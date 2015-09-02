@@ -4,6 +4,9 @@
     <modelRoot contentPath="${module}" type="default">
       <sourceRoot path="${module}/languageModels" />
     </modelRoot>
+    <modelRoot contentPath="${module}" type="java_classes">
+      <sourceRoot location="rascal-shell-stable.jar" />
+    </modelRoot>
   </models>
   <accessoryModels />
   <generators>
