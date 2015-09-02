@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="-1" />
+    </dependencies>
+    <rename id="6o2a.2504845739424388897" type="PROPERTY" from="cardinality" to="card" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="0" />
+    </dependencies>
+    <rename id="6o2a.2504845739424324587" type="CONCEPT" from="RuleReference" to="RuleAssociation" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="1" />
+    </dependencies>
+    <rename id="6o2a.8822712935563370119" type="CONCEPT" from="Reference" to="RuleReference" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="2" />
+    </dependencies>
+    <rename id="6o2a.2504845739424324587" type="CONCEPT" from="RuleAssociation" to="RuleAggregation" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="3" />
+    </dependencies>
+    <rename id="6o2a.2504845739423551604" type="CONCEPT" from="IGrammarRule" to="INamedGrammarContent" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="4" />
+    </dependencies>
+    <rename id="6o2a.513220601743340168" type="CONCEPT" from="EditorModel" to="GenerationModel" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="5" />
+    </dependencies>
+    <rename id="6o2a.7520678199445943180" type="PROPERTY" from="type" to="generator" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="6" />
+    </dependencies>
+    <rename id="6o2a.8822712935563370119" type="CONCEPT" from="RuleReference" to="IdReference" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="7" />
+    </dependencies>
+    <rename id="6o2a.2504845739424324587" type="CONCEPT" from="RuleAggregation" to="NonterminalReference" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="cfqx" modelUID="r:859efffd-deb9-4ee3-9b51-9dd26ec80275(mbnf.behavior)" version="-1" />
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" version="8" />
+      <model index="3enw" modelUID="r:b0425bd0-34be-4bde-96d3-276a994f8898(mbnf.constraints)" version="-1" />
+      <model index="l9rj" modelUID="r:9c95dd7f-b82b-479f-848a-cb6e9d59f821(mbnf.editor)" version="-1" />
+      <model index="rplf" modelUID="r:61914bbb-2720-4ba2-80aa-daf4b51a6cbe(mbnf.plugin)" version="-1" />
+      <model index="e44s" modelUID="r:40de8445-6801-4abc-bf0f-bd25af6471b0(mbnf.typesystem)" version="-1" />
+      <model index="9dsg" modelUID="r:50538c2e-b1ef-4243-83a0-452ffc98ab52(mbnf.generator.template.main@generator)" version="2" />
+    </dependencies>
+    <RenameModel oldModel="r:9c95dd7f-b82b-479f-848a-cb6e9d59f821(mbnf.editor)" newModel="r:9c95dd7f-b82b-479f-848a-cb6e9d59f821(metabnf.editor)" />
+    <RenameModel oldModel="r:61914bbb-2720-4ba2-80aa-daf4b51a6cbe(mbnf.plugin)" newModel="r:61914bbb-2720-4ba2-80aa-daf4b51a6cbe(metabnf.plugin)" />
+    <RenameModel oldModel="r:859efffd-deb9-4ee3-9b51-9dd26ec80275(mbnf.behavior)" newModel="r:859efffd-deb9-4ee3-9b51-9dd26ec80275(metabnf.behavior)" />
+    <RenameModel oldModel="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(mbnf.structure)" newModel="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(metabnf.structure)" />
+    <RenameModel oldModel="r:40de8445-6801-4abc-bf0f-bd25af6471b0(mbnf.typesystem)" newModel="r:40de8445-6801-4abc-bf0f-bd25af6471b0(metabnf.typesystem)" />
+    <RenameModel oldModel="r:b0425bd0-34be-4bde-96d3-276a994f8898(mbnf.constraints)" newModel="r:b0425bd0-34be-4bde-96d3-276a994f8898(metabnf.constraints)" />
+    <RenameModel oldModel="r:50538c2e-b1ef-4243-83a0-452ffc98ab52(mbnf.generator.template.main@generator)" newModel="r:50538c2e-b1ef-4243-83a0-452ffc98ab52(metabnf.generator.template.main@generator)" />
+  </StructureModification>
+</history>
+
