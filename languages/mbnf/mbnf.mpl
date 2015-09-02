@@ -2,11 +2,9 @@
 <language namespace="metabnf" uuid="9c03c641-469f-49e7-aeed-44a3d19b7253">
   <models>
     <modelRoot contentPath="${module}" type="default">
-      <sourceRoot path="${module}/languageModels" />
+      <sourceRoot location="languageModels" />
     </modelRoot>
-    <modelRoot contentPath="${module}" type="java_classes">
-      <sourceRoot location="rascal-shell-stable.jar" />
-    </modelRoot>
+    <modelRoot contentPath="${module}" type="java_classes" />
   </models>
   <accessoryModels />
   <generators>
@@ -108,7 +106,6 @@
   </generators>
   <sourcePath />
   <dependencies>
-    <dependency reexport="false">85d9f97b-1654-4692-b61c-fcc40db03653(Eclipse.Debugger)</dependency>
     <dependency reexport="false">daafa647-f1f7-4b0b-b096-69cd7c8408c0(jetbrains.mps.baseLanguage.regexp)</dependency>
     <dependency reexport="false">a1250a4d-c090-42c3-ad7c-d298a3357dd4(jetbrains.mps.make.runtime)</dependency>
     <dependency reexport="false">df9d410f-2ebb-43f7-893a-483a4f085250(jetbrains.mps.smodel.resources)</dependency>
@@ -128,8 +125,8 @@
     <usedDevKit>2677cb18-f558-4e33-bc38-a5139cee06dc(jetbrains.mps.devkit.language-design)</usedDevKit>
   </usedDevKits>
   <extendedLanguages>
-    <extendedLanguage>7866978e-a0f0-4cc7-81bc-4d213d9375e1(jetbrains.mps.lang.smodel)</extendedLanguage>
     <extendedLanguage>c72da2b9-7cce-4447-8389-f407dc1158b7(jetbrains.mps.lang.structure)</extendedLanguage>
+    <extendedLanguage>7866978e-a0f0-4cc7-81bc-4d213d9375e1(jetbrains.mps.lang.smodel)</extendedLanguage>
   </extendedLanguages>
 </language>
 
