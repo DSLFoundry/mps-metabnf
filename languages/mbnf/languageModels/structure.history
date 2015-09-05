@@ -72,5 +72,17 @@
     <RenameModel oldModel="r:b0425bd0-34be-4bde-96d3-276a994f8898(mbnf.constraints)" newModel="r:b0425bd0-34be-4bde-96d3-276a994f8898(metabnf.constraints)" />
     <RenameModel oldModel="r:50538c2e-b1ef-4243-83a0-452ffc98ab52(mbnf.generator.template.main@generator)" newModel="r:50538c2e-b1ef-4243-83a0-452ffc98ab52(metabnf.generator.template.main@generator)" />
   </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(metabnf.structure)" version="9" />
+    </dependencies>
+    <rename id="6o2a.6652866544651790684" type="REFERENCE" from="m" to="model" />
+  </StructureModification>
+  <StructureModification>
+    <dependencies>
+      <model index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(metabnf.structure)" version="10" />
+    </dependencies>
+    <rename id="6o2a.6652866544652783726" type="CHILD" from="model" to="structure" />
+  </StructureModification>
 </history>
 

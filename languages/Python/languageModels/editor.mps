@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model modelUID="r:f51ae5f5-e259-451e-89a4-85baae52b8e8(TestLanguage.textGen)">
+<model modelUID="r:d662ddb1-48cd-44c7-ab40-0d6d0c194f27(Python.editor)">
   <persistence version="8" />
-  <language namespace="b83431fe-5c8f-40bc-8a36-65e25f4dd253(jetbrains.mps.lang.textGen)" />
+  <language namespace="18bc6592-03a6-4e29-a83a-7ff23bde13ba(jetbrains.mps.lang.editor)" />
   <devkit namespace="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
 </model>
 

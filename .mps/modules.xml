@@ -2,7 +2,7 @@
 <project version="4">
   <component name="MPSProject">
     <projectModules>
-      <modulePath path="$PROJECT_DIR$/languages/TestLanguage/TestLanguage.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/languages/Python/Python.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/mbnf/mbnf.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/mbnf/sandbox/mbnf.sandbox.msd" folder="" />
     </projectModules>

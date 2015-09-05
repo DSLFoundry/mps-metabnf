@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model modelUID="r:01f2daae-3e01-455c-877a-044d19f1e0da(TestLanguage.structure)" version="0">
+<model modelUID="r:ab58bcbb-3fc5-4d59-a0f5-774abb9e9f68(Python.structure)">
   <persistence version="8" />
   <language namespace="c72da2b9-7cce-4447-8389-f407dc1158b7(jetbrains.mps.lang.structure)" />
   <devkit namespace="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />

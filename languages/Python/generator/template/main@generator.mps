@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model modelUID="r:db365a6a-6b16-4e01-90a5-2c6e3fc81f2a(TestLanguage.generator.template.main@generator)">
+<model modelUID="r:6efd76ab-6907-48cd-851e-e4cab564cdb4(Python.generator.template.main@generator)">
   <persistence version="8" />
-  <language namespace="ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)" />
-  <language namespace="9e6ceb0c-683d-4700-9c2c-e36630240ae9(TestLanguage)" />
-  <language namespace="b401a680-8325-4110-8fd3-84331ff25bef(jetbrains.mps.lang.generator)" />
   <language namespace="d7706f63-9be2-479c-a3da-ae92af1e64d5(jetbrains.mps.lang.generator.generationContext)" />
+  <language namespace="ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)" />
+  <language namespace="f89b81c4-cf44-42c7-99d5-d436ac2af374(Python)" />
+  <language namespace="b401a680-8325-4110-8fd3-84331ff25bef(jetbrains.mps.lang.generator)" />
   <devkit namespace="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   <import index="tpf8" modelUID="r:00000000-0000-4000-0000-011c895902e8(jetbrains.mps.lang.generator.structure)" version="2" implicit="yes" />
   <import index="tpck" modelUID="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" version="0" implicit="yes" />
-  <root type="tpf8.MappingConfiguration" typeId="tpf8.1095416546421" id="4698798192897010033" nodeInfo="ng">
+  <root type="tpf8.MappingConfiguration" typeId="tpf8.1095416546421" id="1636259002881738602" nodeInfo="ng">
     <property name="name" nameId="tpck.1169194664001" value="main" />
   </root>
 </model>

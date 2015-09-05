@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language namespace="TestLanguage" uuid="9e6ceb0c-683d-4700-9c2c-e36630240ae9">
+<language namespace="Python" uuid="f89b81c4-cf44-42c7-99d5-d436ac2af374">
   <models>
     <modelRoot contentPath="${module}" type="default">
       <sourceRoot path="${module}/languageModels" />
@@ -7,7 +7,7 @@
   </models>
   <accessoryModels />
   <generators>
-    <generator generatorUID="TestLanguage#4698798192897010032" uuid="41f83719-ea9f-4250-b0f9-da6b2620f857">
+    <generator generatorUID="Python#1636259002881738601" uuid="e77c3503-77ba-408f-a715-69a5bc38bb28">
       <models>
         <modelRoot contentPath="${module}" type="default">
           <sourceRoot path="${module}/generator/template" />
@@ -15,7 +15,7 @@
       </models>
       <external-templates />
       <usedLanguages>
-        <usedLanguage>9e6ceb0c-683d-4700-9c2c-e36630240ae9(TestLanguage)</usedLanguage>
+        <usedLanguage>f89b81c4-cf44-42c7-99d5-d436ac2af374(Python)</usedLanguage>
         <usedLanguage>b401a680-8325-4110-8fd3-84331ff25bef(jetbrains.mps.lang.generator)</usedLanguage>
         <usedLanguage>d7706f63-9be2-479c-a3da-ae92af1e64d5(jetbrains.mps.lang.generator.generationContext)</usedLanguage>
       </usedLanguages>
