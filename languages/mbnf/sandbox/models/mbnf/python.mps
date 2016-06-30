@@ -1,2357 +1,2425 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model modelUID="r:b93f76a9-bff1-4cec-bcda-42793f5523c5(mbnf.python)">
-  <persistence version="8" />
-  <language namespace="9c03c641-469f-49e7-aeed-44a3d19b7253(metabnf)" />
-  <language namespace="daafa647-f1f7-4b0b-b096-69cd7c8408c0(jetbrains.mps.baseLanguage.regexp)" />
-  <import index="6o2a" modelUID="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(metabnf.structure)" version="11" implicit="yes" />
-  <import index="tpck" modelUID="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" version="0" implicit="yes" />
-  <import index="tpfo" modelUID="r:00000000-0000-4000-0000-011c89590518(jetbrains.mps.baseLanguage.regexp.structure)" version="0" implicit="yes" />
-  <root type="6o2a.grammar" typeId="6o2a.2504845739423496082" id="5689872735555037548" nodeInfo="ng">
-    <property name="name" nameId="tpck.1169194664001" value="Python" />
-    <link role="start" roleId="6o2a.2504845739423551607" targetNodeId="5689872735555037974" resolveInfo="program" />
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="4939832016426431133" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="PoC definition of python grammar. Based on Python 3. w.i.p." />
+<model ref="r:b93f76a9-bff1-4cec-bcda-42793f5523c5(mbnf.python)">
+  <persistence version="9" />
+  <languages>
+    <use id="9c03c641-469f-49e7-aeed-44a3d19b7253" name="metabnf" version="0" />
+    <use id="daafa647-f1f7-4b0b-b096-69cd7c8408c0" name="jetbrains.mps.baseLanguage.regexp" version="0" />
+  </languages>
+  <imports />
+  <registry>
+    <language id="9c03c641-469f-49e7-aeed-44a3d19b7253" name="metabnf">
+      <concept id="5689872735553437610" name="metabnf.structure.RuleGroup" flags="ng" index="t8saL">
+        <child id="5689872735553437613" name="rules" index="t8saQ" />
+      </concept>
+      <concept id="4939832016426343668" name="metabnf.structure.Comment" flags="ng" index="2DJ5fZ" />
+      <concept id="2738052631436817608" name="metabnf.structure.TerminalReference" flags="ng" index="2GSJ2k">
+        <reference id="2738052631437369572" name="rule" index="2GQAiS" />
+      </concept>
+      <concept id="2504845739424006305" name="metabnf.structure.Keyword" flags="ng" index="3xhzXc" />
+      <concept id="2504845739424006197" name="metabnf.structure.ITerm" flags="ng" index="3xhzZo">
+        <property id="513220601742038557" name="newline" index="d84lQ" />
+        <property id="513220601742038498" name="indent" index="d84q9" />
+      </concept>
+      <concept id="2504845739424006163" name="metabnf.structure.NonterminalRule" flags="ng" index="3xhzZY">
+        <child id="2504845739424006198" name="terms" index="3xhzZr" />
+      </concept>
+      <concept id="2504845739424324587" name="metabnf.structure.NonterminalReference" flags="ng" index="3xiQg6">
+        <property id="4939832016425377885" name="sep" index="2DFMXm" />
+        <property id="2504845739424658192" name="card" index="3xj4NX" />
+        <reference id="2504845739424324590" name="rule" index="3xiQg3" />
+      </concept>
+      <concept id="2504845739423496082" name="metabnf.structure.grammar" flags="ng" index="3xJwxZ">
+        <reference id="2504845739423551607" name="start" index="3xJMYq" />
+        <child id="2504845739423551605" name="rules" index="3xJMYo" />
+      </concept>
+      <concept id="2504845739423561976" name="metabnf.structure.TerminalRule" flags="ng" index="3xJKsl">
+        <child id="2861244223630461677" name="regexp" index="q_eir" />
+      </concept>
+      <concept id="2504845739423561804" name="metabnf.structure.ChoiceRule" flags="ng" index="3xJKux">
+        <child id="2504845739423561868" name="nonterminals" index="3xJKtx" />
+      </concept>
+      <concept id="8822712935563342996" name="metabnf.structure.EmptyLine" flags="ng" index="3P3UoZ" />
+    </language>
+    <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
+      <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ng" index="TrEIO">
+        <property id="1169194664001" name="name" index="TrG5h" />
+      </concept>
+    </language>
+    <language id="daafa647-f1f7-4b0b-b096-69cd7c8408c0" name="jetbrains.mps.baseLanguage.regexp">
+      <concept id="1174482753837" name="jetbrains.mps.baseLanguage.regexp.structure.StringLiteralRegexp" flags="ng" index="1OC9wW">
+        <property id="1174482761807" name="text" index="1OCb_u" />
+      </concept>
+      <concept id="1174482808826" name="jetbrains.mps.baseLanguage.regexp.structure.StarRegexp" flags="ng" index="1OCmVF" />
+      <concept id="1174484562151" name="jetbrains.mps.baseLanguage.regexp.structure.SeqRegexp" flags="ng" index="1OJ37Q" />
+      <concept id="1174485167097" name="jetbrains.mps.baseLanguage.regexp.structure.BinaryRegexp" flags="ng" index="1OLmFC">
+        <child id="1174485176897" name="left" index="1OLpdg" />
+        <child id="1174485181039" name="right" index="1OLqdY" />
+      </concept>
+      <concept id="1174485235885" name="jetbrains.mps.baseLanguage.regexp.structure.UnaryRegexp" flags="ng" index="1OLBAW">
+        <child id="1174485243418" name="regexp" index="1OLDsb" />
+      </concept>
+      <concept id="1174510540317" name="jetbrains.mps.baseLanguage.regexp.structure.InlineRegexpExpression" flags="nn" index="1Qi9sc">
+        <child id="1174510571016" name="regexp" index="1QigWp" />
+      </concept>
+      <concept id="1174554186090" name="jetbrains.mps.baseLanguage.regexp.structure.SymbolClassRegexp" flags="ng" index="1SSD1V">
+        <child id="1174557628217" name="part" index="1T5LoC" />
+      </concept>
+      <concept id="1174554211468" name="jetbrains.mps.baseLanguage.regexp.structure.PositiveSymbolClassRegexp" flags="ng" index="1SSJmt" />
+      <concept id="1174557878319" name="jetbrains.mps.baseLanguage.regexp.structure.CharacterSymbolClassPart" flags="ng" index="1T6I$Y">
+        <property id="1174557887320" name="character" index="1T6KD9" />
+      </concept>
+      <concept id="1174558301835" name="jetbrains.mps.baseLanguage.regexp.structure.IntervalSymbolClassPart" flags="ng" index="1T8lYq">
+        <property id="1174558315290" name="start" index="1T8p8b" />
+        <property id="1174558317822" name="end" index="1T8pRJ" />
+      </concept>
+    </language>
+  </registry>
+  <node concept="3xJwxZ" id="4VQvhHjW2_G">
+    <property role="TrG5h" value="Python" />
+    <ref role="3xJMYq" node="4VQvhHjW2Gm" resolve="program" />
+    <node concept="2DJ5fZ" id="4idNKJHcJat" role="3xJMYo">
+      <property role="TrG5h" value="PoC definition of python grammar. Based on Python 3. w.i.p." />
     </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016426431595" nodeInfo="ng" />
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555042763" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="terminals" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.TerminalRule" typeId="6o2a.2504845739423561976" id="5689872735555042808" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="NAME" />
-        <node role="regexp" roleId="6o2a.2861244223630461677" type="tpfo.InlineRegexpExpression" typeId="tpfo.1174510540317" id="2861244223630575272" nodeInfo="nn">
-          <node role="regexp" roleId="tpfo.1174510571016" type="tpfo.SeqRegexp" typeId="tpfo.1174484562151" id="2861244223630575273" nodeInfo="ng">
-            <node role="right" roleId="tpfo.1174485181039" type="tpfo.StarRegexp" typeId="tpfo.1174482808826" id="2861244223630575274" nodeInfo="ng">
-              <node role="regexp" roleId="tpfo.1174485243418" type="tpfo.PositiveSymbolClassRegexp" typeId="tpfo.1174554211468" id="2861244223630575275" nodeInfo="ng">
-                <node role="part" roleId="tpfo.1174557628217" type="tpfo.CharacterSymbolClassPart" typeId="tpfo.1174557878319" id="2861244223630575276" nodeInfo="ng">
-                  <property name="character" nameId="tpfo.1174557887320" value="_" />
+    <node concept="3P3UoZ" id="4idNKJHcJhF" role="3xJMYo" />
+    <node concept="t8saL" id="4VQvhHjW3Rb" role="3xJMYo">
+      <property role="TrG5h" value="terminals" />
+      <node concept="3xJKsl" id="4VQvhHjW3RS" role="t8saQ">
+        <property role="TrG5h" value="NAME" />
+        <node concept="1Qi9sc" id="2uPbBoX8SqC" role="q_eir">
+          <node concept="1OJ37Q" id="2uPbBoX8SqD" role="1QigWp">
+            <node concept="1OCmVF" id="2uPbBoX8SqE" role="1OLqdY">
+              <node concept="1SSJmt" id="2uPbBoX8SqF" role="1OLDsb">
+                <node concept="1T6I$Y" id="2uPbBoX8SqG" role="1T5LoC">
+                  <property role="1T6KD9" value="_" />
                 </node>
-                <node role="part" roleId="tpfo.1174557628217" type="tpfo.IntervalSymbolClassPart" typeId="tpfo.1174558301835" id="2861244223630575277" nodeInfo="ng">
-                  <property name="start" nameId="tpfo.1174558315290" value="a" />
-                  <property name="end" nameId="tpfo.1174558317822" value="z" />
+                <node concept="1T8lYq" id="2uPbBoX8SqH" role="1T5LoC">
+                  <property role="1T8p8b" value="a" />
+                  <property role="1T8pRJ" value="z" />
                 </node>
-                <node role="part" roleId="tpfo.1174557628217" type="tpfo.IntervalSymbolClassPart" typeId="tpfo.1174558301835" id="2861244223630575278" nodeInfo="ng">
-                  <property name="start" nameId="tpfo.1174558315290" value="A" />
-                  <property name="end" nameId="tpfo.1174558317822" value="Z" />
+                <node concept="1T8lYq" id="2uPbBoX8SqI" role="1T5LoC">
+                  <property role="1T8p8b" value="A" />
+                  <property role="1T8pRJ" value="Z" />
                 </node>
-                <node role="part" roleId="tpfo.1174557628217" type="tpfo.IntervalSymbolClassPart" typeId="tpfo.1174558301835" id="2861244223630575279" nodeInfo="ng">
-                  <property name="start" nameId="tpfo.1174558315290" value="0" />
-                  <property name="end" nameId="tpfo.1174558317822" value="9" />
-                </node>
-              </node>
-            </node>
-            <node role="left" roleId="tpfo.1174485176897" type="tpfo.PositiveSymbolClassRegexp" typeId="tpfo.1174554211468" id="2861244223630575280" nodeInfo="ng">
-              <node role="part" roleId="tpfo.1174557628217" type="tpfo.CharacterSymbolClassPart" typeId="tpfo.1174557878319" id="2861244223630575281" nodeInfo="ng">
-                <property name="character" nameId="tpfo.1174557887320" value="_" />
-              </node>
-              <node role="part" roleId="tpfo.1174557628217" type="tpfo.IntervalSymbolClassPart" typeId="tpfo.1174558301835" id="2861244223630575282" nodeInfo="ng">
-                <property name="start" nameId="tpfo.1174558315290" value="a" />
-                <property name="end" nameId="tpfo.1174558317822" value="z" />
-              </node>
-              <node role="part" roleId="tpfo.1174557628217" type="tpfo.IntervalSymbolClassPart" typeId="tpfo.1174558301835" id="2861244223630575283" nodeInfo="ng">
-                <property name="start" nameId="tpfo.1174558315290" value="A" />
-                <property name="end" nameId="tpfo.1174558317822" value="Z" />
-              </node>
-            </node>
-          </node>
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.TerminalRule" typeId="6o2a.2504845739423561976" id="5689872735555054031" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="DOT" />
-        <node role="regexp" roleId="6o2a.2861244223630461677" type="tpfo.InlineRegexpExpression" typeId="tpfo.1174510540317" id="2861244223630575038" nodeInfo="nn">
-          <node role="regexp" roleId="tpfo.1174510571016" type="tpfo.PositiveSymbolClassRegexp" typeId="tpfo.1174554211468" id="2861244223630575039" nodeInfo="ng">
-            <node role="part" roleId="tpfo.1174557628217" type="tpfo.CharacterSymbolClassPart" typeId="tpfo.1174557878319" id="2861244223630575040" nodeInfo="ng">
-              <property name="character" nameId="tpfo.1174557887320" value="." />
-            </node>
-          </node>
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.TerminalRule" typeId="6o2a.2504845739423561976" id="5689872735555054188" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="ELLIPSIS" />
-        <node role="regexp" roleId="6o2a.2861244223630461677" type="tpfo.InlineRegexpExpression" typeId="tpfo.1174510540317" id="2861244223630575002" nodeInfo="nn">
-          <node role="regexp" roleId="tpfo.1174510571016" type="tpfo.SeqRegexp" typeId="tpfo.1174484562151" id="2861244223630575003" nodeInfo="ng">
-            <node role="right" roleId="tpfo.1174485181039" type="tpfo.SeqRegexp" typeId="tpfo.1174484562151" id="2861244223630575004" nodeInfo="ng">
-              <node role="left" roleId="tpfo.1174485176897" type="tpfo.PositiveSymbolClassRegexp" typeId="tpfo.1174554211468" id="2861244223630575005" nodeInfo="ng">
-                <node role="part" roleId="tpfo.1174557628217" type="tpfo.CharacterSymbolClassPart" typeId="tpfo.1174557878319" id="2861244223630575006" nodeInfo="ng">
-                  <property name="character" nameId="tpfo.1174557887320" value="." />
-                </node>
-              </node>
-              <node role="right" roleId="tpfo.1174485181039" type="tpfo.PositiveSymbolClassRegexp" typeId="tpfo.1174554211468" id="2861244223630575007" nodeInfo="ng">
-                <node role="part" roleId="tpfo.1174557628217" type="tpfo.CharacterSymbolClassPart" typeId="tpfo.1174557878319" id="2861244223630575008" nodeInfo="ng">
-                  <property name="character" nameId="tpfo.1174557887320" value="." />
+                <node concept="1T8lYq" id="2uPbBoX8SqJ" role="1T5LoC">
+                  <property role="1T8p8b" value="0" />
+                  <property role="1T8pRJ" value="9" />
                 </node>
               </node>
             </node>
-            <node role="left" roleId="tpfo.1174485176897" type="tpfo.PositiveSymbolClassRegexp" typeId="tpfo.1174554211468" id="2861244223630575009" nodeInfo="ng">
-              <node role="part" roleId="tpfo.1174557628217" type="tpfo.CharacterSymbolClassPart" typeId="tpfo.1174557878319" id="2861244223630575010" nodeInfo="ng">
-                <property name="character" nameId="tpfo.1174557887320" value="." />
+            <node concept="1SSJmt" id="2uPbBoX8SqK" role="1OLpdg">
+              <node concept="1T6I$Y" id="2uPbBoX8SqL" role="1T5LoC">
+                <property role="1T6KD9" value="_" />
+              </node>
+              <node concept="1T8lYq" id="2uPbBoX8SqM" role="1T5LoC">
+                <property role="1T8p8b" value="a" />
+                <property role="1T8pRJ" value="z" />
+              </node>
+              <node concept="1T8lYq" id="2uPbBoX8SqN" role="1T5LoC">
+                <property role="1T8p8b" value="A" />
+                <property role="1T8pRJ" value="Z" />
               </node>
             </node>
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.TerminalRule" typeId="6o2a.2504845739423561976" id="7558265857383178347" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="STRING" />
-        <node role="regexp" roleId="6o2a.2861244223630461677" type="tpfo.InlineRegexpExpression" typeId="tpfo.1174510540317" id="7558265857383178349" nodeInfo="nn">
-          <node role="regexp" roleId="tpfo.1174510571016" type="tpfo.StringLiteralRegexp" typeId="tpfo.1174482753837" id="7558265857383178424" nodeInfo="ng">
-            <property name="text" nameId="tpfo.1174482761807" value="todo" />
+      <node concept="3xJKsl" id="4VQvhHjW6Bf" role="t8saQ">
+        <property role="TrG5h" value="DOT" />
+        <node concept="1Qi9sc" id="2uPbBoX8SmY" role="q_eir">
+          <node concept="1SSJmt" id="2uPbBoX8SmZ" role="1QigWp">
+            <node concept="1T6I$Y" id="2uPbBoX8Sn0" role="1T5LoC">
+              <property role="1T6KD9" value="." />
+            </node>
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.TerminalRule" typeId="6o2a.2504845739423561976" id="7558265857383179550" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="NUMBER" />
-        <node role="regexp" roleId="6o2a.2861244223630461677" type="tpfo.InlineRegexpExpression" typeId="tpfo.1174510540317" id="7558265857383179552" nodeInfo="nn">
-          <node role="regexp" roleId="tpfo.1174510571016" type="tpfo.StringLiteralRegexp" typeId="tpfo.1174482753837" id="7558265857383179610" nodeInfo="ng">
-            <property name="text" nameId="tpfo.1174482761807" value="todo" />
+      <node concept="3xJKsl" id="4VQvhHjW6DG" role="t8saQ">
+        <property role="TrG5h" value="ELLIPSIS" />
+        <node concept="1Qi9sc" id="2uPbBoX8Smq" role="q_eir">
+          <node concept="1OJ37Q" id="2uPbBoX8Smr" role="1QigWp">
+            <node concept="1OJ37Q" id="2uPbBoX8Sms" role="1OLqdY">
+              <node concept="1SSJmt" id="2uPbBoX8Smt" role="1OLpdg">
+                <node concept="1T6I$Y" id="2uPbBoX8Smu" role="1T5LoC">
+                  <property role="1T6KD9" value="." />
+                </node>
+              </node>
+              <node concept="1SSJmt" id="2uPbBoX8Smv" role="1OLqdY">
+                <node concept="1T6I$Y" id="2uPbBoX8Smw" role="1T5LoC">
+                  <property role="1T6KD9" value="." />
+                </node>
+              </node>
+            </node>
+            <node concept="1SSJmt" id="2uPbBoX8Smx" role="1OLpdg">
+              <node concept="1T6I$Y" id="2uPbBoX8Smy" role="1T5LoC">
+                <property role="1T6KD9" value="." />
+              </node>
+            </node>
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="7558265857383179503" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383157339" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="True" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383157376" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="True" />
+      <node concept="3xJKsl" id="6z$mG1Viq1F" role="t8saQ">
+        <property role="TrG5h" value="STRING" />
+        <node concept="1Qi9sc" id="6z$mG1Viq1H" role="q_eir">
+          <node concept="1OC9wW" id="6z$mG1Viq2S" role="1QigWp">
+            <property role="1OCb_u" value="todo" />
+          </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383157420" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="False" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383157459" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="False" />
+      <node concept="3xJKsl" id="6z$mG1Viqku" role="t8saQ">
+        <property role="TrG5h" value="NUMBER" />
+        <node concept="1Qi9sc" id="6z$mG1Viqkw" role="q_eir">
+          <node concept="1OC9wW" id="6z$mG1Viqlq" role="1QigWp">
+            <property role="1OCb_u" value="todo" />
+          </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383158564" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="None" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383158605" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="None" />
+      <node concept="3P3UoZ" id="6z$mG1ViqjJ" role="t8saQ" />
+      <node concept="3xhzZY" id="6z$mG1VikTr" role="t8saQ">
+        <property role="TrG5h" value="True" />
+        <node concept="3xhzXc" id="6z$mG1VikU0" role="3xhzZr">
+          <property role="TrG5h" value="True" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383178478" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="number" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="7558265857383178525" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="7558265857383179550" resolveInfo="NUMBER" />
+      <node concept="3xhzZY" id="6z$mG1VikUG" role="t8saQ">
+        <property role="TrG5h" value="False" />
+        <node concept="3xhzXc" id="6z$mG1VikVj" role="3xhzZr">
+          <property role="TrG5h" value="False" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383179622" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="string" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="7558265857383179623" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="7558265857383178347" resolveInfo="STRING" />
+      <node concept="3xhzZY" id="6z$mG1Vilc$" role="t8saQ">
+        <property role="TrG5h" value="None" />
+        <node concept="3xhzXc" id="6z$mG1Vildd" role="3xhzZr">
+          <property role="TrG5h" value="None" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383184045" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="strings" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383184098" nodeInfo="ng">
-          <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383179622" resolveInfo="string" />
+      <node concept="3xhzZY" id="6z$mG1Viq3I" role="t8saQ">
+        <property role="TrG5h" value="number" />
+        <node concept="2GSJ2k" id="6z$mG1Viq4t" role="3xhzZr">
+          <ref role="2GQAiS" node="6z$mG1Viqku" resolve="NUMBER" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555099105" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="name" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="2738052631437668059" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555042808" resolveInfo="NAME" />
+      <node concept="3xhzZY" id="6z$mG1ViqlA" role="t8saQ">
+        <property role="TrG5h" value="string" />
+        <node concept="2GSJ2k" id="6z$mG1ViqlB" role="3xhzZr">
+          <ref role="2GQAiS" node="6z$mG1Viq1F" resolve="STRING" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555075828" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="simple_dot" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="2738052631437668062" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555054031" resolveInfo="DOT" />
+      <node concept="3xhzZY" id="6z$mG1VirqH" role="t8saQ">
+        <property role="TrG5h" value="strings" />
+        <node concept="3xiQg6" id="6z$mG1Virry" role="3xhzZr">
+          <property role="3xj4NX" value="AtleastOne" />
+          <ref role="3xiQg3" node="6z$mG1ViqlA" resolve="string" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555075848" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="ellipsis" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="2738052631437668065" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555054188" resolveInfo="ELLIPSIS" />
+      <node concept="3xhzZY" id="4VQvhHjWhBx" role="t8saQ">
+        <property role="TrG5h" value="name" />
+        <node concept="2GSJ2k" id="2nZx5M9aAVr" role="3xhzZr">
+          <ref role="2GQAiS" node="4VQvhHjW3RS" resolve="NAME" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383187027" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="constant" />
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383187082" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383157339" resolveInfo="True" />
+      <node concept="3xhzZY" id="4VQvhHjWbVO" role="t8saQ">
+        <property role="TrG5h" value="simple_dot" />
+        <node concept="2GSJ2k" id="2nZx5M9aAVu" role="3xhzZr">
+          <ref role="2GQAiS" node="4VQvhHjW6Bf" resolve="DOT" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383187084" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383157420" resolveInfo="False" />
+      </node>
+      <node concept="3xhzZY" id="4VQvhHjWbW8" role="t8saQ">
+        <property role="TrG5h" value="ellipsis" />
+        <node concept="2GSJ2k" id="2nZx5M9aAVx" role="3xhzZr">
+          <ref role="2GQAiS" node="4VQvhHjW6DG" resolve="ELLIPSIS" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383187087" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383158564" resolveInfo="None" />
+      </node>
+      <node concept="3xJKux" id="6z$mG1Vis9j" role="t8saQ">
+        <property role="TrG5h" value="constant" />
+        <node concept="3xiQg6" id="6z$mG1Visaa" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1VikTr" resolve="True" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383187223" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555075848" resolveInfo="ellipsis" />
+        <node concept="3xiQg6" id="6z$mG1Visac" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1VikUG" resolve="False" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383187228" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383184045" resolveInfo="strings" />
+        <node concept="3xiQg6" id="6z$mG1Visaf" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1Vilc$" resolve="None" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383188187" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383178478" resolveInfo="number" />
+        <node concept="3xiQg6" id="6z$mG1Viscn" role="3xJKtx">
+          <ref role="3xiQg3" node="4VQvhHjWbW8" resolve="ellipsis" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Viscs" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1VirqH" resolve="strings" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Visrr" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1Viq3I" resolve="number" />
         </node>
       </node>
     </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555098900" nodeInfo="ng" />
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016426439720" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="operators" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016426188462" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="bin_op" />
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426189447" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426189421" resolveInfo="logical_op" />
+    <node concept="3P3UoZ" id="4VQvhHjWh$k" role="3xJMYo" />
+    <node concept="t8saL" id="4idNKJHcLgC" role="3xJMYo">
+      <property role="TrG5h" value="operators" />
+      <node concept="3xJKux" id="4idNKJHbNUI" role="t8saQ">
+        <property role="TrG5h" value="bin_op" />
+        <node concept="3xiQg6" id="4idNKJHbOa7" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHbO9H" resolve="logical_op" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426196689" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426189930" resolveInfo="comparison_op" />
+        <node concept="3xiQg6" id="4idNKJHbPVh" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHbOhE" resolve="comparison_op" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426201271" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426201238" resolveInfo="bitwise_op" />
+        <node concept="3xiQg6" id="4idNKJHbR2R" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHbR2m" resolve="bitwise_op" />
         </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204082" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426201914" resolveInfo="arithmetic_op" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016426444857" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016426188947" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="logical" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016426189421" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="logical_op" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426189428" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426188958" resolveInfo="log_and" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426189430" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426188967" resolveInfo="log_or" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426188958" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="log_and" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426188961" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="and" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426188967" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="log_or" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426188972" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="or" />
-          </node>
+        <node concept="3xiQg6" id="4idNKJHbRIM" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHbRcU" resolve="arithmetic_op" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016426201086" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="bitwise" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016426201238" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="bitwise_op" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426201251" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426198991" resolveInfo="bw_and" />
+      <node concept="3P3UoZ" id="4idNKJHcMwT" role="t8saQ" />
+      <node concept="t8saL" id="4idNKJHbO2j" role="t8saQ">
+        <property role="TrG5h" value="logical" />
+        <node concept="3xJKux" id="4idNKJHbO9H" role="t8saQ">
+          <property role="TrG5h" value="logical_op" />
+          <node concept="3xiQg6" id="4idNKJHbO9O" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbO2u" resolve="log_and" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426201253" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426198976" resolveInfo="bw_or_" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426201256" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426199008" resolveInfo="bw_xor" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426201260" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426198941" resolveInfo="bw_shl" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426201265" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426200998" resolveInfo="bw_shr" />
+          <node concept="3xiQg6" id="4idNKJHbO9Q" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbO2B" resolve="log_or" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426198976" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="bw_or_" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426198977" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="|" />
+        <node concept="3xhzZY" id="4idNKJHbO2u" role="t8saQ">
+          <property role="TrG5h" value="log_and" />
+          <node concept="3xhzXc" id="4idNKJHbO2x" role="3xhzZr">
+            <property role="TrG5h" value="and" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426198991" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="bw_and" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426198992" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&amp;" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426199008" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="bw_xor" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426199009" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="^" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426198941" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="bw_shl" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426198942" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&lt;&lt;" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426200998" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="bw_shr" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426200999" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&gt;&gt;" />
+        <node concept="3xhzZY" id="4idNKJHbO2B" role="t8saQ">
+          <property role="TrG5h" value="log_or" />
+          <node concept="3xhzXc" id="4idNKJHbO2G" role="3xhzZr">
+            <property role="TrG5h" value="or" />
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016426189466" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="comparison" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016426189930" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="comparison_op" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426194715" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426190387" resolveInfo="less_op" />
+      <node concept="t8saL" id="4idNKJHbQZY" role="t8saQ">
+        <property role="TrG5h" value="bitwise" />
+        <node concept="3xJKux" id="4idNKJHbR2m" role="t8saQ">
+          <property role="TrG5h" value="bitwise_op" />
+          <node concept="3xiQg6" id="4idNKJHbR2z" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbQvf" resolve="bw_and" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426194717" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426190847" resolveInfo="more_op" />
+          <node concept="3xiQg6" id="4idNKJHbR2_" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbQv0" resolve="bw_or_" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426195192" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426190855" resolveInfo="equal_op" />
+          <node concept="3xiQg6" id="4idNKJHbR2C" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbQvw" resolve="bw_xor" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426195669" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426190865" resolveInfo="atleast_op" />
+          <node concept="3xiQg6" id="4idNKJHbR2G" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbQut" resolve="bw_shl" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426195674" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426192705" resolveInfo="atmost_op" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426196155" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426193655" resolveInfo="not_equal_op" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426196162" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426192719" resolveInfo="notequal_op" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426196647" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426194135" resolveInfo="in_op" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426196656" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426194155" resolveInfo="notin_op" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426196666" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426194643" resolveInfo="is_op" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426196677" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426194689" resolveInfo="isnot_op" />
+          <node concept="3xiQg6" id="4idNKJHbR2L" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbQYA" resolve="bw_shr" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426190387" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="less_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426190841" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&lt;" />
+        <node concept="3xhzZY" id="4idNKJHbQv0" role="t8saQ">
+          <property role="TrG5h" value="bw_or_" />
+          <node concept="3xhzXc" id="4idNKJHbQv1" role="3xhzZr">
+            <property role="TrG5h" value="|" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426190847" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="more_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426190848" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&gt;" />
+        <node concept="3xhzZY" id="4idNKJHbQvf" role="t8saQ">
+          <property role="TrG5h" value="bw_and" />
+          <node concept="3xhzXc" id="4idNKJHbQvg" role="3xhzZr">
+            <property role="TrG5h" value="&amp;" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426190855" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="equal_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426190856" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="==" />
+        <node concept="3xhzZY" id="4idNKJHbQvw" role="t8saQ">
+          <property role="TrG5h" value="bw_xor" />
+          <node concept="3xhzXc" id="4idNKJHbQvx" role="3xhzZr">
+            <property role="TrG5h" value="^" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426190865" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="atleast_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426190866" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&gt;=" />
+        <node concept="3xhzZY" id="4idNKJHbQut" role="t8saQ">
+          <property role="TrG5h" value="bw_shl" />
+          <node concept="3xhzXc" id="4idNKJHbQuu" role="3xhzZr">
+            <property role="TrG5h" value="&lt;&lt;" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426192705" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="atmost_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426192706" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&lt;=" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426192719" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="notequal_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426192720" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&lt;&gt;" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426193655" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="not_equal_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426193656" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="!=" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426194135" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="in_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426194136" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="in" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426194155" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="notin_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426194156" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="not in" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426194643" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="is_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426194644" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="is" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426194689" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="isnot_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426194690" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="is not" />
+        <node concept="3xhzZY" id="4idNKJHbQYA" role="t8saQ">
+          <property role="TrG5h" value="bw_shr" />
+          <node concept="3xhzXc" id="4idNKJHbQYB" role="3xhzZr">
+            <property role="TrG5h" value="&gt;&gt;" />
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016426201843" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="arithmetic" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016426201914" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="arithmetic_op" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204047" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426201921" resolveInfo="add_op" />
+      <node concept="t8saL" id="4idNKJHbOaq" role="t8saQ">
+        <property role="TrG5h" value="comparison" />
+        <node concept="3xJKux" id="4idNKJHbOhE" role="t8saQ">
+          <property role="TrG5h" value="comparison_op" />
+          <node concept="3xiQg6" id="4idNKJHbPsr" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbOoN" resolve="less_op" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204049" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426201925" resolveInfo="sub_op" />
+          <node concept="3xiQg6" id="4idNKJHbPst" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbOvZ" resolve="more_op" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204052" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426201929" resolveInfo="mul_op" />
+          <node concept="3xiQg6" id="4idNKJHbPzS" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbOw7" resolve="equal_op" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204056" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426201934" resolveInfo="div_op" />
+          <node concept="3xiQg6" id="4idNKJHbPFl" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbOwh" resolve="atleast_op" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204061" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426202444" resolveInfo="divop" />
+          <node concept="3xiQg6" id="4idNKJHbPFq" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbOX1" resolve="atmost_op" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204067" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426202451" resolveInfo="mod_op" />
+          <node concept="3xiQg6" id="4idNKJHbPMV" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbPbR" resolve="not_equal_op" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426204074" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426202459" resolveInfo="exp_op" />
+          <node concept="3xiQg6" id="4idNKJHbPN2" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbOXf" resolve="notequal_op" />
           </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426201921" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="add_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426203516" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="+" />
+          <node concept="3xiQg6" id="4idNKJHbPUB" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbPjn" resolve="in_op" />
           </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426201925" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="sub_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426203519" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="-" />
+          <node concept="3xiQg6" id="4idNKJHbPUK" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbPjF" resolve="notin_op" />
           </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426201929" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="mul_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426203521" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="*" />
+          <node concept="3xiQg6" id="4idNKJHbPUU" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbPrj" resolve="is_op" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJHbPV5" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbPs1" resolve="isnot_op" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426201934" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="div_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426203523" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="/" />
+        <node concept="3xhzZY" id="4idNKJHbOoN" role="t8saQ">
+          <property role="TrG5h" value="less_op" />
+          <node concept="3xhzXc" id="4idNKJHbOvT" role="3xhzZr">
+            <property role="TrG5h" value="&lt;" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426202444" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="divop" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426203525" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="//" />
+        <node concept="3xhzZY" id="4idNKJHbOvZ" role="t8saQ">
+          <property role="TrG5h" value="more_op" />
+          <node concept="3xhzXc" id="4idNKJHbOw0" role="3xhzZr">
+            <property role="TrG5h" value="&gt;" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426202451" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="mod_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426203527" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="%" />
+        <node concept="3xhzZY" id="4idNKJHbOw7" role="t8saQ">
+          <property role="TrG5h" value="equal_op" />
+          <node concept="3xhzXc" id="4idNKJHbOw8" role="3xhzZr">
+            <property role="TrG5h" value="==" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426202459" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="exp_op" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426203529" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="**" />
+        <node concept="3xhzZY" id="4idNKJHbOwh" role="t8saQ">
+          <property role="TrG5h" value="atleast_op" />
+          <node concept="3xhzXc" id="4idNKJHbOwi" role="3xhzZr">
+            <property role="TrG5h" value="&gt;=" />
           </node>
         </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016426205245" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="unary" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016426205340" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="unary_op" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426206504" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426205351" resolveInfo="un_not" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426206506" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426205907" resolveInfo="un_neg" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426206509" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426205361" resolveInfo="un_plus" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426206513" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426205368" resolveInfo="un_minus" />
+        <node concept="3xhzZY" id="4idNKJHbOX1" role="t8saQ">
+          <property role="TrG5h" value="atmost_op" />
+          <node concept="3xhzXc" id="4idNKJHbOX2" role="3xhzZr">
+            <property role="TrG5h" value="&lt;=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426205351" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="un_not" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426205355" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="not" />
+        <node concept="3xhzZY" id="4idNKJHbOXf" role="t8saQ">
+          <property role="TrG5h" value="notequal_op" />
+          <node concept="3xhzXc" id="4idNKJHbOXg" role="3xhzZr">
+            <property role="TrG5h" value="&lt;&gt;" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426205907" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="un_neg" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426205908" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="~" />
+        <node concept="3xhzZY" id="4idNKJHbPbR" role="t8saQ">
+          <property role="TrG5h" value="not_equal_op" />
+          <node concept="3xhzXc" id="4idNKJHbPbS" role="3xhzZr">
+            <property role="TrG5h" value="!=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426205361" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="un_plus" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426205362" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="+" />
+        <node concept="3xhzZY" id="4idNKJHbPjn" role="t8saQ">
+          <property role="TrG5h" value="in_op" />
+          <node concept="3xhzXc" id="4idNKJHbPjo" role="3xhzZr">
+            <property role="TrG5h" value="in" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426205368" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="un_minus" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426205369" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="-" />
+        <node concept="3xhzZY" id="4idNKJHbPjF" role="t8saQ">
+          <property role="TrG5h" value="notin_op" />
+          <node concept="3xhzXc" id="4idNKJHbPjG" role="3xhzZr">
+            <property role="TrG5h" value="not in" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426207283" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="un_star" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426207284" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="*" />
+        <node concept="3xhzZY" id="4idNKJHbPrj" role="t8saQ">
+          <property role="TrG5h" value="is_op" />
+          <node concept="3xhzXc" id="4idNKJHbPrk" role="3xhzZr">
+            <property role="TrG5h" value="is" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="4idNKJHbPs1" role="t8saQ">
+          <property role="TrG5h" value="isnot_op" />
+          <node concept="3xhzXc" id="4idNKJHbPs2" role="3xhzZr">
+            <property role="TrG5h" value="is not" />
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016426444129" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555067637" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="inplace" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555060431" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="add_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555060671" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="+=" />
+      <node concept="t8saL" id="4idNKJHbRbN" role="t8saQ">
+        <property role="TrG5h" value="arithmetic" />
+        <node concept="3xJKux" id="4idNKJHbRcU" role="t8saQ">
+          <property role="TrG5h" value="arithmetic_op" />
+          <node concept="3xiQg6" id="4idNKJHbRIf" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbRd1" resolve="add_op" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJHbRIh" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbRd5" resolve="sub_op" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJHbRIk" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbRd9" resolve="mul_op" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJHbRIo" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbRde" resolve="div_op" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJHbRIt" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbRlc" resolve="divop" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJHbRIz" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbRlj" resolve="mod_op" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJHbRIE" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbRlr" resolve="exp_op" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555060725" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="sub_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555060726" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="-=" />
+        <node concept="3xhzZY" id="4idNKJHbRd1" role="t8saQ">
+          <property role="TrG5h" value="add_op" />
+          <node concept="3xhzXc" id="4idNKJHbR_W" role="3xhzZr">
+            <property role="TrG5h" value="+" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555060733" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="mul_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555060734" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="*=" />
+        <node concept="3xhzZY" id="4idNKJHbRd5" role="t8saQ">
+          <property role="TrG5h" value="sub_op" />
+          <node concept="3xhzXc" id="4idNKJHbR_Z" role="3xhzZr">
+            <property role="TrG5h" value="-" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555060743" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="div_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555060744" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="/=" />
+        <node concept="3xhzZY" id="4idNKJHbRd9" role="t8saQ">
+          <property role="TrG5h" value="mul_op" />
+          <node concept="3xhzXc" id="4idNKJHbRA1" role="3xhzZr">
+            <property role="TrG5h" value="*" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555060755" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="mod_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555060756" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="%=" />
+        <node concept="3xhzZY" id="4idNKJHbRde" role="t8saQ">
+          <property role="TrG5h" value="div_op" />
+          <node concept="3xhzXc" id="4idNKJHbRA3" role="3xhzZr">
+            <property role="TrG5h" value="/" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555060769" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="and_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555060770" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&amp;=" />
+        <node concept="3xhzZY" id="4idNKJHbRlc" role="t8saQ">
+          <property role="TrG5h" value="divop" />
+          <node concept="3xhzXc" id="4idNKJHbRA5" role="3xhzZr">
+            <property role="TrG5h" value="//" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555061031" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="_or_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555061032" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="|=" />
+        <node concept="3xhzZY" id="4idNKJHbRlj" role="t8saQ">
+          <property role="TrG5h" value="mod_op" />
+          <node concept="3xhzXc" id="4idNKJHbRA7" role="3xhzZr">
+            <property role="TrG5h" value="%" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555061297" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="xor_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555061298" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="^=" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555061567" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="shl_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555061568" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&lt;&lt;=" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555061589" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="shr_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555061590" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="&gt;&gt;=" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555062125" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="exp_assign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555062126" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="**=" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555062151" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="divassign" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555062152" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="//=" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555059954" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="augassign" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062953" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555060431" resolveInfo="add_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062955" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555060725" resolveInfo="sub_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062958" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555060733" resolveInfo="mul_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062962" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="ExactlyOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555060743" resolveInfo="div_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062973" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555060755" resolveInfo="mod_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062980" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555060769" resolveInfo="and_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062988" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555061031" resolveInfo="_or_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555062997" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555061297" resolveInfo="xor_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555063007" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555061567" resolveInfo="shl_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555063018" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555061589" resolveInfo="shr_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555063030" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555062125" resolveInfo="exp_assign" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555515565" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555062151" resolveInfo="divassign" />
+        <node concept="3xhzZY" id="4idNKJHbRlr" role="t8saQ">
+          <property role="TrG5h" value="exp_op" />
+          <node concept="3xhzXc" id="4idNKJHbRA9" role="3xhzZr">
+            <property role="TrG5h" value="**" />
           </node>
         </node>
       </node>
-    </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016426442473" nodeInfo="ng" />
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555045400" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="expr" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="4939832016426432734" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="Lots of work required here. Ideally we do not want to encode priority into the grammar rules," />
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="4939832016426432990" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="but use a more expressive mechanism instead. Eventually we want the generator to automatically" />
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="4939832016426433248" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="generate the rebalancing and left/right-transform behaviour to ensure proper textual usability." />
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="4939832016426452417" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="This requires several extensions to the mbnf language." />
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016426442276" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555045633" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="testlist" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383142159" nodeInfo="ng">
-          <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-          <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="3164669072550699261" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="We need some additional constraints on this one" />
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="3164669072550699521" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="Python grammar restricts this to star_expr" />
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555058043" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="exprlist" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550700792" nodeInfo="ng">
-          <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-          <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555046045" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="yield_expr" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383141245" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="yield" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383141251" nodeInfo="ng">
-          <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555045633" resolveInfo="testlist" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016426437161" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016425276350" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="expr" />
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426207959" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426188450" resolveInfo="binary_expr" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426207961" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426206626" resolveInfo="unary_expr" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383143148" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383221104" resolveInfo="trailer_expr" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016426437447" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016425258804" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="test" />
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426436735" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426434879" resolveInfo="ternary_expr" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426436737" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426331902" resolveInfo="lambdef" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426436740" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426331902" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="lambdef" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426332569" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="lambda" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426332574" nodeInfo="ng">
-          <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425296160" resolveInfo="varargslist" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426332582" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value=":" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426333140" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426434879" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="ternary_expr" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426435570" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="TrueValue" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426435576" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="if" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426435584" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="condition" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426435594" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="else" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426436167" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="FalseValue" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383201453" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="test_nocond" />
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383201525" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383204580" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383201600" resolveInfo="lambdef_nocond" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383201600" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="lambdef_nocond" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383202629" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="lambda" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383202634" nodeInfo="ng">
-          <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425296160" resolveInfo="varargslist" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383203602" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value=":" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383203612" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383201453" resolveInfo="test_nocond" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="7558265857383200354" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426188450" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="binary_expr" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426188452" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="left" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426188468" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426188462" resolveInfo="bin_op" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426188486" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="right" />
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016426206626" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="unary_expr" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426206735" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016426205340" resolveInfo="unary_op" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016426206740" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383143106" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="atom" />
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383180619" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383193034" resolveInfo="paren_expr" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383149757" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383145006" resolveInfo="list_comprehension" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383155456" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383149862" resolveInfo="dictorset_comprehension" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383180623" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555099105" resolveInfo="name" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383188233" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383187027" resolveInfo="constant" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="7558265857383194144" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="7558265857383381140" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="trailer" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383221104" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="trailer_expr" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383242550" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383222288" resolveInfo="funccall" />
+      <node concept="t8saL" id="4idNKJHbS0X" role="t8saQ">
+        <property role="TrG5h" value="unary" />
+        <node concept="3xJKux" id="4idNKJHbS2s" role="t8saQ">
+          <property role="TrG5h" value="unary_op" />
+          <node concept="3xiQg6" id="4idNKJHbSkC" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbS2B" resolve="un_not" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383242552" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383225519" resolveInfo="deref" />
+          <node concept="3xiQg6" id="4idNKJHbSkE" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbSbj" resolve="un_neg" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383242555" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383229743" resolveInfo="subscriptlist" />
+          <node concept="3xiQg6" id="4idNKJHbSkH" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbS2L" resolve="un_plus" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383242567" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383143106" resolveInfo="atom" />
+          <node concept="3xiQg6" id="4idNKJHbSkL" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJHbS2S" resolve="un_minus" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383222288" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="funccall" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383222391" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383221104" resolveInfo="trailer_expr" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383222397" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="(" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383222413" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236596825" resolveInfo="arglist" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383223415" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value=")" />
+        <node concept="3xhzZY" id="4idNKJHbS2B" role="t8saQ">
+          <property role="TrG5h" value="un_not" />
+          <node concept="3xhzXc" id="4idNKJHbS2F" role="3xhzZr">
+            <property role="TrG5h" value="not" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383225519" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="deref" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383225623" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383221104" resolveInfo="trailer_expr" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383225628" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="." />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="7558265857383228627" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555042808" resolveInfo="NAME" />
+        <node concept="3xhzZY" id="4idNKJHbSbj" role="t8saQ">
+          <property role="TrG5h" value="un_neg" />
+          <node concept="3xhzXc" id="4idNKJHbSbk" role="3xhzZr">
+            <property role="TrG5h" value="~" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383229743" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="subscriptlist" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383242544" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383221104" resolveInfo="trailer_expr" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383230850" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="[" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383234093" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383233981" resolveInfo="subscript" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383231854" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="]" />
+        <node concept="3xhzZY" id="4idNKJHbS2L" role="t8saQ">
+          <property role="TrG5h" value="un_plus" />
+          <node concept="3xhzXc" id="4idNKJHbS2M" role="3xhzZr">
+            <property role="TrG5h" value="+" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383233981" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="subscript" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383235099" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383241525" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383237337" resolveInfo="sliceop" />
+        <node concept="3xhzZY" id="4idNKJHbS2S" role="t8saQ">
+          <property role="TrG5h" value="un_minus" />
+          <node concept="3xhzXc" id="4idNKJHbS2T" role="3xhzZr">
+            <property role="TrG5h" value="-" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383237223" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="slice" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383239470" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <property name="name" nameId="tpck.1169194664001" value="low" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383239475" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value=":" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383239489" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <property name="name" nameId="tpck.1169194664001" value="high" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383240509" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383237337" resolveInfo="sliceop" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383237337" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="sliceop" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383238455" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value=":" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383238460" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
+        <node concept="3xhzZY" id="4idNKJHbSwN" role="t8saQ">
+          <property role="TrG5h" value="un_star" />
+          <node concept="3xhzXc" id="4idNKJHbSwO" role="3xhzZr">
+            <property role="TrG5h" value="*" />
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="7558265857383236107" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="7558265857383381552" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="bracketed" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383193034" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="paren_expr" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383193046" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="(" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383193060" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383180614" resolveInfo="paren_expr_item" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383193052" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value=")" />
+      <node concept="3P3UoZ" id="4idNKJHcMlx" role="t8saQ" />
+      <node concept="t8saL" id="4VQvhHjW9VP" role="t8saQ">
+        <property role="TrG5h" value="inplace" />
+        <node concept="3xhzZY" id="4VQvhHjW8bf" role="t8saQ">
+          <property role="TrG5h" value="add_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8eZ" role="3xhzZr">
+            <property role="TrG5h" value="+=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383180614" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="paren_expr_item" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383193065" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555046045" resolveInfo="yield_expr" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383193075" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383147917" resolveInfo="testlist_comp" />
+        <node concept="3xhzZY" id="4VQvhHjW8fP" role="t8saQ">
+          <property role="TrG5h" value="sub_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8fQ" role="3xhzZr">
+            <property role="TrG5h" value="-=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383145006" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="list_comprehension" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383145956" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="[" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383148830" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383147917" resolveInfo="testlist_comp" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383148840" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="]" />
+        <node concept="3xhzZY" id="4VQvhHjW8fX" role="t8saQ">
+          <property role="TrG5h" value="mul_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8fY" role="3xhzZr">
+            <property role="TrG5h" value="*=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383149862" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="dictorset_comprehension" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383154532" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="{" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383154508" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383152672" resolveInfo="dictorsetmaker" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383154513" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="}" />
+        <node concept="3xhzZY" id="4VQvhHjW8g7" role="t8saQ">
+          <property role="TrG5h" value="div_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8g8" role="3xhzZr">
+            <property role="TrG5h" value="/=" />
           </node>
         </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="7558265857383147870" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="7558265857383147823" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="comprehensions" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383152672" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="dictorsetmaker" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550704420" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550703252" resolveInfo="dictmaker" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550704422" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550703225" resolveInfo="setmaker" />
+        <node concept="3xhzZY" id="4VQvhHjW8gj" role="t8saQ">
+          <property role="TrG5h" value="mod_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8gk" role="3xhzZr">
+            <property role="TrG5h" value="%=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072550709227" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="3164669072550713430" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="setmaker" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550703225" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="setmaker" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550705570" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550708000" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550706748" resolveInfo="setmaker_rest" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="3164669072550706748" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="setmaker_rest" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550706778" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383206651" resolveInfo="comp_for" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550707994" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550706811" resolveInfo="setmaker_tests" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550706811" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="setmaker_tests" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550719614" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="," />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550707992" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
+        <node concept="3xhzZY" id="4VQvhHjW8gx" role="t8saQ">
+          <property role="TrG5h" value="and_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8gy" role="3xhzZr">
+            <property role="TrG5h" value="&amp;=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072550713349" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="3164669072550713602" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="dictmaker" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550703252" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="dictmaker" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550720902" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550720857" resolveInfo="dictmaker_keyval" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550714896" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550716075" resolveInfo="dictmaker_rest" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="3164669072550716075" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="dictmaker_rest" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550717250" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383206651" resolveInfo="comp_for" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550717252" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550713699" resolveInfo="dictmaker_tests" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550713699" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="dictmaker_tests" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550719618" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="," />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550720912" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550720857" resolveInfo="dictmaker_keyval" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550720857" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="dictmaker_keyval" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550720872" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="key" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550720877" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550720888" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="value" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
+        <node concept="3xhzZY" id="4VQvhHjW8kB" role="t8saQ">
+          <property role="TrG5h" value="_or_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8kC" role="3xhzZr">
+            <property role="TrG5h" value="|=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072550709156" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="3164669072550710458" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="testlist" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383147917" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="testlist_comp" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383214877" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383219922" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383215881" resolveInfo="testlist_tail" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383215881" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="testlist_tail" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383217949" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383206651" resolveInfo="comp_for" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383217947" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383216941" resolveInfo="testlist_tests" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383216941" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="testlist_tests" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383216962" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
+        <node concept="3xhzZY" id="4VQvhHjW8oL" role="t8saQ">
+          <property role="TrG5h" value="xor_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8oM" role="3xhzZr">
+            <property role="TrG5h" value="^=" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072550709191" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="3164669072550710618" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="comp" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="7558265857383208610" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="comp_iter" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383208617" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383206651" resolveInfo="comp_for" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383208619" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383207621" resolveInfo="comp_if" />
-            </node>
+        <node concept="3xhzZY" id="4VQvhHjW8sZ" role="t8saQ">
+          <property role="TrG5h" value="shl_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8t0" role="3xhzZr">
+            <property role="TrG5h" value="&lt;&lt;=" />
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383206651" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="comp_for" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383209592" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="for" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383209597" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555058043" resolveInfo="exprlist" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383210578" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="in" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383210588" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383211575" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383208610" resolveInfo="comp_iter" />
-            </node>
+        </node>
+        <node concept="3xhzZY" id="4VQvhHjW8tl" role="t8saQ">
+          <property role="TrG5h" value="shr_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8tm" role="3xhzZr">
+            <property role="TrG5h" value="&gt;&gt;=" />
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="7558265857383207621" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="comp_if" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="7558265857383212557" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="if" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383212906" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383201453" resolveInfo="test_nocond" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="7558265857383213894" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383208610" resolveInfo="comp_iter" />
-            </node>
+        </node>
+        <node concept="3xhzZY" id="4VQvhHjW8_H" role="t8saQ">
+          <property role="TrG5h" value="exp_assign" />
+          <node concept="3xhzXc" id="4VQvhHjW8_I" role="3xhzZr">
+            <property role="TrG5h" value="**=" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="4VQvhHjW8A7" role="t8saQ">
+          <property role="TrG5h" value="divassign" />
+          <node concept="3xhzXc" id="4VQvhHjW8A8" role="3xhzZr">
+            <property role="TrG5h" value="//=" />
+          </node>
+        </node>
+        <node concept="3xJKux" id="4VQvhHjW83M" role="t8saQ">
+          <property role="TrG5h" value="augassign" />
+          <node concept="3xiQg6" id="4VQvhHjW8MD" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8bf" resolve="add_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8MF" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8fP" resolve="sub_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8MI" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8fX" resolve="mul_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8MM" role="3xJKtx">
+            <property role="3xj4NX" value="ExactlyOne" />
+            <ref role="3xiQg3" node="4VQvhHjW8g7" resolve="div_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8MX" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8gj" resolve="mod_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8N4" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8gx" resolve="and_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8Nc" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8kB" resolve="_or_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8Nl" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8oL" resolve="xor_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8Nv" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8sZ" resolve="shl_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8NE" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8tl" resolve="shr_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW8NQ" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8_H" resolve="exp_assign" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjXRiH" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW8A7" resolve="divassign" />
           </node>
         </node>
       </node>
     </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="7558265857383206097" nodeInfo="ng" />
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016425283606" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="arglist" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281799481" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="fpdefval" />
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="9135769606281799495" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="=" />
-        </node>
-        <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281800529" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
+    <node concept="3P3UoZ" id="4idNKJHcLVD" role="3xJMYo" />
+    <node concept="t8saL" id="4VQvhHjW4wo" role="3xJMYo">
+      <property role="TrG5h" value="expr" />
+      <node concept="2DJ5fZ" id="4idNKJHcJzu" role="t8saQ">
+        <property role="TrG5h" value="Lots of work required here. Ideally we do not want to encode priority into the grammar rules," />
+      </node>
+      <node concept="2DJ5fZ" id="4idNKJHcJBu" role="t8saQ">
+        <property role="TrG5h" value="but use a more expressive mechanism instead. Eventually we want the generator to automatically" />
+      </node>
+      <node concept="2DJ5fZ" id="4idNKJHcJFw" role="t8saQ">
+        <property role="TrG5h" value="generate the rebalancing and left/right-transform behaviour to ensure proper textual usability." />
+      </node>
+      <node concept="2DJ5fZ" id="4idNKJHcOn1" role="t8saQ">
+        <property role="TrG5h" value="This requires several extensions to the mbnf language." />
+      </node>
+      <node concept="3P3UoZ" id="4idNKJHcLS$" role="t8saQ" />
+      <node concept="3xhzZY" id="4VQvhHjW4$1" role="t8saQ">
+        <property role="TrG5h" value="testlist" />
+        <node concept="3xiQg6" id="6z$mG1Vihcf" role="3xhzZr">
+          <property role="3xj4NX" value="AtleastOne" />
+          <property role="2DFMXm" value=", " />
+          <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556183779" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="3164669072556179643" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="typed" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016425287803" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="typedargslist" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281813341" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281804766" resolveInfo="simple_typedargslist" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281813339" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281808951" resolveInfo="typed_argskwargslist" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556185027" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281804766" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="simple_typedargslist" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281805821" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281802635" resolveInfo="tfpdefwdef" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556185064" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281808951" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="typed_argskwargslist" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281810010" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281802635" resolveInfo="tfpdefwdef" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281812243" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281812215" resolveInfo="typed_argskwargs_tail" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="9135769606281812215" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="typed_argskwargs_tail" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281829468" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281815470" resolveInfo="typed_args_tail" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281829470" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281813312" resolveInfo="typed_kwargs_tail" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281815470" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="typed_args_tail" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="9135769606281816547" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="*" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281818644" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281770832" resolveInfo="tfpdef" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281830532" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281823015" resolveInfo="typed_args_tail1" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281830542" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281827295" resolveInfo="typed_args_tail2" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281823015" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="typed_args_tail1" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="9135769606281824098" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value=", " />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281824103" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281802635" resolveInfo="tfpdefwdef" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281827295" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="typed_args_tail2" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="9135769606281827333" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value=", " />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281828409" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281813312" resolveInfo="typed_kwargs_tail" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281813312" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="typed_kwargs_tail" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="9135769606281814386" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="**" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281814391" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281770832" resolveInfo="tfpdef" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556184781" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281802635" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="tfpdefwdef" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281802652" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281770832" resolveInfo="tfpdef" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281802657" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281799481" resolveInfo="fpdefval" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281770832" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="tfpdef" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="9135769606281790129" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555042808" resolveInfo="NAME" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281794261" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281794239" resolveInfo="tfpdeftype" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281794239" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="tfpdeftype" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="9135769606281794249" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value=":" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="9135769606281794254" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-          </node>
+      <node concept="2DJ5fZ" id="2JFas4t3a3X" role="t8saQ">
+        <property role="TrG5h" value="We need some additional constraints on this one" />
+      </node>
+      <node concept="2DJ5fZ" id="2JFas4t3a81" role="t8saQ">
+        <property role="TrG5h" value="Python grammar restricts this to star_expr" />
+      </node>
+      <node concept="3xhzZY" id="4VQvhHjW7_V" role="t8saQ">
+        <property role="TrG5h" value="exprlist" />
+        <node concept="3xiQg6" id="2JFas4t3arS" role="3xhzZr">
+          <property role="3xj4NX" value="AtleastOne" />
+          <property role="2DFMXm" value=", " />
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="9135769606281803712" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="3164669072556179984" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="untyped" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016425296160" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="varargslist" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550689983" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236568263" resolveInfo="simple_varargslist" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550689985" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236577147" resolveInfo="varargskwargslist" />
-          </node>
+      <node concept="3xhzZY" id="4VQvhHjW4Et" role="t8saQ">
+        <property role="TrG5h" value="yield_expr" />
+        <node concept="3xhzXc" id="6z$mG1VigXX" role="3xhzZr">
+          <property role="TrG5h" value="yield" />
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556185136" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236568263" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="simple_varargslist" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236576034" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236569368" resolveInfo="vfpdefwdef" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556185361" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236577147" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="varargskwargslist" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236577197" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236569368" resolveInfo="vfpdefwdef" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236583217" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236579382" resolveInfo="vargargskwargs_tail" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="6217748898236579382" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="vargargskwargs_tail" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236584293" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236581859" resolveInfo="args_tail" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236584295" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236580552" resolveInfo="kwargs_tail" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236581859" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="args_tail" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236585372" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="*" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236585377" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281791151" resolveInfo="vfpdef" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236586461" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236581971" resolveInfo="args_tail1" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236586471" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236582085" resolveInfo="args_tail2" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236581971" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="args_tail1" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236587555" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="," />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236587560" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236569368" resolveInfo="vfpdefwdef" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236582085" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="args_tail2" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236589724" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="," />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236589729" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236580552" resolveInfo="kwargs_tail" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236580552" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="kwargs_tail" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236580605" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="**" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236580610" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281791151" resolveInfo="vfpdef" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556185104" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236569368" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="vfpdefwdef" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236573903" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281791151" resolveInfo="vfpdef" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236574969" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="9135769606281799481" resolveInfo="fpdefval" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="9135769606281791151" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="vfpdef" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="9135769606281791152" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555042808" resolveInfo="NAME" />
-          </node>
+        <node concept="3xiQg6" id="6z$mG1VigY3" role="3xhzZr">
+          <property role="3xj4NX" value="AtMostOne" />
+          <ref role="3xiQg3" node="4VQvhHjW4$1" resolve="testlist" />
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="6217748898236598135" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="3164669072556185509" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="argument" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236596825" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="arglist" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236596898" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236593359" resolveInfo="argument" />
+      <node concept="3P3UoZ" id="4idNKJHcKCD" role="t8saQ" />
+      <node concept="3xJKux" id="4idNKJH8leY" role="t8saQ">
+        <property role="TrG5h" value="expr" />
+        <node concept="3xiQg6" id="4idNKJHbSFn" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHbNUy" resolve="binary_expr" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHbSFp" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHbSmy" resolve="unary_expr" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1VihrG" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1Vi$tK" resolve="trailer_expr" />
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="4idNKJHcKH7" role="t8saQ" />
+      <node concept="3xJKux" id="4idNKJH8gWO" role="t8saQ">
+        <property role="TrG5h" value="test" />
+        <node concept="3xiQg6" id="4idNKJHcKxZ" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHcK4Z" resolve="ternary_expr" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHcKy1" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJHcmVY" resolve="lambdef" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHcKy4" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+        </node>
+      </node>
+      <node concept="3xhzZY" id="4idNKJHcmVY" role="t8saQ">
+        <property role="TrG5h" value="lambdef" />
+        <node concept="3xhzXc" id="4idNKJHcn6p" role="3xhzZr">
+          <property role="TrG5h" value="lambda" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHcn6u" role="3xhzZr">
+          <property role="3xj4NX" value="AtMostOne" />
+          <ref role="3xiQg3" node="4idNKJH8q4w" resolve="varargslist" />
+        </node>
+        <node concept="3xhzXc" id="4idNKJHcn6A" role="3xhzZr">
+          <property role="TrG5h" value=":" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHcnfk" role="3xhzZr">
+          <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+        </node>
+      </node>
+      <node concept="3xhzZY" id="4idNKJHcK4Z" role="t8saQ">
+        <property role="TrG5h" value="ternary_expr" />
+        <node concept="3xiQg6" id="4idNKJHcKfM" role="3xhzZr">
+          <property role="TrG5h" value="TrueValue" />
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+        </node>
+        <node concept="3xhzXc" id="4idNKJHcKfS" role="3xhzZr">
+          <property role="TrG5h" value="if" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHcKg0" role="3xhzZr">
+          <property role="TrG5h" value="condition" />
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+        </node>
+        <node concept="3xhzXc" id="4idNKJHcKga" role="3xhzZr">
+          <property role="TrG5h" value="else" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHcKp7" role="3xhzZr">
+          <property role="TrG5h" value="FalseValue" />
+          <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+        </node>
+      </node>
+      <node concept="3xJKux" id="6z$mG1VivEH" role="t8saQ">
+        <property role="TrG5h" value="test_nocond" />
+        <node concept="3xiQg6" id="6z$mG1VivFP" role="3xJKtx">
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Viwr$" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1VivH0" resolve="lambdef_nocond" />
+        </node>
+      </node>
+      <node concept="3xhzZY" id="6z$mG1VivH0" role="t8saQ">
+        <property role="TrG5h" value="lambdef_nocond" />
+        <node concept="3xhzXc" id="6z$mG1VivX5" role="3xhzZr">
+          <property role="TrG5h" value="lambda" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1VivXa" role="3xhzZr">
+          <property role="3xj4NX" value="AtMostOne" />
+          <ref role="3xiQg3" node="4idNKJH8q4w" resolve="varargslist" />
+        </node>
+        <node concept="3xhzXc" id="6z$mG1Viwci" role="3xhzZr">
+          <property role="TrG5h" value=":" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Viwcs" role="3xhzZr">
+          <ref role="3xiQg3" node="6z$mG1VivEH" resolve="test_nocond" />
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="6z$mG1Vivpy" role="t8saQ" />
+      <node concept="3xhzZY" id="4idNKJHbNUy" role="t8saQ">
+        <property role="TrG5h" value="binary_expr" />
+        <node concept="3xiQg6" id="4idNKJHbNU$" role="3xhzZr">
+          <property role="TrG5h" value="left" />
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHbNUO" role="3xhzZr">
+          <ref role="3xiQg3" node="4idNKJHbNUI" resolve="bin_op" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHbNV6" role="3xhzZr">
+          <property role="TrG5h" value="right" />
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+        </node>
+      </node>
+      <node concept="3xhzZY" id="4idNKJHbSmy" role="t8saQ">
+        <property role="TrG5h" value="unary_expr" />
+        <node concept="3xiQg6" id="4idNKJHbSof" role="3xhzZr">
+          <ref role="3xiQg3" node="4idNKJHbS2s" resolve="unary_op" />
+        </node>
+        <node concept="3xiQg6" id="4idNKJHbSok" role="3xhzZr">
+          <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+        </node>
+      </node>
+      <node concept="3xJKux" id="6z$mG1Vihr2" role="t8saQ">
+        <property role="TrG5h" value="atom" />
+        <node concept="3xiQg6" id="6z$mG1Viq_b" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1VitBa" resolve="paren_expr" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Vij2X" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1VihSI" resolve="list_comprehension" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Viks0" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1Vij4A" resolve="dictorset_comprehension" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Viq_f" role="3xJKtx">
+          <ref role="3xiQg3" node="4VQvhHjWhBx" resolve="name" />
+        </node>
+        <node concept="3xiQg6" id="6z$mG1Viss9" role="3xJKtx">
+          <ref role="3xiQg3" node="6z$mG1Vis9j" resolve="constant" />
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="6z$mG1VitSw" role="t8saQ" />
+      <node concept="t8saL" id="6z$mG1Vjbyk" role="t8saQ">
+        <property role="TrG5h" value="trailer" />
+        <node concept="3xJKux" id="6z$mG1Vi$tK" role="t8saQ">
+          <property role="TrG5h" value="trailer_expr" />
+          <node concept="3xiQg6" id="6z$mG1ViDGQ" role="3xJKtx">
+            <ref role="3xiQg3" node="6z$mG1Vi$Kg" resolve="funccall" />
           </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236598427" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236598351" resolveInfo="arglist_tail" />
+          <node concept="3xiQg6" id="6z$mG1ViDGS" role="3xJKtx">
+            <ref role="3xiQg3" node="6z$mG1Vi_yJ" resolve="deref" />
+          </node>
+          <node concept="3xiQg6" id="6z$mG1ViDGV" role="3xJKtx">
+            <ref role="3xiQg3" node="6z$mG1ViA$J" resolve="subscriptlist" />
+          </node>
+          <node concept="3xiQg6" id="6z$mG1ViDH7" role="3xJKtx">
+            <ref role="3xiQg3" node="6z$mG1Vihr2" resolve="atom" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556232914" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="6217748898236598351" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="arglist_tail" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236599518" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236593359" resolveInfo="argument" />
+        <node concept="3xhzZY" id="6z$mG1Vi$Kg" role="t8saQ">
+          <property role="TrG5h" value="funccall" />
+          <node concept="3xiQg6" id="6z$mG1Vi$LR" role="3xhzZr">
+            <ref role="3xiQg3" node="6z$mG1Vi$tK" resolve="trailer_expr" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236599520" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236606310" resolveInfo="args_argument" />
+          <node concept="3xhzXc" id="6z$mG1Vi$LX" role="3xhzZr">
+            <property role="TrG5h" value="(" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236606390" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236601778" resolveInfo="kwargs_argument" />
+          <node concept="3xiQg6" id="6z$mG1Vi$Md" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="5p9SqSdY09p" resolve="arglist" />
           </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236606310" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="args_argument" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236606394" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="*" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236606399" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236611168" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236607582" resolveInfo="args_argument1" />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236611178" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236607750" resolveInfo="args_argument2" />
+          <node concept="3xhzXc" id="6z$mG1Vi_1R" role="3xhzZr">
+            <property role="TrG5h" value=")" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236607582" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="args_argument1" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236608944" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="," />
+        <node concept="3xhzZY" id="6z$mG1Vi_yJ" role="t8saQ">
+          <property role="TrG5h" value="deref" />
+          <node concept="3xiQg6" id="6z$mG1Vi_$n" role="3xhzZr">
+            <ref role="3xiQg3" node="6z$mG1Vi$tK" resolve="trailer_expr" />
           </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236608949" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236593359" resolveInfo="argument" />
+          <node concept="3xhzXc" id="6z$mG1Vi_$s" role="3xhzZr">
+            <property role="TrG5h" value="." />
           </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236607750" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="args_argument2" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236607835" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="," />
-          </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236607840" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236601778" resolveInfo="kwargs_argument" />
+          <node concept="2GSJ2k" id="6z$mG1ViAjj" role="3xhzZr">
+            <ref role="2GQAiS" node="4VQvhHjW3RS" resolve="NAME" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="6217748898236601778" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="kwargs_argument" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="6217748898236602945" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="**" />
+        <node concept="3xhzZY" id="6z$mG1ViA$J" role="t8saQ">
+          <property role="TrG5h" value="subscriptlist" />
+          <node concept="3xiQg6" id="6z$mG1ViDGK" role="3xhzZr">
+            <ref role="3xiQg3" node="6z$mG1Vi$tK" resolve="trailer_expr" />
           </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="6217748898236604042" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
+          <node concept="3xhzXc" id="6z$mG1ViAQ2" role="3xhzZr">
+            <property role="TrG5h" value="[" />
           </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="3164669072556232950" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="6217748898236593359" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="argument" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550697989" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550691209" resolveInfo="arg_comp" />
+          <node concept="3xiQg6" id="6z$mG1ViBCH" role="3xhzZr">
+            <property role="3xj4NX" value="AtleastOne" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="6z$mG1ViBAX" resolve="subscript" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550697991" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550691397" resolveInfo="arg_keyword" />
+          <node concept="3xhzXc" id="6z$mG1ViB5I" role="3xhzZr">
+            <property role="TrG5h" value="]" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="3164669072550697480" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="Warning, there is an ambiguity between &lt;test&gt; and &lt;NAME&gt; here" />
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="3164669072550697682" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="Python parser handles this by replacing &lt;NAME&gt; by &lt;test&gt; in arg_keyword case" />
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="3164669072550697886" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="and post-checking it is actually a &lt;NAME&gt;" />
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550691209" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="arg_comp" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550694875" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
+        <node concept="3xJKux" id="6z$mG1ViBAX" role="t8saQ">
+          <property role="TrG5h" value="subscript" />
+          <node concept="3xiQg6" id="6z$mG1ViBSr" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
           </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550694880" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="7558265857383206651" resolveInfo="comp_for" />
+          <node concept="3xiQg6" id="6z$mG1ViDsP" role="3xJKtx">
+            <ref role="3xiQg3" node="6z$mG1ViCrp" resolve="sliceop" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550691397" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="arg_keyword" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="3164669072550696014" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555042808" resolveInfo="NAME" />
+        <node concept="3xhzZY" id="6z$mG1ViCpB" role="t8saQ">
+          <property role="TrG5h" value="slice" />
+          <node concept="3xiQg6" id="6z$mG1ViCWI" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <property role="TrG5h" value="low" />
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
           </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550696019" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="=" />
+          <node concept="3xhzXc" id="6z$mG1ViCWN" role="3xhzZr">
+            <property role="TrG5h" value=":" />
           </node>
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550696030" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
+          <node concept="3xiQg6" id="6z$mG1ViCX1" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <property role="TrG5h" value="high" />
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+          </node>
+          <node concept="3xiQg6" id="6z$mG1ViDcX" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="6z$mG1ViCrp" resolve="sliceop" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="6z$mG1ViCrp" role="t8saQ">
+          <property role="TrG5h" value="sliceop" />
+          <node concept="3xhzXc" id="6z$mG1ViCGR" role="3xhzZr">
+            <property role="TrG5h" value=":" />
+          </node>
+          <node concept="3xiQg6" id="6z$mG1ViCGW" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
           </node>
         </node>
       </node>
-    </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425370334" nodeInfo="ng" />
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555038466" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="statements" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="2924121441060141326" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="We add small_stmt here to allow for non-simple_stmt small_stmt nodes" />
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555038475" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="stmt" />
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555039459" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555039137" resolveInfo="simple_stmt" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="2924121441060141600" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555039785" resolveInfo="small_stmt" />
-        </node>
-        <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555039461" nodeInfo="ng">
-          <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555039457" resolveInfo="compound_stmt" />
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555039464" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555038931" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="simple" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555039137" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="simple_stmt" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555039898" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value="; " />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555039785" resolveInfo="small_stmt" />
+      <node concept="3P3UoZ" id="6z$mG1ViC8b" role="t8saQ" />
+      <node concept="t8saL" id="6z$mG1VjbCK" role="t8saQ">
+        <property role="TrG5h" value="bracketed" />
+        <node concept="3xhzZY" id="6z$mG1VitBa" role="t8saQ">
+          <property role="TrG5h" value="paren_expr" />
+          <node concept="3xhzXc" id="6z$mG1VitBm" role="3xhzZr">
+            <property role="TrG5h" value="(" />
+          </node>
+          <node concept="3xiQg6" id="6z$mG1VitB$" role="3xhzZr">
+            <ref role="3xiQg3" node="6z$mG1Viq_6" resolve="paren_expr_item" />
+          </node>
+          <node concept="3xhzXc" id="6z$mG1VitBs" role="3xhzZr">
+            <property role="TrG5h" value=")" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555039785" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="small_stmt" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555041346" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555040830" resolveInfo="expr_stmt" />
+        <node concept="3xJKux" id="6z$mG1Viq_6" role="t8saQ">
+          <property role="TrG5h" value="paren_expr_item" />
+          <node concept="3xiQg6" id="6z$mG1VitBD" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW4Et" resolve="yield_expr" />
           </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555043401" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555041850" resolveInfo="del_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555043553" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555042016" resolveInfo="pass_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555041348" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555041344" resolveInfo="flow_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555041351" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555041597" resolveInfo="import_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555041599" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555042293" resolveInfo="global_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555043707" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555043099" resolveInfo="nonlocal_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555043863" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555043249" resolveInfo="assert_stmt" />
+          <node concept="3xiQg6" id="6z$mG1VitBN" role="3xJKtx">
+            <ref role="3xiQg3" node="6z$mG1ViiAd" resolve="testlist_comp" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555040473" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555040484" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="expr" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555040830" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="expr_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555063313" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555045633" resolveInfo="testlist" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555067191" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555063755" resolveInfo="assignment" />
-            </node>
+        <node concept="3xhzZY" id="6z$mG1VihSI" role="t8saQ">
+          <property role="TrG5h" value="list_comprehension" />
+          <node concept="3xhzXc" id="6z$mG1Vii7$" role="3xhzZr">
+            <property role="TrG5h" value="[" />
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555068249" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555068128" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="assign" />
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555063755" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="assignment" />
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555066900" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555064387" resolveInfo="basic_assign" />
-              </node>
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555066902" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555064433" resolveInfo="inplace_assign" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555064387" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="basic_assign" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426182070" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value="=" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555065770" nodeInfo="ng">
-                <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-                <property name="sep" nameId="6o2a.4939832016425377885" value="=" />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555065163" resolveInfo="yield_or_list" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555064433" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="inplace_assign" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555066330" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555059954" resolveInfo="augassign" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555066615" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555065163" resolveInfo="yield_or_list" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555065163" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="yield_or_list" />
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555065209" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555046045" resolveInfo="yield_expr" />
-              </node>
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555065211" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555045633" resolveInfo="testlist" />
-              </node>
-            </node>
+          <node concept="3xiQg6" id="6z$mG1ViiOu" role="3xhzZr">
+            <ref role="3xiQg3" node="6z$mG1ViiAd" resolve="testlist_comp" />
+          </node>
+          <node concept="3xhzXc" id="6z$mG1ViiOC" role="3xhzZr">
+            <property role="TrG5h" value="]" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555047024" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555041082" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="flow" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555041344" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="flow_stmt" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555046556" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555044335" resolveInfo="break_statement" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555046558" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555044499" resolveInfo="continue_statement" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555046727" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555044506" resolveInfo="return_statement" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555046731" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555044838" resolveInfo="yield_statement" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555046904" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555044670" resolveInfo="raise_statement" />
-            </node>
+        <node concept="3xhzZY" id="6z$mG1Vij4A" role="t8saQ">
+          <property role="TrG5h" value="dictorset_comprehension" />
+          <node concept="3xhzXc" id="6z$mG1Vikd$" role="3xhzZr">
+            <property role="TrG5h" value="{" />
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555047356" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555044335" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="break_statement" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555044489" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="break" />
-            </node>
+          <node concept="3xiQg6" id="6z$mG1Vikdc" role="3xhzZr">
+            <ref role="3xiQg3" node="6z$mG1VijKw" resolve="dictorsetmaker" />
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555044499" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="continue_statement" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555044500" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="continue" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555044506" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="return_statement" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555044507" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="return" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555045712" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555045633" resolveInfo="testlist" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555044838" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="yield_statement" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555046213" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555046045" resolveInfo="yield_expr" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555044670" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="raise_statement" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550679451" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="raise" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550682948" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550680579" resolveInfo="raise_expr" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550680579" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="raise_expr" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550682936" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550682941" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550680600" resolveInfo="raise_from" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550680600" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="raise_from" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550681728" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="from" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550681821" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555046933" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555041091" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="import" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555041597" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="import_stmt" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555049626" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555047675" resolveInfo="import_name" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555049628" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555051135" resolveInfo="import_from" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555047485" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555047675" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="import_name" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555047681" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="import" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555048612" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value="," />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555047872" resolveInfo="dotted_as_name" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555051135" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="import_from" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555051158" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="from" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555051163" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555050883" resolveInfo="relative_module" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555051171" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="import" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555051424" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555051399" resolveInfo="import_clause" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555053208" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555057053" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="auxiliary" />
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555047872" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="dotted_as_name" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555049190" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value="Importee" />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555048808" resolveInfo="dotted_name" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555048427" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value="ImportAs" />
-                <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742216432" resolveInfo="as_name" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555048808" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="dotted_name" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555049002" nodeInfo="ng">
-                <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-                <property name="sep" nameId="6o2a.4939832016425377885" value="." />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555099105" resolveInfo="name" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555050049" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="import_as_name" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="2738052631438277713" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555042808" resolveInfo="NAME" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555050446" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value="ImportAs" />
-                <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742216432" resolveInfo="as_name" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555053853" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="just_dots" />
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="2738052631438277709" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555075828" resolveInfo="simple_dot" />
-              </node>
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555054880" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555075848" resolveInfo="ellipsis" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="1658893429742216432" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="as_name" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="1658893429742216448" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value="as" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.TerminalReference" typeId="6o2a.2738052631436817608" id="2738052631438277705" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2738052631437369572" targetNodeId="5689872735555042808" resolveInfo="NAME" />
-              </node>
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555057209" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555057160" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="module" />
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555050883" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="relative_module" />
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555056907" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555055654" resolveInfo="named_relative_module" />
-              </node>
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555056909" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555055700" resolveInfo="unnamed_relative_module" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555055654" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="named_relative_module" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555055973" nodeInfo="ng">
-                <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555053853" resolveInfo="just_dots" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555056438" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555048808" resolveInfo="dotted_name" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555055700" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="unnamed_relative_module" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555056673" nodeInfo="ng">
-                <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555053853" resolveInfo="just_dots" />
-              </node>
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555057424" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555057314" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="elements" />
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555051399" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="import_clause" />
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555052219" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555051650" resolveInfo="import_all" />
-              </node>
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555052221" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555051733" resolveInfo="import_names" />
-              </node>
-              <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555052224" nodeInfo="ng">
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555052171" resolveInfo="import_names_paren" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555051650" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="import_all" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555051676" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value="*" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555051733" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="import_names" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555051961" nodeInfo="ng">
-                <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-                <property name="sep" nameId="6o2a.4939832016425377885" value="," />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555050049" resolveInfo="import_as_name" />
-              </node>
-            </node>
-            <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555052171" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="import_names_paren" />
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555052206" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value="(" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555052172" nodeInfo="ng">
-                <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-                <property name="sep" nameId="6o2a.4939832016425377885" value="," />
-                <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555050049" resolveInfo="import_as_name" />
-              </node>
-              <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555052214" nodeInfo="ng">
-                <property name="name" nameId="tpck.1169194664001" value=")" />
-              </node>
-            </node>
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="5689872735555047438" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555041100" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="misc" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555041850" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="del_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550684066" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="del" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550684072" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555058043" resolveInfo="exprlist" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555042016" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="pass_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="5689872735555042144" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="pass" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555042293" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="global_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550688840" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="global" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550688846" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555099105" resolveInfo="name" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555043099" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="nonlocal_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550688850" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="nonlocal" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550688855" nodeInfo="ng">
-              <property name="sep" nameId="6o2a.4939832016425377885" value=", " />
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555099105" resolveInfo="name" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555043249" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="assert_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550686317" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="assert" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550686322" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550686330" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="3164669072550685192" resolveInfo="assert_message" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="3164669072550685192" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="assert_message" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="3164669072550687453" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="," />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="3164669072550687714" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
+          <node concept="3xhzXc" id="6z$mG1Vikdh" role="3xhzZr">
+            <property role="TrG5h" value="}" />
           </node>
         </node>
       </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425297571" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016425256520" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="suite" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425256863" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="stats" />
-          <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425257172" nodeInfo="ng">
-            <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-            <property name="sep" nameId="6o2a.4939832016425377885" value="\n" />
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555038475" resolveInfo="stmt" />
+      <node concept="3P3UoZ" id="6z$mG1Vii_u" role="t8saQ" />
+      <node concept="t8saL" id="6z$mG1Vii$J" role="t8saQ">
+        <property role="TrG5h" value="comprehensions" />
+        <node concept="3xJKux" id="6z$mG1VijKw" role="t8saQ">
+          <property role="TrG5h" value="dictorsetmaker" />
+          <node concept="3xiQg6" id="2JFas4t3bk$" role="3xJKtx">
+            <ref role="3xiQg3" node="2JFas4t3b2k" resolve="dictmaker" />
+          </node>
+          <node concept="3xiQg6" id="2JFas4t3bkA" role="3xJKtx">
+            <ref role="3xiQg3" node="2JFas4t3b1T" resolve="setmaker" />
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016425257195" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="suite" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425257201" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555039137" resolveInfo="simple_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425257203" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425256863" resolveInfo="stats" />
-          </node>
-        </node>
-      </node>
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425364959" nodeInfo="ng" />
-      <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="5689872735555039348" nodeInfo="ng">
-        <property name="name" nameId="tpck.1169194664001" value="compound" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555039457" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="compound_stmt" />
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425280734" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425264827" resolveInfo="if_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425280736" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425260944" resolveInfo="while_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425281126" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425259220" resolveInfo="for_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425281518" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425273501" resolveInfo="try_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425281912" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276744" resolveInfo="with_stmt" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425282308" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425279576" resolveInfo="funcdef" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425282706" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425279961" resolveInfo="classdef" />
-          </node>
-          <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425283106" nodeInfo="ng">
-            <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425280347" resolveInfo="decorated" />
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425247596" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="1658893429742287375" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="definitions" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425279576" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="funcdef" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425286613" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="def" />
+        <node concept="3P3UoZ" id="2JFas4t3cvF" role="t8saQ" />
+        <node concept="t8saL" id="2JFas4t3dxm" role="t8saQ">
+          <property role="TrG5h" value="setmaker" />
+          <node concept="3xhzZY" id="2JFas4t3b1T" role="t8saQ">
+            <property role="TrG5h" value="setmaker" />
+            <node concept="3xiQg6" id="2JFas4t3bAy" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425286955" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555099105" resolveInfo="name" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425287373" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="(" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425288224" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425287803" resolveInfo="typedargslist" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425288648" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=")" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425289520" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742308054" resolveInfo="func_result" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425289953" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425289973" nodeInfo="ng">
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
+            <node concept="3xiQg6" id="2JFas4t3ccw" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="2JFas4t3bSW" resolve="setmaker_rest" />
             </node>
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425279961" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="classdef" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425284802" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="class" />
+          <node concept="3xJKux" id="2JFas4t3bSW" role="t8saQ">
+            <property role="TrG5h" value="setmaker_rest" />
+            <node concept="3xiQg6" id="2JFas4t3bTq" role="3xJKtx">
+              <ref role="3xiQg3" node="6z$mG1ViwVV" resolve="comp_for" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425284819" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555099105" resolveInfo="name" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425285229" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="(" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425285239" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236596825" resolveInfo="arglist" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425285251" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=")" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425285669" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425285685" nodeInfo="ng">
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
+            <node concept="3xiQg6" id="2JFas4t3ccq" role="3xJKtx">
+              <ref role="3xiQg3" node="2JFas4t3bTV" resolve="setmaker_tests" />
             </node>
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="1658893429742308054" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="func_result" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="1658893429742308075" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="-&gt;" />
+          <node concept="3xhzZY" id="2JFas4t3bTV" role="t8saQ">
+            <property role="TrG5h" value="setmaker_tests" />
+            <node concept="3xhzXc" id="2JFas4t3f1Y" role="3xhzZr">
+              <property role="TrG5h" value="," />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742308124" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
+            <node concept="3xiQg6" id="2JFas4t3cco" role="3xhzZr">
+              <property role="3xj4NX" value="AtleastOne" />
+              <property role="2DFMXm" value=", " />
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
             </node>
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425259198" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="1658893429742286861" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="loops" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425260944" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="while_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425260945" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="while" />
+        <node concept="3P3UoZ" id="2JFas4t3dw5" role="t8saQ" />
+        <node concept="t8saL" id="2JFas4t3d$2" role="t8saQ">
+          <property role="TrG5h" value="dictmaker" />
+          <node concept="3xhzZY" id="2JFas4t3b2k" role="t8saQ">
+            <property role="TrG5h" value="dictmaker" />
+            <node concept="3xiQg6" id="2JFas4t3fm6" role="3xhzZr">
+              <ref role="3xiQg3" node="2JFas4t3flp" resolve="dictmaker_keyval" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425260946" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425260947" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425260948" nodeInfo="ng">
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214165" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742213944" resolveInfo="else_clause" />
+            <node concept="3xiQg6" id="2JFas4t3dSg" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="2JFas4t3eaF" resolve="dictmaker_rest" />
             </node>
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425259220" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="for_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425259243" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="for" />
+          <node concept="3xJKux" id="2JFas4t3eaF" role="t8saQ">
+            <property role="TrG5h" value="dictmaker_rest" />
+            <node concept="3xiQg6" id="2JFas4t3et2" role="3xJKtx">
+              <ref role="3xiQg3" node="6z$mG1ViwVV" resolve="comp_for" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425259248" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555058043" resolveInfo="exprlist" />
+            <node concept="3xiQg6" id="2JFas4t3et4" role="3xJKtx">
+              <ref role="3xiQg3" node="2JFas4t3d_z" resolve="dictmaker_tests" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425259576" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="in" />
+          </node>
+          <node concept="3xhzZY" id="2JFas4t3d_z" role="t8saQ">
+            <property role="TrG5h" value="dictmaker_tests" />
+            <node concept="3xhzXc" id="2JFas4t3f22" role="3xhzZr">
+              <property role="TrG5h" value="," />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425259907" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555045633" resolveInfo="testlist" />
+            <node concept="3xiQg6" id="2JFas4t3fmg" role="3xhzZr">
+              <property role="3xj4NX" value="AtleastOne" />
+              <property role="2DFMXm" value=", " />
+              <ref role="3xiQg3" node="2JFas4t3flp" resolve="dictmaker_keyval" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425260241" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
+          </node>
+          <node concept="3xhzZY" id="2JFas4t3flp" role="t8saQ">
+            <property role="TrG5h" value="dictmaker_keyval" />
+            <node concept="3xiQg6" id="2JFas4t3flC" role="3xhzZr">
+              <property role="TrG5h" value="key" />
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425260585" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="ExactlyOne" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
+            <node concept="3xhzXc" id="2JFas4t3flH" role="3xhzZr">
+              <property role="TrG5h" value=":" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214195" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742213944" resolveInfo="else_clause" />
+            <node concept="3xiQg6" id="2JFas4t3flS" role="3xhzZr">
+              <property role="TrG5h" value="value" />
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
             </node>
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="1658893429742286736" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016425263728" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="selection" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425264827" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="if_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425264836" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="if" />
+        <node concept="3P3UoZ" id="2JFas4t3cu$" role="t8saQ" />
+        <node concept="t8saL" id="2JFas4t3cMU" role="t8saQ">
+          <property role="TrG5h" value="testlist" />
+          <node concept="3xhzZY" id="6z$mG1ViiAd" role="t8saQ">
+            <property role="TrG5h" value="testlist_comp" />
+            <node concept="3xiQg6" id="6z$mG1ViyWt" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425265181" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425265189" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425265199" nodeInfo="ng">
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425265554" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425264105" resolveInfo="elif_clause" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214090" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742213944" resolveInfo="else_clause" />
+            <node concept="3xiQg6" id="6z$mG1Vi$bi" role="3xhzZr">
+              <ref role="3xiQg3" node="6z$mG1Vizc9" resolve="testlist_tail" />
             </node>
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425264105" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="elif_clause" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425264109" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="elif" />
+          <node concept="3xJKux" id="6z$mG1Vizc9" role="t8saQ">
+            <property role="TrG5h" value="testlist_tail" />
+            <node concept="3xiQg6" id="6z$mG1VizGt" role="3xJKtx">
+              <ref role="3xiQg3" node="6z$mG1ViwVV" resolve="comp_for" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425264448" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425264456" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425264466" nodeInfo="ng">
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
+            <node concept="3xiQg6" id="6z$mG1VizGr" role="3xJKtx">
+              <ref role="3xiQg3" node="6z$mG1VizsH" resolve="testlist_tests" />
             </node>
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="1658893429742213944" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="else_clause" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="1658893429742214063" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="else" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="1658893429742214068" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214076" nodeInfo="ng">
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425263769" nodeInfo="ng" />
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016425255856" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="try" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="1658893429742214834" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="alternative:" />
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="1658893429742214896" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="try : &lt;suite&gt; &lt;except_clause&gt;* &lt;else_clause&gt;? &lt;finally_clause&gt;?" />
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.Comment" typeId="6o2a.4939832016426343668" id="1658893429742214960" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="with constraint sizeof(except_clause) + sizeof(else_clause) + sizeof(finally_clause) != 0" />
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="1658893429742214993" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425273501" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="try_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425273895" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="try" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016426326267" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425274274" nodeInfo="ng">
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425274652" nodeInfo="ng">
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425270455" resolveInfo="except_finally" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="1658893429742217300" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016425270455" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="except_finally" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425273447" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425271220" resolveInfo="except_clauses" />
-            </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425273449" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425271192" resolveInfo="finally_clause" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425271192" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="finally_clause" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425273074" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="finally:" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425273079" nodeInfo="ng">
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425271220" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="except_clauses" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425271592" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value="\n" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425267893" resolveInfo="except_clause" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214120" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742213944" resolveInfo="else_clause" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214143" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425271192" resolveInfo="finally_clause" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="1658893429742217226" nodeInfo="ng" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425267893" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="except_clause" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425267898" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="except" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425269346" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425268263" resolveInfo="except_test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425269354" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425269719" nodeInfo="ng">
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <property name="card" nameId="6o2a.2504845739424658192" value="ExactlyOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425268263" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="except_test" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425268621" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425268985" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742214644" resolveInfo="except_rename" />
-            </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="1658893429742214644" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="except_rename" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="1658893429742214673" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="as" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214738" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555099105" resolveInfo="name" />
+          <node concept="3xhzZY" id="6z$mG1VizsH" role="t8saQ">
+            <property role="TrG5h" value="testlist_tests" />
+            <node concept="3xiQg6" id="6z$mG1Vizt2" role="3xhzZr">
+              <property role="3xj4NX" value="ZeroOrMore" />
+              <property role="2DFMXm" value=", " />
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
             </node>
           </node>
         </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425256183" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016425256174" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="with" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425276744" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="with_stmt" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425277128" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="with" />
+        <node concept="3P3UoZ" id="2JFas4t3cv7" role="t8saQ" />
+        <node concept="t8saL" id="2JFas4t3cPq" role="t8saQ">
+          <property role="TrG5h" value="comp" />
+          <node concept="3xJKux" id="6z$mG1Vixqy" role="t8saQ">
+            <property role="TrG5h" value="comp_iter" />
+            <node concept="3xiQg6" id="6z$mG1VixqD" role="3xJKtx">
+              <ref role="3xiQg3" node="6z$mG1ViwVV" resolve="comp_for" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425277511" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value="," />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257837" resolveInfo="with_item" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425277897" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=":" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425277907" nodeInfo="ng">
-              <property name="indent" nameId="6o2a.513220601742038498" value="true" />
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425257195" resolveInfo="suite" />
+            <node concept="3xiQg6" id="6z$mG1VixqF" role="3xJKtx">
+              <ref role="3xiQg3" node="6z$mG1Vixb5" resolve="comp_if" />
             </node>
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425257837" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="with_item" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425275957" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425258804" resolveInfo="test" />
+          <node concept="3xhzZY" id="6z$mG1ViwVV" role="t8saQ">
+            <property role="TrG5h" value="comp_for" />
+            <node concept="3xhzXc" id="6z$mG1VixDS" role="3xhzZr">
+              <property role="TrG5h" value="for" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425276357" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="1658893429742214755" resolveInfo="with_rename" />
+            <node concept="3xiQg6" id="6z$mG1VixDX" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW7_V" resolve="exprlist" />
             </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="1658893429742214755" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="with_rename" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="1658893429742214767" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="as" />
+            <node concept="3xhzXc" id="6z$mG1VixTi" role="3xhzZr">
+              <property role="TrG5h" value="in" />
             </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="1658893429742214798" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425276350" resolveInfo="expr" />
+            <node concept="3xiQg6" id="6z$mG1VixTs" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
             </node>
-          </node>
-        </node>
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016425283705" nodeInfo="ng" />
-        <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.RuleGroup" typeId="6o2a.5689872735553437610" id="4939832016425279107" nodeInfo="ng">
-          <property name="name" nameId="tpck.1169194664001" value="decorators" />
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425280347" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="decorated" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425294815" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtleastOne" />
-              <property name="sep" nameId="6o2a.4939832016425377885" value="\n" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425291294" resolveInfo="decorator" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425295248" nodeInfo="ng">
-              <property name="newline" nameId="6o2a.513220601742038557" value="true" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425290848" resolveInfo="decoratee" />
+            <node concept="3xiQg6" id="6z$mG1Viy8R" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="6z$mG1Vixqy" resolve="comp_iter" />
             </node>
           </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="4939832016425290848" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="decoratee" />
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425290852" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425279961" resolveInfo="classdef" />
+          <node concept="3xhzZY" id="6z$mG1Vixb5" role="t8saQ">
+            <property role="TrG5h" value="comp_if" />
+            <node concept="3xhzXc" id="6z$mG1Viyod" role="3xhzZr">
+              <property role="TrG5h" value="if" />
             </node>
-            <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425290854" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="4939832016425279576" resolveInfo="funcdef" />
+            <node concept="3xiQg6" id="6z$mG1ViytE" role="3xhzZr">
+              <ref role="3xiQg3" node="6z$mG1VivEH" resolve="test_nocond" />
             </node>
-          </node>
-          <node role="rules" roleId="6o2a.5689872735553437613" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="4939832016425291294" nodeInfo="ng">
-            <property name="name" nameId="tpck.1169194664001" value="decorator" />
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425292145" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="@" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425292590" nodeInfo="ng">
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555048808" resolveInfo="dotted_name" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425293022" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value="(" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="4939832016425293933" nodeInfo="ng">
-              <property name="card" nameId="6o2a.2504845739424658192" value="AtMostOne" />
-              <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="6217748898236596825" resolveInfo="arglist" />
-            </node>
-            <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.Keyword" typeId="6o2a.2504845739424006305" id="4939832016425293947" nodeInfo="ng">
-              <property name="name" nameId="tpck.1169194664001" value=")" />
+            <node concept="3xiQg6" id="6z$mG1ViyH6" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="6z$mG1Vixqy" resolve="comp_iter" />
             </node>
           </node>
         </node>
       </node>
     </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.EmptyLine" typeId="6o2a.8822712935563342996" id="4939832016427593227" nodeInfo="ng" />
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555038321" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="EmptyLine" />
-    </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.ChoiceRule" typeId="6o2a.2504845739423561804" id="5689872735555038069" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="IProgramElement" />
-      <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555038326" nodeInfo="ng">
-        <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555038321" resolveInfo="EmptyLine" />
+    <node concept="3P3UoZ" id="6z$mG1ViwNh" role="3xJMYo" />
+    <node concept="t8saL" id="4idNKJH8n0m" role="3xJMYo">
+      <property role="TrG5h" value="arglist" />
+      <node concept="3xhzZY" id="7V8LwQOfasT" role="t8saQ">
+        <property role="TrG5h" value="fpdefval" />
+        <node concept="3xhzXc" id="7V8LwQOfat7" role="3xhzZr">
+          <property role="TrG5h" value="=" />
+        </node>
+        <node concept="3xiQg6" id="7V8LwQOfaHh" role="3xhzZr">
+          <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+        </node>
       </node>
-      <node role="nonterminals" roleId="6o2a.2504845739423561868" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555038328" nodeInfo="ng">
-        <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555038475" resolveInfo="stmt" />
+      <node concept="3P3UoZ" id="2JFas4to53z" role="t8saQ" />
+      <node concept="t8saL" id="2JFas4to42V" role="t8saQ">
+        <property role="TrG5h" value="typed" />
+        <node concept="3xJKux" id="4idNKJH8o1V" role="t8saQ">
+          <property role="TrG5h" value="typedargslist" />
+          <node concept="3xiQg6" id="7V8LwQOfdPt" role="3xJKtx">
+            <ref role="3xiQg3" node="7V8LwQOfbJu" resolve="simple_typedargslist" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfdPr" role="3xJKtx">
+            <ref role="3xiQg3" node="7V8LwQOfcKR" resolve="typed_argskwargslist" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4to5n3" role="t8saQ" />
+        <node concept="3xhzZY" id="7V8LwQOfbJu" role="t8saQ">
+          <property role="TrG5h" value="simple_typedargslist" />
+          <node concept="3xiQg6" id="7V8LwQOfbZX" role="3xhzZr">
+            <property role="3xj4NX" value="AtleastOne" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="7V8LwQOfbeb" resolve="tfpdefwdef" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4to5nC" role="t8saQ" />
+        <node concept="3xhzZY" id="7V8LwQOfcKR" role="t8saQ">
+          <property role="TrG5h" value="typed_argskwargslist" />
+          <node concept="3xiQg6" id="7V8LwQOfd1q" role="3xhzZr">
+            <property role="3xj4NX" value="ZeroOrMore" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="7V8LwQOfbeb" resolve="tfpdefwdef" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfd$j" role="3xhzZr">
+            <ref role="3xiQg3" node="7V8LwQOfdzR" resolve="typed_argskwargs_tail" />
+          </node>
+        </node>
+        <node concept="3xJKux" id="7V8LwQOfdzR" role="t8saQ">
+          <property role="TrG5h" value="typed_argskwargs_tail" />
+          <node concept="3xiQg6" id="7V8LwQOfhLs" role="3xJKtx">
+            <ref role="3xiQg3" node="7V8LwQOfemI" resolve="typed_args_tail" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfhLu" role="3xJKtx">
+            <ref role="3xiQg3" node="7V8LwQOfdP0" resolve="typed_kwargs_tail" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="7V8LwQOfemI" role="t8saQ">
+          <property role="TrG5h" value="typed_args_tail" />
+          <node concept="3xhzXc" id="7V8LwQOfeBz" role="3xhzZr">
+            <property role="TrG5h" value="*" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOff8k" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="7V8LwQOf3tg" resolve="tfpdef" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfi24" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="7V8LwQOfgcB" resolve="typed_args_tail1" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfi2e" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="7V8LwQOfhfv" resolve="typed_args_tail2" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="7V8LwQOfgcB" role="t8saQ">
+          <property role="TrG5h" value="typed_args_tail1" />
+          <node concept="3xhzXc" id="7V8LwQOfgty" role="3xhzZr">
+            <property role="TrG5h" value=", " />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfgtB" role="3xhzZr">
+            <property role="3xj4NX" value="ZeroOrMore" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="7V8LwQOfbeb" resolve="tfpdefwdef" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="7V8LwQOfhfv" role="t8saQ">
+          <property role="TrG5h" value="typed_args_tail2" />
+          <node concept="3xhzXc" id="7V8LwQOfhg5" role="3xhzZr">
+            <property role="TrG5h" value=", " />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfhwT" role="3xhzZr">
+            <ref role="3xiQg3" node="7V8LwQOfdP0" resolve="typed_kwargs_tail" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="7V8LwQOfdP0" role="t8saQ">
+          <property role="TrG5h" value="typed_kwargs_tail" />
+          <node concept="3xhzXc" id="7V8LwQOfe5M" role="3xhzZr">
+            <property role="TrG5h" value="**" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfe5R" role="3xhzZr">
+            <ref role="3xiQg3" node="7V8LwQOf3tg" resolve="tfpdef" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4to5jd" role="t8saQ" />
+        <node concept="3xhzZY" id="7V8LwQOfbeb" role="t8saQ">
+          <property role="TrG5h" value="tfpdefwdef" />
+          <node concept="3xiQg6" id="7V8LwQOfbes" role="3xhzZr">
+            <ref role="3xiQg3" node="7V8LwQOf3tg" resolve="tfpdef" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOfbex" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="7V8LwQOfasT" resolve="fpdefval" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="7V8LwQOf3tg" role="t8saQ">
+          <property role="TrG5h" value="tfpdef" />
+          <node concept="2GSJ2k" id="7V8LwQOf8aL" role="3xhzZr">
+            <ref role="2GQAiS" node="4VQvhHjW3RS" resolve="NAME" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOf9bl" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="7V8LwQOf9aZ" resolve="tfpdeftype" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="7V8LwQOf9aZ" role="t8saQ">
+          <property role="TrG5h" value="tfpdeftype" />
+          <node concept="3xhzXc" id="7V8LwQOf9b9" role="3xhzZr">
+            <property role="TrG5h" value=":" />
+          </node>
+          <node concept="3xiQg6" id="7V8LwQOf9be" role="3xhzZr">
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+          </node>
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="7V8LwQOfbv0" role="t8saQ" />
+      <node concept="t8saL" id="2JFas4to48g" role="t8saQ">
+        <property role="TrG5h" value="untyped" />
+        <node concept="3xJKux" id="4idNKJH8q4w" role="t8saQ">
+          <property role="TrG5h" value="varargslist" />
+          <node concept="3xiQg6" id="2JFas4t37MZ" role="3xJKtx">
+            <ref role="3xiQg3" node="5p9SqSdXTb7" resolve="simple_varargslist" />
+          </node>
+          <node concept="3xiQg6" id="2JFas4t37N1" role="3xJKtx">
+            <ref role="3xiQg3" node="5p9SqSdXVlV" resolve="varargskwargslist" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4to5oK" role="t8saQ" />
+        <node concept="3xhzZY" id="5p9SqSdXTb7" role="t8saQ">
+          <property role="TrG5h" value="simple_varargslist" />
+          <node concept="3xiQg6" id="5p9SqSdXV4y" role="3xhzZr">
+            <property role="3xj4NX" value="AtleastOne" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="5p9SqSdXTso" resolve="vfpdefwdef" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4to5sh" role="t8saQ" />
+        <node concept="3xhzZY" id="5p9SqSdXVlV" role="t8saQ">
+          <property role="TrG5h" value="varargskwargslist" />
+          <node concept="3xiQg6" id="5p9SqSdXVmH" role="3xhzZr">
+            <property role="3xj4NX" value="ZeroOrMore" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="5p9SqSdXTso" resolve="vfpdefwdef" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXWOL" role="3xhzZr">
+            <ref role="3xiQg3" node="5p9SqSdXVSQ" resolve="vargargskwargs_tail" />
+          </node>
+        </node>
+        <node concept="3xJKux" id="5p9SqSdXVSQ" role="t8saQ">
+          <property role="TrG5h" value="vargargskwargs_tail" />
+          <node concept="3xiQg6" id="5p9SqSdXX5_" role="3xJKtx">
+            <ref role="3xiQg3" node="5p9SqSdXWvz" resolve="args_tail" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXX5B" role="3xJKtx">
+            <ref role="3xiQg3" node="5p9SqSdXWb8" resolve="kwargs_tail" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdXWvz" role="t8saQ">
+          <property role="TrG5h" value="args_tail" />
+          <node concept="3xhzXc" id="5p9SqSdXXms" role="3xhzZr">
+            <property role="TrG5h" value="*" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXXmx" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="7V8LwQOf8qJ" resolve="vfpdef" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXXBt" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="5p9SqSdXWxj" resolve="args_tail1" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXXBB" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="5p9SqSdXWz5" resolve="args_tail2" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdXWxj" role="t8saQ">
+          <property role="TrG5h" value="args_tail1" />
+          <node concept="3xhzXc" id="5p9SqSdXXSz" role="3xhzZr">
+            <property role="TrG5h" value="," />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXXSC" role="3xhzZr">
+            <property role="3xj4NX" value="ZeroOrMore" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="5p9SqSdXTso" resolve="vfpdefwdef" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdXWz5" role="t8saQ">
+          <property role="TrG5h" value="args_tail2" />
+          <node concept="3xhzXc" id="5p9SqSdXYqs" role="3xhzZr">
+            <property role="TrG5h" value="," />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXYqx" role="3xhzZr">
+            <ref role="3xiQg3" node="5p9SqSdXWb8" resolve="kwargs_tail" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdXWb8" role="t8saQ">
+          <property role="TrG5h" value="kwargs_tail" />
+          <node concept="3xhzXc" id="5p9SqSdXWbX" role="3xhzZr">
+            <property role="TrG5h" value="**" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXWc2" role="3xhzZr">
+            <ref role="3xiQg3" node="7V8LwQOf8qJ" resolve="vfpdef" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4to5og" role="t8saQ" />
+        <node concept="3xhzZY" id="5p9SqSdXTso" role="t8saQ">
+          <property role="TrG5h" value="vfpdefwdef" />
+          <node concept="3xiQg6" id="5p9SqSdXUzf" role="3xhzZr">
+            <ref role="3xiQg3" node="7V8LwQOf8qJ" resolve="vfpdef" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdXUNT" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="7V8LwQOfasT" resolve="fpdefval" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="7V8LwQOf8qJ" role="t8saQ">
+          <property role="TrG5h" value="vfpdef" />
+          <node concept="2GSJ2k" id="7V8LwQOf8qK" role="3xhzZr">
+            <ref role="2GQAiS" node="4VQvhHjW3RS" resolve="NAME" />
+          </node>
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="5p9SqSdY0tR" role="t8saQ" />
+      <node concept="t8saL" id="2JFas4to5u_" role="t8saQ">
+        <property role="TrG5h" value="argument" />
+        <node concept="3xhzZY" id="5p9SqSdY09p" role="t8saQ">
+          <property role="TrG5h" value="arglist" />
+          <node concept="3xiQg6" id="5p9SqSdY0ay" role="3xhzZr">
+            <property role="3xj4NX" value="ZeroOrMore" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="5p9SqSdXZjf" resolve="argument" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY0yr" role="3xhzZr">
+            <ref role="3xiQg3" node="5p9SqSdY0xf" resolve="arglist_tail" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4toh3i" role="t8saQ" />
+        <node concept="3xJKux" id="5p9SqSdY0xf" role="t8saQ">
+          <property role="TrG5h" value="arglist_tail" />
+          <node concept="3xiQg6" id="5p9SqSdY0Nu" role="3xJKtx">
+            <ref role="3xiQg3" node="5p9SqSdXZjf" resolve="argument" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY0Nw" role="3xJKtx">
+            <ref role="3xiQg3" node="5p9SqSdY2tA" resolve="args_argument" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY2uQ" role="3xJKtx">
+            <ref role="3xiQg3" node="5p9SqSdY1mM" resolve="kwargs_argument" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdY2tA" role="t8saQ">
+          <property role="TrG5h" value="args_argument" />
+          <node concept="3xhzXc" id="5p9SqSdY2uU" role="3xhzZr">
+            <property role="TrG5h" value="*" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY2uZ" role="3xhzZr">
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY3Dw" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="5p9SqSdY2Lu" resolve="args_argument1" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY3DE" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="5p9SqSdY2O6" resolve="args_argument2" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdY2Lu" role="t8saQ">
+          <property role="TrG5h" value="args_argument1" />
+          <node concept="3xhzXc" id="5p9SqSdY36K" role="3xhzZr">
+            <property role="TrG5h" value="," />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY36P" role="3xhzZr">
+            <property role="3xj4NX" value="ZeroOrMore" />
+            <property role="2DFMXm" value=", " />
+            <ref role="3xiQg3" node="5p9SqSdXZjf" resolve="argument" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdY2O6" role="t8saQ">
+          <property role="TrG5h" value="args_argument2" />
+          <node concept="3xhzXc" id="5p9SqSdY2Pr" role="3xhzZr">
+            <property role="TrG5h" value="," />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY2Pw" role="3xhzZr">
+            <ref role="3xiQg3" node="5p9SqSdY1mM" resolve="kwargs_argument" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="5p9SqSdY1mM" role="t8saQ">
+          <property role="TrG5h" value="kwargs_argument" />
+          <node concept="3xhzXc" id="5p9SqSdY1D1" role="3xhzZr">
+            <property role="TrG5h" value="**" />
+          </node>
+          <node concept="3xiQg6" id="5p9SqSdY1Ua" role="3xhzZr">
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="2JFas4toh3Q" role="t8saQ" />
+        <node concept="3xJKux" id="5p9SqSdXZjf" role="t8saQ">
+          <property role="TrG5h" value="argument" />
+          <node concept="3xiQg6" id="2JFas4t39K5" role="3xJKtx">
+            <ref role="3xiQg3" node="2JFas4t3869" resolve="arg_comp" />
+          </node>
+          <node concept="3xiQg6" id="2JFas4t39K7" role="3xJKtx">
+            <ref role="3xiQg3" node="2JFas4t3895" resolve="arg_keyword" />
+          </node>
+        </node>
+        <node concept="2DJ5fZ" id="2JFas4t39C8" role="t8saQ">
+          <property role="TrG5h" value="Warning, there is an ambiguity between &lt;test&gt; and &lt;NAME&gt; here" />
+        </node>
+        <node concept="2DJ5fZ" id="2JFas4t39Fi" role="t8saQ">
+          <property role="TrG5h" value="Python parser handles this by replacing &lt;NAME&gt; by &lt;test&gt; in arg_keyword case" />
+        </node>
+        <node concept="2DJ5fZ" id="2JFas4t39Iu" role="t8saQ">
+          <property role="TrG5h" value="and post-checking it is actually a &lt;NAME&gt;" />
+        </node>
+        <node concept="3xhzZY" id="2JFas4t3869" role="t8saQ">
+          <property role="TrG5h" value="arg_comp" />
+          <node concept="3xiQg6" id="2JFas4t38Zr" role="3xhzZr">
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+          </node>
+          <node concept="3xiQg6" id="2JFas4t38Zw" role="3xhzZr">
+            <property role="3xj4NX" value="AtMostOne" />
+            <ref role="3xiQg3" node="6z$mG1ViwVV" resolve="comp_for" />
+          </node>
+        </node>
+        <node concept="3xhzZY" id="2JFas4t3895" role="t8saQ">
+          <property role="TrG5h" value="arg_keyword" />
+          <node concept="2GSJ2k" id="2JFas4t39he" role="3xhzZr">
+            <ref role="2GQAiS" node="4VQvhHjW3RS" resolve="NAME" />
+          </node>
+          <node concept="3xhzXc" id="2JFas4t39hj" role="3xhzZr">
+            <property role="TrG5h" value="=" />
+          </node>
+          <node concept="3xiQg6" id="2JFas4t39hu" role="3xhzZr">
+            <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+          </node>
+        </node>
       </node>
     </node>
-    <node role="rules" roleId="6o2a.2504845739423551605" type="6o2a.NonterminalRule" typeId="6o2a.2504845739424006163" id="5689872735555037974" nodeInfo="ng">
-      <property name="name" nameId="tpck.1169194664001" value="program" />
-      <node role="terms" roleId="6o2a.2504845739424006198" type="6o2a.NonterminalReference" typeId="6o2a.2504845739424324587" id="5689872735555038574" nodeInfo="ng">
-        <property name="card" nameId="6o2a.2504845739424658192" value="ZeroOrMore" />
-        <property name="sep" nameId="6o2a.4939832016425377885" value="\n" />
-        <link role="rule" roleId="6o2a.2504845739424324590" targetNodeId="5689872735555038069" resolveInfo="IProgramElement" />
+    <node concept="3P3UoZ" id="4idNKJH8Gbu" role="3xJMYo" />
+    <node concept="t8saL" id="4VQvhHjW2O2" role="3xJMYo">
+      <property role="TrG5h" value="statements" />
+      <node concept="2DJ5fZ" id="2yk$fkYvz$e" role="t8saQ">
+        <property role="TrG5h" value="We add small_stmt here to allow for non-simple_stmt small_stmt nodes" />
+      </node>
+      <node concept="3xJKux" id="4VQvhHjW2Ob" role="t8saQ">
+        <property role="TrG5h" value="stmt" />
+        <node concept="3xiQg6" id="4VQvhHjW33z" role="3xJKtx">
+          <ref role="3xiQg3" node="4VQvhHjW2Yx" resolve="simple_stmt" />
+        </node>
+        <node concept="3xiQg6" id="2yk$fkYvzCw" role="3xJKtx">
+          <ref role="3xiQg3" node="4VQvhHjW38D" resolve="small_stmt" />
+        </node>
+        <node concept="3xiQg6" id="4VQvhHjW33_" role="3xJKtx">
+          <ref role="3xiQg3" node="4VQvhHjW33x" resolve="compound_stmt" />
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="4VQvhHjW33C" role="t8saQ" />
+      <node concept="t8saL" id="4VQvhHjW2Vj" role="t8saQ">
+        <property role="TrG5h" value="simple" />
+        <node concept="3xhzZY" id="4VQvhHjW2Yx" role="t8saQ">
+          <property role="TrG5h" value="simple_stmt" />
+          <node concept="3xiQg6" id="4VQvhHjW3aq" role="3xhzZr">
+            <property role="3xj4NX" value="AtleastOne" />
+            <property role="2DFMXm" value="; " />
+            <ref role="3xiQg3" node="4VQvhHjW38D" resolve="small_stmt" />
+          </node>
+        </node>
+        <node concept="3xJKux" id="4VQvhHjW38D" role="t8saQ">
+          <property role="TrG5h" value="small_stmt" />
+          <node concept="3xiQg6" id="4VQvhHjW3x2" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3oY" resolve="expr_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW419" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3CU" resolve="del_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW43x" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3Fw" resolve="pass_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW3x4" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3x0" resolve="flow_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW3x7" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3$X" resolve="import_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW3$Z" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3JP" resolve="global_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW45V" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3Wr" resolve="nonlocal_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4VQvhHjW48n" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW3YL" resolve="assert_stmt" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4VQvhHjW3jp" role="t8saQ" />
+        <node concept="t8saL" id="4VQvhHjW3j$" role="t8saQ">
+          <property role="TrG5h" value="expr" />
+          <node concept="3xhzZY" id="4VQvhHjW3oY" role="t8saQ">
+            <property role="TrG5h" value="expr_stmt" />
+            <node concept="3xiQg6" id="4VQvhHjW8Sh" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW4$1" resolve="testlist" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW9OR" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="4VQvhHjW8Zb" resolve="assignment" />
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="4VQvhHjWa5p" role="t8saQ" />
+          <node concept="t8saL" id="4VQvhHjWa3w" role="t8saQ">
+            <property role="TrG5h" value="assign" />
+            <node concept="3xJKux" id="4VQvhHjW8Zb" role="t8saQ">
+              <property role="TrG5h" value="assignment" />
+              <node concept="3xiQg6" id="4VQvhHjW9Kk" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW993" resolve="basic_assign" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW9Km" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW99L" resolve="inplace_assign" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW993" role="t8saQ">
+              <property role="TrG5h" value="basic_assign" />
+              <node concept="3xhzXc" id="4idNKJHbMmQ" role="3xhzZr">
+                <property role="TrG5h" value="=" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW9uE" role="3xhzZr">
+                <property role="3xj4NX" value="AtleastOne" />
+                <property role="2DFMXm" value="=" />
+                <ref role="3xiQg3" node="4VQvhHjW9lb" resolve="yield_or_list" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW99L" role="t8saQ">
+              <property role="TrG5h" value="inplace_assign" />
+              <node concept="3xiQg6" id="4VQvhHjW9Bq" role="3xhzZr">
+                <ref role="3xiQg3" node="4VQvhHjW83M" resolve="augassign" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW9FR" role="3xhzZr">
+                <ref role="3xiQg3" node="4VQvhHjW9lb" resolve="yield_or_list" />
+              </node>
+            </node>
+            <node concept="3xJKux" id="4VQvhHjW9lb" role="t8saQ">
+              <property role="TrG5h" value="yield_or_list" />
+              <node concept="3xiQg6" id="4VQvhHjW9lT" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW4Et" resolve="yield_expr" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW9lV" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW4$1" resolve="testlist" />
+              </node>
+            </node>
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4VQvhHjW4TK" role="t8saQ" />
+        <node concept="t8saL" id="4VQvhHjW3sU" role="t8saQ">
+          <property role="TrG5h" value="flow" />
+          <node concept="3xJKux" id="4VQvhHjW3x0" role="t8saQ">
+            <property role="TrG5h" value="flow_stmt" />
+            <node concept="3xiQg6" id="4VQvhHjW4Ms" role="3xJKtx">
+              <ref role="3xiQg3" node="4VQvhHjW4fJ" resolve="break_statement" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW4Mu" role="3xJKtx">
+              <ref role="3xiQg3" node="4VQvhHjW4ij" resolve="continue_statement" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW4P7" role="3xJKtx">
+              <ref role="3xiQg3" node="4VQvhHjW4iq" resolve="return_statement" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW4Pb" role="3xJKtx">
+              <ref role="3xiQg3" node="4VQvhHjW4nA" resolve="yield_statement" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW4RS" role="3xJKtx">
+              <ref role="3xiQg3" node="4VQvhHjW4kY" resolve="raise_statement" />
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="4VQvhHjW4YW" role="t8saQ" />
+          <node concept="3xhzZY" id="4VQvhHjW4fJ" role="t8saQ">
+            <property role="TrG5h" value="break_statement" />
+            <node concept="3xhzXc" id="4VQvhHjW4i9" role="3xhzZr">
+              <property role="TrG5h" value="break" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW4ij" role="t8saQ">
+            <property role="TrG5h" value="continue_statement" />
+            <node concept="3xhzXc" id="4VQvhHjW4ik" role="3xhzZr">
+              <property role="TrG5h" value="continue" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW4iq" role="t8saQ">
+            <property role="TrG5h" value="return_statement" />
+            <node concept="3xhzXc" id="4VQvhHjW4ir" role="3xhzZr">
+              <property role="TrG5h" value="return" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW4_g" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="4VQvhHjW4$1" resolve="testlist" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW4nA" role="t8saQ">
+            <property role="TrG5h" value="yield_statement" />
+            <node concept="3xiQg6" id="4VQvhHjW4H5" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW4Et" resolve="yield_expr" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW4kY" role="t8saQ">
+            <property role="TrG5h" value="raise_statement" />
+            <node concept="3xhzXc" id="2JFas4t35er" role="3xhzZr">
+              <property role="TrG5h" value="raise" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t3654" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="2JFas4t35w3" resolve="raise_expr" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="2JFas4t35w3" role="t8saQ">
+            <property role="TrG5h" value="raise_expr" />
+            <node concept="3xiQg6" id="2JFas4t364S" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t364X" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="2JFas4t35wo" resolve="raise_from" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="2JFas4t35wo" role="t8saQ">
+            <property role="TrG5h" value="raise_from" />
+            <node concept="3xhzXc" id="2JFas4t35M0" role="3xhzZr">
+              <property role="TrG5h" value="from" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t35Nt" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4VQvhHjW4Sl" role="t8saQ" />
+        <node concept="t8saL" id="4VQvhHjW3t3" role="t8saQ">
+          <property role="TrG5h" value="import" />
+          <node concept="3xJKux" id="4VQvhHjW3$X" role="t8saQ">
+            <property role="TrG5h" value="import_stmt" />
+            <node concept="3xiQg6" id="4VQvhHjW5yq" role="3xJKtx">
+              <ref role="3xiQg3" node="4VQvhHjW53V" resolve="import_name" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW5ys" role="3xJKtx">
+              <ref role="3xiQg3" node="4VQvhHjW5TZ" resolve="import_from" />
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="4VQvhHjW50X" role="t8saQ" />
+          <node concept="3xhzZY" id="4VQvhHjW53V" role="t8saQ">
+            <property role="TrG5h" value="import_name" />
+            <node concept="3xhzXc" id="4VQvhHjW541" role="3xhzZr">
+              <property role="TrG5h" value="import" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW5i$" role="3xhzZr">
+              <property role="3xj4NX" value="AtleastOne" />
+              <property role="2DFMXm" value="," />
+              <ref role="3xiQg3" node="4VQvhHjW570" resolve="dotted_as_name" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW5TZ" role="t8saQ">
+            <property role="TrG5h" value="import_from" />
+            <node concept="3xhzXc" id="4VQvhHjW5Um" role="3xhzZr">
+              <property role="TrG5h" value="from" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW5Ur" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW5Q3" resolve="relative_module" />
+            </node>
+            <node concept="3xhzXc" id="4VQvhHjW5Uz" role="3xhzZr">
+              <property role="TrG5h" value="import" />
+            </node>
+            <node concept="3xiQg6" id="4VQvhHjW5Yw" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW5Y7" resolve="import_clause" />
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="4VQvhHjW6qo" role="t8saQ" />
+          <node concept="t8saL" id="4VQvhHjW7mt" role="t8saQ">
+            <property role="TrG5h" value="auxiliary" />
+            <node concept="3xhzZY" id="4VQvhHjW570" role="t8saQ">
+              <property role="TrG5h" value="dotted_as_name" />
+              <node concept="3xiQg6" id="4VQvhHjW5rA" role="3xhzZr">
+                <property role="TrG5h" value="Importee" />
+                <ref role="3xiQg3" node="4VQvhHjW5lC" resolve="dotted_name" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW5fF" role="3xhzZr">
+                <property role="TrG5h" value="ImportAs" />
+                <property role="3xj4NX" value="AtMostOne" />
+                <ref role="3xiQg3" node="1s5$G$00UjK" resolve="as_name" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW5lC" role="t8saQ">
+              <property role="TrG5h" value="dotted_name" />
+              <node concept="3xiQg6" id="4VQvhHjW5oE" role="3xhzZr">
+                <property role="3xj4NX" value="AtleastOne" />
+                <property role="2DFMXm" value="." />
+                <ref role="3xiQg3" node="4VQvhHjWhBx" resolve="name" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW5D1" role="t8saQ">
+              <property role="TrG5h" value="import_as_name" />
+              <node concept="2GSJ2k" id="2nZx5M9cVLh" role="3xhzZr">
+                <ref role="2GQAiS" node="4VQvhHjW3RS" resolve="NAME" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW5Je" role="3xhzZr">
+                <property role="TrG5h" value="ImportAs" />
+                <property role="3xj4NX" value="AtMostOne" />
+                <ref role="3xiQg3" node="1s5$G$00UjK" resolve="as_name" />
+              </node>
+            </node>
+            <node concept="3xJKux" id="4VQvhHjW6$t" role="t8saQ">
+              <property role="TrG5h" value="just_dots" />
+              <node concept="3xiQg6" id="2nZx5M9cVLd" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjWbVO" resolve="simple_dot" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW6Ow" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjWbW8" resolve="ellipsis" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="1s5$G$00UjK" role="t8saQ">
+              <property role="TrG5h" value="as_name" />
+              <node concept="3xhzXc" id="1s5$G$00Uk0" role="3xhzZr">
+                <property role="TrG5h" value="as" />
+              </node>
+              <node concept="2GSJ2k" id="2nZx5M9cVL9" role="3xhzZr">
+                <ref role="2GQAiS" node="4VQvhHjW3RS" resolve="NAME" />
+              </node>
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="4VQvhHjW7oT" role="t8saQ" />
+          <node concept="t8saL" id="4VQvhHjW7o8" role="t8saQ">
+            <property role="TrG5h" value="module" />
+            <node concept="3xJKux" id="4VQvhHjW5Q3" role="t8saQ">
+              <property role="TrG5h" value="relative_module" />
+              <node concept="3xiQg6" id="4VQvhHjW7kb" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW70A" resolve="named_relative_module" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW7kd" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW71k" resolve="unnamed_relative_module" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW70A" role="t8saQ">
+              <property role="TrG5h" value="named_relative_module" />
+              <node concept="3xiQg6" id="4VQvhHjW75_" role="3xhzZr">
+                <property role="3xj4NX" value="ZeroOrMore" />
+                <ref role="3xiQg3" node="4VQvhHjW6$t" resolve="just_dots" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW7cQ" role="3xhzZr">
+                <ref role="3xiQg3" node="4VQvhHjW5lC" resolve="dotted_name" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW71k" role="t8saQ">
+              <property role="TrG5h" value="unnamed_relative_module" />
+              <node concept="3xiQg6" id="4VQvhHjW7gx" role="3xhzZr">
+                <property role="3xj4NX" value="AtleastOne" />
+                <ref role="3xiQg3" node="4VQvhHjW6$t" resolve="just_dots" />
+              </node>
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="4VQvhHjW7sg" role="t8saQ" />
+          <node concept="t8saL" id="4VQvhHjW7qy" role="t8saQ">
+            <property role="TrG5h" value="elements" />
+            <node concept="3xJKux" id="4VQvhHjW5Y7" role="t8saQ">
+              <property role="TrG5h" value="import_clause" />
+              <node concept="3xiQg6" id="4VQvhHjW6aV" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW622" resolve="import_all" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW6aX" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW63l" resolve="import_names" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW6b0" role="3xJKtx">
+                <ref role="3xiQg3" node="4VQvhHjW6ab" resolve="import_names_paren" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW622" role="t8saQ">
+              <property role="TrG5h" value="import_all" />
+              <node concept="3xhzXc" id="4VQvhHjW62s" role="3xhzZr">
+                <property role="TrG5h" value="*" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW63l" role="t8saQ">
+              <property role="TrG5h" value="import_names" />
+              <node concept="3xiQg6" id="4VQvhHjW66T" role="3xhzZr">
+                <property role="3xj4NX" value="AtleastOne" />
+                <property role="2DFMXm" value="," />
+                <ref role="3xiQg3" node="4VQvhHjW5D1" resolve="import_as_name" />
+              </node>
+            </node>
+            <node concept="3xhzZY" id="4VQvhHjW6ab" role="t8saQ">
+              <property role="TrG5h" value="import_names_paren" />
+              <node concept="3xhzXc" id="4VQvhHjW6aI" role="3xhzZr">
+                <property role="TrG5h" value="(" />
+              </node>
+              <node concept="3xiQg6" id="4VQvhHjW6ac" role="3xhzZr">
+                <property role="3xj4NX" value="AtleastOne" />
+                <property role="2DFMXm" value="," />
+                <ref role="3xiQg3" node="4VQvhHjW5D1" resolve="import_as_name" />
+              </node>
+              <node concept="3xhzXc" id="4VQvhHjW6aQ" role="3xhzZr">
+                <property role="TrG5h" value=")" />
+              </node>
+            </node>
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4VQvhHjW50e" role="t8saQ" />
+        <node concept="t8saL" id="4VQvhHjW3tc" role="t8saQ">
+          <property role="TrG5h" value="misc" />
+          <node concept="3xhzZY" id="4VQvhHjW3CU" role="t8saQ">
+            <property role="TrG5h" value="del_stmt" />
+            <node concept="3xhzXc" id="2JFas4t36my" role="3xhzZr">
+              <property role="TrG5h" value="del" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t36mC" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW7_V" resolve="exprlist" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW3Fw" role="t8saQ">
+            <property role="TrG5h" value="pass_stmt" />
+            <node concept="3xhzXc" id="4VQvhHjW3Hw" role="3xhzZr">
+              <property role="TrG5h" value="pass" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW3JP" role="t8saQ">
+            <property role="TrG5h" value="global_stmt" />
+            <node concept="3xhzXc" id="2JFas4t37x8" role="3xhzZr">
+              <property role="TrG5h" value="global" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t37xe" role="3xhzZr">
+              <property role="3xj4NX" value="AtleastOne" />
+              <property role="2DFMXm" value=", " />
+              <ref role="3xiQg3" node="4VQvhHjWhBx" resolve="name" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW3Wr" role="t8saQ">
+            <property role="TrG5h" value="nonlocal_stmt" />
+            <node concept="3xhzXc" id="2JFas4t37xi" role="3xhzZr">
+              <property role="TrG5h" value="nonlocal" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t37xn" role="3xhzZr">
+              <property role="2DFMXm" value=", " />
+              <property role="3xj4NX" value="AtleastOne" />
+              <ref role="3xiQg3" node="4VQvhHjWhBx" resolve="name" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4VQvhHjW3YL" role="t8saQ">
+            <property role="TrG5h" value="assert_stmt" />
+            <node concept="3xhzXc" id="2JFas4t36TH" role="3xhzZr">
+              <property role="TrG5h" value="assert" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t36TM" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t36TU" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="2JFas4t36C8" resolve="assert_message" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="2JFas4t36C8" role="t8saQ">
+            <property role="TrG5h" value="assert_message" />
+            <node concept="3xhzXc" id="2JFas4t37bt" role="3xhzZr">
+              <property role="TrG5h" value="," />
+            </node>
+            <node concept="3xiQg6" id="2JFas4t37fy" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="4idNKJH8qqz" role="t8saQ" />
+      <node concept="t8saL" id="4idNKJH8gp8" role="t8saQ">
+        <property role="TrG5h" value="suite" />
+        <node concept="3xhzZY" id="4idNKJH8guv" role="t8saQ">
+          <property role="TrG5h" value="stats" />
+          <node concept="3xiQg6" id="4idNKJH8gzk" role="3xhzZr">
+            <property role="3xj4NX" value="AtleastOne" />
+            <property role="2DFMXm" value="\n" />
+            <ref role="3xiQg3" node="4VQvhHjW2Ob" resolve="stmt" />
+          </node>
+        </node>
+        <node concept="3xJKux" id="4idNKJH8gzF" role="t8saQ">
+          <property role="TrG5h" value="suite" />
+          <node concept="3xiQg6" id="4idNKJH8gzL" role="3xJKtx">
+            <ref role="3xiQg3" node="4VQvhHjW2Yx" resolve="simple_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8gzN" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8guv" resolve="stats" />
+          </node>
+        </node>
+      </node>
+      <node concept="3P3UoZ" id="4idNKJH8ERv" role="t8saQ" />
+      <node concept="t8saL" id="4VQvhHjW31O" role="t8saQ">
+        <property role="TrG5h" value="compound" />
+        <node concept="3xJKux" id="4VQvhHjW33x" role="t8saQ">
+          <property role="TrG5h" value="compound_stmt" />
+          <node concept="3xiQg6" id="4idNKJH8mju" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8iqV" resolve="if_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8mjw" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8hug" resolve="while_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8mpA" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8h3k" resolve="for_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8mvI" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8kyt" resolve="try_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8m_S" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8ll8" resolve="with_stmt" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8mG4" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8m1o" resolve="funcdef" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8mMi" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8m7p" resolve="classdef" />
+          </node>
+          <node concept="3xiQg6" id="4idNKJH8mSy" role="3xJKtx">
+            <ref role="3xiQg3" node="4idNKJH8mdr" resolve="decorated" />
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4idNKJH8edG" role="t8saQ" />
+        <node concept="t8saL" id="1s5$G$01bCf" role="t8saQ">
+          <property role="TrG5h" value="definitions" />
+          <node concept="3xhzZY" id="4idNKJH8m1o" role="t8saQ">
+            <property role="TrG5h" value="funcdef" />
+            <node concept="3xhzXc" id="4idNKJH8nJl" role="3xhzZr">
+              <property role="TrG5h" value="def" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8nOF" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjWhBx" resolve="name" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8nVd" role="3xhzZr">
+              <property role="TrG5h" value="(" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8o8w" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="4idNKJH8o1V" resolve="typedargslist" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8of8" role="3xhzZr">
+              <property role="TrG5h" value=")" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8osK" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="1s5$G$01gFm" resolve="func_result" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8ozx" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8ozP" role="3xhzZr">
+              <property role="d84q9" value="true" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8m7p" role="t8saQ">
+            <property role="TrG5h" value="classdef" />
+            <node concept="3xhzXc" id="4idNKJH8nj2" role="3xhzZr">
+              <property role="TrG5h" value="class" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8njj" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjWhBx" resolve="name" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8npH" role="3xhzZr">
+              <property role="TrG5h" value="(" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8npR" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="5p9SqSdY09p" resolve="arglist" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8nq3" role="3xhzZr">
+              <property role="TrG5h" value=")" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8nw_" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8nwP" role="3xhzZr">
+              <property role="d84q9" value="true" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="1s5$G$01gFm" role="t8saQ">
+            <property role="TrG5h" value="func_result" />
+            <node concept="3xhzXc" id="1s5$G$01gFF" role="3xhzZr">
+              <property role="TrG5h" value="-&gt;" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$01gGs" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4idNKJH8h2Y" role="t8saQ" />
+        <node concept="t8saL" id="1s5$G$01bwd" role="t8saQ">
+          <property role="TrG5h" value="loops" />
+          <node concept="3xhzZY" id="4idNKJH8hug" role="t8saQ">
+            <property role="TrG5h" value="while_stmt" />
+            <node concept="3xhzXc" id="4idNKJH8huh" role="3xhzZr">
+              <property role="TrG5h" value="while" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8hui" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8huj" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8huk" role="3xhzZr">
+              <property role="d84lQ" value="true" />
+              <property role="d84q9" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TKl" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="1s5$G$00TGS" resolve="else_clause" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8h3k" role="t8saQ">
+            <property role="TrG5h" value="for_stmt" />
+            <node concept="3xhzXc" id="4idNKJH8h3F" role="3xhzZr">
+              <property role="TrG5h" value="for" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8h3K" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW7_V" resolve="exprlist" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8h8S" role="3xhzZr">
+              <property role="TrG5h" value="in" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8he3" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW4$1" resolve="testlist" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8hjh" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8hoD" role="3xhzZr">
+              <property role="3xj4NX" value="ExactlyOne" />
+              <property role="d84lQ" value="true" />
+              <property role="d84q9" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TKN" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="1s5$G$00TGS" resolve="else_clause" />
+            </node>
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="1s5$G$01bug" role="t8saQ" />
+        <node concept="t8saL" id="4idNKJH8i9K" role="t8saQ">
+          <property role="TrG5h" value="selection" />
+          <node concept="3xhzZY" id="4idNKJH8iqV" role="t8saQ">
+            <property role="TrG5h" value="if_stmt" />
+            <node concept="3xhzXc" id="4idNKJH8ir4" role="3xhzZr">
+              <property role="TrG5h" value="if" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8iwt" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8iw_" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8iwJ" role="3xhzZr">
+              <property role="d84lQ" value="true" />
+              <property role="d84q9" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8iAi" role="3xhzZr">
+              <property role="3xj4NX" value="ZeroOrMore" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8ifD" resolve="elif_clause" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TJa" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="1s5$G$00TGS" resolve="else_clause" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8ifD" role="t8saQ">
+            <property role="TrG5h" value="elif_clause" />
+            <node concept="3xhzXc" id="4idNKJH8ifH" role="3xhzZr">
+              <property role="TrG5h" value="elif" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8il0" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8il8" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8ili" role="3xhzZr">
+              <property role="d84q9" value="true" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="1s5$G$00TGS" role="t8saQ">
+            <property role="TrG5h" value="else_clause" />
+            <node concept="3xhzXc" id="1s5$G$00TIJ" role="3xhzZr">
+              <property role="TrG5h" value="else" />
+            </node>
+            <node concept="3xhzXc" id="1s5$G$00TIO" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TIW" role="3xhzZr">
+              <property role="d84lQ" value="true" />
+              <property role="d84q9" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="4idNKJH8iap" role="t8saQ" />
+        </node>
+        <node concept="t8saL" id="4idNKJH8geK" role="t8saQ">
+          <property role="TrG5h" value="try" />
+          <node concept="2DJ5fZ" id="1s5$G$00TUM" role="t8saQ">
+            <property role="TrG5h" value="alternative:" />
+          </node>
+          <node concept="2DJ5fZ" id="1s5$G$00TVK" role="t8saQ">
+            <property role="TrG5h" value="try : &lt;suite&gt; &lt;except_clause&gt;* &lt;else_clause&gt;? &lt;finally_clause&gt;?" />
+          </node>
+          <node concept="2DJ5fZ" id="1s5$G$00TWK" role="t8saQ">
+            <property role="TrG5h" value="with constraint sizeof(except_clause) + sizeof(else_clause) + sizeof(finally_clause) != 0" />
+          </node>
+          <node concept="3P3UoZ" id="1s5$G$00TXh" role="t8saQ" />
+          <node concept="3xhzZY" id="4idNKJH8kyt" role="t8saQ">
+            <property role="TrG5h" value="try_stmt" />
+            <node concept="3xhzXc" id="4idNKJH8kCB" role="3xhzZr">
+              <property role="TrG5h" value="try" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJHclzV" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8kIy" role="3xhzZr">
+              <property role="d84q9" value="true" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8kOs" role="3xhzZr">
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8jMR" resolve="except_finally" />
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="1s5$G$00Uxk" role="t8saQ" />
+          <node concept="3xJKux" id="4idNKJH8jMR" role="t8saQ">
+            <property role="TrG5h" value="except_finally" />
+            <node concept="3xiQg6" id="4idNKJH8kxB" role="3xJKtx">
+              <ref role="3xiQg3" node="4idNKJH8jYO" resolve="except_clauses" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8kxD" role="3xJKtx">
+              <ref role="3xiQg3" node="4idNKJH8jYo" resolve="finally_clause" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8jYo" role="t8saQ">
+            <property role="TrG5h" value="finally_clause" />
+            <node concept="3xhzXc" id="4idNKJH8krM" role="3xhzZr">
+              <property role="TrG5h" value="finally:" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8krR" role="3xhzZr">
+              <property role="d84lQ" value="true" />
+              <property role="d84q9" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8jYO" role="t8saQ">
+            <property role="TrG5h" value="except_clauses" />
+            <node concept="3xiQg6" id="4idNKJH8k4C" role="3xhzZr">
+              <property role="3xj4NX" value="AtleastOne" />
+              <property role="2DFMXm" value="\n" />
+              <ref role="3xiQg3" node="4idNKJH8jaP" resolve="except_clause" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TJC" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="1s5$G$00TGS" resolve="else_clause" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TJZ" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8jYo" resolve="finally_clause" />
+            </node>
+          </node>
+          <node concept="3P3UoZ" id="1s5$G$00Uwa" role="t8saQ" />
+          <node concept="3xhzZY" id="4idNKJH8jaP" role="t8saQ">
+            <property role="TrG5h" value="except_clause" />
+            <node concept="3xhzXc" id="4idNKJH8jaU" role="3xhzZr">
+              <property role="TrG5h" value="except" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8jxy" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="4idNKJH8jgB" resolve="except_test" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8jxE" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8jBn" role="3xhzZr">
+              <property role="d84q9" value="true" />
+              <property role="d84lQ" value="true" />
+              <property role="3xj4NX" value="ExactlyOne" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8jgB" role="t8saQ">
+            <property role="TrG5h" value="except_test" />
+            <node concept="3xiQg6" id="4idNKJH8jmd" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8jrT" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="1s5$G$00TRO" resolve="except_rename" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="1s5$G$00TRO" role="t8saQ">
+            <property role="TrG5h" value="except_rename" />
+            <node concept="3xhzXc" id="1s5$G$00TSh" role="3xhzZr">
+              <property role="TrG5h" value="as" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TTi" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjWhBx" resolve="name" />
+            </node>
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4idNKJH8gjR" role="t8saQ" />
+        <node concept="t8saL" id="4idNKJH8gjI" role="t8saQ">
+          <property role="TrG5h" value="with" />
+          <node concept="3xhzZY" id="4idNKJH8ll8" role="t8saQ">
+            <property role="TrG5h" value="with_stmt" />
+            <node concept="3xhzXc" id="4idNKJH8lr8" role="3xhzZr">
+              <property role="TrG5h" value="with" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8lx7" role="3xhzZr">
+              <property role="3xj4NX" value="AtleastOne" />
+              <property role="2DFMXm" value="," />
+              <ref role="3xiQg3" node="4idNKJH8gHH" resolve="with_item" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8lB9" role="3xhzZr">
+              <property role="TrG5h" value=":" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8lBj" role="3xhzZr">
+              <property role="d84q9" value="true" />
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8gzF" resolve="suite" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8gHH" role="t8saQ">
+            <property role="TrG5h" value="with_item" />
+            <node concept="3xiQg6" id="4idNKJH8l8P" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8gWO" resolve="test" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8lf5" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="1s5$G$00TTz" resolve="with_rename" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="1s5$G$00TTz" role="t8saQ">
+            <property role="TrG5h" value="with_rename" />
+            <node concept="3xhzXc" id="1s5$G$00TTJ" role="3xhzZr">
+              <property role="TrG5h" value="as" />
+            </node>
+            <node concept="3xiQg6" id="1s5$G$00TUe" role="3xhzZr">
+              <ref role="3xiQg3" node="4idNKJH8leY" resolve="expr" />
+            </node>
+          </node>
+        </node>
+        <node concept="3P3UoZ" id="4idNKJH8n1T" role="t8saQ" />
+        <node concept="t8saL" id="4idNKJH8lU3" role="t8saQ">
+          <property role="TrG5h" value="decorators" />
+          <node concept="3xhzZY" id="4idNKJH8mdr" role="t8saQ">
+            <property role="TrG5h" value="decorated" />
+            <node concept="3xiQg6" id="4idNKJH8pJv" role="3xhzZr">
+              <property role="3xj4NX" value="AtleastOne" />
+              <property role="2DFMXm" value="\n" />
+              <ref role="3xiQg3" node="4idNKJH8oSu" resolve="decorator" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8pQg" role="3xhzZr">
+              <property role="d84lQ" value="true" />
+              <ref role="3xiQg3" node="4idNKJH8oLw" resolve="decoratee" />
+            </node>
+          </node>
+          <node concept="3xJKux" id="4idNKJH8oLw" role="t8saQ">
+            <property role="TrG5h" value="decoratee" />
+            <node concept="3xiQg6" id="4idNKJH8oL$" role="3xJKtx">
+              <ref role="3xiQg3" node="4idNKJH8m7p" resolve="classdef" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8oLA" role="3xJKtx">
+              <ref role="3xiQg3" node="4idNKJH8m1o" resolve="funcdef" />
+            </node>
+          </node>
+          <node concept="3xhzZY" id="4idNKJH8oSu" role="t8saQ">
+            <property role="TrG5h" value="decorator" />
+            <node concept="3xhzXc" id="4idNKJH8p5L" role="3xhzZr">
+              <property role="TrG5h" value="@" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8pcI" role="3xhzZr">
+              <ref role="3xiQg3" node="4VQvhHjW5lC" resolve="dotted_name" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8pju" role="3xhzZr">
+              <property role="TrG5h" value="(" />
+            </node>
+            <node concept="3xiQg6" id="4idNKJH8pxH" role="3xhzZr">
+              <property role="3xj4NX" value="AtMostOne" />
+              <ref role="3xiQg3" node="5p9SqSdY09p" resolve="arglist" />
+            </node>
+            <node concept="3xhzXc" id="4idNKJH8pxV" role="3xhzZr">
+              <property role="TrG5h" value=")" />
+            </node>
+          </node>
+        </node>
       </node>
     </node>
-  </root>
+    <node concept="3P3UoZ" id="4idNKJHhaSb" role="3xJMYo" />
+    <node concept="3xhzZY" id="4VQvhHjW2LL" role="3xJMYo">
+      <property role="TrG5h" value="EmptyLine" />
+    </node>
+    <node concept="3xJKux" id="4VQvhHjW2HP" role="3xJMYo">
+      <property role="TrG5h" value="IProgramElement" />
+      <node concept="3xiQg6" id="4VQvhHjW2LQ" role="3xJKtx">
+        <ref role="3xiQg3" node="4VQvhHjW2LL" resolve="EmptyLine" />
+      </node>
+      <node concept="3xiQg6" id="4VQvhHjW2LS" role="3xJKtx">
+        <ref role="3xiQg3" node="4VQvhHjW2Ob" resolve="stmt" />
+      </node>
+    </node>
+    <node concept="3xhzZY" id="4VQvhHjW2Gm" role="3xJMYo">
+      <property role="TrG5h" value="program" />
+      <node concept="3xiQg6" id="4VQvhHjW2PI" role="3xhzZr">
+        <property role="3xj4NX" value="ZeroOrMore" />
+        <property role="2DFMXm" value="\n" />
+        <ref role="3xiQg3" node="4VQvhHjW2HP" resolve="IProgramElement" />
+      </node>
+    </node>
+  </node>
 </model>
 
