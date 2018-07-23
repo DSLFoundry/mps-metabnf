@@ -2,7 +2,7 @@
 <model ref="r:859efffd-deb9-4ee3-9b51-9dd26ec80275(metabnf.behavior)">
   <persistence version="9" />
   <languages>
-    <use id="af65afd8-f0dd-4942-87d9-63a55f2a9db1" name="jetbrains.mps.lang.behavior" version="0" />
+    <use id="af65afd8-f0dd-4942-87d9-63a55f2a9db1" name="jetbrains.mps.lang.behavior" version="1" />
     <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   </languages>
   <imports>
@@ -372,7 +372,7 @@
                 <ref role="3cqZAo" node="6xuOfB$1fCH" resolve="result" />
               </node>
               <node concept="3TrEf2" id="6xuOfB$1pRK" role="2OqNvi">
-                <ref role="3Tt5mk" to="6o2a:svkQGakJb4" />
+                <ref role="3Tt5mk" to="6o2a:svkQGakJb4" resolve="grammar" />
               </node>
             </node>
             <node concept="2oxUTD" id="6xuOfB$1qks" role="2OqNvi">

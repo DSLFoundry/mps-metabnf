@@ -2,8 +2,7 @@
 <model ref="r:40de8445-6801-4abc-bf0f-bd25af6471b0(metabnf.typesystem)">
   <persistence version="9" />
   <languages>
-    <use id="7a5dda62-9140-4668-ab76-d5ed1746f2b2" name="jetbrains.mps.lang.typesystem" version="0" />
-    <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
+    <devkit ref="00000000-0000-4000-0000-1de82b3a4936(jetbrains.mps.devkit.aspect.typesystem)" />
   </languages>
   <imports>
     <import index="6o2a" ref="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(metabnf.structure)" />
@@ -150,7 +149,7 @@
                       <ref role="1YBMHb" node="44Pv0YAShnh" resolve="nonterminalRule" />
                     </node>
                     <node concept="3Tsc0h" id="44Pv0YASlpW" role="2OqNvi">
-                      <ref role="3TtcxE" to="6o2a:2b2ZYR3xc0Q" />
+                      <ref role="3TtcxE" to="6o2a:2b2ZYR3xc0Q" resolve="terms" />
                     </node>
                   </node>
                   <node concept="v3k3i" id="44Pv0YASDnq" role="2OqNvi">
@@ -169,7 +168,7 @@
                               <ref role="3cqZAo" node="44Pv0YASF_m" resolve="it" />
                             </node>
                             <node concept="3TrEf2" id="44Pv0YASGdI" role="2OqNvi">
-                              <ref role="3Tt5mk" to="6o2a:2b2ZYR3ypJI" />
+                              <ref role="3Tt5mk" to="6o2a:2b2ZYR3ypJI" resolve="rule" />
                             </node>
                           </node>
                           <node concept="2OqwBi" id="44Pv0YASGKF" role="3uHU7w">
@@ -177,7 +176,7 @@
                               <ref role="3cqZAo" node="44Pv0YAShwl" resolve="ref" />
                             </node>
                             <node concept="3TrEf2" id="44Pv0YASHsI" role="2OqNvi">
-                              <ref role="3Tt5mk" to="6o2a:2b2ZYR3ypJI" />
+                              <ref role="3Tt5mk" to="6o2a:2b2ZYR3ypJI" resolve="rule" />
                             </node>
                           </node>
                         </node>
@@ -241,7 +240,7 @@
               <ref role="1YBMHb" node="44Pv0YAShnh" resolve="nonterminalRule" />
             </node>
             <node concept="3Tsc0h" id="44Pv0YATpCS" role="2OqNvi">
-              <ref role="3TtcxE" to="6o2a:2b2ZYR3xc0Q" />
+              <ref role="3TtcxE" to="6o2a:2b2ZYR3xc0Q" resolve="terms" />
             </node>
           </node>
           <node concept="v3k3i" id="44Pv0YATsBG" role="2OqNvi">
