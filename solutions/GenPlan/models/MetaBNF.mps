@@ -14,10 +14,7 @@
       <concept id="1820634577908471809" name="jetbrains.mps.lang.generator.plan.structure.Checkpoint" flags="ng" index="2VgMA1">
         <child id="3750601816081740498" name="cpSpec" index="3ps6aC" />
       </concept>
-      <concept id="6257322641293267918" name="jetbrains.mps.lang.generator.plan.structure.CheckpointDeclaration" flags="ng" index="19BiC4" />
-      <concept id="3750601816081740541" name="jetbrains.mps.lang.generator.plan.structure.DeclaredCheckpointSpec" flags="ng" index="3ps6a7">
-        <reference id="3750601816081740544" name="cpDecl" index="3ps6dU" />
-      </concept>
+      <concept id="3750601816081736033" name="jetbrains.mps.lang.generator.plan.structure.InPlaceCheckpointSpec" flags="ng" index="3ps74r" />
       <concept id="8296877263936070001" name="jetbrains.mps.lang.generator.plan.structure.ApplyGenerators" flags="ng" index="3uMcMo">
         <child id="8296877263936660572" name="generator" index="3uOsAP" />
       </concept>
@@ -39,9 +36,6 @@
   </registry>
   <node concept="2VgMpV" id="3tSvZ16jtfV">
     <property role="TrG5h" value="MetaBNF-Plan" />
-    <node concept="19BiC4" id="3tSvZ16jtgn" role="2VgMA7">
-      <property role="TrG5h" value="Concepts" />
-    </node>
     <node concept="3uMcMo" id="5Dh5jJl1DrD" role="2VgMA7">
       <node concept="3uMdn$" id="5Dh5jJl1DrM" role="3uOsAP">
         <node concept="20RdaH" id="5Dh5jJl1DrN" role="3uMdmt">
@@ -51,8 +45,21 @@
       </node>
     </node>
     <node concept="2VgMA1" id="5Dh5jJl3czk" role="2VgMA7">
-      <node concept="3ps6a7" id="5Dh5jJl3czt" role="3ps6aC">
-        <ref role="3ps6dU" node="3tSvZ16jtgn" resolve="Concepts" />
+      <node concept="3ps74r" id="5Dh5jJltmh5" role="3ps6aC">
+        <property role="TrG5h" value="Concepts" />
+      </node>
+    </node>
+    <node concept="3uMcMo" id="5Dh5jJltmfS" role="2VgMA7">
+      <node concept="3uMdn$" id="5Dh5jJltmg3" role="3uOsAP">
+        <node concept="20RdaH" id="5Dh5jJltmg4" role="3uMdmt">
+          <property role="20Rdg5" value="e05ba086-8387-46d0-bcc8-c3ee323cb77f" />
+          <property role="20Rdg7" value="metabnf.aspectgen#01" />
+        </node>
+      </node>
+    </node>
+    <node concept="2VgMA1" id="5Dh5jJltmgM" role="2VgMA7">
+      <node concept="3ps74r" id="5Dh5jJltmh0" role="3ps6aC">
+        <property role="TrG5h" value="Aspects" />
       </node>
     </node>
   </node>

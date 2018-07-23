@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model ref="r:2b60c47c-3cb3-4b1f-b97d-f21975dc2a9d(Python.behavior)">
+<model ref="r:48a97c20-5a7d-47a7-9bc6-5a1909b4b91e(metabnf.aspectgen.behavior)">
   <persistence version="9" />
   <languages>
     <use id="af65afd8-f0dd-4942-87d9-63a55f2a9db1" name="jetbrains.mps.lang.behavior" version="1" />

@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language namespace="Python" uuid="f89b81c4-cf44-42c7-99d5-d436ac2af374" languageVersion="0" moduleVersion="0">
+<language namespace="Demo" uuid="48bed45b-b394-4796-8621-cea28d56a6da" languageVersion="0" moduleVersion="0">
   <models>
     <modelRoot contentPath="${module}" type="default">
-      <sourceRoot location="languageModels" />
+      <sourceRoot location="models" />
     </modelRoot>
   </models>
   <accessoryModels />
   <generators>
-    <generator namespace="Python#3997085339232029833" uuid="e77c3503-77ba-408f-a715-69a5bc38bb28">
+    <generator alias="main" namespace="Demo#01" uuid="972d5101-8cf0-48c2-aaaa-05901e20b917">
       <models>
-        <modelRoot contentPath="${module}" type="default">
-          <sourceRoot path="${module}/generator/template" />
+        <modelRoot contentPath="${module}/generator/template" type="default">
+          <sourceRoot location="." />
         </modelRoot>
       </models>
       <external-templates />
       <languageVersions>
-        <language slang="l:f89b81c4-cf44-42c7-99d5-d436ac2af374:Python" version="0" />
         <language slang="l:f3061a53-9226-4cc5-a443-f952ceaf5816:jetbrains.mps.baseLanguage" version="6" />
         <language slang="l:fd392034-7849-419d-9071-12563d152375:jetbrains.mps.baseLanguage.closures" version="0" />
         <language slang="l:83888646-71ce-4f1c-9c53-c54016f6ad4f:jetbrains.mps.baseLanguage.collections" version="0" />
@@ -25,19 +24,21 @@
         <language slang="l:ceab5195-25ea-4f22-9b92-103b95ca8c0c:jetbrains.mps.lang.core" version="1" />
         <language slang="l:b401a680-8325-4110-8fd3-84331ff25bef:jetbrains.mps.lang.generator" version="0" />
         <language slang="l:d7706f63-9be2-479c-a3da-ae92af1e64d5:jetbrains.mps.lang.generator.generationContext" version="0" />
+        <language slang="l:289fcc83-6543-41e8-a5ca-768235715ce4:jetbrains.mps.lang.generator.generationParameters" version="0" />
         <language slang="l:446c26eb-2b7b-4bf0-9b35-f83fa582753e:jetbrains.mps.lang.modelapi" version="0" />
         <language slang="l:3a13115c-633c-4c5c-bbcc-75c4219e9555:jetbrains.mps.lang.quotation" version="0" />
+        <language slang="l:13744753-c81f-424a-9c1b-cf8943bf4e86:jetbrains.mps.lang.sharedConcepts" version="0" />
         <language slang="l:7866978e-a0f0-4cc7-81bc-4d213d9375e1:jetbrains.mps.lang.smodel" version="11" />
         <language slang="l:c7fb639f-be78-4307-89b0-b5959c3fa8c8:jetbrains.mps.lang.text" version="0" />
         <language slang="l:9ded098b-ad6a-4657-bfd9-48636cfe8bc3:jetbrains.mps.lang.traceable" version="0" />
       </languageVersions>
       <dependencyVersions>
         <module reference="3f233e7f-b8a6-46d2-a57f-795d56775243(Annotations)" version="0" />
+        <module reference="48bed45b-b394-4796-8621-cea28d56a6da(Demo)" version="0" />
+        <module reference="972d5101-8cf0-48c2-aaaa-05901e20b917(Demo#01)" version="0" />
         <module reference="6354ebe7-c22a-4a0f-ac54-50b52ab9b065(JDK)" version="0" />
         <module reference="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea(MPS.Core)" version="0" />
         <module reference="8865b7a8-5271-43d3-884c-6fd1d9cfdd34(MPS.OpenAPI)" version="0" />
-        <module reference="f89b81c4-cf44-42c7-99d5-d436ac2af374(Python)" version="0" />
-        <module reference="e77c3503-77ba-408f-a715-69a5bc38bb28(Python#3997085339232029833)" version="0" />
         <module reference="ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)" version="0" />
       </dependencyVersions>
       <mapping-priorities />
@@ -71,15 +72,14 @@
   </languageVersions>
   <dependencyVersions>
     <module reference="3f233e7f-b8a6-46d2-a57f-795d56775243(Annotations)" version="0" />
+    <module reference="48bed45b-b394-4796-8621-cea28d56a6da(Demo)" version="0" />
     <module reference="6354ebe7-c22a-4a0f-ac54-50b52ab9b065(JDK)" version="0" />
     <module reference="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea(MPS.Core)" version="0" />
     <module reference="8865b7a8-5271-43d3-884c-6fd1d9cfdd34(MPS.OpenAPI)" version="0" />
-    <module reference="f89b81c4-cf44-42c7-99d5-d436ac2af374(Python)" version="0" />
     <module reference="ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)" version="0" />
     <module reference="a9e4c532-c5f5-4bb7-99ef-42abb73bbb70(jetbrains.mps.lang.descriptor.aspects)" version="0" />
-    <module reference="566c591f-9002-4c12-b8be-7b5006d08dc2(mbnf.sandbox@transient16)" version="0" />
-    <module reference="b0fcf759-165d-4568-89d7-4e9214309cfb(mbnf.sandbox@transient43)" version="0" />
-    <module reference="95552bef-bc85-457b-9583-4f76ed4c21bd(mbnf.sandbox@transient94)" version="0" />
+    <module reference="142c6b91-ff64-4c49-ac66-23d8f95a7dd9(mbnf.sandbox@transient114)" version="0" />
+    <module reference="a0bc3466-155a-46cd-bb1b-44f518359406(mbnf.sandbox@transient122)" version="0" />
   </dependencyVersions>
   <extendedLanguages />
 </language>
