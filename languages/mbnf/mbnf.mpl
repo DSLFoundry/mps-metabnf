@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language namespace="metabnf" uuid="9c03c641-469f-49e7-aeed-44a3d19b7253" languageVersion="1" moduleVersion="0">
+<language namespace="metabnf" uuid="9c03c641-469f-49e7-aeed-44a3d19b7253" languageVersion="0" moduleVersion="0">
   <models>
     <modelRoot contentPath="${module}" type="default">
       <sourceRoot location="languageModels" />
