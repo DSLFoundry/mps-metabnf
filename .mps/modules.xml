@@ -7,7 +7,7 @@
       <modulePath path="$PROJECT_DIR$/languages/mbnf/mbnf.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/mbnf/sandbox/mbnf.sandbox.msd" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/metabnf.aspectgen/metabnf.aspectgen.mpl" folder="" />
-      <modulePath path="$PROJECT_DIR$/solutions/GenPlan/GenPlan.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/solutions/GenPlan/Genplan.msd" folder="" />
     </projectModules>
   </component>
 </project>
