@@ -1,6 +1,6 @@
 # MetaBNF for JetBrains MPS
 Grammar-based MPS-language specification and generation
-This version of MetaBNF works on MPS 2018.1
+This version of MetaBNF works on MPS 2019.1
 
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language)

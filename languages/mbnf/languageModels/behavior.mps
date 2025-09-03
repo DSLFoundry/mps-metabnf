@@ -664,10 +664,10 @@
             <node concept="2OqwBi" id="3tKEMTIuW_t" role="1eOMHV">
               <node concept="2YIFZM" id="3tKEMTIuW_u" role="2Oq$k0">
                 <ref role="1Pybhc" to="w1kc:~SModelRepository" resolve="SModelRepository" />
-                <ref role="37wK5l" to="w1kc:~SModelRepository.getInstance():jetbrains.mps.smodel.SModelRepository" resolve="getInstance" />
+                <ref role="37wK5l" to="w1kc:~SModelRepository.getInstance()" resolve="getInstance" />
               </node>
               <node concept="liA8E" id="3tKEMTIuW_v" role="2OqNvi">
-                <ref role="37wK5l" to="w1kc:~SModelRepository.getModelDescriptor(java.lang.String):org.jetbrains.mps.openapi.model.SModel" resolve="getModelDescriptor" />
+                <ref role="37wK5l" to="w1kc:~SModelRepository.getModelDescriptor(java.lang.String)" resolve="getModelDescriptor" />
                 <node concept="3cpWs3" id="6sza796Wr3O" role="37wK5m">
                   <node concept="37vLTw" id="6sza796Wr5a" role="3uHU7w">
                     <ref role="3cqZAo" node="3tKEMTIk46E" resolve="aspect" />

@@ -4,7 +4,7 @@
   <languages>
     <use id="9c03c641-469f-49e7-aeed-44a3d19b7253" name="metabnf" version="0" />
     <use id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator" version="2" />
-    <use id="d7706f63-9be2-479c-a3da-ae92af1e64d5" name="jetbrains.mps.lang.generator.generationContext" version="0" />
+    <use id="d7706f63-9be2-479c-a3da-ae92af1e64d5" name="jetbrains.mps.lang.generator.generationContext" version="1" />
     <use id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure" version="7" />
     <use id="13744753-c81f-424a-9c1b-cf8943bf4e86" name="jetbrains.mps.lang.sharedConcepts" version="0" />
     <use id="18bc6592-03a6-4e29-a83a-7ff23bde13ba" name="jetbrains.mps.lang.editor" version="12" />
@@ -565,7 +565,7 @@
                                 </node>
                               </node>
                               <node concept="liA8E" id="44Pv0YAETHa" role="2OqNvi">
-                                <ref role="37wK5l" to="wyt6:~String.equals(java.lang.Object):boolean" resolve="equals" />
+                                <ref role="37wK5l" to="wyt6:~String.equals(java.lang.Object)" resolve="equals" />
                                 <node concept="2OqwBi" id="44Pv0YAETHb" role="37wK5m">
                                   <node concept="2OqwBi" id="44Pv0YAETHc" role="2Oq$k0">
                                     <node concept="30H73N" id="44Pv0YAETHd" role="2Oq$k0" />
@@ -877,7 +877,7 @@
                                   </node>
                                 </node>
                                 <node concept="liA8E" id="2uPbBoXa7$h" role="2OqNvi">
-                                  <ref role="37wK5l" to="wyt6:~String.equals(java.lang.Object):boolean" resolve="equals" />
+                                  <ref role="37wK5l" to="wyt6:~String.equals(java.lang.Object)" resolve="equals" />
                                   <node concept="2OqwBi" id="2uPbBoXa7$i" role="37wK5m">
                                     <node concept="2OqwBi" id="2uPbBoXa7$j" role="2Oq$k0">
                                       <node concept="30H73N" id="2uPbBoXa7$k" role="2Oq$k0" />
@@ -1087,7 +1087,7 @@
                                   </node>
                                 </node>
                                 <node concept="liA8E" id="4VQvhHjWsxx" role="2OqNvi">
-                                  <ref role="37wK5l" to="wyt6:~String.equals(java.lang.Object):boolean" resolve="equals" />
+                                  <ref role="37wK5l" to="wyt6:~String.equals(java.lang.Object)" resolve="equals" />
                                   <node concept="2OqwBi" id="4VQvhHjWsxy" role="37wK5m">
                                     <node concept="2OqwBi" id="4VQvhHjWsxz" role="2Oq$k0">
                                       <node concept="30H73N" id="4VQvhHjWsx$" role="2Oq$k0" />
