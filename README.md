@@ -2,6 +2,14 @@
 Grammar-based MPS-language specification and generation
 This version of MetaBNF works on MPS 2019.1
 
+# Rationale
+This language tries to achieve similar results as https://github.com/premun/ingrid (see also https://github.com/vaclav/MPS_CSharp for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid simply translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
+
+# Current status
+The current status of MetaBNF is: it works for basic cases, but is not yet feature-complete w.r.t. editor usability. There are no industrial or large-scale applications yet that have battle tested it.
+
+Also, grammars are written manually at the moment and there is no import (e.g. from antlr or similar).
+
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language)
 - To generate a language from the MetaBNF model:
