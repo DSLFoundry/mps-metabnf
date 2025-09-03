@@ -2,7 +2,7 @@
 <model ref="r:61914bbb-2720-4ba2-80aa-daf4b51a6cbe(metabnf.plugin)">
   <persistence version="9" />
   <languages>
-    <use id="28f9e497-3b42-4291-aeba-0a1039153ab1" name="jetbrains.mps.lang.plugin" version="2" />
+    <use id="28f9e497-3b42-4291-aeba-0a1039153ab1" name="jetbrains.mps.lang.plugin" version="4" />
     <use id="ef7bf5ac-d06c-4342-b11d-e42104eb9343" name="jetbrains.mps.lang.plugin.standalone" version="0" />
     <use id="443f4c36-fcf5-4eb6-9500-8d06ed259e3e" name="jetbrains.mps.baseLanguage.classifiers" version="0" />
     <use id="696c1165-4a59-463b-bc5d-902caab85dd0" name="jetbrains.mps.make.facet" version="0" />
@@ -82,9 +82,6 @@
       <concept id="1465982738277781862" name="jetbrains.mps.baseLanguage.structure.PlaceholderMember" flags="ng" index="2tJIrI" />
       <concept id="1076505808687" name="jetbrains.mps.baseLanguage.structure.WhileStatement" flags="nn" index="2$JKZl">
         <child id="1076505808688" name="condition" index="2$JKZa" />
-      </concept>
-      <concept id="1224848483129" name="jetbrains.mps.baseLanguage.structure.IBLDeprecatable" flags="ng" index="IEa8$">
-        <property id="1224848525476" name="isDeprecated" index="IEkAT" />
       </concept>
       <concept id="1154032098014" name="jetbrains.mps.baseLanguage.structure.AbstractLoopStatement" flags="nn" index="2LF5Ji">
         <child id="1154032183016" name="body" index="2LFqv$" />
@@ -328,7 +325,7 @@
       </concept>
       <concept id="709746936026466394" name="jetbrains.mps.lang.core.structure.ChildAttribute" flags="ng" index="3VBwX9">
         <property id="709746936026609031" name="linkId" index="3V$3ak" />
-        <property id="709746936026609029" name="linkRole" index="3V$3am" />
+        <property id="709746936026609029" name="role_DebugInfo" index="3V$3am" />
       </concept>
       <concept id="4452961908202556907" name="jetbrains.mps.lang.core.structure.BaseCommentAttribute" flags="ng" index="1X3_iC">
         <child id="3078666699043039389" name="commentedNode" index="8Wnug" />
@@ -923,7 +920,6 @@
                               <property role="1EzhhJ" value="false" />
                               <property role="TrG5h" value="run" />
                               <property role="DiZV1" value="false" />
-                              <property role="IEkAT" value="false" />
                               <node concept="3Tm1VV" id="75wOK7mdAx3" role="1B3o_S" />
                               <node concept="3cqZAl" id="75wOK7mdAx5" role="3clF45" />
                               <node concept="3clFbS" id="75wOK7mdAx6" role="3clF47">
@@ -1185,7 +1181,6 @@
                                               <property role="1EzhhJ" value="false" />
                                               <property role="TrG5h" value="run" />
                                               <property role="DiZV1" value="false" />
-                                              <property role="IEkAT" value="false" />
                                               <node concept="3Tm1VV" id="75wOK7mprZ5" role="1B3o_S" />
                                               <node concept="3cqZAl" id="75wOK7mprZ7" role="3clF45" />
                                               <node concept="3clFbS" id="75wOK7mprZ8" role="3clF47">
