@@ -7,6 +7,9 @@
   </models>
   <facets>
     <facet type="generator" planModel="r:de9bfef8-6a97-4beb-afa0-cf9671039543(GenPlan.MetaBNF)" />
+    <facet type="java">
+      <classes generated="true" path="${module}/classes_gen" />
+    </facet>
   </facets>
   <sourcePath />
   <dependencies>
