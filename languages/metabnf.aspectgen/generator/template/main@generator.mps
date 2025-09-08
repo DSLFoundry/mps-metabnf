@@ -3,7 +3,7 @@
   <persistence version="9" />
   <languages>
     <use id="9c03c641-469f-49e7-aeed-44a3d19b7253" name="metabnf" version="0" />
-    <use id="18bc6592-03a6-4e29-a83a-7ff23bde13ba" name="jetbrains.mps.lang.editor" version="12" />
+    <use id="18bc6592-03a6-4e29-a83a-7ff23bde13ba" name="jetbrains.mps.lang.editor" version="13" />
     <use id="b83431fe-5c8f-40bc-8a36-65e25f4dd253" name="jetbrains.mps.lang.textGen" version="1" />
     <devkit ref="a2eb3a43-fcc2-4200-80dc-c60110c4862d(jetbrains.mps.devkit.templates)" />
   </languages>
@@ -207,12 +207,18 @@
       <concept id="1217282130234" name="jetbrains.mps.lang.generator.generationContext.structure.GenerationContextOp_GetOutputModel" flags="nn" index="1FEO0x" />
     </language>
     <language id="760a0a8c-eabb-4521-8bfd-65db761a9ba3" name="jetbrains.mps.baseLanguage.logging">
-      <concept id="1167227138527" name="jetbrains.mps.baseLanguage.logging.structure.LogStatement" flags="nn" index="34ab3g">
+      <concept id="1167227138527" name="jetbrains.mps.baseLanguage.logging.structure.LogStatement" flags="ng" index="34ab3g">
         <property id="1167245565795" name="severity" index="35gtTG" />
         <child id="1167227463056" name="logExpression" index="34bqiv" />
       </concept>
     </language>
     <language id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel">
+      <concept id="4705942098322609812" name="jetbrains.mps.lang.smodel.structure.EnumMember_IsOperation" flags="ng" index="21noJN">
+        <child id="4705942098322609813" name="member" index="21noJM" />
+      </concept>
+      <concept id="4705942098322467729" name="jetbrains.mps.lang.smodel.structure.EnumMemberReference" flags="ng" index="21nZrQ">
+        <reference id="4705942098322467736" name="decl" index="21nZrZ" />
+      </concept>
       <concept id="1177026924588" name="jetbrains.mps.lang.smodel.structure.RefConcept_Reference" flags="nn" index="chp4Y">
         <reference id="1177026940964" name="conceptDeclaration" index="cht4Q" />
       </concept>
@@ -220,16 +226,10 @@
         <child id="1144104376918" name="parameter" index="1xVPHs" />
       </concept>
       <concept id="1179409122411" name="jetbrains.mps.lang.smodel.structure.Node_ConceptMethodCall" flags="nn" index="2qgKlT" />
-      <concept id="1138676077309" name="jetbrains.mps.lang.smodel.structure.EnumMemberReference" flags="nn" index="uoxfO">
-        <reference id="1138676095763" name="enumMember" index="uo_Cq" />
-      </concept>
       <concept id="1171323947159" name="jetbrains.mps.lang.smodel.structure.Model_NodesOperation" flags="nn" index="2SmgA7">
         <child id="1758937410080001570" name="conceptArgument" index="1dBWTz" />
       </concept>
       <concept id="1171407110247" name="jetbrains.mps.lang.smodel.structure.Node_GetAncestorOperation" flags="nn" index="2Xjw5R" />
-      <concept id="1146171026731" name="jetbrains.mps.lang.smodel.structure.Property_HasValue_Enum" flags="nn" index="3t7uKx">
-        <child id="1146171026732" name="value" index="3t7uKA" />
-      </concept>
       <concept id="1171999116870" name="jetbrains.mps.lang.smodel.structure.Node_IsNullOperation" flags="nn" index="3w_OXm" />
       <concept id="1172008320231" name="jetbrains.mps.lang.smodel.structure.Node_IsNotNullOperation" flags="nn" index="3x8VRR" />
       <concept id="1144101972840" name="jetbrains.mps.lang.smodel.structure.OperationParm_Concept" flags="ng" index="1xMEDy">
@@ -4040,13 +4040,13 @@
                             <node concept="2OqwBi" id="6xuOfB$bYUr" role="3clFbG">
                               <node concept="2OqwBi" id="6xuOfB$bY28" role="2Oq$k0">
                                 <node concept="3TrcHB" id="6xuOfB$bYuu" role="2OqNvi">
-                                  <ref role="3TsBF5" to="6o2a:2b2ZYR3zFcg" resolve="card" />
+                                  <ref role="3TsBF5" to="6o2a:21bD4dVyEsP" resolve="card" />
                                 </node>
                                 <node concept="30H73N" id="6xuOfB$bY2c" role="2Oq$k0" />
                               </node>
-                              <node concept="3t7uKx" id="6xuOfB$c3zY" role="2OqNvi">
-                                <node concept="uoxfO" id="6xuOfB$c3$0" role="3t7uKA">
-                                  <ref role="uo_Cq" to="6o2a:2b2ZYR3yDpL" />
+                              <node concept="21noJN" id="21bD4dVyEt7" role="2OqNvi">
+                                <node concept="21nZrQ" id="21bD4dVyEt8" role="21noJM">
+                                  <ref role="21nZrZ" to="6o2a:21bD4dVyEsO" resolve="AtMostOne" />
                                 </node>
                               </node>
                             </node>
@@ -4245,13 +4245,13 @@
                             <node concept="2OqwBi" id="6xuOfB$cpyk" role="3clFbG">
                               <node concept="2OqwBi" id="6xuOfB$cojx" role="2Oq$k0">
                                 <node concept="3TrcHB" id="6xuOfB$cp3L" role="2OqNvi">
-                                  <ref role="3TsBF5" to="6o2a:2b2ZYR3zFcg" resolve="card" />
+                                  <ref role="3TsBF5" to="6o2a:21bD4dVyEsP" resolve="card" />
                                 </node>
                                 <node concept="30H73N" id="6xuOfB$coj_" role="2Oq$k0" />
                               </node>
-                              <node concept="3t7uKx" id="6xuOfB$cqGg" role="2OqNvi">
-                                <node concept="uoxfO" id="6xuOfB$cqGi" role="3t7uKA">
-                                  <ref role="uo_Cq" to="6o2a:2b2ZYR3yDr8" />
+                              <node concept="21noJN" id="21bD4dVyEt9" role="2OqNvi">
+                                <node concept="21nZrQ" id="21bD4dVyEta" role="21noJM">
+                                  <ref role="21nZrZ" to="6o2a:21bD4dVyEsL" resolve="ExactlyOne" />
                                 </node>
                               </node>
                             </node>
@@ -4469,25 +4469,25 @@
                                 <node concept="2OqwBi" id="6xuOfB$ctNl" role="2Oq$k0">
                                   <node concept="30H73N" id="6xuOfB$ctI4" role="2Oq$k0" />
                                   <node concept="3TrcHB" id="6xuOfB$cu5c" role="2OqNvi">
-                                    <ref role="3TsBF5" to="6o2a:2b2ZYR3zFcg" resolve="card" />
+                                    <ref role="3TsBF5" to="6o2a:21bD4dVyEsP" resolve="card" />
                                   </node>
                                 </node>
-                                <node concept="3t7uKx" id="6xuOfB$cvwq" role="2OqNvi">
-                                  <node concept="uoxfO" id="6xuOfB$cvws" role="3t7uKA">
-                                    <ref role="uo_Cq" to="6o2a:2b2ZYR3yDpO" />
+                                <node concept="21noJN" id="21bD4dVyEtb" role="2OqNvi">
+                                  <node concept="21nZrQ" id="21bD4dVyEtc" role="21noJM">
+                                    <ref role="21nZrZ" to="6o2a:21bD4dVyEsN" resolve="AtleastOne" />
                                   </node>
                                 </node>
                               </node>
                               <node concept="2OqwBi" id="6xuOfB$crUR" role="3uHU7B">
                                 <node concept="2OqwBi" id="6xuOfB$cr5o" role="2Oq$k0">
                                   <node concept="3TrcHB" id="6xuOfB$cruU" role="2OqNvi">
-                                    <ref role="3TsBF5" to="6o2a:2b2ZYR3zFcg" resolve="card" />
+                                    <ref role="3TsBF5" to="6o2a:21bD4dVyEsP" resolve="card" />
                                   </node>
                                   <node concept="30H73N" id="6xuOfB$cr5s" role="2Oq$k0" />
                                 </node>
-                                <node concept="3t7uKx" id="6xuOfB$ct4N" role="2OqNvi">
-                                  <node concept="uoxfO" id="6xuOfB$ct4P" role="3t7uKA">
-                                    <ref role="uo_Cq" to="6o2a:2b2ZYR3yDpK" />
+                                <node concept="21noJN" id="21bD4dVyEtd" role="2OqNvi">
+                                  <node concept="21nZrQ" id="21bD4dVyEte" role="21noJM">
+                                    <ref role="21nZrZ" to="6o2a:21bD4dVyEsM" resolve="ZeroOrMore" />
                                   </node>
                                 </node>
                               </node>

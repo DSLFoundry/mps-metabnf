@@ -2,7 +2,7 @@
 <model ref="r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)">
   <persistence version="9" />
   <languages>
-    <use id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure" version="7" />
+    <use id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure" version="9" />
     <devkit ref="78434eb8-b0e5-444b-850d-e7c4ad2da9ab(jetbrains.mps.devkit.aspect.structure)" />
   </languages>
   <imports>
@@ -10,6 +10,9 @@
   </imports>
   <registry>
     <language id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure">
+      <concept id="1082978164218" name="jetbrains.mps.lang.structure.structure.DataTypeDeclaration" flags="ng" index="AxPO6">
+        <property id="7791109065626895363" name="datatypeId" index="3F6X1D" />
+      </concept>
       <concept id="1082978499127" name="jetbrains.mps.lang.structure.structure.ConstrainedDataTypeDeclaration" flags="ng" index="Az7Fb">
         <property id="1083066089218" name="constraint" index="FLfZY" />
       </concept>
@@ -56,16 +59,19 @@
     <property role="TrG5h" value="Identifier" />
     <property role="FLfZY" value="\\w+" />
     <property role="3GE5qa" value="terminals" />
+    <property role="3F6X1D" value="6508006283257725234" />
   </node>
   <node concept="Az7Fb" id="5Dh5jJl_$4N">
     <property role="TrG5h" value="BooleanValue" />
     <property role="FLfZY" value="(?:True)|(?:False)" />
     <property role="3GE5qa" value="terminals" />
+    <property role="3F6X1D" value="6508006283257725235" />
   </node>
   <node concept="Az7Fb" id="5Dh5jJl_$4O">
     <property role="TrG5h" value="NumberValue" />
     <property role="FLfZY" value="\\p{Digit}*" />
     <property role="3GE5qa" value="terminals" />
+    <property role="3F6X1D" value="6508006283257725236" />
   </node>
   <node concept="1TIwiD" id="5Dh5jJl_$4P">
     <property role="1pbfSe" value="405467652" />
@@ -140,9 +146,9 @@
     </node>
     <node concept="1TJgyj" id="5Dh5jJl_$52" role="1TKVEi">
       <property role="20kJfa" value="Expression" />
-      <property role="20lbJX" value="1" />
+      <property role="20lbJX" value="fLJekj4/_1" />
       <property role="IQ2ns" value="6508006283257725250" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$4X" resolve="Expression" />
     </node>
     <node concept="PrWs8" id="5Dh5jJl_$53" role="PzmwI">
@@ -159,23 +165,23 @@
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="5Dh5jJl_$55" role="1TKVEi">
       <property role="20kJfa" value="Condition" />
-      <property role="20lbJX" value="1" />
+      <property role="20lbJX" value="fLJekj4/_1" />
       <property role="IQ2ns" value="6508006283257725253" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$4V" resolve="Condition" />
     </node>
     <node concept="1TJgyj" id="5Dh5jJl_$56" role="1TKVEi">
       <property role="20kJfa" value="thenstats" />
-      <property role="20lbJX" value="1" />
+      <property role="20lbJX" value="fLJekj4/_1" />
       <property role="IQ2ns" value="6508006283257725254" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$5e" resolve="Statements" />
     </node>
     <node concept="1TJgyj" id="5Dh5jJl_$57" role="1TKVEi">
       <property role="20kJfa" value="elsestats" />
-      <property role="20lbJX" value="1" />
+      <property role="20lbJX" value="fLJekj4/_1" />
       <property role="IQ2ns" value="6508006283257725255" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$5e" resolve="Statements" />
     </node>
     <node concept="PrWs8" id="5Dh5jJl_$58" role="PzmwI">
@@ -192,16 +198,16 @@
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="5Dh5jJl_$5a" role="1TKVEi">
       <property role="20kJfa" value="Condition" />
-      <property role="20lbJX" value="1" />
+      <property role="20lbJX" value="fLJekj4/_1" />
       <property role="IQ2ns" value="6508006283257725258" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$4V" resolve="Condition" />
     </node>
     <node concept="1TJgyj" id="5Dh5jJl_$5b" role="1TKVEi">
       <property role="20kJfa" value="Statement" />
-      <property role="20lbJX" value="1" />
+      <property role="20lbJX" value="fLJekj4/_1" />
       <property role="IQ2ns" value="6508006283257725259" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$5d" resolve="Statement" />
     </node>
     <node concept="PrWs8" id="5Dh5jJl_$5c" role="PzmwI">
@@ -223,9 +229,9 @@
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="5Dh5jJl_$5f" role="1TKVEi">
       <property role="20kJfa" value="Statement" />
-      <property role="20lbJX" value="1..n" />
+      <property role="20lbJX" value="fLJekj6/_1__n" />
       <property role="IQ2ns" value="6508006283257725263" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$5d" resolve="Statement" />
     </node>
   </node>
@@ -244,9 +250,9 @@
     </node>
     <node concept="1TJgyj" id="5Dh5jJl_$5i" role="1TKVEi">
       <property role="20kJfa" value="Statements" />
-      <property role="20lbJX" value="1" />
+      <property role="20lbJX" value="fLJekj4/_1" />
       <property role="IQ2ns" value="6508006283257725266" />
-      <property role="20lmBu" value="aggregation" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
       <ref role="20lvS9" node="5Dh5jJl_$5e" resolve="Statements" />
     </node>
   </node>
