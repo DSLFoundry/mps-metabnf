@@ -3,7 +3,7 @@
   <persistence version="9" />
   <languages>
     <use id="9c03c641-469f-49e7-aeed-44a3d19b7253" name="metabnf" version="0" />
-    <use id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator" version="3" />
+    <use id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator" version="4" />
     <use id="d7706f63-9be2-479c-a3da-ae92af1e64d5" name="jetbrains.mps.lang.generator.generationContext" version="2" />
     <use id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure" version="9" />
     <use id="13744753-c81f-424a-9c1b-cf8943bf4e86" name="jetbrains.mps.lang.sharedConcepts" version="0" />
@@ -277,7 +277,7 @@
       <concept id="1883223317721107059" name="jetbrains.mps.lang.smodel.structure.IfInstanceOfVarReference" flags="nn" index="Jnkvi" />
       <concept id="1171305280644" name="jetbrains.mps.lang.smodel.structure.Node_GetDescendantsOperation" flags="nn" index="2Rf3mk" />
       <concept id="1171315804604" name="jetbrains.mps.lang.smodel.structure.Model_RootsOperation" flags="nn" index="2RRcyG">
-        <reference id="1171315804605" name="concept" index="2RRcyH" />
+        <child id="6750920497477046361" name="conceptArgument" index="3MHsoP" />
       </concept>
       <concept id="1171323947159" name="jetbrains.mps.lang.smodel.structure.Model_NodesOperation" flags="nn" index="2SmgA7">
         <child id="1758937410080001570" name="conceptArgument" index="1dBWTz" />
@@ -1270,7 +1270,9 @@
             <node concept="2OqwBi" id="6xuOfB$1BXe" role="33vP2m">
               <node concept="1Q6Npb" id="6xuOfB$1BWg" role="2Oq$k0" />
               <node concept="2RRcyG" id="6xuOfB$1C6Q" role="2OqNvi">
-                <ref role="2RRcyH" to="6o2a:2b2ZYR3vfui" resolve="grammar" />
+                <node concept="chp4Y" id="5RUBQRi9j2k" role="3MHsoP">
+                  <ref role="cht4Q" to="6o2a:2b2ZYR3vfui" resolve="grammar" />
+                </node>
               </node>
             </node>
           </node>

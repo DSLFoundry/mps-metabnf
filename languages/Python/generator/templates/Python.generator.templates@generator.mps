@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model ref="r:6efd76ab-6907-48cd-851e-e4cab564cdb4(Python.generator.template.main@generator)">
+<model ref="r:8ca3f77b-325f-4746-9533-b6d0dac322d8(Python.generator.templates@generator)">
   <persistence version="9" />
   <languages>
-    <use id="d7706f63-9be2-479c-a3da-ae92af1e64d5" name="jetbrains.mps.lang.generator.generationContext" version="2" />
-    <use id="f89b81c4-cf44-42c7-99d5-d436ac2af374" name="Python" version="0" />
-    <use id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator" version="3" />
-    <use id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core" version="2" />
-    <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
+    <devkit ref="a2eb3a43-fcc2-4200-80dc-c60110c4862d(jetbrains.mps.devkit.templates)" />
   </languages>
-  <imports />
+  <imports>
+    <import index="vkjk" ref="r:ab58bcbb-3fc5-4d59-a0f5-774abb9e9f68(Python.structure)" />
+  </imports>
   <registry>
     <language id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator">
       <concept id="1095416546421" name="jetbrains.mps.lang.generator.structure.MappingConfiguration" flags="ig" index="bUwia" />
@@ -19,7 +17,7 @@
       </concept>
     </language>
   </registry>
-  <node concept="bUwia" id="1qPaejjjgtE">
+  <node concept="bUwia" id="5RUBQRic2oE">
     <property role="TrG5h" value="main" />
   </node>
 </model>

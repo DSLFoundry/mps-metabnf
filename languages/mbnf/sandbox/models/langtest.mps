@@ -2,8 +2,8 @@
 <model ref="r:8516252e-9edc-4402-baf6-fadc85f81400(mbnf.sandbox.langtest)">
   <persistence version="9" />
   <languages>
-    <use id="f89b81c4-cf44-42c7-99d5-d436ac2af374" name="Python" version="0" />
     <use id="48bed45b-b394-4796-8621-cea28d56a6da" name="Demo" version="0" />
+    <use id="3e22ecc8-2d7d-4785-af04-96cbcec526fa" name="Python" version="0" />
   </languages>
   <imports />
   <registry>
