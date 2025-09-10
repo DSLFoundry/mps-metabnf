@@ -1,6 +1,6 @@
 # MetaBNF for JetBrains MPS
 Grammar-based MPS-language specification and generation
-This version of MetaBNF works on MPS 2021.1
+This version of MetaBNF works on MPS 2021.2
 Note: previous versions (at least from 2018.1 on until 2019.2) needed java 8, this version (from 2019.2 on) needs java 11.
 
 # Rationale
