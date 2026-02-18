@@ -1,7 +1,6 @@
 # MetaBNF for JetBrains MPS
 Grammar-based MPS-language specification and generation
-This version of MetaBNF works on MPS 2021.2
-Note: previous versions (at least from 2018.1 on until 2019.2) needed java 8, this version (from 2019.2 on) needs java 11.
+This version of MetaBNF works on MPS 2021.3
 
 # Rationale
 This language tries to achieve similar results as https://github.com/premun/ingrid (see also https://github.com/vaclav/MPS_CSharp for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
