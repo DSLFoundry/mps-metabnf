@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<solution name="mbnf.sandbox" uuid="74814277-11d5-4959-8d6e-72e99bea6823" moduleVersion="0" compileInMPS="true">
+<solution name="mbnf.sandbox" uuid="74814277-11d5-4959-8d6e-72e99bea6823" moduleVersion="0">
   <models>
     <modelRoot contentPath="${module}" type="default">
       <sourceRoot location="models" />
@@ -11,7 +11,6 @@
       <classes generated="true" path="${module}/classes_gen" />
     </facet>
   </facets>
-  <sourcePath />
   <dependencies>
     <dependency reexport="false">2417e694-c9d2-48c2-b396-c9ab05f8d822(GenPlan)</dependency>
   </dependencies>
