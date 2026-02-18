@@ -6,7 +6,7 @@
     </modelRoot>
   </models>
   <facets>
-    <facet type="java">
+    <facet type="java" compile="mps" classes="mps" ext="yes">
       <classes generated="true" path="${module}/classes_gen" />
     </facet>
   </facets>
@@ -19,7 +19,7 @@
         </modelRoot>
       </models>
       <facets>
-        <facet type="java">
+        <facet type="java" compile="mps" classes="mps" ext="no">
           <classes generated="true" path="${module}/generator/classes_gen" />
         </facet>
       </facets>
@@ -58,6 +58,7 @@
   <dependencies>
     <dependency reexport="false">dffab718-7078-49db-ab30-bc28036cf021(mbnf.sandbox@transient28)</dependency>
     <dependency reexport="false">92199264-01e7-4497-a721-912b458e2f9c(mbnf.sandbox@transient8)</dependency>
+    <dependency reexport="false">150c0332-dee4-46fb-8cde-4490700c26d6(mbnf.sandbox@transient18)</dependency>
   </dependencies>
   <languageVersions>
     <language slang="l:f3061a53-9226-4cc5-a443-f952ceaf5816:jetbrains.mps.baseLanguage" version="12" />

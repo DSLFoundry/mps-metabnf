@@ -26,7 +26,7 @@
   <node concept="1TIwiD" id="4CvBJ4yUFT0">
     <property role="EcuMT" value="5341162441594814016" />
     <property role="TrG5h" value="Test" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
   </node>
 </model>
 
