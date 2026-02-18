@@ -4,7 +4,7 @@
   <languages>
     <use id="3ecd7c84-cde3-45de-886c-135ecc69b742" name="jetbrains.mps.lang.refactoring" version="0" />
     <use id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core" version="2" />
-    <use id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage" version="11" />
+    <use id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage" version="12" />
     <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   </languages>
   <imports>
@@ -140,9 +140,9 @@
         <child id="4693937538533538124" name="requestedConcept" index="v3oSu" />
       </concept>
       <concept id="559557797393017698" name="jetbrains.mps.lang.smodel.structure.ModelReferenceExpression" flags="nn" index="BaHAS">
-        <property id="559557797393041554" name="fqName" index="BaBD8" />
         <property id="559557797393021807" name="stereotype" index="BaGAP" />
         <property id="559557797393017702" name="name" index="BaHAW" />
+        <child id="1423104411233404408" name="repo" index="up2gk" />
       </concept>
       <concept id="1145383075378" name="jetbrains.mps.lang.smodel.structure.SNodeListType" flags="in" index="2I9FWS" />
       <concept id="1883223317721008708" name="jetbrains.mps.lang.smodel.structure.IfInstanceOfStatement" flags="nn" index="Jncv_">
@@ -1212,13 +1212,21 @@
         </node>
         <node concept="3clFbF" id="21ByT8TBv2P" role="3cqZAp">
           <node concept="1eXUof" id="21ByT8TBv2Q" role="3clFbG">
-            <node concept="BaHAS" id="21ByT8TBzHY" role="1eT4Jk">
-              <property role="BaBD8" value="/" />
-              <property role="BaHAW" value="Python.structure" />
-              <property role="BaGAP" value="" />
-            </node>
             <node concept="37vLTw" id="21ByT8TBv2S" role="1eT4Jl">
               <ref role="3cqZAo" node="21ByT8TBv1K" resolve="toMove" />
+            </node>
+            <node concept="BaHAS" id="4CvBJ4yS51S" role="1eT4Jk">
+              <property role="BaHAW" value="Python.structure" />
+              <property role="BaGAP" value="" />
+              <node concept="2OqwBi" id="4CvBJ4yS5tU" role="up2gk">
+                <node concept="2OqwBi" id="4CvBJ4yS5cw" role="2Oq$k0">
+                  <node concept="50NuE" id="4CvBJ4yS567" role="2Oq$k0" />
+                  <node concept="50M6h" id="4CvBJ4yS5n4" role="2OqNvi" />
+                </node>
+                <node concept="liA8E" id="4CvBJ4yS5Az" role="2OqNvi">
+                  <ref role="37wK5l" to="lui2:~SModule.getRepository()" resolve="getRepository" />
+                </node>
+              </node>
             </node>
           </node>
         </node>
@@ -1258,17 +1266,26 @@
             </node>
           </node>
         </node>
+        <node concept="3clFbH" id="4CvBJ4yRRGq" role="3cqZAp" />
         <node concept="2Gpval" id="21ByT8TFxP4" role="3cqZAp">
           <node concept="2GrKxI" id="21ByT8TFxP6" role="2Gsz3X">
             <property role="TrG5h" value="node" />
           </node>
           <node concept="2OqwBi" id="21ByT8TH5rD" role="2GsD0m">
-            <node concept="BaHAS" id="21ByT8TFzom" role="2Oq$k0">
-              <property role="BaBD8" value="/" />
+            <node concept="2RRcyG" id="21ByT8TH5HH" role="2OqNvi" />
+            <node concept="BaHAS" id="4CvBJ4yS5Mq" role="2Oq$k0">
               <property role="BaHAW" value="Python.structure" />
               <property role="BaGAP" value="" />
+              <node concept="2OqwBi" id="4CvBJ4yS6Nq" role="up2gk">
+                <node concept="2OqwBi" id="4CvBJ4yS6lP" role="2Oq$k0">
+                  <node concept="50NuE" id="4CvBJ4yS65B" role="2Oq$k0" />
+                  <node concept="50M6h" id="4CvBJ4yS6Df" role="2OqNvi" />
+                </node>
+                <node concept="liA8E" id="4CvBJ4yS7c8" role="2OqNvi">
+                  <ref role="37wK5l" to="lui2:~SModule.getRepository()" resolve="getRepository" />
+                </node>
+              </node>
             </node>
-            <node concept="2RRcyG" id="21ByT8TH5HH" role="2OqNvi" />
           </node>
           <node concept="3clFbS" id="21ByT8TFxPa" role="2LFqv$">
             <node concept="Jncv_" id="21ByT8TF$vf" role="3cqZAp">
@@ -1326,9 +1343,18 @@
             <node concept="37vLTw" id="21ByT8TH5QY" role="1eT4Jl">
               <ref role="3cqZAo" node="21ByT8TFvgp" resolve="editors" />
             </node>
-            <node concept="BaHAS" id="21ByT8TH5SM" role="1eT4Jk">
+            <node concept="BaHAS" id="4CvBJ4yS7pJ" role="1eT4Jk">
               <property role="BaHAW" value="Python.editor" />
               <property role="BaGAP" value="" />
+              <node concept="2OqwBi" id="4CvBJ4yS7Jb" role="up2gk">
+                <node concept="2OqwBi" id="4CvBJ4yS7$n" role="2Oq$k0">
+                  <node concept="50NuE" id="4CvBJ4yS7tY" role="2Oq$k0" />
+                  <node concept="50M6h" id="4CvBJ4yS7HB" role="2OqNvi" />
+                </node>
+                <node concept="liA8E" id="4CvBJ4yS7RO" role="2OqNvi">
+                  <ref role="37wK5l" to="lui2:~SModule.getRepository()" resolve="getRepository" />
+                </node>
+              </node>
             </node>
           </node>
         </node>
@@ -1337,9 +1363,18 @@
             <node concept="37vLTw" id="21ByT8TH6fH" role="1eT4Jl">
               <ref role="3cqZAo" node="21ByT8TFweB" resolve="textGens" />
             </node>
-            <node concept="BaHAS" id="21ByT8TH6hx" role="1eT4Jk">
+            <node concept="BaHAS" id="4CvBJ4yS7WA" role="1eT4Jk">
               <property role="BaHAW" value="Python.textGen" />
               <property role="BaGAP" value="" />
+              <node concept="2OqwBi" id="4CvBJ4yS8r3" role="up2gk">
+                <node concept="2OqwBi" id="4CvBJ4yS87e" role="2Oq$k0">
+                  <node concept="50NuE" id="4CvBJ4yS80P" role="2Oq$k0" />
+                  <node concept="50M6h" id="4CvBJ4yS8pv" role="2OqNvi" />
+                </node>
+                <node concept="liA8E" id="4CvBJ4yS8Gm" role="2OqNvi">
+                  <ref role="37wK5l" to="lui2:~SModule.getRepository()" resolve="getRepository" />
+                </node>
+              </node>
             </node>
           </node>
         </node>
