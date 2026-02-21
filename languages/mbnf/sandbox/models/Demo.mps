@@ -17,7 +17,7 @@
         <reference id="2738052631437369572" name="rule" index="2GQAiS" />
       </concept>
       <concept id="2504845739424006305" name="metabnf.structure.Keyword" flags="ng" index="3xhzXc" />
-      <concept id="2504845739424006197" name="metabnf.structure.ITerm" flags="ngI" index="3xhzZo">
+      <concept id="2504845739424006197" name="metabnf.structure.ITerm" flags="ng" index="3xhzZo">
         <property id="513220601742038557" name="newline" index="d84lQ" />
         <property id="513220601742038498" name="indent" index="d84q9" />
       </concept>
@@ -73,7 +73,7 @@
   </registry>
   <node concept="3xJwxZ" id="5Dh5jJl$$AE">
     <property role="TrG5h" value="Demo" />
-    <ref role="3xJMYq" node="5Dh5jJl$$AF" resolve="Program" />
+    <ref role="3xJMYq" node="5Dh5jJl$$AF" />
     <node concept="t8saL" id="5Dh5jJl$$AK" role="3xJMYo">
       <property role="TrG5h" value="terminals" />
       <node concept="3xJKsl" id="5Dh5jJl$$AO" role="t8saQ">
@@ -120,28 +120,28 @@
       <node concept="3xhzZY" id="5Dh5jJl$$H5" role="t8saQ">
         <property role="TrG5h" value="Bool" />
         <node concept="2GSJ2k" id="5Dh5jJl$$H7" role="3xhzZr">
-          <ref role="2GQAiS" node="5Dh5jJl$$Fg" resolve="BooleanValue" />
+          <ref role="2GQAiS" node="5Dh5jJl$$Fg" />
         </node>
       </node>
       <node concept="3xhzZY" id="5Dh5jJl$$Qt" role="t8saQ">
         <property role="TrG5h" value="Number" />
         <node concept="2GSJ2k" id="5Dh5jJl$$QA" role="3xhzZr">
-          <ref role="2GQAiS" node="5Dh5jJl$$PE" resolve="NumberValue" />
+          <ref role="2GQAiS" node="5Dh5jJl$$PE" />
         </node>
       </node>
       <node concept="3xJKux" id="5Dh5jJl$$Hl" role="t8saQ">
         <property role="TrG5h" value="Condition" />
         <node concept="3xiQg6" id="5Dh5jJl$$Hq" role="3xJKtx">
-          <ref role="3xiQg3" node="5Dh5jJl$$H5" resolve="Bool" />
+          <ref role="3xiQg3" node="5Dh5jJl$$H5" />
         </node>
       </node>
       <node concept="3xJKux" id="5Dh5jJl$$M1" role="t8saQ">
         <property role="TrG5h" value="Expression" />
         <node concept="3xiQg6" id="5Dh5jJl$$M8" role="3xJKtx">
-          <ref role="3xiQg3" node="5Dh5jJl$$Hl" resolve="Condition" />
+          <ref role="3xiQg3" node="5Dh5jJl$$Hl" />
         </node>
         <node concept="3xiQg6" id="5Dh5jJl$$QC" role="3xJKtx">
-          <ref role="3xiQg3" node="5Dh5jJl$$Qt" resolve="Number" />
+          <ref role="3xiQg3" node="5Dh5jJl$$Qt" />
         </node>
       </node>
     </node>
@@ -157,13 +157,13 @@
       <node concept="3xhzZY" id="5Dh5jJl$$JB" role="t8saQ">
         <property role="TrG5h" value="Assignment" />
         <node concept="2GSJ2k" id="5Dh5jJl$$JN" role="3xhzZr">
-          <ref role="2GQAiS" node="5Dh5jJl$$AO" resolve="Identifier" />
+          <ref role="2GQAiS" node="5Dh5jJl$$AO" />
         </node>
         <node concept="3xhzXc" id="5Dh5jJl$$JS" role="3xhzZr">
           <property role="TrG5h" value=":=" />
         </node>
         <node concept="3xiQg6" id="5Dh5jJl$$Ma" role="3xhzZr">
-          <ref role="3xiQg3" node="5Dh5jJl$$M1" resolve="Expression" />
+          <ref role="3xiQg3" node="5Dh5jJl$$M1" />
         </node>
         <node concept="3xhzXc" id="5Dh5jJl$$Ms" role="3xhzZr">
           <property role="TrG5h" value=";" />
@@ -175,7 +175,7 @@
           <property role="TrG5h" value="if" />
         </node>
         <node concept="3xiQg6" id="5Dh5jJl$$Gq" role="3xhzZr">
-          <ref role="3xiQg3" node="5Dh5jJl$$Hl" resolve="Condition" />
+          <ref role="3xiQg3" node="5Dh5jJl$$Hl" />
         </node>
         <node concept="3xhzXc" id="5Dh5jJl$$Hw" role="3xhzZr">
           <property role="TrG5h" value="then" />
@@ -185,7 +185,7 @@
           <property role="d84lQ" value="true" />
           <property role="TrG5h" value="thenstats" />
           <property role="2DFMXm" value="\n" />
-          <ref role="3xiQg3" node="5Dh5jJl_zKX" resolve="Statements" />
+          <ref role="3xiQg3" node="5Dh5jJl_zKX" />
         </node>
         <node concept="3xhzXc" id="5Dh5jJl$$HQ" role="3xhzZr">
           <property role="TrG5h" value="else" />
@@ -196,7 +196,7 @@
           <property role="d84lQ" value="true" />
           <property role="TrG5h" value="elsestats" />
           <property role="2DFMXm" value="\n" />
-          <ref role="3xiQg3" node="5Dh5jJl_zKX" resolve="Statements" />
+          <ref role="3xiQg3" node="5Dh5jJl_zKX" />
         </node>
         <node concept="3xhzXc" id="5Dh5jJl$$Ik" role="3xhzZr">
           <property role="TrG5h" value="fi" />
@@ -209,7 +209,7 @@
           <property role="TrG5h" value="while" />
         </node>
         <node concept="3xiQg6" id="5Dh5jJl$$O3" role="3xhzZr">
-          <ref role="3xiQg3" node="5Dh5jJl$$Hl" resolve="Condition" />
+          <ref role="3xiQg3" node="5Dh5jJl$$Hl" />
         </node>
         <node concept="3xhzXc" id="5Dh5jJl$$Ob" role="3xhzZr">
           <property role="TrG5h" value="do" />
@@ -217,7 +217,7 @@
         <node concept="3xiQg6" id="5Dh5jJl$$Ol" role="3xhzZr">
           <property role="d84q9" value="true" />
           <property role="d84lQ" value="true" />
-          <ref role="3xiQg3" node="5Dh5jJl$$CY" resolve="Statement" />
+          <ref role="3xiQg3" node="5Dh5jJl$$CY" />
         </node>
         <node concept="3xhzXc" id="5Dh5jJl$$Ox" role="3xhzZr">
           <property role="TrG5h" value="od" />
@@ -227,23 +227,23 @@
       <node concept="3xJKux" id="5Dh5jJl$$CY" role="t8saQ">
         <property role="TrG5h" value="Statement" />
         <node concept="3xiQg6" id="5Dh5jJl_zNj" role="3xJKtx">
-          <ref role="3xiQg3" node="5Dh5jJl_zMP" resolve="Skip" />
+          <ref role="3xiQg3" node="5Dh5jJl_zMP" />
         </node>
         <node concept="3xiQg6" id="5Dh5jJl$$M$" role="3xJKtx">
-          <ref role="3xiQg3" node="5Dh5jJl$$JB" resolve="Assignment" />
+          <ref role="3xiQg3" node="5Dh5jJl$$JB" />
         </node>
         <node concept="3xiQg6" id="5Dh5jJl$$My" role="3xJKtx">
-          <ref role="3xiQg3" node="5Dh5jJl$$D3" resolve="Selection" />
+          <ref role="3xiQg3" node="5Dh5jJl$$D3" />
         </node>
         <node concept="3xiQg6" id="5Dh5jJl$$OE" role="3xJKtx">
-          <ref role="3xiQg3" node="5Dh5jJl$$NF" resolve="Loop" />
+          <ref role="3xiQg3" node="5Dh5jJl$$NF" />
         </node>
       </node>
       <node concept="3xhzZY" id="5Dh5jJl_zKX" role="t8saQ">
         <property role="TrG5h" value="Statements" />
         <node concept="3xiQg6" id="5Dh5jJl_zLp" role="3xhzZr">
           <property role="3xj4NX" value="2b2ZYR3yDpO/AtleastOne" />
-          <ref role="3xiQg3" node="5Dh5jJl$$CY" resolve="Statement" />
+          <ref role="3xiQg3" node="5Dh5jJl$$CY" />
         </node>
       </node>
     </node>
@@ -254,7 +254,7 @@
         <property role="TrG5h" value="Program" />
       </node>
       <node concept="2GSJ2k" id="5Dh5jJl$$Ct" role="3xhzZr">
-        <ref role="2GQAiS" node="5Dh5jJl$$AO" resolve="Identifier" />
+        <ref role="2GQAiS" node="5Dh5jJl$$AO" />
       </node>
       <node concept="3xhzXc" id="5Dh5jJl$$OL" role="3xhzZr">
         <property role="TrG5h" value="is" />
@@ -266,7 +266,7 @@
       <node concept="3xiQg6" id="5Dh5jJl$$OV" role="3xhzZr">
         <property role="d84q9" value="true" />
         <property role="d84lQ" value="true" />
-        <ref role="3xiQg3" node="5Dh5jJl_zKX" resolve="Statements" />
+        <ref role="3xiQg3" node="5Dh5jJl_zKX" />
       </node>
       <node concept="3xhzXc" id="5Dh5jJl$$P7" role="3xhzZr">
         <property role="TrG5h" value="end;" />

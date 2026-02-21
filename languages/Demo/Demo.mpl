@@ -60,6 +60,7 @@
     <dependency reexport="false">150c0332-dee4-46fb-8cde-4490700c26d6(mbnf.sandbox@transient18)</dependency>
     <dependency reexport="false">c2a5b9d7-07cd-4b65-8dfa-95546fb19171(mbnf.sandbox@transient10)</dependency>
     <dependency reexport="false">3e21dcd0-e89f-4cba-939b-ae1558f48a24(mbnf.sandbox@transient14)</dependency>
+    <dependency reexport="false">498c0aa7-fe36-428e-8701-e3acdd534a5b(mbnf.sandbox@transient26)</dependency>
   </dependencies>
   <languageVersions>
     <language slang="l:f3061a53-9226-4cc5-a443-f952ceaf5816:jetbrains.mps.baseLanguage" version="12" />
