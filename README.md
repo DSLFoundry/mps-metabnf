@@ -3,12 +3,27 @@ Grammar-based MPS-language specification and generation
 This version of MetaBNF works on MPS 2025.1
 
 # Rationale
-This language tries to achieve similar results as https://github.com/premun/ingrid (see also https://github.com/vaclav/MPS_CSharp for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
+This language tries to achieve similar results as [Ingrid](https://github.com/premun/ingrid) (see also [Ingrid-CS](https://github.com/vaclav/MPS_CSharp) for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
 
 # Current status
 The current status of MetaBNF is: it works for basic cases, but is not yet feature-complete w.r.t. editor usability. There are no industrial or large-scale applications yet that have battle tested it.
 
 Also, grammars are written manually at the moment and there is no import (e.g. from antlr or similar).
+
+# Where this could go
+The starting point that is MetaBNF today, is already useful, but not its full potential. Here are some research/extension ideas:
+- Create powerful parsers for the language, interfacing with Rascal (something along the lines of [rascal-mps](https://github.com/cwi-swat/rascal-mps), but it needs a bit more work) which has one of the most powerful parser systems in the world
+- PX/MX/UX improvements to find good ways to improve usability of text-based languages. Some research was done in this direction, and there is a body of [MPS Extensions](github.com/jetbrains/mps-extensions) (e.g. grammar cells, widgets, etc.) that can be used to improve the programming/modeling/usage experience for text-based languages bridged to/from MPS.
+- Link to the research work mentioned above on Ingrid in order to have a class of bridges through antlr. An interesting research question there is 
+- Use MetBNF in combination with textual language workbenches (Rascal, MontiCore, Spoofax, etc.) to investigate/research a formal relation between object grammars (which would be the closest formalism to describe what MPS does) with grammars.
+- Build a library of maintainable connectors between projectional languages and textual languages, strenthening the [LionWeb](https://github.com/LionWeb-io/) interoperability initiative as a possible addition, specifically for text/projectional interoperability (see also some work done on this here - and I'm sure there's more).
+
+# How to contribute
+Any kind of contribution or improvement would be helpful. To give a few ideas:
+- Bug report
+- Documentation
+- Add more to this README on existing work that could connect to this in a useful fashion
+- Write an issue if you are someone from academia, industry (or otherwise) and think you can contribute somehow. Research on this topic exists and more is very interesting, but a practical consolidation of this research has not happened too much yet, while it is a very enabling technology for bridging text and projectional/UI based modeling languages.
 
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language) in a model (see mbnf.sandbox/mbnf/sandbox/Demo model for an example)
