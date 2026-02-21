@@ -165,7 +165,7 @@
                         <node concept="3clFbC" id="44Pv0YASGyy" role="3clFbG">
                           <node concept="2OqwBi" id="44Pv0YASFHR" role="3uHU7B">
                             <node concept="37vLTw" id="44Pv0YASFDe" role="2Oq$k0">
-                              <ref role="3cqZAo" node="5cbC3YGYC1V" />
+                              <ref role="3cqZAo" node="5cbC3YGYC1V" resolve="it" />
                             </node>
                             <node concept="3TrEf2" id="44Pv0YASGdI" role="2OqNvi">
                               <ref role="3Tt5mk" to="6o2a:2b2ZYR3ypJI" resolve="rule" />

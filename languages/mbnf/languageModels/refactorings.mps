@@ -506,7 +506,7 @@
                           <node concept="2OqwBi" id="5zguxsqgdKc" role="3clFbG">
                             <node concept="2OqwBi" id="5zguxsqgdbp" role="2Oq$k0">
                               <node concept="37vLTw" id="5zguxsqgd8I" role="2Oq$k0">
-                                <ref role="3cqZAo" node="5cbC3YGYC1R" />
+                                <ref role="3cqZAo" node="5cbC3YGYC1R" resolve="it" />
                               </node>
                               <node concept="liA8E" id="5zguxsqgdy1" role="2OqNvi">
                                 <ref role="37wK5l" to="mhbf:~SModel.getModelName()" resolve="getModelName" />
@@ -970,7 +970,7 @@
                           <node concept="2OqwBi" id="21ByT8TBv1q" role="3clFbG">
                             <node concept="2OqwBi" id="21ByT8TBv1r" role="2Oq$k0">
                               <node concept="37vLTw" id="21ByT8TBv1s" role="2Oq$k0">
-                                <ref role="3cqZAo" node="5cbC3YGYC1T" />
+                                <ref role="3cqZAo" node="5cbC3YGYC1T" resolve="it" />
                               </node>
                               <node concept="liA8E" id="21ByT8TBv1t" role="2OqNvi">
                                 <ref role="37wK5l" to="mhbf:~SModel.getModelName()" resolve="getModelName" />
