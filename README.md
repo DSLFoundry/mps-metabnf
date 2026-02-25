@@ -51,4 +51,6 @@ An example with Demo for a clean build procedure that is fully reproducible:
  - Tools -> Import Remaining Language Aspects
  - ... etc. (like in the section above on how to use the tool)
 
+# History
+MetaBNF started as an idea on 30 October 2013 in the evening when @klemensschindler, @RemiBosman, and me were thinking about a way to interface projectional languages like the ones built in JetBrains MPS with textual languages that typically have a grammer describing them. On the same date and the evening after (1 November), @klemensschindler created a mockup language for writing BNF grammars in MPS, which we called mps-compiler-toolkit. 
 
