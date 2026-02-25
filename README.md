@@ -25,6 +25,11 @@ Any kind of contribution or improvement would be helpful. To give a few ideas:
 - Add more to this README on existing work that could connect to this in a useful fashion
 - Write an issue if you are someone from academia, industry (or otherwise) and think you can contribute somehow. Research on this topic exists and more is very interesting, but a practical consolidation of this research has not happened too much yet, while it is a very enabling technology for bridging text and projectional/UI based modeling languages.
 
+# How to build
+There are no dependencies to thirdparty plugins, so the [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version you have to install) can be used.
+
+Building is simply opening the MPS project in the MPS IDE and building the two languages starting with com.dslfoundry.metabnf.
+
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language) in a model (see mbnf.sandbox/mbnf/sandbox/Demo model for an example)
 - To generate a language from the MetaBNF model:
