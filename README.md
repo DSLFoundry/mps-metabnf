@@ -24,6 +24,7 @@ Any kind of contribution or improvement would be helpful. To give a few ideas:
 - Documentation
 - Add more to this README on existing work that could connect to this in a useful fashion
 - Write an issue if you are someone from academia, industry (or otherwise) and think you can contribute somehow. Research on this topic exists and more is very interesting, but a practical consolidation of this research has not happened too much yet, while it is a very enabling technology for bridging text and projectional/UI based modeling languages.
+- Make a pull request if you want to contribute fixes, features, or other types of ideas.
 
 # How to build
 There are no dependencies to thirdparty plugins, so the [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version you have to install) can be used.
@@ -59,8 +60,8 @@ An example with Demo for a clean build procedure that is fully reproducible:
  - ... etc. (like in the section above on how to use the tool)
 
 # History
-MetaBNF started as an idea on 30 October 2013 in the evening when @klemensschindler, @RemiBosman, and me were thinking about a way to interface projectional languages like the ones built in JetBrains MPS with textual languages that typically have a grammer describing them. On the same date and the evening after (1 November), @klemensschindler created a mockup language for writing BNF grammars in MPS, which we called mps-compiler-toolkit.
+MetaBNF started as an idea on 30 October 2013 in the evening when @klemensschindler, @RemiBosman, and @eugenschindler were thinking about a way to interface projectional languages like the ones built in JetBrains MPS with textual languages that typically have a grammer describing them. On the same date and the evening after (1 November), @klemensschindler created a mockup language for writing BNF grammars in MPS, which we called mps-compiler-toolkit.
 
-On 26 August 2015, I created the project in which to develop MetaBNF here on DSLFoundry and on 2 September 2015, @RemiBosman implemented a first working - albeit very basic - version of MetaBNF. In the following two and a half months, @RemiBosman gave much more body to MetaBNF and in the years after, until mid 2018, he kept it migrated and used a few real-world testcases on the prototypical tool, most notably the languages Python (shipped with this repository) and Ada (not yet opensourced). Unfortunately, he died in 2018.
+On 26 August 2015, @eugenschindler created the project in which to develop MetaBNF here on DSLFoundry and on 2 September 2015, @RemiBosman implemented a first working - albeit very basic - version of MetaBNF. In the following two and a half months, @RemiBosman gave much more body to MetaBNF and in the years after, until mid 2018, he kept it migrated and used a few real-world testcases on the prototypical tool, most notably the languages Python (shipped with this repository) and Ada (not yet opensourced). Unfortunately, he died in 2018.
 
-In September 2025, I have started modernizing the plugin and it is now again a somewhat usable - if not yet very well stabilized - base for further development, research, and (for now) prototypical use.
+In September 2025, @eugenschindler has started modernizing the plugin and it is now again a somewhat usable - if not yet very well stabilized - base for further development, research, and (for now) prototypical use.
