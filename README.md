@@ -30,6 +30,8 @@ There are no dependencies to thirdparty plugins, so the [vanilla MPS](https://ww
 
 Building is simply opening the MPS project in the MPS IDE and building the two languages starting with com.dslfoundry.metabnf.
 
+In case you encounter problems, see the *Troubleshooting* section further below.
+
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language) in a model (see mbnf.sandbox/mbnf/sandbox/Demo model for an example)
 - To generate a language from the MetaBNF model:
