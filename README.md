@@ -5,6 +5,8 @@ This version of MetaBNF works on MPS 2026.1
 # Rationale
 This language tries to achieve similar results as [Ingrid](https://github.com/premun/ingrid) (see also [Ingrid-CS](https://github.com/vaclav/MPS_CSharp) for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
 
+In the meantime, another MPS project named MetaBNF appeared: [MetaBNF by Porsche](https://github.com/porscheofficial/MetaBNF). The approach of Porsche's project is similar to this project, but with a smaller scope, focused on editors, not on parsing. The developer was contacted on the MPS Slack to discuss opportunities to work together or to merge, but no response so far.
+
 # Current status
 The current status of MetaBNF is: it works for basic cases, but is not yet feature-complete w.r.t. editor usability. There are no industrial or large-scale applications yet that have battle tested it.
 
