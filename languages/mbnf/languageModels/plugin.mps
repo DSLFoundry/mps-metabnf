@@ -71,6 +71,9 @@
         <child id="5538333046911298738" name="condition" index="1oa70y" />
       </concept>
     </language>
+    <language id="af65afd8-f0dd-4942-87d9-63a55f2a9db1" name="jetbrains.mps.lang.behavior">
+      <concept id="3235159848334022093" name="jetbrains.mps.lang.behavior.structure.Node_ConceptMethodCall" flags="nn" index="3zqWPK" />
+    </language>
     <language id="ef7bf5ac-d06c-4342-b11d-e42104eb9343" name="jetbrains.mps.lang.plugin.standalone">
       <concept id="7520713872864775836" name="jetbrains.mps.lang.plugin.standalone.structure.StandalonePluginDescriptor" flags="ng" index="2DaZZR" />
     </language>
@@ -296,7 +299,6 @@
       <concept id="1177026924588" name="jetbrains.mps.lang.smodel.structure.RefConcept_Reference" flags="nn" index="chp4Y">
         <reference id="1177026940964" name="conceptDeclaration" index="cht4Q" />
       </concept>
-      <concept id="1179409122411" name="jetbrains.mps.lang.smodel.structure.Node_ConceptMethodCall" flags="nn" index="2qgKlT" />
       <concept id="559557797393017698" name="jetbrains.mps.lang.smodel.structure.ModelReferenceExpression" flags="nn" index="BaHAS">
         <property id="559557797393021807" name="stereotype" index="BaGAP" />
         <property id="559557797393017702" name="name" index="BaHAW" />
@@ -443,9 +445,9 @@
                 <node concept="2GrUjf" id="3tKEMTIk5Sa" role="2Oq$k0">
                   <ref role="2Gs0qQ" node="39uPS0le2mx" resolve="injector" />
                 </node>
-                <node concept="2qgKlT" id="3tKEMTIk6Af" role="2OqNvi">
+                <node concept="3zqWPK" id="LaOfQBYxnT" role="2OqNvi">
                   <ref role="37wK5l" to="cfqx:3tKEMTIiBjR" resolve="getAspectModel" />
-                  <node concept="Xl_RD" id="3tKEMTIgAsN" role="37wK5m">
+                  <node concept="Xl_RD" id="LaOfQBYxnV" role="37wK5m">
                     <property role="Xl_RC" value=".structure" />
                   </node>
                 </node>
@@ -475,9 +477,9 @@
                   <node concept="2GrUjf" id="3tKEMTIrYbC" role="2Oq$k0">
                     <ref role="2Gs0qQ" node="39uPS0le2mx" resolve="injector" />
                   </node>
-                  <node concept="2qgKlT" id="3tKEMTIrYbD" role="2OqNvi">
+                  <node concept="3zqWPK" id="LaOfQBYxnW" role="2OqNvi">
                     <ref role="37wK5l" to="cfqx:3tKEMTIiBjR" resolve="getAspectModel" />
-                    <node concept="Xl_RD" id="3tKEMTIrYbE" role="37wK5m">
+                    <node concept="Xl_RD" id="LaOfQBYxnY" role="37wK5m">
                       <property role="Xl_RC" value=".editor" />
                     </node>
                   </node>
@@ -508,9 +510,9 @@
                   <node concept="2GrUjf" id="3tKEMTIrYbP" role="2Oq$k0">
                     <ref role="2Gs0qQ" node="39uPS0le2mx" resolve="injector" />
                   </node>
-                  <node concept="2qgKlT" id="3tKEMTIrYbQ" role="2OqNvi">
+                  <node concept="3zqWPK" id="LaOfQBYxnZ" role="2OqNvi">
                     <ref role="37wK5l" to="cfqx:3tKEMTIiBjR" resolve="getAspectModel" />
-                    <node concept="Xl_RD" id="3tKEMTIrYbR" role="37wK5m">
+                    <node concept="Xl_RD" id="LaOfQBYxo1" role="37wK5m">
                       <property role="Xl_RC" value=".textGen" />
                     </node>
                   </node>
@@ -1122,64 +1124,6 @@
                       </node>
                       <node concept="Xl_RD" id="6ewv3lXcTDX" role="37wK5m">
                         <property role="Xl_RC" value="" />
-                      </node>
-                    </node>
-                  </node>
-                </node>
-              </node>
-            </node>
-            <node concept="1X3_iC" id="6sza796XzXv" role="lGtFl">
-              <property role="3V$3am" value="statement" />
-              <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-              <node concept="3cpWs8" id="6ewv3lXcA_8" role="8Wnug">
-                <node concept="3cpWsn" id="6ewv3lXcA_6" role="3cpWs9">
-                  <property role="3TUv4t" value="true" />
-                  <property role="TrG5h" value="structure" />
-                  <node concept="3uibUv" id="6ewv3lXcB4f" role="1tU5fm">
-                    <ref role="3uigEE" to="mhbf:~SModel" resolve="SModel" />
-                  </node>
-                  <node concept="2OqwBi" id="6ewv3lXcBwS" role="33vP2m">
-                    <node concept="2YIFZM" id="6ewv3lXcB5E" role="2Oq$k0">
-                      <ref role="37wK5l" to="w1kc:~SModelRepository.getInstance()" resolve="getInstance" />
-                      <ref role="1Pybhc" to="w1kc:~SModelRepository" resolve="SModelRepository" />
-                    </node>
-                    <node concept="liA8E" id="6ewv3lXcBN9" role="2OqNvi">
-                      <ref role="37wK5l" to="w1kc:~SModelRepository.getModelDescriptor(org.jetbrains.mps.openapi.model.SModelReference)" resolve="getModelDescriptor" />
-                      <node concept="37vLTw" id="6ewv3lXd2YF" role="37wK5m">
-                        <ref role="3cqZAo" node="6ewv3lXcK2m" resolve="r" />
-                      </node>
-                    </node>
-                  </node>
-                </node>
-              </node>
-            </node>
-            <node concept="1X3_iC" id="6sza796XzXw" role="lGtFl">
-              <property role="3V$3am" value="statement" />
-              <property role="3V$3ak" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123136/1068581517665" />
-              <node concept="3cpWs8" id="3Of10aF3$gq" role="8Wnug">
-                <node concept="3cpWsn" id="3Of10aF3$go" role="3cpWs9">
-                  <property role="3TUv4t" value="true" />
-                  <property role="TrG5h" value="structure" />
-                  <node concept="3uibUv" id="3Of10aF3_89" role="1tU5fm">
-                    <ref role="3uigEE" to="mhbf:~SModel" resolve="SModel" />
-                  </node>
-                  <node concept="2OqwBi" id="3Of10aF3_c9" role="33vP2m">
-                    <node concept="2YIFZM" id="3Of10aF3_9Y" role="2Oq$k0">
-                      <ref role="37wK5l" to="w1kc:~SModelRepository.getInstance()" resolve="getInstance" />
-                      <ref role="1Pybhc" to="w1kc:~SModelRepository" resolve="SModelRepository" />
-                    </node>
-                    <node concept="liA8E" id="3Of10aF3_un" role="2OqNvi">
-                      <ref role="37wK5l" to="w1kc:~SModelRepository.getModelDescriptor(org.jetbrains.mps.openapi.model.SModelReference)" resolve="getModelDescriptor" />
-                      <node concept="2ShNRf" id="3Of10aF3_Wn" role="37wK5m">
-                        <node concept="1pGfFk" id="3Of10aF3Aw8" role="2ShVmc">
-                          <ref role="37wK5l" to="w1kc:~SModelReference.&lt;init&gt;(org.jetbrains.mps.openapi.module.SModuleReference,org.jetbrains.mps.openapi.model.SModelId,java.lang.String)" resolve="SModelReference" />
-                          <node concept="Xl_RD" id="3Of10aF3AxV" role="37wK5m">
-                            <property role="Xl_RC" value="TestLanguage.structure" />
-                          </node>
-                          <node concept="Xl_RD" id="3Of10aF3ATe" role="37wK5m">
-                            <property role="Xl_RC" value="" />
-                          </node>
-                        </node>
                       </node>
                     </node>
                   </node>
@@ -1890,9 +1834,9 @@
                 <node concept="2GrUjf" id="3tKEMTIkjmZ" role="2Oq$k0">
                   <ref role="2Gs0qQ" node="1qPaejjq5yK" resolve="injector" />
                 </node>
-                <node concept="2qgKlT" id="3tKEMTIkjn0" role="2OqNvi">
+                <node concept="3zqWPK" id="LaOfQBYxo2" role="2OqNvi">
                   <ref role="37wK5l" to="cfqx:3tKEMTIiBjR" resolve="getAspectModel" />
-                  <node concept="Xl_RD" id="3tKEMTIkjn1" role="37wK5m">
+                  <node concept="Xl_RD" id="LaOfQBYxo4" role="37wK5m">
                     <property role="Xl_RC" value=".editor" />
                   </node>
                 </node>
@@ -1919,9 +1863,9 @@
                 <node concept="2GrUjf" id="3tKEMTIkjne" role="2Oq$k0">
                   <ref role="2Gs0qQ" node="1qPaejjq5yK" resolve="injector" />
                 </node>
-                <node concept="2qgKlT" id="3tKEMTIkjnf" role="2OqNvi">
+                <node concept="3zqWPK" id="LaOfQBYxo5" role="2OqNvi">
                   <ref role="37wK5l" to="cfqx:3tKEMTIiBjR" resolve="getAspectModel" />
-                  <node concept="Xl_RD" id="3tKEMTIkjng" role="37wK5m">
+                  <node concept="Xl_RD" id="LaOfQBYxo7" role="37wK5m">
                     <property role="Xl_RC" value=".textGen" />
                   </node>
                 </node>

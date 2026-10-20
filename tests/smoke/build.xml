@@ -1,0 +1,146 @@
+<project name="metabnf-smoke" default="smoke" basedir=".">
+  <property environment="env" />
+  <property name="mps.home" value="${env.MPS_HOME}" />
+  <property name="repo.root" location="../.." />
+  <available file="${mps.home}/lib/ant/lib/ant-mps.jar" property="mps.available" />
+  <fail unless="mps.available" message="Set MPS_HOME or -Dmps.home to an MPS 2026.1 installation." />
+
+  <taskdef resource="jetbrains/mps/build/ant/antlib.xml">
+    <classpath>
+      <fileset dir="${mps.home}/lib/ant/lib" includes="*.jar" />
+    </classpath>
+  </taskdef>
+
+  <target name="prepare">
+    <tempfile property="smoke.dir" destdir="${java.io.tmpdir}" prefix="metabnf-smoke-" />
+    <property name="smoke.project" location="${smoke.dir}/project" />
+    <echo message="Smoke-test artifacts: ${smoke.dir}" />
+    <copy todir="${smoke.project}">
+      <fileset dir="${repo.root}">
+        <include name=".mps/*.xml" />
+        <include name="languages/**/*.mpl" />
+        <include name="languages/**/*.msd" />
+        <include name="languages/**/*.mps" />
+        <include name="solutions/**/*.msd" />
+        <include name="solutions/**/*.mps" />
+        <exclude name=".mps/workspace.xml" />
+        <exclude name="**/source_gen/**" />
+        <exclude name="**/source_gen.caches/**" />
+        <exclude name="**/classes_gen/**" />
+      </fileset>
+    </copy>
+    <copy file="${basedir}/smoketest.msd" todir="${smoke.dir}/harness" />
+  </target>
+
+  <target name="core" depends="prepare">
+    <echo message="Building the two core languages and their generation plan from clean sources." />
+    <mps.make mpsHome="${mps.home}" failOnError="true">
+      <repository>
+        <modules dir="${smoke.project}/languages" />
+        <modules dir="${smoke.project}/solutions" />
+      </repository>
+      <module file="${smoke.project}/languages/mbnf/mbnf.mpl" />
+      <module file="${smoke.project}/languages/metabnf.aspectgen/metabnf.aspectgen.mpl" />
+      <module file="${smoke.project}/solutions/GenPlan/Genplan.msd" />
+      <jvmargs>
+        <arg value="-Xmx2g" />
+        <arg value="-ea" />
+        <arg value="-Didea.config.path=${smoke.dir}/config" />
+        <arg value="-Didea.system.path=${smoke.dir}/system" />
+        <arg value="-Didea.log.path=${smoke.dir}/log" />
+      </jvmargs>
+    </mps.make>
+  </target>
+
+  <target name="compile-harness" depends="prepare">
+    <mkdir dir="${smoke.dir}/harness/classes" />
+    <javac srcdir="${basedir}" destdir="${smoke.dir}/harness/classes"
+           includes="MetaBnfSmokeTest.java" includeantruntime="false" encoding="UTF-8"
+           fork="true" executable="${java.home}/bin/javac">
+      <classpath>
+        <fileset dir="${mps.home}/lib" includes="*.jar" />
+        <fileset dir="${mps.home}/lib/ant/lib" includes="*.jar" />
+        <fileset dir="${mps.home}/lib/mpsant" includes="*.jar" />
+        <fileset dir="${mps.home}/plugins/mps-core/lib" includes="*.jar" />
+        <pathelement location="${smoke.project}/languages/mbnf/classes_gen" />
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="run-harness" depends="compile-harness">
+    <delete dir="${smoke.project}/languages/Demo/source_gen" />
+    <delete dir="${smoke.project}/languages/Demo/source_gen.caches" />
+    <delete dir="${smoke.project}/languages/Demo/classes_gen" />
+    <runMPS mpsHome="${mps.home}" solution="df89e477-654a-4695-bb44-4ca739a68e93(metabnf.smoketest)"
+            startClass="metabnf.smoketest.MetaBnfSmokeTest" startMethod="run">
+      <repository>
+        <modules dir="${smoke.project}/languages" />
+        <modules dir="${smoke.project}/solutions" />
+        <modules dir="${smoke.dir}/harness" />
+      </repository>
+      <jvmargs>
+        <arg value="-Xmx2g" />
+        <arg value="-ea" />
+        <arg value="-Dmetabnf.smoke.project=${smoke.project}" />
+        <arg value="-Didea.config.path=${smoke.dir}/config" />
+        <arg value="-Didea.system.path=${smoke.dir}/system" />
+        <arg value="-Didea.log.path=${smoke.dir}/log" />
+      </jvmargs>
+    </runMPS>
+  </target>
+
+  <target name="import" depends="core,run-harness" />
+
+  <target name="compile-demo">
+    <echo message="Rebuilding Demo solely from the imported generated aspects." />
+    <delete dir="${smoke.project}/languages/Demo/source_gen" />
+    <delete dir="${smoke.project}/languages/Demo/source_gen.caches" />
+    <delete dir="${smoke.project}/languages/Demo/classes_gen" />
+    <mps.make mpsHome="${mps.home}" failOnError="true">
+      <repository>
+        <modules dir="${smoke.project}/languages" />
+        <modules dir="${smoke.project}/solutions" />
+      </repository>
+      <module file="${smoke.project}/languages/Demo/Demo.mpl" />
+      <jvmargs>
+        <arg value="-Xmx2g" />
+        <arg value="-ea" />
+        <arg value="-Didea.config.path=${smoke.dir}/config" />
+        <arg value="-Didea.system.path=${smoke.dir}/system" />
+        <arg value="-Didea.log.path=${smoke.dir}/log" />
+      </jvmargs>
+    </mps.make>
+    <condition property="demo.compiled">
+      <and>
+        <available file="${smoke.project}/languages/Demo/classes_gen/Demo/structure/StructureAspectDescriptor.class" />
+        <available file="${smoke.project}/languages/Demo/classes_gen/Demo/editor/EditorAspectDescriptorImpl.class" />
+        <available file="${smoke.project}/languages/Demo/classes_gen/Demo/textGen/TextGenAspectDescriptor.class" />
+      </and>
+    </condition>
+    <fail unless="demo.compiled" message="Demo's generated structure, editor, and textGen descriptors were not compiled." />
+  </target>
+
+  <target name="smoke" depends="import,compile-demo">
+    <echo message="MetaBNF smoke test passed. Artifacts: ${smoke.dir}" />
+  </target>
+
+  <target name="build-project" depends="core">
+    <mps.make mpsHome="${mps.home}" failOnError="true">
+      <repository>
+        <modules dir="${smoke.project}/languages" />
+        <modules dir="${smoke.project}/solutions" />
+      </repository>
+      <module file="${smoke.project}/languages/Demo/Demo.mpl" />
+      <module file="${smoke.project}/languages/Python/Python.mpl" />
+      <module file="${smoke.project}/languages/TestLanguage/TestLanguage.mpl" />
+      <module file="${smoke.project}/languages/mbnf/sandbox/mbnf.sandbox.msd" />
+      <jvmargs>
+        <arg value="-Xmx2g" />
+        <arg value="-ea" />
+        <arg value="-Didea.config.path=${smoke.dir}/config" />
+        <arg value="-Didea.system.path=${smoke.dir}/system" />
+        <arg value="-Didea.log.path=${smoke.dir}/log" />
+      </jvmargs>
+    </mps.make>
+  </target>
+</project>

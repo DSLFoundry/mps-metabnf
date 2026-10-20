@@ -54,15 +54,6 @@
       <mapping-priorities />
     </generator>
   </generators>
-  <dependencies>
-    <dependency reexport="false">dffab718-7078-49db-ab30-bc28036cf021(mbnf.sandbox@transient28)</dependency>
-    <dependency reexport="false">92199264-01e7-4497-a721-912b458e2f9c(mbnf.sandbox@transient8)</dependency>
-    <dependency reexport="false">150c0332-dee4-46fb-8cde-4490700c26d6(mbnf.sandbox@transient18)</dependency>
-    <dependency reexport="false">c2a5b9d7-07cd-4b65-8dfa-95546fb19171(mbnf.sandbox@transient10)</dependency>
-    <dependency reexport="false">3e21dcd0-e89f-4cba-939b-ae1558f48a24(mbnf.sandbox@transient14)</dependency>
-    <dependency reexport="false">498c0aa7-fe36-428e-8701-e3acdd534a5b(mbnf.sandbox@transient26)</dependency>
-    <dependency reexport="false">8d69898c-c087-4a37-adfe-7232fac73b6c(mbnf.sandbox@transient10)</dependency>
-  </dependencies>
   <languageVersions>
     <language slang="l:f3061a53-9226-4cc5-a443-f952ceaf5816:jetbrains.mps.baseLanguage" version="12" />
     <language slang="l:443f4c36-fcf5-4eb6-9500-8d06ed259e3e:jetbrains.mps.baseLanguage.classifiers" version="0" />
@@ -104,10 +95,6 @@
     <module reference="8865b7a8-5271-43d3-884c-6fd1d9cfdd34(MPS.OpenAPI)" version="0" />
     <module reference="ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)" version="0" />
     <module reference="a9e4c532-c5f5-4bb7-99ef-42abb73bbb70(jetbrains.mps.lang.descriptor.aspects)" version="0" />
-    <module reference="142c6b91-ff64-4c49-ac66-23d8f95a7dd9(mbnf.sandbox@transient114)" version="0" />
-    <module reference="a0bc3466-155a-46cd-bb1b-44f518359406(mbnf.sandbox@transient122)" version="0" />
-    <module reference="dffab718-7078-49db-ab30-bc28036cf021(mbnf.sandbox@transient28)" version="0" />
   </dependencyVersions>
   <extendedLanguages />
 </language>
-

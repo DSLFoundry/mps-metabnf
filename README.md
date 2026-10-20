@@ -1,6 +1,6 @@
 # MetaBNF for JetBrains MPS
 Grammar-based MPS-language specification and generation
-This version of MetaBNF works on MPS 2025.1
+This version of MetaBNF works on MPS 2026.1
 
 # Rationale
 This language tries to achieve similar results as [Ingrid](https://github.com/premun/ingrid) (see also [Ingrid-CS](https://github.com/vaclav/MPS_CSharp) for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
@@ -29,9 +29,35 @@ Any kind of contribution or improvement would be helpful. To give a few ideas:
 # How to build
 There are no dependencies to thirdparty plugins, so the [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version you have to install) can be used.
 
-Building is simply opening the MPS project in the MPS IDE and building the two languages starting with com.dslfoundry.metabnf.
+Open the MPS project in the MPS IDE and rebuild the `metabnf` and `metabnf.aspectgen` languages and the `GenPlan` solution.
+
+When upgrading an existing checkout, save your work before switching to MPS 2026.1. If MPS reports pending migrations, run **Run Migration Assistant** via **Find Action** (Ctrl+Shift+A), then rebuild the languages.
 
 In case you encounter problems, see the *Troubleshooting* section further below.
+
+## Gradle build and automated smoke test
+
+Install a JDK 25 to run the Gradle wrapper. Gradle resolves MPS 2026.1.1 and its matching JetBrains Runtime automatically; you do not need a separately installed MPS or Ant for command-line builds. Versions are pinned in `gradle/libs.versions.toml`, dependency locks, and the checksum-verified Gradle wrapper.
+
+On Windows:
+
+```powershell
+.\gradlew.bat build
+```
+
+On Linux, use `./gradlew build` (or `xvfb-run --auto-servernum ./gradlew build` on a machine without a display). `build` compiles all languages and solutions, packages the core languages and generation plan, and runs the README's clean Demo generation/import workflow. To run just that workflow, use `smokeTest`; to compile and package without the smoke test, use `assemble`.
+
+The build and test use separate source copies under `build/mps-build` and `build/mps-smoke`, with isolated MPS settings, caches, and logs. They do not change your source models, open projects, or IDE settings. Each task starts afresh; its artifacts remain available until the next run or `clean`. The smoke test builds the core languages, checks the source grammar with MPS's native constraint checker, empties Demo's structure/editor/textGen in the copy, rebuilds the grammar twice, and executes **Import Generated Language** followed by **Import Remaining Language Aspects** on the final transient model.
+
+It requires the 14 expected structure declarations, eight editors, eight text generators, and resolved references that survive removal of all transient models, then compiles the regenerated Demo language. It also rejects transient model imports, module dependencies, and dependency-version entries. The test injects stale transient entries into the temporary target to verify their detection and cleanup by the import actions. A failed assertion or build returns a nonzero exit code.
+
+For local development, `-PmpsHomeDir=C:\path\to\MPS` selects an existing MPS installation instead of downloading MPS; the matching pinned JBR is still resolved by Gradle. To update dependencies deliberately, edit the version catalog and run `build --write-locks`.
+
+### CI and published artifacts
+
+GitHub Actions builds and smoketests on Linux and Windows for pull requests and development branches, uploading the compiled module ZIP and diagnostics. Pushes to `main` run the same build and smoke test on Linux, publish `com.dslfoundry:metabnf:<version>@zip` to GitHub Packages, and attach the ZIP to a GitHub prerelease. CI versions include the run ID and attempt so retries do not overwrite existing packages. Publishing uses the repository's built-in `GITHUB_TOKEN`; no personal token, reviewer assignment, or approval environment is required.
+
+The ZIP under `build/distributions` contains compiled MPS modules and their source models, not an IDE plugin. Extract it and add its `metabnf` directory as a project library in MPS 2026.1. Locally, `publishToMavenLocal` installs the ZIP and POM into your Maven repository; remote `publish` requires `GITHUB_ACTOR` and `GITHUB_TOKEN`. Use `-PreleaseVersion=...` to set a deliberate publication version.
 
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language) in a model (see mbnf.sandbox/mbnf/sandbox/Demo model for an example)

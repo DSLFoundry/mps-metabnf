@@ -1,0 +1,63 @@
+name: Publish MetaBNF
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: gradle/actions/setup-gradle@0b6dd653ba04f4f93bf581ec31e66cbd7dcb644d # v4
+      - name: Build, smoketest, and publish Maven package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          chmod +x gradlew
+          set -o pipefail
+          xvfb-run --auto-servernum ./gradlew build publish --console=plain 2>&1 | tee build-ci.log
+      - name: Publish GitHub prerelease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "build-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            build/distributions/*.zip \
+            --target "$GITHUB_SHA" \
+            --title "MetaBNF build ${GITHUB_RUN_NUMBER}" \
+            --prerelease --generate-notes
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: metabnf
+          path: build/distributions/*.zip
+          if-no-files-found: error
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: publish-diagnostics
+          path: |
+            build-ci.log
+            build/mps-*/log/**
+            build/mps-*/project/**/*.mps
+            build/mps-*/project/**/*.mpl
+            build/reports/**
+          if-no-files-found: ignore
+          retention-days: 7

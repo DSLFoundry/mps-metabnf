@@ -2,13 +2,16 @@
 <model ref="r:9ce34230-ecdb-4cd9-9392-83b09e10ee81(metabnf.GenPlan)">
   <persistence version="9" />
   <languages>
-    <use id="7ab1a6fa-0a11-4b95-9e48-75f363d6cb00" name="jetbrains.mps.lang.generator.plan" version="2" />
+    <use id="7ab1a6fa-0a11-4b95-9e48-75f363d6cb00" name="jetbrains.mps.lang.generator.plan" version="3" />
     <use id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel" version="19" />
     <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   </languages>
   <imports />
   <registry>
     <language id="7ab1a6fa-0a11-4b95-9e48-75f363d6cb00" name="jetbrains.mps.lang.generator.plan">
+      <concept id="2332321114124261810" name="jetbrains.mps.lang.generator.plan.structure.GeneratorModulePointer" flags="ng" index="lQKw0">
+        <child id="2332321114124261812" name="module" index="lQKw6" />
+      </concept>
       <concept id="1820634577908471803" name="jetbrains.mps.lang.generator.plan.structure.Plan" flags="ng" index="2VgMpV">
         <child id="1820634577908471815" name="steps" index="2VgMA7" />
       </concept>
@@ -17,13 +20,10 @@
         <child id="8296877263936660572" name="generator" index="3uOsAP" />
       </concept>
     </language>
-    <language id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel">
-      <concept id="427659576753752243" name="jetbrains.mps.lang.smodel.structure.ModulePointer" flags="ng" index="20RdaH">
-        <property id="427659576753753627" name="moduleId" index="20Rdg5" />
-        <property id="427659576753753625" name="moduleName" index="20Rdg7" />
-      </concept>
-      <concept id="8296877263936075789" name="jetbrains.mps.lang.smodel.structure.GeneratorModulePointer" flags="ng" index="3uMdn$">
-        <child id="8296877263936075892" name="module" index="3uMdmt" />
+    <language id="446c26eb-2b7b-4bf0-9b35-f83fa582753e" name="jetbrains.mps.lang.modelapi">
+      <concept id="361130699826193249" name="jetbrains.mps.lang.modelapi.structure.ModulePointer" flags="ng" index="1dCxOk">
+        <property id="1863527487546097500" name="moduleId" index="1XweGW" />
+        <property id="1863527487545993577" name="moduleName" index="1XxBO9" />
       </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
@@ -35,10 +35,10 @@
   <node concept="2VgMpV" id="3tSvZ16hS5p">
     <property role="TrG5h" value="MetaBNF Plan" />
     <node concept="3uMcMo" id="3tSvZ16hS5y" role="2VgMA7">
-      <node concept="3uMdn$" id="3tSvZ16hS5C" role="3uOsAP">
-        <node concept="20RdaH" id="3tSvZ16hS5D" role="3uMdmt">
-          <property role="20Rdg5" value="47b530dd-ebda-4923-bd60-37ece9820068" />
-          <property role="20Rdg7" value="metabnf#3997085339232029834" />
+      <node concept="lQKw0" id="LaOfQBYxok" role="3uOsAP">
+        <node concept="1dCxOk" id="LaOfQBYxol" role="lQKw6">
+          <property role="1XweGW" value="47b530dd-ebda-4923-bd60-37ece9820068" />
+          <property role="1XxBO9" value="metabnf#3997085339232029834" />
         </node>
       </node>
     </node>

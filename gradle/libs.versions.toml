@@ -1,0 +1,11 @@
+[versions]
+mps = "2026.1.1"
+jbr = "25.0.3-b329.124"
+mpsPlugin = "2.1.1"
+
+[libraries]
+mps = { module = "com.jetbrains:mps", version.ref = "mps" }
+jbr = { module = "com.jetbrains.jdk:jbr_jcef", version.ref = "jbr" }
+
+[plugins]
+mps = { id = "com.specificlanguages.mps", version.ref = "mpsPlugin" }
