@@ -35,12 +35,18 @@ See [setup and missing-menu troubleshooting](metabnf-base.md#setup).
 4. Select the target model and a simple generated-language name, for example
    `Mini`. The importer creates and saves native MPS nodes in that model,
    using native language imports and references; it does not write `.mps` XML.
-5. Open the target in Logical View and review/check the grammar. Add usability
-   decorations as needed. Import does **not** generate a language or infer
+5. Review the optional [enrichment preview](profiles-and-enrichment.md). **OK**
+   attaches inferred decorations and reviewable suggestions; **Cancel** keeps
+   the imported grammar without enrichment. The same operation is available
+   later through **Tools > Analyze and Enrich Grammar...**.
+6. Open the target in Logical View and review/check the grammar. Import does
+   **not** generate a language or infer
    source-to-AST mappings. For generation, follow the core guide's
    [language generation instructions](metabnf-base.md#generate-an-mps-language).
 
 Other target roots are preserved. An existing grammar is never replaced.
+For reimport, use a fresh model and the conservative
+[metadata-transfer workflow](profiles-and-enrichment.md#reimport-without-guessing-correspondence).
 Parsing/validation happen before the target is mutated; unsupported constructs
 produce an error instead of an approximation. Native creation/save failures
 can leave partial changes: inspect the target before retrying, as indicated

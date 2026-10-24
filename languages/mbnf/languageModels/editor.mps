@@ -7,7 +7,8 @@
   </languages>
   <imports>
     <import index="6o2a" ref="r:0fbcf19f-c60b-479b-81cb-094b5b2b9f1d(metabnf.structure)" />
-    <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
+    <import index="9toz" ref="9c03c641-469f-49e7-aeed-44a3d19b7253/java:metabnf.usability(metabnf/)" />
+    <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" />
   </imports>
   <registry>
     <language id="18bc6592-03a6-4e29-a83a-7ff23bde13ba" name="jetbrains.mps.lang.editor">
@@ -88,7 +89,14 @@
       </concept>
       <concept id="1073389882823" name="jetbrains.mps.lang.editor.structure.CellModel_RefNode" flags="sg" stub="730538219795960754" index="3F1sOY" />
       <concept id="1073390211982" name="jetbrains.mps.lang.editor.structure.CellModel_RefNodeList" flags="sg" stub="2794558372793454595" index="3F2HdR" />
+      <concept id="1225898583838" name="jetbrains.mps.lang.editor.structure.ReadOnlyModelAccessor" flags="ng" index="1HfYo3">
+        <child id="1225898971709" name="getter" index="1Hhtcw" />
+      </concept>
+      <concept id="1225900081164" name="jetbrains.mps.lang.editor.structure.CellModel_ReadOnlyModelAccessor" flags="sg" stub="3708815482283559694" index="1HlG4h">
+        <child id="1225900141900" name="modelAccessor" index="1HlULh" />
+      </concept>
       <concept id="625126330682908270" name="jetbrains.mps.lang.editor.structure.CellModel_ReferencePresentation" flags="sg" stub="730538219795961225" index="3SHvHV" />
+      <concept id="1176717841777" name="jetbrains.mps.lang.editor.structure.QueryFunction_ModelAccess_Getter" flags="in" index="3TQlhw" />
       <concept id="1198256887712" name="jetbrains.mps.lang.editor.structure.CellModel_Indent" flags="ng" index="3XFhqQ" />
       <concept id="1166049232041" name="jetbrains.mps.lang.editor.structure.AbstractComponent" flags="ng" index="1XWOmA">
         <reference id="1166049300910" name="conceptDeclaration" index="1XX52x" />
@@ -105,6 +113,12 @@
       <concept id="1137021947720" name="jetbrains.mps.baseLanguage.structure.ConceptFunction" flags="in" index="2VMwT0">
         <child id="1137022507850" name="body" index="2VODD2" />
       </concept>
+      <concept id="1070475926800" name="jetbrains.mps.baseLanguage.structure.StringLiteral" flags="nn" index="Xl_RD">
+        <property id="1070475926801" name="value" index="Xl_RC" />
+      </concept>
+      <concept id="1081236700937" name="jetbrains.mps.baseLanguage.structure.StaticMethodCall" flags="nn" index="2YIFZM">
+        <reference id="1144433194310" name="classConcept" index="1Pybhc" />
+      </concept>
       <concept id="1225271408483" name="jetbrains.mps.baseLanguage.structure.IsNotEmptyOperation" flags="nn" index="17RvpY" />
       <concept id="1068580123155" name="jetbrains.mps.baseLanguage.structure.ExpressionStatement" flags="nn" index="3clFbF">
         <child id="1068580123156" name="expression" index="3clFbG" />
@@ -114,6 +128,10 @@
       </concept>
       <concept id="1068581242878" name="jetbrains.mps.baseLanguage.structure.ReturnStatement" flags="nn" index="3cpWs6">
         <child id="1068581517676" name="expression" index="3cqZAk" />
+      </concept>
+      <concept id="1204053956946" name="jetbrains.mps.baseLanguage.structure.IMethodCall" flags="ngI" index="1ndlxa">
+        <reference id="1068499141037" name="baseMethodDeclaration" index="37wK5l" />
+        <child id="1068499141038" name="actualArgument" index="37wK5m" />
       </concept>
     </language>
     <language id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel">
@@ -945,6 +963,531 @@
           </node>
           <node concept="PMmxH" id="$td8qQ36vm" role="3EZMnx">
             <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="570owZKsWIf">
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:14wlUfKK6zf" resolve="GenerationProfile" />
+    <node concept="3EZMnI" id="570owZKsWIg" role="2wV5jI">
+      <node concept="2iRkQZ" id="570owZKsWIh" role="2iSdaV" />
+      <node concept="3EZMnI" id="570owZKsWHU" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWHV" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWHT" role="3EZMnx">
+          <property role="3F0ifm" value="generation profile:" />
+        </node>
+        <node concept="3F0A7n" id="570owZKsWHS" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:14wlUfKK6zg" resolve="profileId" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWId" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWIe" role="2iSdaV" />
+        <node concept="3XFhqQ" id="570owZKsWIc" role="3EZMnx" />
+        <node concept="3EZMnI" id="570owZKsWIa" role="3EZMnx">
+          <node concept="2iRkQZ" id="570owZKsWIb" role="2iSdaV" />
+          <node concept="3EZMnI" id="570owZKsWHY" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWHZ" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWHX" role="3EZMnx">
+              <property role="3F0ifm" value="version:" />
+            </node>
+            <node concept="3F0A7n" id="570owZKsWHW" role="3EZMnx">
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zh" resolve="version" />
+            </node>
+          </node>
+          <node concept="3EZMnI" id="570owZKsWI4" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWI5" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWI3" role="3EZMnx">
+              <property role="3F0ifm" value="grammar:" />
+            </node>
+            <node concept="1iCGBv" id="570owZKsWI0" role="3EZMnx">
+              <property role="1$x2rV" value="&lt;select grammar&gt;" />
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zi" resolve="grammar" />
+              <node concept="1sVBvm" id="570owZKsWI1" role="1sWHZn">
+                <node concept="3SHvHV" id="570owZKsWI2" role="2wV5jI" />
+              </node>
+            </node>
+          </node>
+          <node concept="3F0ifn" id="570owZKsWI6" role="3EZMnx">
+            <property role="3F0ifm" value="projection selections (empty = auto):" />
+          </node>
+          <node concept="3EZMnI" id="570owZKsWI8" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWI9" role="2iSdaV" />
+            <node concept="3XFhqQ" id="570owZKsWI7" role="3EZMnx" />
+            <node concept="3F2HdR" id="570owZKsWHP" role="3EZMnx">
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zp" resolve="selections" />
+              <node concept="2iRkQZ" id="570owZKsWHQ" role="2czzBx" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3EZMnI" id="570owZKsWJ4" role="6VMZX">
+      <node concept="2iRkQZ" id="570owZKsWJ5" role="2iSdaV" />
+      <node concept="3F0ifn" id="570owZKsWIi" role="3EZMnx">
+        <property role="3F0ifm" value="Effective generation selection (computed; not an editable plan)" />
+      </node>
+      <node concept="3EZMnI" id="570owZKsWIo" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWIp" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWIn" role="3EZMnx">
+          <property role="3F0ifm" value="implementation:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWIj" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWIk" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWIl" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWIm" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKsWKN" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0$3" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0$7" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0$5" role="37wK5m">
+                      <property role="Xl_RC" value="implementation" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWIv" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWIw" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWIu" role="3EZMnx">
+          <property role="3F0ifm" value="origin:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWIq" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWIr" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWIs" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWIt" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0$9" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0$d" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0$h" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0$f" role="37wK5m">
+                      <property role="Xl_RC" value="origin" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWIA" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWIB" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWI_" role="3EZMnx">
+          <property role="3F0ifm" value="reason:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWIx" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWIy" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWIz" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWI$" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0$j" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0$n" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0$r" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0$p" role="37wK5m">
+                      <property role="Xl_RC" value="reason" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWIH" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWII" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWIG" role="3EZMnx">
+          <property role="3F0ifm" value="alternatives:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWIC" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWID" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWIE" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWIF" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0$t" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0$x" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0$_" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0$z" role="37wK5m">
+                      <property role="Xl_RC" value="alternatives" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWIO" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWIP" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWIN" role="3EZMnx">
+          <property role="3F0ifm" value="requirements:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWIJ" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWIK" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWIL" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWIM" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0$B" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0$F" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0$J" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0$H" role="37wK5m">
+                      <property role="Xl_RC" value="requirements" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWIV" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWIW" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWIU" role="3EZMnx">
+          <property role="3F0ifm" value="generationMetadata:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWIQ" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWIR" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWIS" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWIT" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0$L" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0$P" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0$T" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0$R" role="37wK5m">
+                      <property role="Xl_RC" value="generationMetadata" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWJ2" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWJ3" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWJ1" role="3EZMnx">
+          <property role="3F0ifm" value="diagnostics:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWIX" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWIY" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWIZ" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWJ0" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0$V" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0$Z" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0_3" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0_1" role="37wK5m">
+                      <property role="Xl_RC" value="diagnostics" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="570owZKsWJx">
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:14wlUfKK6zj" resolve="ImplementationSelection" />
+    <node concept="3EZMnI" id="570owZKsWJy" role="2wV5jI">
+      <node concept="2iRkQZ" id="570owZKsWJz" role="2iSdaV" />
+      <node concept="3EZMnI" id="570owZKsWJ8" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWJ9" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWJ7" role="3EZMnx">
+          <property role="3F0ifm" value="projection:" />
+        </node>
+        <node concept="3F0A7n" id="570owZKsWJ6" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:14wlUfKK6zk" resolve="projection" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWJv" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWJw" role="2iSdaV" />
+        <node concept="3XFhqQ" id="570owZKsWJu" role="3EZMnx" />
+        <node concept="3EZMnI" id="570owZKsWJs" role="3EZMnx">
+          <node concept="2iRkQZ" id="570owZKsWJt" role="2iSdaV" />
+          <node concept="3EZMnI" id="570owZKsWJc" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWJd" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWJb" role="3EZMnx">
+              <property role="3F0ifm" value="scope:" />
+            </node>
+            <node concept="3F0A7n" id="570owZKsWJa" role="3EZMnx">
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zl" resolve="scope" />
+            </node>
+          </node>
+          <node concept="3EZMnI" id="570owZKsWJi" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWJj" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWJh" role="3EZMnx">
+              <property role="3F0ifm" value="target (empty for pattern default):" />
+            </node>
+            <node concept="1iCGBv" id="570owZKsWJe" role="3EZMnx">
+              <property role="1$x2rV" value="&lt;select target&gt;" />
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zo" resolve="target" />
+              <node concept="1sVBvm" id="570owZKsWJf" role="1sWHZn">
+                <node concept="3SHvHV" id="570owZKsWJg" role="2wV5jI" />
+              </node>
+            </node>
+          </node>
+          <node concept="3EZMnI" id="570owZKsWJm" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWJn" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWJl" role="3EZMnx">
+              <property role="3F0ifm" value="pattern:" />
+            </node>
+            <node concept="3F0A7n" id="570owZKsWJk" role="3EZMnx">
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zm" resolve="pattern" />
+            </node>
+          </node>
+          <node concept="3EZMnI" id="570owZKsWJq" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWJr" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWJp" role="3EZMnx">
+              <property role="3F0ifm" value="implementation (auto or explicit capability ID):" />
+            </node>
+            <node concept="3F0A7n" id="570owZKsWJo" role="3EZMnx">
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zn" resolve="implementation" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3EZMnI" id="570owZKsWKm" role="6VMZX">
+      <node concept="2iRkQZ" id="570owZKsWKn" role="2iSdaV" />
+      <node concept="3F0ifn" id="570owZKsWJ$" role="3EZMnx">
+        <property role="3F0ifm" value="Effective generation selection (computed; not an editable plan)" />
+      </node>
+      <node concept="3EZMnI" id="570owZKsWJE" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWJF" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWJD" role="3EZMnx">
+          <property role="3F0ifm" value="implementation:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWJ_" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWJA" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWJB" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWJC" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0_5" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0_9" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0_d" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0_b" role="37wK5m">
+                      <property role="Xl_RC" value="implementation" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWJL" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWJM" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWJK" role="3EZMnx">
+          <property role="3F0ifm" value="origin:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWJG" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWJH" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWJI" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWJJ" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0_f" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0_j" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0_n" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0_l" role="37wK5m">
+                      <property role="Xl_RC" value="origin" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWJS" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWJT" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWJR" role="3EZMnx">
+          <property role="3F0ifm" value="reason:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWJN" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWJO" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWJP" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWJQ" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0_p" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0_t" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0_x" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0_v" role="37wK5m">
+                      <property role="Xl_RC" value="reason" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWJZ" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWK0" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWJY" role="3EZMnx">
+          <property role="3F0ifm" value="alternatives:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWJU" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWJV" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWJW" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWJX" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0_z" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0_B" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0_F" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0_D" role="37wK5m">
+                      <property role="Xl_RC" value="alternatives" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWK6" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWK7" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWK5" role="3EZMnx">
+          <property role="3F0ifm" value="requirements:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWK1" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWK2" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWK3" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWK4" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0_H" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0_L" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0_P" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0_N" role="37wK5m">
+                      <property role="Xl_RC" value="requirements" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWKd" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWKe" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWKc" role="3EZMnx">
+          <property role="3F0ifm" value="generationMetadata:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWK8" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWK9" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWKa" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWKb" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0_R" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0_V" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0_Z" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0_X" role="37wK5m">
+                      <property role="Xl_RC" value="generationMetadata" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWKk" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWKl" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWKj" role="3EZMnx">
+          <property role="3F0ifm" value="diagnostics:" />
+        </node>
+        <node concept="1HlG4h" id="570owZKsWKf" role="3EZMnx">
+          <node concept="1HfYo3" id="570owZKsWKg" role="1HlULh">
+            <node concept="3TQlhw" id="570owZKsWKh" role="1Hhtcw">
+              <node concept="3clFbS" id="570owZKsWKi" role="2VODD2">
+                <node concept="3cpWs6" id="570owZKt0A1" role="3cqZAp">
+                  <node concept="2YIFZM" id="570owZKt0A5" role="3cqZAk">
+                    <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                    <ref role="37wK5l" to="9toz:~GenerationProfiles.inspectorField(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="inspectorField" />
+                    <node concept="pncrf" id="570owZKt0A9" role="37wK5m" />
+                    <node concept="Xl_RD" id="570owZKt0A7" role="37wK5m">
+                      <property role="Xl_RC" value="diagnostics" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="570owZKsWKJ">
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:14wlUfKK6zq" resolve="PatternAnnotation" />
+    <node concept="3EZMnI" id="570owZKsWKK" role="2wV5jI">
+      <node concept="2iRkQZ" id="570owZKsWKL" role="2iSdaV" />
+      <node concept="3EZMnI" id="570owZKsWKq" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWKr" role="2iSdaV" />
+        <node concept="3F0ifn" id="570owZKsWKp" role="3EZMnx">
+          <property role="3F0ifm" value="pattern suggestion:" />
+        </node>
+        <node concept="3F0A7n" id="570owZKsWKo" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:14wlUfKK6zr" resolve="pattern" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="570owZKsWKH" role="3EZMnx">
+        <node concept="2iRfu4" id="570owZKsWKI" role="2iSdaV" />
+        <node concept="3XFhqQ" id="570owZKsWKG" role="3EZMnx" />
+        <node concept="3EZMnI" id="570owZKsWKE" role="3EZMnx">
+          <node concept="2iRkQZ" id="570owZKsWKF" role="2iSdaV" />
+          <node concept="3EZMnI" id="570owZKsWKw" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWKx" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWKv" role="3EZMnx">
+              <property role="3F0ifm" value="target:" />
+            </node>
+            <node concept="1iCGBv" id="570owZKsWKs" role="3EZMnx">
+              <property role="1$x2rV" value="&lt;select target&gt;" />
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zt" resolve="target" />
+              <node concept="1sVBvm" id="570owZKsWKt" role="1sWHZn">
+                <node concept="3SHvHV" id="570owZKsWKu" role="2wV5jI" />
+              </node>
+            </node>
+          </node>
+          <node concept="3EZMnI" id="570owZKsWK$" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWK_" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWKz" role="3EZMnx">
+              <property role="3F0ifm" value="mapping-impact (intent only):" />
+            </node>
+            <node concept="3F0A7n" id="570owZKsWKy" role="3EZMnx">
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zs" resolve="mappingImpact" />
+            </node>
+          </node>
+          <node concept="PMmxH" id="570owZKsWHR" role="3EZMnx">
+            <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+          </node>
+          <node concept="3EZMnI" id="570owZKsWKC" role="3EZMnx">
+            <node concept="2iRfu4" id="570owZKsWKD" role="2iSdaV" />
+            <node concept="3F0ifn" id="570owZKsWKB" role="3EZMnx">
+              <property role="3F0ifm" value="source correspondence:" />
+            </node>
+            <node concept="3F0A7n" id="570owZKsWKA" role="3EZMnx">
+              <property role="1Intyy" value="true" />
+              <ref role="1NtTu8" to="6o2a:14wlUfKK6zu" resolve="recognitionKey" />
+            </node>
           </node>
         </node>
       </node>

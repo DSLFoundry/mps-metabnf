@@ -579,6 +579,11 @@
       <property role="IQ2nx" value="656738873848441255" />
       <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
+    <node concept="1TJgyi" id="14wlUfKK6zu" role="1TKVEl">
+      <property role="TrG5h" value="recognitionKey" />
+      <property role="IQ2nx" value="1234082659529943262" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
   </node>
   <node concept="1TIwiD" id="$td8qPViAE">
     <property role="TrG5h" value="FlagAnnotation" />
@@ -631,6 +636,157 @@
       <property role="TrG5h" value="distinguishEmpty" />
       <property role="IQ2nx" value="656738873848441266" />
       <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+  </node>
+  <node concept="25R3W" id="14wlUfKK6z2">
+    <property role="TrG5h" value="UsabilityPattern" />
+    <property role="3F6X1D" value="1234082659529943234" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1H5jkz" node="14wlUfKK6z3" resolve="Flag" />
+    <node concept="25R33" id="14wlUfKK6z3" role="25R1y">
+      <property role="TrG5h" value="Flag" />
+      <property role="3tVfz5" value="1234082659529943235" />
+      <property role="1L1pqM" value="Flag" />
+    </node>
+    <node concept="25R33" id="14wlUfKK6z4" role="25R1y">
+      <property role="TrG5h" value="List" />
+      <property role="3tVfz5" value="1234082659529943236" />
+      <property role="1L1pqM" value="List" />
+    </node>
+    <node concept="25R33" id="14wlUfKK6z5" role="25R1y">
+      <property role="TrG5h" value="OptionalGroup" />
+      <property role="3tVfz5" value="1234082659529943237" />
+      <property role="1L1pqM" value="OptionalGroup" />
+    </node>
+    <node concept="25R33" id="14wlUfKK6z6" role="25R1y">
+      <property role="TrG5h" value="LiteralChoice" />
+      <property role="3tVfz5" value="1234082659529943238" />
+      <property role="1L1pqM" value="LiteralChoice" />
+    </node>
+  </node>
+  <node concept="25R3W" id="14wlUfKK6z7">
+    <property role="TrG5h" value="EditorProjection" />
+    <property role="3F6X1D" value="1234082659529943239" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1H5jkz" node="14wlUfKK6z8" resolve="Textual" />
+    <node concept="25R33" id="14wlUfKK6z8" role="25R1y">
+      <property role="TrG5h" value="Textual" />
+      <property role="3tVfz5" value="1234082659529943240" />
+      <property role="1L1pqM" value="Textual" />
+    </node>
+    <node concept="25R33" id="14wlUfKK6z9" role="25R1y">
+      <property role="TrG5h" value="Form" />
+      <property role="3tVfz5" value="1234082659529943241" />
+      <property role="1L1pqM" value="Form" />
+    </node>
+    <node concept="25R33" id="14wlUfKK6za" role="25R1y">
+      <property role="TrG5h" value="Table" />
+      <property role="3tVfz5" value="1234082659529943242" />
+      <property role="1L1pqM" value="Table" />
+    </node>
+  </node>
+  <node concept="25R3W" id="14wlUfKK6zb">
+    <property role="TrG5h" value="SelectionScope" />
+    <property role="3F6X1D" value="1234082659529943243" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1H5jkz" node="14wlUfKK6zc" resolve="Occurrence" />
+    <node concept="25R33" id="14wlUfKK6zc" role="25R1y">
+      <property role="TrG5h" value="Occurrence" />
+      <property role="3tVfz5" value="1234082659529943244" />
+      <property role="1L1pqM" value="Occurrence" />
+    </node>
+    <node concept="25R33" id="14wlUfKK6zd" role="25R1y">
+      <property role="TrG5h" value="Rule" />
+      <property role="3tVfz5" value="1234082659529943245" />
+      <property role="1L1pqM" value="Rule" />
+    </node>
+    <node concept="25R33" id="14wlUfKK6ze" role="25R1y">
+      <property role="TrG5h" value="Pattern" />
+      <property role="3tVfz5" value="1234082659529943246" />
+      <property role="1L1pqM" value="Pattern" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="14wlUfKK6zf">
+    <property role="TrG5h" value="GenerationProfile" />
+    <property role="19KtqR" value="true" />
+    <property role="EcuMT" value="1234082659529943247" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="14wlUfKK6zg" role="1TKVEl">
+      <property role="TrG5h" value="profileId" />
+      <property role="IQ2nx" value="1234082659529943248" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="14wlUfKK6zh" role="1TKVEl">
+      <property role="TrG5h" value="version" />
+      <property role="IQ2nx" value="1234082659529943249" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="14wlUfKK6zi" role="1TKVEi">
+      <property role="20kJfa" value="grammar" />
+      <property role="IQ2ns" value="1234082659529943250" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2b2ZYR3vfui" resolve="grammar" />
+    </node>
+    <node concept="1TJgyj" id="14wlUfKK6zp" role="1TKVEi">
+      <property role="20kJfa" value="selections" />
+      <property role="IQ2ns" value="1234082659529943257" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <ref role="20lvS9" node="14wlUfKK6zj" resolve="ImplementationSelection" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="14wlUfKK6zj">
+    <property role="TrG5h" value="ImplementationSelection" />
+    <property role="EcuMT" value="1234082659529943251" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="14wlUfKK6zk" role="1TKVEl">
+      <property role="TrG5h" value="projection" />
+      <property role="IQ2nx" value="1234082659529943252" />
+      <ref role="AX2Wp" node="14wlUfKK6z7" resolve="EditorProjection" />
+    </node>
+    <node concept="1TJgyi" id="14wlUfKK6zl" role="1TKVEl">
+      <property role="TrG5h" value="scope" />
+      <property role="IQ2nx" value="1234082659529943253" />
+      <ref role="AX2Wp" node="14wlUfKK6zb" resolve="SelectionScope" />
+    </node>
+    <node concept="1TJgyi" id="14wlUfKK6zm" role="1TKVEl">
+      <property role="TrG5h" value="pattern" />
+      <property role="IQ2nx" value="1234082659529943254" />
+      <ref role="AX2Wp" node="14wlUfKK6z2" resolve="UsabilityPattern" />
+    </node>
+    <node concept="1TJgyi" id="14wlUfKK6zn" role="1TKVEl">
+      <property role="TrG5h" value="implementation" />
+      <property role="IQ2nx" value="1234082659529943255" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="14wlUfKK6zo" role="1TKVEi">
+      <property role="20kJfa" value="target" />
+      <property role="IQ2ns" value="1234082659529943256" />
+      <ref role="20lvS9" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="14wlUfKK6zq">
+    <property role="TrG5h" value="PatternAnnotation" />
+    <property role="EcuMT" value="1234082659529943258" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1TJDcQ" node="$td8qPViA$" resolve="UsabilityAnnotation" />
+    <node concept="1TJgyi" id="14wlUfKK6zr" role="1TKVEl">
+      <property role="TrG5h" value="pattern" />
+      <property role="IQ2nx" value="1234082659529943259" />
+      <ref role="AX2Wp" node="14wlUfKK6z2" resolve="UsabilityPattern" />
+    </node>
+    <node concept="1TJgyi" id="14wlUfKK6zs" role="1TKVEl">
+      <property role="TrG5h" value="mappingImpact" />
+      <property role="IQ2nx" value="1234082659529943260" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+    <node concept="1TJgyj" id="14wlUfKK6zt" role="1TKVEi">
+      <property role="20kJfa" value="target" />
+      <property role="IQ2ns" value="1234082659529943261" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpck:gw2VY9q" resolve="BaseConcept" />
     </node>
   </node>
 </model>

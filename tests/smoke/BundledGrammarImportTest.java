@@ -5,6 +5,9 @@ import jetbrains.mps.project.Project;
 import jetbrains.mps.tool.environment.Environment;
 import metabnf.rascal.GrammarModelImporter;
 import metabnf.rascal.GrammarTools;
+import metabnf.usability.GrammarEnrichment;
+import metabnf.usability.ModelNodes;
+import jetbrains.mps.smodel.CopyUtil;
 import org.jetbrains.mps.openapi.model.EditableSModel;
 import org.jetbrains.mps.openapi.model.SModel;
 import org.jetbrains.mps.openapi.model.SNode;
@@ -58,6 +61,20 @@ final class BundledGrammarImportTest {
                     }
                     require(roots(target) == count, "Rejected import mutated native roots");
                     target.removeRootNode(sentinelReference.resolve(project.getRepository()));
+                    var before = ModelNodes.fingerprint(restored);
+                    var preview = GrammarEnrichment.analyze(restored, null);
+                    SNode manual = CopyUtil.copy(restored);
+                    target.addRootNode(manual);
+                    var manualPreview = GrammarEnrichment.analyze(manual, null);
+                    require(preview.candidates().stream().map(item -> item.pattern() + ":" + item.evidence()).sorted().toList()
+                                    .equals(manualPreview.candidates().stream().map(item -> item.pattern() + ":" + item.evidence()).sorted().toList()),
+                            tool + " import and equivalent manual grammar have different enrichment");
+                    target.removeRootNode(manual);
+                    SNode set = GrammarEnrichment.apply(preview, target);
+                    var once = ModelNodes.fingerprint(set);
+                    GrammarEnrichment.apply(GrammarEnrichment.analyze(restored, set), target);
+                    require(once.equals(ModelNodes.fingerprint(set)), tool + " enrichment is not idempotent");
+                    require(before.equals(ModelNodes.fingerprint(restored)), tool + " enrichment changed grammar/mapping input");
                     ((EditableSModel) target).save();
                 }));
                 MetaBnfSmokeTest.checkConstraints(environment, project, target);

@@ -8,6 +8,8 @@ import jetbrains.mps.project.Solution;
 import org.jetbrains.mps.openapi.model.EditableSModel;
 import org.jetbrains.mps.openapi.model.SModel;
 import org.jetbrains.mps.openapi.model.SModelReference;
+import org.jetbrains.mps.openapi.model.SNodeReference;
+import metabnf.usability.UsabilityActions;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -86,13 +88,21 @@ public final class GrammarImportAction {
                     indicator.checkCanceled();
                     ApplicationManager.getApplication().invokeAndWait(() -> {
                         if (ideaProject.isDisposed() || indicator.isCanceled()) return;
+                        SNodeReference[] imported = new SNodeReference[1];
                         project.getModelAccess().executeCommand(() -> {
                             SModel model = target.reference().resolve(project.getRepository());
                             if (model == null) throw new IllegalStateException("Target model was removed during import");
-                            GrammarModelImporter.importInto(model, grammar, language, tool);
+                            imported[0] = GrammarModelImporter.importInto(model, grammar, language, tool).getReference();
                         });
                         JOptionPane.showMessageDialog(null, "Imported into " + target.label()
                                 + ". Open the model in Logical View.\nNo language was generated; review the grammar before generation.");
+                        try {
+                            UsabilityActions.enrich(project, imported[0]);
+                        } catch (RuntimeException failure) {
+                            JOptionPane.showMessageDialog(null, "The grammar was imported, but enrichment failed: "
+                                            + failure.getMessage() + "\nThe imported grammar is retained. Inspect metadata before retrying.",
+                                    "MetaBNF enrichment", JOptionPane.ERROR_MESSAGE);
+                        }
                     });
                 } catch (com.intellij.openapi.progress.ProcessCanceledException cancelled) {
                     throw cancelled;

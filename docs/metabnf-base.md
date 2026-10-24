@@ -73,7 +73,8 @@ Use MPS **Check Model** and resolve errors before generation.
 
 Alternatively use [ANTLR/Rascal grammar import](importing-grammars.md).
 Import creates a MetaBNF grammar; it does not create a target language module,
-populate its aspects, infer source-to-AST mappings, or apply usability changes.
+populate its aspects or infer source-to-AST mappings. After import, an optional
+enrichment preview can attach usability metadata without changing syntax.
 
 ## Record usability intent
 
@@ -89,11 +90,18 @@ Authored annotations cannot be suppressed. Lists target an already repeated
 nonterminal reference; optional-group endpoints are ordered terms of one rule.
 
 These annotations are **metadata only today**: they do not change generated
-structure/editors/textGen. Automatic recognition, profiles, structural
-lowering and additional editor backends remain planned.
+structure/editors/textGen. **Tools > Analyze and Enrich Grammar...** recognizes
+supported patterns in manual or imported grammars and previews metadata changes.
+**Tools > Configure Generation Profile...** creates/inspects projection-scoped
+capability selections. **Tools > Transfer Enrichment Metadata...** conservatively
+transfers author decisions to a separately imported replacement.
+See [Profiles and enrichment](profiles-and-enrichment.md) for workflows,
+capability IDs, the native Inspector, stale-preview rejection and the explicit
+Grammar Cells compatibility blocker. Structural lowering and interactive
+editor-backend delivery remain later work.
 See [Typed usability annotations](usability-annotations.md) for complete
 authoring rules and inspection diagnostics. Editors allow intermediate invalid
-states; shared-service diagnostics are not the same as a new Tools-menu action.
+states; use shared-service inspection to diagnose intermediate invalid metadata.
 
 ## Generate an MPS language
 

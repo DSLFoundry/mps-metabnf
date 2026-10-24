@@ -21,7 +21,8 @@ final class NativeGrammarActionsTest {
         require(group instanceof ActionGroup, "MetaBNF action group was not registered");
         require(Arrays.asList(((ActionGroup) tools).getChildren(null)).contains(group),
                 "MetaBNF action group is not attached to Tools");
-        for (String name : List.of("ImportGrammar", "ImportAntlrGrammar", "ImportRascalGrammar", "ParserBridgeUtilities")) {
+        for (String name : List.of("ImportGrammar", "ImportAntlrGrammar", "ImportRascalGrammar", "ParserBridgeUtilities",
+                "EnrichGrammar", "ConfigureGenerationProfile", "TransferEnrichmentMetadata")) {
             String id = "metabnf.plugin." + name + "_Action";
             var action = manager.getAction(id);
             require(action != null, "Native action was not registered: " + id);

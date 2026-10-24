@@ -84,6 +84,9 @@ public final class MetaBnfSmokeTest {
             checkConstraints(environment, project, usability);
             System.out.println("SMOKE: native usability annotation CRUD, diagnostics, and persistence are clean");
             System.out.println("SMOKE: dedicated annotation editor fields, completions, and evidence editing are clean");
+            onEdt(() -> project.getModelAccess().executeCommand(() -> ProfilesEnrichmentTest.run(usability, grammar)));
+            checkConstraints(environment, project, usability);
+            System.out.println("SMOKE: profile resolution, native inspectors, enrichment previews/idempotence and reimport preservation are clean");
             BundledGrammarImportTest.run(environment, project, usability);
             System.out.println("SMOKE: bundled ANTLR/Rascal Java tools import native grammars without Python");
             SModel rascalImport = project.getModelAccess().computeReadAction(() ->

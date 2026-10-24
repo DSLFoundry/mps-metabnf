@@ -14,7 +14,7 @@ An initial, tested Rascal/ANTLR bridge milestone is implemented, with command-li
 
 [Import grammar files directly in MPS](docs/importing-grammars.md) with **Tools > Import Grammar into MetaBNF...**, or the dedicated ANTLR/Rascal entries. MetaBNF bundles the tools, runs them with Java, and creates native MPS nodes: no Python, separately supplied parser JAR, or IDE-plugin installation is required for grammar import. Optional legacy source-model/export workflows still use Python.
 
-The [typed usability-annotation foundation](docs/usability-annotations.md) provides native flag, list, and optional-group intent with provenance, suppression, structured diagnostics, and shared inspection/editing services. These annotations are metadata only: automatic recognition, profiles, editor backends, and structural lowering are later roadmap steps.
+The [typed usability annotations](docs/usability-annotations.md) provide native intent with provenance, suppression and structured diagnostics. [Profiles and enrichment](docs/profiles-and-enrichment.md) add previewable pattern recognition, conservative reimport metadata transfer, projection-scoped capability selection and native Inspector explanations. These remain metadata-only: interactive backend generation and AST lowering are later steps; Grammar Cells is explicitly blocked pending MPS 2026.1 compatibility verification.
 
 # User documentation
 
@@ -25,6 +25,7 @@ Start at the [user documentation index](docs/README.md).
 | [MetaBNF basics and all actions](docs/metabnf-base.md) | Setup, grammar authoring, decoration, language generation, every Tools action, legacy limitations and troubleshooting |
 | [ANTLR and Rascal grammar import](docs/importing-grammars.md) | Java-only import, bundled tools, target models and supported subsets |
 | [Usability annotations](docs/usability-annotations.md) | Projectional authoring, provenance, suppression and native inspection APIs |
+| [Profiles and enrichment](docs/profiles-and-enrichment.md) | Pattern previews, reimport decisions, projection choices and backend requirements |
 
 # Where this could go
 The initial Rascal and ANTLR bridges provide a working foundation, but the broader usability and interoperability goals remain open. Here are some research/extension ideas:

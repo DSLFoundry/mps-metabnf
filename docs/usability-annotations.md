@@ -1,7 +1,8 @@
 # Typed usability annotations
 
 This is the foundation for [issue #3](https://github.com/DSLFoundry/mps-metabnf/issues/3):
-native semantic metadata, not an editor backend or an automatic recognizer.
+native semantic metadata, not an editor backend. The shared recognizer and
+profile resolver are described in [Profiles and enrichment](profiles-and-enrichment.md).
 Existing grammars need no migration or annotations. Generators explicitly drop
 annotation-set roots; adding metadata does not change generated structure,
 editors, text generators, or parser mappings at this stage.
@@ -21,6 +22,7 @@ All concrete annotations extend abstract `UsabilityAnnotation`:
 | `origin: AnnotationOrigin` | `Authored`, `Inferred`, or `Suggested`; defaults to `Authored` |
 | `evidence: string` | Author explanation or recognition/source evidence; required for inferred and suggested intent |
 | `suppressed: boolean` | Explicit rejection of inferred/suggested intent without losing its evidence |
+| `recognitionKey: string` | Tool-owned stable structural correspondence for enrichment/reimport; leave empty for manual annotations |
 
 `Authored` records an explicit author decision. `Inferred` records a supported
 recognition; `Suggested` records intent still needing a decision. Suppression
@@ -28,14 +30,14 @@ is independent of those two non-authored origins, not deletion or a fourth
 origin. An authored annotation cannot be suppressed: remove it to withdraw it,
 or retain its inferred/suggested provenance when rejecting a recognition.
 Accept a suggestion by updating its origin to authored and clearing suppression.
-Future enrichment/profile consumers must respect these decisions; this
-foundation does not yet apply or resolve them.
+Enrichment respects these decisions without applying AST/mapping transforms.
 
 | Annotation | Attachment and intent |
 | --- | --- |
 | `FlagAnnotation` | `target: Flag`; decorates the existing flag term, not a new boolean/keyword representation |
 | `ListAnnotation` | `target: NonterminalReference`; requires existing `>*` or `>+` cardinality and reuses its separator |
 | `OptionalGroupAnnotation` | `owner: NonterminalRule`, `first: ITerm`, `last: ITerm`; inclusive, ordered endpoints among the owner's terms |
+| `PatternAnnotation` | Grammar-local `target`, typed `pattern` and `mappingImpact`; review a flag/list/group/literal-choice interpretation without lowering AST nodes |
 
 `OptionalGroupAnnotation.distinguishEmpty` records whether absent and
 present-but-empty groups must remain distinct when implemented. It does not
@@ -54,10 +56,10 @@ editor cell type, or structural-lowering policy is stored in these annotations.
 After building `metabnf`, the generated class is
 `metabnf.plugin.UsabilityAnnotations`. UI code can call its static methods;
 model-access providers can invoke the same class. Dedicated projectional editors
-present the annotation set and all three annotation kinds, with target-reference
+present the annotation set and all annotation kinds, with target-reference
 completion, editable origin/evidence/suppression, and the optional group's
 absent-versus-present-empty setting. There is no separate agent persistence
-format or automatic importer enrichment.
+format. Import offers the same enrichment preview as manual grammar analysis.
 
 Annotation headings are indented within the set; provenance, evidence, and
 optional-group details are nested beneath their heading, with spacing between
@@ -72,7 +74,8 @@ booleans use native value completion. Evidence is editable and may be cleared
 for authored intent; inferred/suggested intent requires evidence.
 The editors use normal MPS editing/undo. Semantic validation remains in the
 shared service's inspection diagnostics; the editors do not prevent every
-intermediate invalid state or implement automatic inference.
+intermediate invalid state. Inference runs through the explicit preview/apply
+workflow, not during typing.
 
 | Operation | Signature |
 | --- | --- |
@@ -94,7 +97,7 @@ Removal does not prune model imports that other nodes might still need.
 
 Inspection returns `set` and `grammar` serialized references, `annotations`
 records, and `diagnostics`. Each annotation record contains its `node` reference,
-`kind`, `origin`, `evidence`, `suppressed`, and its resolved attachment references;
+`kind`, `origin`, `evidence`, `suppressed`, `recognitionKey`, and its resolved attachment references;
 optional groups also expose `distinguishEmpty`. A missing attachment is an empty
 reference accompanied by a diagnostic, not a successful resolution.
 Inspection reports malformed annotations and duplicates, including edits made
