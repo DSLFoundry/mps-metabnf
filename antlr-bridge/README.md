@@ -7,12 +7,16 @@ generating or executing user Java code.
 
 ## Requirements and licensing
 
-Use Python 3.10+, a Java runtime supporting source-file launching with its
-compiler module (the build's MPS 2026.1 runtime works), and the **ANTLR 4.13.2
-complete JAR**. A runtime-only ANTLR JAR is insufficient. For development,
+For **MPS grammar import**, install the parser bridge plugin with its bundled
+**ANTLR 4.13.2 complete JAR** and Java bridge. No Python or separate JAR is
+needed; see [Import grammar files in MPS](../docs/importing-grammars.md).
+
+The optional legacy source-model/portable CLI workflows still use Python 3.10+,
+a Java runtime supporting source-file launching with its compiler module
+(the build's MPS 2026.1 runtime works), and a complete JAR. A runtime-only JAR
+is insufficient. For development,
 `.\gradlew.bat prepareAntlr` downloads the pinned artifact into
-`build\antlr\antlr4-4.13.2-complete.jar`. The installed plugin asks for a
-separately supplied complete JAR; it does not bundle ANTLR.
+`build\antlr\antlr4-4.13.2-complete.jar`.
 
 ANTLR 4.13.2 uses the permissive [BSD-3-Clause license][license]. It can be used
 alongside this project's Apache-2.0 code without changing MetaBNF's license or
@@ -21,22 +25,25 @@ retain its copyright notice, conditions, and disclaimer; if redistributing
 binaries, reproduce them in the accompanying documentation/materials. Do not
 use the copyright holders' or contributors' names to endorse derived products
 without permission. Third-party grammars and dependencies have their own
-licenses: check those independently. Supplying a JAR rather than bundling it
-does not waive obligations for anyone who subsequently redistributes it.
+licenses: check those independently. The distribution includes component
+notices, license texts and source artifacts; retain its complete `third-party`
+directory when redistributing. See [redistribution details](../third-party/README.md).
 
 [license]: https://github.com/antlr/antlr4/blob/4.13.2/LICENSE.txt
 
 ## Usage
 
-Install the optional parser bridge plugin as described in the
-[Rascal bridge guide](../rascal-bridge/README.md). In MPS, choose
-**Tools > Rascal / ANTLR / MetaBNF**, then **Import ANTLR grammar into MetaBNF**
-or **Import ANTLR source model into MPS**. Select the grammar, an explicit
-parser start rule, the complete JAR, and an output file. Source-model import
-also needs a model template and an explicit mapping. Reload the resulting
-model in a solution that uses its languages.
+In MPS, choose **Tools > Import Grammar into MetaBNF...**, select ANTLR, the
+`.g4` file, parser start rule, existing editable target model, and generated
+language name. Native nodes are saved in that model; existing grammars are
+never overwritten. See the [step-by-step guide](../docs/importing-grammars.md).
 
-Equivalent PowerShell commands from this checkout:
+For optional source-model import use **Tools > Parser Bridge Utilities
+(legacy Python)... > Import ANTLR source model into MPS**. That workflow
+additionally selects the complete JAR, output file, template and explicit
+mapping. Reload its resulting model in a solution that uses the target languages.
+
+Legacy portable PowerShell commands from this checkout:
 
 ```powershell
 python antlr-bridge\bridge.py grammar `
@@ -102,7 +109,10 @@ the pinned complete JAR. `build` includes these checks, the existing bridge
 tests, and a fresh ANTLR grammar import checked with native MPS constraints
 inside the isolated smoke project.
 `verifyParserBridgeDistribution` checks the installed archive layout and
-executes both ANTLR imports from an extracted bundle outside the checkout.
+executes both legacy ANTLR imports from an extracted bundle outside the checkout.
+`verifyBundledGrammarTools` runs the packaged ANTLR and Rascal tools using
+Java only and checks license/source resources. `smokeTest` exercises native
+node creation, persistence/reload, references, and rejection without replacement.
 Parsed source models are reopened in a fresh MPS process with the regenerated
 Demo registry and checked structurally. That check does not establish that
 Demo's compiled concept descriptors loaded or that all semantic constraints

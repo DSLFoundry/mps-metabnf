@@ -1,0 +1,17 @@
+# name|SHA-256|upstream URL
+Rascal-LICENSE|84c81705b841dec84a49c76dcc95ba27918d8b28437cc40e54f26e7869b97ae7|https://raw.githubusercontent.com/usethesource/rascal/v0.43.0/LICENSE
+ANTLR4-LICENSE|3db1fb3ee79a4b4f9918fc4d0f6133bf18a3cf787f126cd22f8aa9b862281c0c|https://raw.githubusercontent.com/antlr/antlr4/4.13.2/LICENSE.txt
+ST4-LICENSE|022bdae9c4f408d375f8c3c16b7695c22a2152c56535af180059e3ab92adffb0|https://raw.githubusercontent.com/antlr/stringtemplate4/ST4-4.3.4/LICENSE.txt
+Vallang-LICENSE|9523160fd30519b1e2ebf7861a3c94d9024fe849b6686c72bf1d11ec161006a4|https://raw.githubusercontent.com/usethesource/vallang/v1.1.0/LICENSE
+Capsule-LICENSE|ae21b8ccc73c3bc07106bf5cae3a87e3301a78a022ba1b488a089d9964494eff|https://raw.githubusercontent.com/usethesource/capsule/v0.7.2/LICENSE
+JLine-LICENSE|44e55d448e3324fa5b8f26b42556ee4a758aa27bbcb86babe32c144b5aa11ac0|https://raw.githubusercontent.com/jline/jline3/jline-3.29.0/LICENSE.txt
+ICU-LICENSE|e55522d81edc687a341a4411e0776e54ca654e90147f354a90458aaced4116af|https://raw.githubusercontent.com/unicode-org/icu/release-78.3/LICENSE
+LSP4J-LICENSE|ff2d746ce477bf54fa8ef96e66eae1bace8ed23c8c184b60b2c2ef2aa24d25ae|https://raw.githubusercontent.com/eclipse-lsp4j/lsp4j/v1.0.0/LICENSE
+LSP4J-NOTICE|08c8ba13e84c3fa147a2b0774e35d515b290c5ccd50b1d4aff1d062e686759fb|https://raw.githubusercontent.com/eclipse-lsp4j/lsp4j/v1.0.0/NOTICE
+EPL-1.0|9648bb2891b9813970bddb68d4be8a5e6ec8280d0180a53dfb29236b579c55bb|https://raw.githubusercontent.com/junit-team/junit4/r4.13.2/LICENSE-junit.txt
+EPL-2.0|61616a4066701bc7888ad910de1633dbc55eb4d4d30d930feef55afb9492e33c|https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/text/EPL-2.0.txt
+XZ-COPYING|1e77ef26cee5216d6531e49cbf2f6111a0270dc7b322fc65477063c5aff88766|https://raw.githubusercontent.com/tukaani-project/xz-java/v1.12/COPYING
+ZstdJNI-LICENSE|289a6adada5726047b9e68bf607cc44fbbac953bbb4fd29f53ffe75b5cb3e7b1|https://raw.githubusercontent.com/luben/zstd-jni/v1.5.7-9/LICENSE
+Zstd-LICENSE|2c1a7fa704df8f3a606f6fc010b8b5aaebf403f3aeec339a12048f1ba7331a0b|https://raw.githubusercontent.com/luben/zstd-jni/v1.5.7-9/src/main/native/LICENSE
+Zstd-xxHash.h|8cb837b21a8fe9a6b9dbcd0961ab16e733bfcbfa9e003f3a496ce07ae80aa8ee|https://raw.githubusercontent.com/luben/zstd-jni/v1.5.7-9/src/main/native/common/xxhash.h
+ASM-LICENSE|293b6af371eee28b0ff16f0334ea19e20a3d5522143faa4b95b346855507879a|https://gitlab.ow2.org/asm/asm/-/raw/ASM_9_9_1/LICENSE.txt

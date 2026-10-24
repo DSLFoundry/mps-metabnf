@@ -12,6 +12,8 @@ The current status of MetaBNF is: it works for basic cases, but is not yet featu
 
 An initial, tested Rascal/ANTLR bridge milestone is implemented, with command-line workflows and an optional MPS Tools-menu plugin. The [Rascal bridge](rascal-bridge/README.md) imports a supported subset of Rascal grammars into MetaBNF, generates Rascal parsers from MetaBNF grammars, and supports mapped source/model round trips. The [ANTLR bridge](antlr-bridge/README.md) uses ANTLR's native Tool API to import a supported subset of combined ANTLR 4 grammars, and its interpreters to parse source text. Both can map parsed text into an existing MPS language using an explicit AST mapping. These are prototype, subset-based bridges, not general-purpose importers for arbitrary grammars; automatic mapping inference and AST cross-reference resolution remain open.
 
+[Import grammar files directly in MPS](docs/importing-grammars.md) with **Tools > Import Grammar into MetaBNF...**. The plugin bundles ANTLR and Rascal, runs them with Java, and creates native MPS nodes: no Python or separately supplied parser JAR is required for grammar import. Optional legacy source-model/export workflows still use Python.
+
 The [typed usability-annotation foundation](docs/usability-annotations.md) provides native flag, list, and optional-group intent with provenance, suppression, structured diagnostics, and shared inspection/editing services. These annotations are metadata only: automatic recognition, profiles, editor backends, and structural lowering are later roadmap steps.
 
 # Where this could go
@@ -31,7 +33,7 @@ Any kind of contribution or improvement would be helpful. To give a few ideas:
 - Make a pull request if you want to contribute fixes, features, or other types of ideas.
 
 # How to build
-The MetaBNF languages have no third-party plugin dependencies, so they can be used with [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version to install). The optional parser bridge plugin uses Python and a separately supplied Rascal or ANTLR complete JAR; see the [Rascal](rascal-bridge/README.md) and [ANTLR](antlr-bridge/README.md) guides.
+The MetaBNF languages have no third-party plugin dependencies, so they can be used with [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version to install). The optional parser bridge plugin bundles its grammar-import tools; see [installation and import instructions](docs/importing-grammars.md). MetaBNF code remains Apache-2.0; bundled dependencies retain their own licenses, notices and corresponding sources as described in [third-party/README.md](third-party/README.md).
 
 Open the MPS project in the MPS IDE and rebuild the `metabnf` and `metabnf.aspectgen` languages and the `GenPlan` solution.
 
@@ -49,7 +51,7 @@ On Windows:
 .\gradlew.bat build
 ```
 
-On Linux, use `./gradlew build` (or `xvfb-run --auto-servernum ./gradlew build` on a machine without a display). `build` compiles all languages and solutions, compiles and packages the optional parser bridge plugin, runs the ANTLR integration tests and clean Demo generation/import smoke test, and checks a freshly imported ANTLR grammar with native MPS constraints. Python 3.10+ is required; `-PpythonExecutable=...` overrides the bridge-test interpreter. To run just the native workflow, use `smokeTest`; to compile and package without the smoke test, use `assemble`.
+On Linux, use `./gradlew build` (or `xvfb-run --auto-servernum ./gradlew build` on a machine without a display). `build` compiles all languages and solutions, packages the parser tools and legal/source material, runs legacy bridge tests and clean Demo generation/import smoke tests, checks native ANTLR/Rascal grammar imports, and runs both bundled tools from the extracted ZIP. Python 3.10+ is required for the legacy bridge regressions; `-PpythonExecutable=...` overrides their interpreter. `assemble` and `verifyBundledGrammarTools` build/package and exercise the new grammar tools using Java only. `smokeTest` also covers the existing Python-based source-model workflows.
 
 The build and test use separate source copies under `build/mps-build` and `build/mps-smoke`, with isolated MPS settings, caches, and logs. They do not change your source models, open projects, or IDE settings. Each task starts afresh; its artifacts remain available until the next run or `clean`. The smoke test builds the core languages, checks the source grammar with MPS's native constraint checker, empties Demo's structure/editor/textGen in the copy, rebuilds the grammar twice, and executes **Import Generated Language** followed by **Import Remaining Language Aspects** on the final transient model.
 
@@ -61,7 +63,7 @@ For local development, `-PmpsHomeDir=C:\path\to\MPS` selects an existing MPS ins
 
 GitHub Actions builds and smoketests on Linux and Windows for pull requests and development branches, uploading the compiled module ZIP and diagnostics. Pushes to `main` run the same build and smoke test on Linux, publish `com.dslfoundry:metabnf:<version>@zip` to GitHub Packages, and attach the ZIP to a GitHub prerelease. CI versions include the run ID and attempt so retries do not overwrite existing packages. Publishing uses the repository's built-in `GITHUB_TOKEN`; no personal token, reviewer assignment, or approval environment is required.
 
-The ZIP under `build/distributions` contains the compiled MPS module library under `metabnf/` and the optional IDE plugin under `plugins/metabnf-rascal-bridge/` (the stable plugin ID is unchanged). Add the module library as a project library in MPS 2026.1; install the plugin separately as described in the [Rascal bridge guide](rascal-bridge/README.md). The plugin does not bundle Rascal or ANTLR runtimes. Locally, `publishToMavenLocal` installs the ZIP and POM into your Maven repository; remote `publish` requires `GITHUB_ACTOR` and `GITHUB_TOKEN`. Use `-PreleaseVersion=...` to set a deliberate publication version.
+The ZIP under `build/distributions` contains the compiled MPS module library under `metabnf/` and the optional IDE plugin under `plugins/metabnf-rascal-bridge/` (the stable plugin ID is unchanged). Add the module library as a project library in MPS 2026.1; install the complete plugin directory as described in the [grammar import guide](docs/importing-grammars.md). Its bundled ANTLR/Rascal runtimes and offline legal/source materials deliberately increase archive size. Locally, `publishToMavenLocal` installs the ZIP and POM into your Maven repository; remote `publish` requires `GITHUB_ACTOR` and `GITHUB_TOKEN`. Use `-PreleaseVersion=...` to set a deliberate publication version.
 
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language) in a model (see mbnf.sandbox/mbnf/sandbox/Demo model for an example)

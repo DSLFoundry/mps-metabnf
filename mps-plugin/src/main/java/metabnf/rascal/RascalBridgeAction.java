@@ -60,6 +60,11 @@ public final class RascalBridgeAction extends AnAction {
     if (operation == null) {
       return;
     }
+    if (operation.equals("Import Rascal grammar into MetaBNF")
+        || operation.equals("Import ANTLR grammar into MetaBNF")) {
+      new GrammarImportAction(operation.contains("ANTLR") ? "ANTLR" : "Rascal").actionPerformed(event);
+      return;
+    }
     try {
       Path pluginRoot = pluginRoot();
       Path bridge = pluginRoot.resolve("rascal-bridge");
@@ -67,11 +72,9 @@ public final class RascalBridgeAction extends AnAction {
         throw new IOException("The installed Rascal bridge resources are incomplete.");
       }
       switch (operation) {
-        case "Import Rascal grammar into MetaBNF" -> importGrammar(pluginRoot, bridge);
         case "Export MetaBNF grammar as Rascal" -> exportGrammar(bridge);
         case "Import source model into MPS" -> importSourceModel(bridge);
         case "Export MPS model as source" -> exportSourceModel(bridge);
-        case "Import ANTLR grammar into MetaBNF" -> importAntlr(pluginRoot, false);
         case "Import ANTLR source model into MPS" -> importAntlr(pluginRoot, true);
         default -> throw new IllegalStateException("Unknown parser bridge operation.");
       }
@@ -122,35 +125,6 @@ public final class RascalBridgeAction extends AnAction {
           }
           runPython(workingBridge, "bridge.py", arguments.toArray(String[]::new));
         });
-  }
-
-  private static void importGrammar(Path pluginRoot, Path bridge) throws IOException {
-    Path source = chooseOpenFile("Select a Rascal grammar", "Rascal source", "rsc");
-    if (source == null) return;
-    Path output = chooseSaveFile("Save the MetaBNF model under an MPS model root", "MPS model", "mps");
-    if (output == null) return;
-    Path rascalJar = chooseRascalJar();
-    if (rascalJar == null) return;
-    Path template = pluginRoot.resolve("templates/Demo.mps");
-    Path regexTemplate = pluginRoot.resolve("templates/python.mps");
-    String modelName = fileStem(output);
-    runWorkflow("Importing Rascal grammar", output, bridge, workingBridge -> {
-      Path interchange = Files.createTempFile("metabnf-grammar-", ".xml");
-      try {
-        runPython(workingBridge, "import_rascal_file.py",
-            "--rascal-jar", rascalJar.toString(),
-            "--input", source.toString(),
-            "--output", interchange.toString());
-        runPython(workingBridge, "import_to_mps.py",
-            "--input", interchange.toString(),
-            "--output", output.toString(),
-            "--model-name", modelName,
-            "--template", template.toString(),
-            "--regex-template", regexTemplate.toString());
-      } finally {
-        Files.deleteIfExists(interchange);
-      }
-    });
   }
 
   private static void exportGrammar(Path bridge) throws IOException {

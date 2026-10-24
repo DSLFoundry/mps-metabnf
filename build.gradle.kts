@@ -15,16 +15,148 @@ version = providers.gradleProperty("releaseVersion").orElse(
 repositories {
     maven("https://artifacts.itemis.cloud/repository/maven-mps")
     mavenCentral()
+    maven("https://releases.usethesource.io/maven")
 }
 
 val antlrTool = configurations.create("antlrTool") {
     isTransitive = false
 }
 
+val parserLegalArtifacts = configurations.create("parserLegalArtifacts") {
+    isTransitive = false
+}
+val parserComponents = file("third-party/parser-components.tsv").readLines()
+    .filter { it.isNotBlank() && !it.startsWith("#") }.map { it.substringBefore('|') }
+
 dependencies {
     mps(libs.mps)
     jbr(libs.jbr)
     add(antlrTool.name, "org.antlr:antlr4:${libs.versions.antlr.get()}:complete")
+    parserComponents.forEach {
+        add(parserLegalArtifacts.name, "$it@jar")
+        if (!it.startsWith("org.rascalmpl:typepal:")) add(parserLegalArtifacts.name, "$it:sources@jar")
+    }
+}
+
+val prepareRascal = tasks.register("prepareRascal") {
+    val directory = layout.buildDirectory.dir("rascal")
+    val artifacts = mapOf(
+        "rascal-0.43.0.jar" to "810a01fa9bac9eab81cfd8f4a077bba0285e5ce1c2b860817229b3c78ebea24d",
+        "rascal-0.43.0-sources.jar" to "dc1e058093d8247bd2704af73cf967b8e1ba20f654837d7a8d17a25dde8461b6"
+    )
+    outputs.files(artifacts.keys.map { directory.map { dir -> dir.file(it) } })
+    doLast {
+        artifacts.forEach { (name, expected) ->
+            val destination = directory.get().file(name).asFile
+            destination.parentFile.mkdirs()
+            if (!destination.exists()) {
+                val temporary = java.io.File(destination.parentFile, "$name.download")
+                try {
+                    java.net.URI("https://github.com/usethesource/rascal/releases/download/v0.43.0/$name")
+                        .toURL().openStream().use { input -> temporary.outputStream().use { input.copyTo(it) } }
+                    temporary.copyTo(destination, overwrite = true)
+                } finally { temporary.delete() }
+            }
+            val actual = java.security.MessageDigest.getInstance("SHA-256")
+                .digest(destination.readBytes()).joinToString("") { "%02x".format(it) }
+            check(actual == expected) { "Checksum mismatch for $name; remove the invalid cached artifact and retry" }
+        }
+    }
+}
+
+val compileAntlrTool = tasks.register<JavaCompile>("compileAntlrTool") {
+    source("antlr-bridge/src/AntlrBridge.java")
+    classpath = antlrTool
+    options.release.set(21)
+    sourceCompatibility = "21"
+    targetCompatibility = "21"
+    destinationDirectory.set(layout.buildDirectory.dir("parser-tools/antlr-classes"))
+}
+val antlrToolJar = tasks.register<Jar>("antlrToolJar") {
+    from(compileAntlrTool)
+    archiveFileName.set("antlr-bridge.jar")
+    destinationDirectory.set(layout.buildDirectory.dir("parser-tools"))
+}
+val stageParserTools = tasks.register<Sync>("stageParserTools") {
+    dependsOn(prepareRascal, antlrToolJar)
+    doFirst {
+        val actual = java.security.MessageDigest.getInstance("SHA-256").digest(antlrTool.singleFile.readBytes())
+            .joinToString("") { "%02x".format(it) }
+        check(actual == "eae2dfa119a64327444672aff63e9ec35a20180dc5b8090b7a6ab85125df4d76") {
+            "ANTLR complete JAR checksum changed; review the tool and its third-party materials"
+        }
+    }
+    into(layout.buildDirectory.dir("parser-tools/plugin"))
+    into("tools/antlr") {
+        from(antlrTool)
+        from(antlrToolJar)
+    }
+    into("tools/rascal") {
+        from(layout.buildDirectory.file("rascal/rascal-0.43.0.jar"))
+        from("rascal-bridge") { include("src/**/*.rsc", "META-INF/RASCAL.MF") }
+    }
+}
+val downloadParserLicenses = tasks.register("downloadParserLicenses") {
+    inputs.file("third-party/license-resources.tsv")
+    outputs.dir(layout.buildDirectory.dir("parser-tools/upstream-licenses"))
+    doLast {
+        file("third-party/license-resources.tsv").readLines()
+            .filter { it.isNotBlank() && !it.startsWith("#") }.forEach { line ->
+                val (name, expected, url) = line.split('|')
+                val destination = layout.buildDirectory.file("parser-tools/upstream-licenses/$name").get().asFile
+                destination.parentFile.mkdirs()
+                if (!destination.exists()) {
+                    java.net.URI(url).toURL().openStream().use { input ->
+                        destination.outputStream().use { input.copyTo(it) }
+                    }
+                }
+                val actual = java.security.MessageDigest.getInstance("SHA-256")
+                    .digest(destination.readBytes()).joinToString("") { "%02x".format(it) }
+                check(actual == expected) { "License content changed: $name; review upstream before redistributing" }
+            }
+    }
+}
+val prepareParserLegal = tasks.register<Sync>("prepareParserLegal") {
+    dependsOn(prepareRascal, downloadParserLicenses)
+    into(layout.buildDirectory.dir("parser-tools/legal"))
+    from("third-party")
+    from("LICENSE") { rename { "MetaBNF-LICENSE" } }
+    from(downloadParserLicenses) { into("licenses") }
+    from(parserLegalArtifacts) { into("reference-artifacts") }
+    from(layout.buildDirectory.file("rascal/rascal-0.43.0-sources.jar")) { into("sources") }
+    // Preserve notices with their original paths and component identity, not a lossy merged license.
+    parserLegalArtifacts.forEach { artifact ->
+        from(zipTree(artifact)) {
+            include("**/*LICENSE*", "**/*license*", "**/*NOTICE*", "**/*notice*", "**/*COPYING*", "**/*copyright*",
+                "**/pom.xml", "**/pom.properties")
+            into("notices/${artifact.name}")
+        }
+    }
+    from(zipTree(layout.buildDirectory.file("rascal/rascal-0.43.0.jar"))) {
+        include("**/*LICENSE*", "**/*license*", "**/*NOTICE*", "**/*notice*")
+        into("notices/rascal-0.43.0.jar")
+    }
+    doLast {
+        // Some upstream JARs omit separate licenses but retain complete source headers.
+        parserLegalArtifacts.filter { it.name.endsWith("-sources.jar") }.forEach { artifact ->
+            val headers = linkedSetOf<String>()
+            java.util.zip.ZipFile(artifact).use { zip ->
+                zip.entries().asSequence().filter { it.name.endsWith(".java") }.forEach { entry ->
+                    val source = zip.getInputStream(entry).bufferedReader().use { it.readText() }.trimStart()
+                    val end = source.indexOf("*/")
+                    if (source.startsWith("/*") && end >= 0) {
+                        val header = source.substring(0, end + 2)
+                        if (header.contains("copyright", ignoreCase = true)) headers.add(header)
+                    }
+                }
+            }
+            if (headers.isNotEmpty()) {
+                val output = destinationDir.resolve("source-headers/${artifact.name}.txt")
+                output.parentFile.mkdirs()
+                output.writeText(headers.joinToString("\n\n"))
+            }
+        }
+    }
 }
 
 dependencyLocking {
@@ -90,10 +222,11 @@ val prepareAntlr = tasks.register<Sync>("prepareAntlr") {
 }
 
 smokeTest.configure {
-    dependsOn(prepareAntlr)
+    dependsOn(prepareAntlr, stageParserTools)
     pathProperties.put("antlr.jar", layout.buildDirectory.file(
         "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
     ).map { it.asFile })
+    pathProperties.put("parser.tools", layout.buildDirectory.dir("parser-tools/plugin").map { it.asFile })
 }
 
 val antlrBridgeTest = tasks.register<Exec>("antlrBridgeTest") {
@@ -126,7 +259,7 @@ val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
 }
 
 val packageLanguages = tasks.register<Zip>("packageLanguages") {
-    dependsOn(buildLanguages, rascalBridgePluginJar)
+    dependsOn(buildLanguages, rascalBridgePluginJar, stageParserTools, prepareParserLegal)
     group = "distribution"
     description = "Packages the compiled MetaBNF languages and generation plan as an MPS module library."
     archiveBaseName = "metabnf"
@@ -148,7 +281,10 @@ val packageLanguages = tasks.register<Zip>("packageLanguages") {
             into("lib")
         }
         from("LICENSE")
-        from("rascal-bridge/README.md")
+        from(stageParserTools)
+        from(prepareParserLegal) { into("third-party") }
+        from("mps-plugin/README.md")
+        into("docs") { from("docs/importing-grammars.md") }
         into("rascal-bridge") {
             from("rascal-bridge") {
                 include("*.py", "src/**/*.rsc", "README.md")
@@ -197,13 +333,30 @@ val verifyParserBridgeDistribution = tasks.register<Exec>("verifyParserBridgeDis
     environment("JAVA_HOME", System.getProperty("java.home"))
 }
 
+val compilePackagedGrammarToolsTest = tasks.register<JavaCompile>("compilePackagedGrammarToolsTest") {
+    source("tests/parser-tools/PackagedGrammarToolsTest.java")
+    classpath = files()
+    sourceCompatibility = "21"
+    targetCompatibility = "21"
+    options.release.set(21)
+    destinationDirectory.set(layout.buildDirectory.dir("parser-tools/test-classes"))
+}
+val verifyBundledGrammarTools = tasks.register<JavaExec>("verifyBundledGrammarTools") {
+    dependsOn(packageLanguages, compilePackagedGrammarToolsTest)
+    group = "verification"
+    description = "Runs both bundled grammar tools from the ZIP using Java only and checks license/source materials."
+    classpath = files(compilePackagedGrammarToolsTest)
+    mainClass.set("PackagedGrammarToolsTest")
+    args(packageLanguages.get().archiveFile.get().asFile.absolutePath, file("tests").absolutePath)
+}
+
 tasks.assemble {
     dependsOn(packageLanguages)
 }
 
 tasks.check {
     dependsOn(smokeTest, compileRascalBridgePlugin, antlrBridgeTest, rascalBridgeTest,
-        verifyParserBridgeDistribution)
+        verifyParserBridgeDistribution, verifyBundledGrammarTools)
 }
 
 tasks.wrapper {
@@ -219,7 +372,9 @@ publishing {
             artifact(packageLanguages)
             pom {
                 name = "MetaBNF"
-                description = "Compiled MetaBNF MPS languages and generation plan for MPS ${libs.versions.mps.get()}"
+                description = "Compiled MetaBNF MPS languages and generation plan for MPS ${libs.versions.mps.get()}. " +
+                    "MetaBNF code is Apache-2.0; bundled parser tools retain their own licenses, notices and " +
+                    "corresponding sources supplied in the plugin's third-party directory."
                 url = "https://github.com/DSLFoundry/mps-metabnf"
                 licenses {
                     license {

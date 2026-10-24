@@ -18,16 +18,23 @@ The ZIP in `build/distributions` contains the MetaBNF module library under
 the module library in MPS as usual. Copy the plugin directory into the MPS
 installation's `plugins` directory and restart MPS.
 
-In MPS, choose **Tools → Rascal / ANTLR / MetaBNF…** and select one of the four Rascal
-operations. Grammar import accepts a `.rsc` file and creates an MPS MetaBNF
-model; grammar export writes Rascal source from a MetaBNF model. Source-model
+For grammar import, choose **Tools → Import Grammar into MetaBNF…**, select
+Rascal and a `.rsc` file, then an existing editable target model and generated
+language name. The plugin bundles Rascal 0.43.0 and ANTLR 4.13.2, invokes them
+using MPS's Java runtime, and saves native MPS nodes: **no Python or separately
+downloaded JAR is required**. See the
+[complete grammar import instructions](../docs/importing-grammars.md).
+
+Optional **Tools → Parser Bridge Utilities (legacy Python)…** retains the
+older source/export operations. Grammar export writes Rascal source from a
+MetaBNF model. Source-model
 import parses a source file with a Rascal or MetaBNF grammar and creates an
 MPS model; source-model export serializes a mapped MPS model back to text.
 Save generated `.mps` models under the corresponding MPS model root so MPS can
 discover them; imported MetaBNF grammars use the `mbnf.sandbox` package.
 
-The plugin asks for the Rascal distribution JAR when an operation needs the
-Rascal runtime. Source-model import/export also asks for a target model template
+Only these legacy utilities ask for a Rascal distribution JAR when an operation
+needs the runtime. Source-model import/export also asks for a target model template
 and an AST mapping configuration: the target MPS language must already be
 generated, and its rule-to-concept mapping must be defined. Python 3 must be
 available as `python` on Windows or `python3` elsewhere; override the
@@ -38,7 +45,12 @@ interchange is kept in a temporary directory.
 
 ## Run the tests
 
-Requirements are Python 3, Java, the Rascal 0.43.0 distribution JAR, and MPS
+`.\gradlew.bat verifyBundledGrammarTools` builds the ZIP and executes both
+bundled tools from it with Java only, including legal/source resource checks.
+The native smoke regression also checks node creation, references, persistence,
+reload and unsupported-input rejection.
+
+Requirements for the legacy portable tests below are Python 3, Java, the Rascal 0.43.0 distribution JAR, and MPS
 2026.1 for the MPS smoke test. Set `JAVA_HOME` to the JDK used by MPS, or make
 Java available on `PATH`. Set `MPS_HOME` to the MPS installation directory for
 the smoke test.
@@ -96,9 +108,10 @@ Maven POM declares BSD-2-Clause and notes the older EPL-1.0 files. The
 `Grammar`, `Modules`, and Rascal syntax modules loaded by this bridge have
 EPL-1.0 headers in that artifact.
 
-This integration invokes a user-selected Rascal distribution as an external
-parser and neither bundles nor copies its runtime, library sources, or
-dependencies. The upstream licenses permit use under their stated terms; this
-non-redistributing integration does not determine the licensing obligations
-for packaging Rascal or its dependency graph. Reassess those obligations before
-bundling or redistributing either.
+The plugin now distributes the unmodified Rascal release as an isolated Java
+tool, together with ANTLR. MetaBNF's own code remains Apache-2.0; the tools and
+their dependencies retain their own terms. Every plugin package includes a
+component inventory, upstream license/copyright notices, supplementary full
+license texts and corresponding source artifacts, including EPL-covered
+sources. See [third-party/README.md](../third-party/README.md) and retain that
+entire directory when redistributing. User grammar licenses are independent.

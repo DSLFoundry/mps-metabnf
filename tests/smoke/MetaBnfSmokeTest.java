@@ -82,6 +82,8 @@ public final class MetaBnfSmokeTest {
             checkConstraints(environment, project, usability);
             System.out.println("SMOKE: native usability annotation CRUD, diagnostics, and persistence are clean");
             System.out.println("SMOKE: dedicated annotation editor fields, completions, and evidence editing are clean");
+            BundledGrammarImportTest.run(environment, project, usability);
+            System.out.println("SMOKE: bundled ANTLR/Rascal Java tools import native grammars without Python");
             SModel rascalImport = project.getModelAccess().computeReadAction(() ->
                     model(project, RASCAL_IMPORT_FIXTURE));
             checkConstraints(environment, project, rascalImport);
@@ -189,7 +191,7 @@ public final class MetaBnfSmokeTest {
         }
     }
 
-    private static void checkConstraints(Environment environment, Project project, SModel model) {
+    static void checkConstraints(Environment environment, Project project, SModel model) {
         List<IssueKindReportItem> problems = new ArrayList<>();
         new ModelCheckerBuilder(new ModelCheckerBuilder.ModelsExtractorImpl())
                 .createChecker(Collections.singletonList(new ConstraintsChecker(environment.getPlatform())))

@@ -61,8 +61,9 @@
   <target name="compile-harness" depends="prepare">
     <mkdir dir="${smoke.dir}/harness/classes" />
     <javac srcdir="${basedir}" destdir="${smoke.dir}/harness/classes"
-           includes="MetaBnfSmokeTest.java,UsabilityAnnotationsTest.java,UsabilityEditorsTest.java" includeantruntime="false" encoding="UTF-8"
+           includes="MetaBnfSmokeTest.java,UsabilityAnnotationsTest.java,UsabilityEditorsTest.java,BundledGrammarImportTest.java,metabnf/rascal/GrammarModelImporter.java,metabnf/rascal/GrammarTools.java" includeantruntime="false" encoding="UTF-8"
            fork="true" executable="${java.home}/bin/javac">
+      <src path="${repo.root}/mps-plugin/src/main/java" />
       <classpath>
         <fileset dir="${mps.home}/lib" includes="*.jar" />
         <fileset dir="${mps.home}/lib/ant/lib" includes="*.jar" />
@@ -128,6 +129,8 @@
         <arg value="-ea" />
         <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
         <arg value="-Dmetabnf.smoke.project=${smoke.project}" />
+        <arg value="-Dmetabnf.parser.tools=${parser.tools}" />
+        <arg value="-Dmetabnf.smoke.repo=${repo.root}" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
         <arg value="-Didea.system.path=${smoke.dir}/system" />
         <arg value="-Didea.log.path=${smoke.dir}/log" />

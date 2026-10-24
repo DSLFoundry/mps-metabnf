@@ -1,0 +1,50 @@
+# Original reference binaries and sources for the components in the bundled tools.
+# group:artifact:version | license family; embedded upstream notices take precedence.
+org.antlr:antlr4:4.13.2|BSD-3-Clause
+org.antlr:antlr4-runtime:4.13.2|BSD-3-Clause
+org.antlr:antlr-runtime:3.5.3|BSD-3-Clause
+org.antlr:ST4:4.3.4|BSD-3-Clause
+org.abego.treelayout:org.abego.treelayout.core:1.0.3|BSD-3-Clause
+org.rascalmpl:typepal:0.17.1|BSD-2-Clause
+io.usethesource:vallang:1.1.0|BSD-2-Clause
+io.usethesource:capsule:0.7.2|BSD-2-Clause
+org.apache.commons:commons-math:2.2|Apache-2.0 and included third-party notices
+org.apache.commons:commons-compress:1.28.0|Apache-2.0
+commons-io:commons-io:2.20.0|Apache-2.0
+org.apache.commons:commons-lang3:3.18.0|Apache-2.0
+commons-codec:commons-codec:1.22.0|Apache-2.0
+com.google.code.gson:gson:2.14.0|Apache-2.0
+com.google.errorprone:error_prone_annotations:2.48.0|Apache-2.0
+org.jline:jline-reader:3.29.0|BSD-3-Clause
+org.jline:jline-terminal:3.29.0|BSD-3-Clause
+org.jline:jline-native:3.29.0|BSD-3-Clause
+org.jline:jline-terminal-jni:3.29.0|BSD-3-Clause
+org.jline:jline-style:3.29.0|BSD-3-Clause
+org.jline:jline-console:3.29.0|BSD-3-Clause
+org.jline:jline-builtins:3.29.0|BSD-3-Clause
+org.jline:jansi-core:3.29.0|BSD-3-Clause
+org.yaml:snakeyaml:2.6|Apache-2.0
+org.jsoup:jsoup:1.23.2|MIT
+org.nanohttpd:nanohttpd:2.3.1|BSD-3-Clause
+com.ibm.icu:icu4j:78.3|Unicode-3.0 and included third-party notices
+org.apache.maven:maven-model:3.9.16|Apache-2.0
+org.codehaus.plexus:plexus-utils:3.6.1|Apache-2.0 and included third-party notices
+org.apache.maven:maven-model-builder:3.9.16|Apache-2.0
+org.codehaus.plexus:plexus-interpolation:1.29|Apache-2.0
+org.apache.maven:maven-artifact:3.9.16|Apache-2.0
+org.apache.maven:maven-builder-support:3.9.16|Apache-2.0
+org.apache.maven:maven-repository-metadata:3.9.16|Apache-2.0
+org.apache.maven:maven-settings:3.9.16|Apache-2.0
+engineering.swat:java-watch:0.9.7|BSD-2-Clause
+org.apache.logging.log4j:log4j-api:2.25.3|Apache-2.0
+junit:junit:4.13.2|EPL-1.0
+org.hamcrest:hamcrest-core:1.3|BSD-3-Clause
+org.jdom:jdom2:2.0.6.1|JDOM (BSD-style)
+org.eclipse.lsp4j:org.eclipse.lsp4j.debug:1.0.0|EPL-2.0 OR BSD-3-Clause
+org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:1.0.0|EPL-2.0 OR BSD-3-Clause
+com.github.luben:zstd-jni:1.5.7-9|BSD-2-Clause and bundled native notices
+org.tukaani:xz:1.12|0BSD and included notices
+com.github.ben-manes.caffeine:caffeine:3.1.1|Apache-2.0
+org.checkerframework:checker-qual:3.53.1|MIT
+javax.inject:javax.inject:1|Apache-2.0
+org.ow2.asm:asm:9.9.1|BSD-3-Clause
