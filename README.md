@@ -12,6 +12,8 @@ The current status of MetaBNF is: it works for basic cases, but is not yet featu
 
 An initial, tested Rascal/ANTLR bridge milestone is implemented, with command-line workflows and an optional MPS Tools-menu plugin. The [Rascal bridge](rascal-bridge/README.md) imports a supported subset of Rascal grammars into MetaBNF, generates Rascal parsers from MetaBNF grammars, and supports mapped source/model round trips. The [ANTLR bridge](antlr-bridge/README.md) uses ANTLR's native Tool API to import a supported subset of combined ANTLR 4 grammars, and its interpreters to parse source text. Both can map parsed text into an existing MPS language using an explicit AST mapping. These are prototype, subset-based bridges, not general-purpose importers for arbitrary grammars; automatic mapping inference and AST cross-reference resolution remain open.
 
+The [typed usability-annotation foundation](docs/usability-annotations.md) provides native flag, list, and optional-group intent with provenance, suppression, structured diagnostics, and shared inspection/editing services. These annotations are metadata only: automatic recognition, profiles, editor backends, and structural lowering are later roadmap steps.
+
 # Where this could go
 The initial Rascal and ANTLR bridges provide a working foundation, but the broader usability and interoperability goals remain open. Here are some research/extension ideas:
 - Extend the [Rascal bridge](rascal-bridge/README.md) beyond its current grammar subset and improve its integration with MPS (building on work such as [rascal-mps](https://github.com/cwi-swat/rascal-mps))

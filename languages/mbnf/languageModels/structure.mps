@@ -43,6 +43,7 @@
       <concept id="1169125787135" name="jetbrains.mps.lang.structure.structure.AbstractConceptDeclaration" flags="ig" index="PkWjJ">
         <property id="6714410169261853888" name="conceptId" index="EcuMT" />
         <property id="4628067390765907488" name="conceptShortDescription" index="R4oN_" />
+        <property id="4628067390765956802" name="abstract" index="R5$K7" />
         <property id="5092175715804935370" name="conceptAlias" index="34LRSv" />
         <child id="1071489727083" name="linkDeclaration" index="1TKVEi" />
         <child id="1071489727084" name="propertyDeclaration" index="1TKVEl" />
@@ -514,6 +515,122 @@
       <property role="1L1pqM" value="&gt;?" />
       <property role="3tVfz5" value="2504845739424388721" />
       <ref role="2wpffI" node="2b2ZYR3yDpL" />
+    </node>
+  </node>
+  <node concept="25R3W" id="$td8qPViAv">
+    <property role="TrG5h" value="AnnotationOrigin" />
+    <property role="3F6X1D" value="656738873848441247" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1H5jkz" node="$td8qPViAw" resolve="Authored" />
+    <node concept="25R33" id="$td8qPViAw" role="25R1y">
+      <property role="TrG5h" value="Authored" />
+      <property role="3tVfz5" value="656738873848441248" />
+      <property role="1L1pqM" value="authored" />
+    </node>
+    <node concept="25R33" id="$td8qPViAx" role="25R1y">
+      <property role="TrG5h" value="Inferred" />
+      <property role="3tVfz5" value="656738873848441249" />
+      <property role="1L1pqM" value="inferred" />
+    </node>
+    <node concept="25R33" id="$td8qPViAy" role="25R1y">
+      <property role="TrG5h" value="Suggested" />
+      <property role="3tVfz5" value="656738873848441250" />
+      <property role="1L1pqM" value="suggested" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="$td8qPViAz">
+    <property role="TrG5h" value="UsabilityAnnotations" />
+    <property role="19KtqR" value="true" />
+    <property role="EcuMT" value="656738873848441251" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyj" id="$td8qPViAC" role="1TKVEi">
+      <property role="20kJfa" value="grammar" />
+      <property role="IQ2ns" value="656738873848441256" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2b2ZYR3vfui" resolve="grammar" />
+    </node>
+    <node concept="1TJgyj" id="$td8qPViAD" role="1TKVEi">
+      <property role="20kJfa" value="annotations" />
+      <property role="IQ2ns" value="656738873848441257" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <ref role="20lvS9" node="$td8qPViA$" resolve="UsabilityAnnotation" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="$td8qPViA$">
+    <property role="TrG5h" value="UsabilityAnnotation" />
+    <property role="EcuMT" value="656738873848441252" />
+    <property role="3GE5qa" value="usability" />
+    <property role="R5$K7" value="true" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="$td8qPViA_" role="1TKVEl">
+      <property role="TrG5h" value="origin" />
+      <property role="IQ2nx" value="656738873848441253" />
+      <ref role="AX2Wp" node="$td8qPViAv" resolve="AnnotationOrigin" />
+    </node>
+    <node concept="1TJgyi" id="$td8qPViAA" role="1TKVEl">
+      <property role="TrG5h" value="suppressed" />
+      <property role="IQ2nx" value="656738873848441254" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+    <node concept="1TJgyi" id="$td8qPViAB" role="1TKVEl">
+      <property role="TrG5h" value="evidence" />
+      <property role="IQ2nx" value="656738873848441255" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="$td8qPViAE">
+    <property role="TrG5h" value="FlagAnnotation" />
+    <property role="EcuMT" value="656738873848441258" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1TJDcQ" node="$td8qPViA$" resolve="UsabilityAnnotation" />
+    <node concept="1TJgyj" id="$td8qPViAF" role="1TKVEi">
+      <property role="20kJfa" value="target" />
+      <property role="IQ2ns" value="656738873848441259" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="4idNKJHg4Qe" resolve="Flag" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="$td8qPViAG">
+    <property role="TrG5h" value="ListAnnotation" />
+    <property role="EcuMT" value="656738873848441260" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1TJDcQ" node="$td8qPViA$" resolve="UsabilityAnnotation" />
+    <node concept="1TJgyj" id="$td8qPViAH" role="1TKVEi">
+      <property role="20kJfa" value="target" />
+      <property role="IQ2ns" value="656738873848441261" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2b2ZYR3ypJF" resolve="NonterminalReference" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="$td8qPViAI">
+    <property role="TrG5h" value="OptionalGroupAnnotation" />
+    <property role="EcuMT" value="656738873848441262" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1TJDcQ" node="$td8qPViA$" resolve="UsabilityAnnotation" />
+    <node concept="1TJgyj" id="$td8qPViAJ" role="1TKVEi">
+      <property role="20kJfa" value="owner" />
+      <property role="IQ2ns" value="656738873848441263" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2b2ZYR3xc0j" resolve="NonterminalRule" />
+    </node>
+    <node concept="1TJgyj" id="$td8qPViAK" role="1TKVEi">
+      <property role="20kJfa" value="first" />
+      <property role="IQ2ns" value="656738873848441264" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2b2ZYR3xc0P" resolve="ITerm" />
+    </node>
+    <node concept="1TJgyj" id="$td8qPViAL" role="1TKVEi">
+      <property role="20kJfa" value="last" />
+      <property role="IQ2ns" value="656738873848441265" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2b2ZYR3xc0P" resolve="ITerm" />
+    </node>
+    <node concept="1TJgyi" id="$td8qPViAM" role="1TKVEl">
+      <property role="TrG5h" value="distinguishEmpty" />
+      <property role="IQ2nx" value="656738873848441266" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
     </node>
   </node>
 </model>

@@ -74,6 +74,12 @@ public final class MetaBnfSmokeTest {
             SModel grammar = project.getModelAccess().computeReadAction(() -> model(project, GRAMMAR));
             checkConstraints(environment, project, grammar);
             System.out.println("SMOKE: native MPS grammar constraints are clean");
+            SModel usability = project.getModelAccess().computeReadAction(() ->
+                    model(project, "r:50e696ba-6dbe-4374-8573-c5102cf3ceca(mbnf.sandbox.UsabilityFixture)"));
+            checkConstraints(environment, project, usability);
+            onEdt(() -> project.getModelAccess().executeCommand(() -> UsabilityAnnotationsTest.run(usability, grammar)));
+            checkConstraints(environment, project, usability);
+            System.out.println("SMOKE: native usability annotation CRUD, diagnostics, and persistence are clean");
             SModel rascalImport = project.getModelAccess().computeReadAction(() ->
                     model(project, RASCAL_IMPORT_FIXTURE));
             checkConstraints(environment, project, rascalImport);
@@ -221,6 +227,9 @@ public final class MetaBnfSmokeTest {
         require(roots(result).stream().anyMatch(node ->
                         "metabnf.structure.TargetInjector".equals(node.getConcept().getQualifiedName())),
                 "The last Demo transient model has no TargetInjector: " + result.getName());
+        require(roots(result).stream().noneMatch(node ->
+                        "metabnf.structure.UsabilityAnnotations".equals(node.getConcept().getQualifiedName())),
+                "Usability metadata leaked into the generated language");
         return result;
     }
 

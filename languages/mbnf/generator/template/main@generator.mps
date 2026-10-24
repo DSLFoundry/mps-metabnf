@@ -120,12 +120,16 @@
       <concept id="8822712935563342996" name="metabnf.structure.EmptyLine" flags="ng" index="3P3UoZ" />
     </language>
     <language id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator">
+      <concept id="1219952072943" name="jetbrains.mps.lang.generator.structure.DropRootRule" flags="lg" index="aNPBN">
+        <reference id="1219952338328" name="applicableConcept" index="aOQi4" />
+      </concept>
       <concept id="1114729360583" name="jetbrains.mps.lang.generator.structure.CopySrcListMacro" flags="lg" index="2b32R4">
         <child id="1168278589236" name="sourceNodesQuery" index="2P8S$" />
       </concept>
       <concept id="1202776937179" name="jetbrains.mps.lang.generator.structure.AbandonInput_RuleConsequence" flags="lg" index="b5Tf3" />
       <concept id="1095416546421" name="jetbrains.mps.lang.generator.structure.MappingConfiguration" flags="ig" index="bUwia">
         <property id="1184950341882" name="topPriorityGroup" index="3$yP7D" />
+        <child id="1219952894531" name="dropRootRule" index="aQYdv" />
         <child id="1200911492601" name="mappingLabel" index="2rTMjI" />
         <child id="1167328349397" name="reductionMappingRule" index="3acgRq" />
         <child id="1167514678247" name="rootMappingRule" index="3lj3bC" />
@@ -317,6 +321,7 @@
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
       <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
+        <property id="1156234966388" name="shortDescription" index="OYnhT" />
         <property id="1193676396447" name="virtualPackage" index="3GE5qa" />
         <child id="5169995583184591170" name="smodelAttribute" index="lGtFl" />
       </concept>
@@ -2152,6 +2157,10 @@
           </node>
         </node>
       </node>
+    </node>
+    <node concept="aNPBN" id="$td8qQ10r4" role="aQYdv">
+      <property role="OYnhT" value="Semantic usability metadata is not generated" />
+      <ref role="aOQi4" to="6o2a:$td8qPViAz" resolve="UsabilityAnnotations" />
     </node>
   </node>
 </model>
