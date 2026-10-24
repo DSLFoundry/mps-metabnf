@@ -25,6 +25,7 @@ final class UsabilityEditorsTest {
         EditorComponent editor = new EditorComponent(model.getRepository()) {};
         try {
             editor.editNode(set);
+            editor.getRootCell().relayout();
             List<EditorCell> cells = new ArrayList<>();
             collect(editor.getRootCell(), cells);
             field(cells, set, "usability for grammar:", true);
@@ -48,6 +49,14 @@ final class UsabilityEditorsTest {
                 EditorCell_Property origin = field(cells, annotation, "origin:", false);
                 EditorCell_Property suppressed = field(cells, annotation, "suppressed:", false);
                 EditorCell_Property evidence = field(cells, annotation, "evidence:", false);
+                EditorCell heading = cells.stream().filter(cell -> cell.getSNode() == annotation
+                        && cell instanceof EditorCell_Label && !((EditorCell_Label) cell).isEditable())
+                        .findFirst().orElseThrow(AssertionError::new);
+                require(heading.getX() > editor.getRootCell().getX(),
+                        "Annotation headings are not indented within the set");
+                EditorCell originLabel = cells.get(cells.indexOf(origin) - 1);
+                require(originLabel.getX() > heading.getX(),
+                        "Annotation details are not indented beneath their heading");
                 require(origin.getSubstituteInfo() != null, "Origin has no native completion");
                 for (String value : List.of("authored", "inferred", "suggested")) {
                     require(origin.getSubstituteInfo().getMatchingActions(value, true).size() == 1,

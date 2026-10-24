@@ -59,6 +59,10 @@ completion, editable origin/evidence/suppression, and the optional group's
 absent-versus-present-empty setting. There is no separate agent persistence
 format or automatic importer enrichment.
 
+Annotation headings are indented within the set; provenance, evidence, and
+optional-group details are nested beneath their heading, with spacing between
+annotations.
+
 Open `mbnf.sandbox.UsabilityFixture` to explore these editors. Create a
 `UsabilityAnnotations` root through the model's **New Root** menu, select its
 grammar reference using completion, and add flag/list/optional-group entries

@@ -15,6 +15,7 @@
         <child id="1078153129734" name="inspectedCellModel" index="6VMZX" />
       </concept>
       <concept id="1176897764478" name="jetbrains.mps.lang.editor.structure.QueryFunction_NodeFactory" flags="in" index="4$FPG" />
+      <concept id="1226339751946" name="jetbrains.mps.lang.editor.structure.PaddingTopStyleClassItem" flags="ln" index="27yT$n" />
       <concept id="1140524381322" name="jetbrains.mps.lang.editor.structure.CellModel_ListWithRole" flags="ng" index="2czfm3">
         <property id="1140524450557" name="separatorText" index="2czwfO" />
         <child id="1176897874615" name="nodeFactory" index="4_6I_" />
@@ -61,6 +62,9 @@
       </concept>
       <concept id="1223387125302" name="jetbrains.mps.lang.editor.structure.QueryFunction_Boolean" flags="in" index="3nzxsE" />
       <concept id="1088185857835" name="jetbrains.mps.lang.editor.structure.InlineEditorComponent" flags="ig" index="1sVBvm" />
+      <concept id="1215007762405" name="jetbrains.mps.lang.editor.structure.FloatStyleClassItem" flags="ln" index="3$6MrZ">
+        <property id="1215007802031" name="value" index="3$6WeP" />
+      </concept>
       <concept id="1139848536355" name="jetbrains.mps.lang.editor.structure.CellModel_WithRole" flags="ng" index="1$h60E">
         <property id="1139852716018" name="noTargetText" index="1$x2rV" />
         <property id="1140017977771" name="readOnly" index="1Intyy" />
@@ -85,6 +89,7 @@
       <concept id="1073389882823" name="jetbrains.mps.lang.editor.structure.CellModel_RefNode" flags="sg" stub="730538219795960754" index="3F1sOY" />
       <concept id="1073390211982" name="jetbrains.mps.lang.editor.structure.CellModel_RefNodeList" flags="sg" stub="2794558372793454595" index="3F2HdR" />
       <concept id="625126330682908270" name="jetbrains.mps.lang.editor.structure.CellModel_ReferencePresentation" flags="sg" stub="730538219795961225" index="3SHvHV" />
+      <concept id="1198256887712" name="jetbrains.mps.lang.editor.structure.CellModel_Indent" flags="ng" index="3XFhqQ" />
       <concept id="1166049232041" name="jetbrains.mps.lang.editor.structure.AbstractComponent" flags="ng" index="1XWOmA">
         <reference id="1166049300910" name="conceptDeclaration" index="1XX52x" />
       </concept>
@@ -801,9 +806,16 @@
       <node concept="3F0ifn" id="$td8qQ36uO" role="3EZMnx">
         <property role="3F0ifm" value="annotations:" />
       </node>
-      <node concept="3F2HdR" id="$td8qQ36uI" role="3EZMnx">
-        <ref role="1NtTu8" to="6o2a:$td8qPViAD" resolve="annotations" />
-        <node concept="2iRkQZ" id="$td8qQ36uJ" role="2czzBx" />
+      <node concept="3EZMnI" id="$td8qQ5LEd" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ5LEe" role="2iSdaV" />
+        <node concept="3XFhqQ" id="$td8qQ5LEf" role="3EZMnx" />
+        <node concept="3EZMnI" id="$td8qQ5LEb" role="3EZMnx">
+          <node concept="2iRkQZ" id="$td8qQ5LEc" role="2iSdaV" />
+          <node concept="3F2HdR" id="$td8qQ36uI" role="3EZMnx">
+            <ref role="1NtTu8" to="6o2a:$td8qPViAD" resolve="annotations" />
+            <node concept="2iRkQZ" id="$td8qQ36uJ" role="2czzBx" />
+          </node>
+        </node>
       </node>
     </node>
   </node>
@@ -825,8 +837,18 @@
           </node>
         </node>
       </node>
-      <node concept="PMmxH" id="$td8qQ36uW" role="3EZMnx">
-        <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+      <node concept="27yT$n" id="$td8qQ4dYX" role="3F10Kt">
+        <property role="3$6WeP" value="1" />
+      </node>
+      <node concept="3EZMnI" id="$td8qQ5LEi" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ5LEj" role="2iSdaV" />
+        <node concept="3XFhqQ" id="$td8qQ5LEk" role="3EZMnx" />
+        <node concept="3EZMnI" id="$td8qQ5LEg" role="3EZMnx">
+          <node concept="2iRkQZ" id="$td8qQ5LEh" role="2iSdaV" />
+          <node concept="PMmxH" id="$td8qQ36uW" role="3EZMnx">
+            <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+          </node>
+        </node>
       </node>
     </node>
   </node>
@@ -848,8 +870,18 @@
           </node>
         </node>
       </node>
-      <node concept="PMmxH" id="$td8qQ36v4" role="3EZMnx">
-        <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+      <node concept="27yT$n" id="$td8qQ4dZ1" role="3F10Kt">
+        <property role="3$6WeP" value="1" />
+      </node>
+      <node concept="3EZMnI" id="$td8qQ5LEn" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ5LEo" role="2iSdaV" />
+        <node concept="3XFhqQ" id="$td8qQ5LEp" role="3EZMnx" />
+        <node concept="3EZMnI" id="$td8qQ5LEl" role="3EZMnx">
+          <node concept="2iRkQZ" id="$td8qQ5LEm" role="2iSdaV" />
+          <node concept="PMmxH" id="$td8qQ36v4" role="3EZMnx">
+            <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+          </node>
+        </node>
       </node>
     </node>
   </node>
@@ -871,40 +903,50 @@
           </node>
         </node>
       </node>
-      <node concept="3EZMnI" id="$td8qQ36vg" role="3EZMnx">
-        <node concept="2iRfu4" id="$td8qQ36vh" role="2iSdaV" />
-        <node concept="3F0ifn" id="$td8qQ36vc" role="3EZMnx">
-          <property role="3F0ifm" value="from:" />
-        </node>
-        <node concept="1iCGBv" id="$td8qQ36vd" role="3EZMnx">
-          <property role="1$x2rV" value="&lt;select first&gt;" />
-          <ref role="1NtTu8" to="6o2a:$td8qPViAK" resolve="first" />
-          <node concept="1sVBvm" id="$td8qQ3ssJ" role="1sWHZn">
-            <node concept="3SHvHV" id="$td8qQ3ssK" role="2wV5jI" />
+      <node concept="27yT$n" id="$td8qQ4dZ5" role="3F10Kt">
+        <property role="3$6WeP" value="1" />
+      </node>
+      <node concept="3EZMnI" id="$td8qQ5LEs" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ5LEt" role="2iSdaV" />
+        <node concept="3XFhqQ" id="$td8qQ5LEu" role="3EZMnx" />
+        <node concept="3EZMnI" id="$td8qQ5LEq" role="3EZMnx">
+          <node concept="2iRkQZ" id="$td8qQ5LEr" role="2iSdaV" />
+          <node concept="3EZMnI" id="$td8qQ36vg" role="3EZMnx">
+            <node concept="2iRfu4" id="$td8qQ36vh" role="2iSdaV" />
+            <node concept="3F0ifn" id="$td8qQ36vc" role="3EZMnx">
+              <property role="3F0ifm" value="from:" />
+            </node>
+            <node concept="1iCGBv" id="$td8qQ36vd" role="3EZMnx">
+              <property role="1$x2rV" value="&lt;select first&gt;" />
+              <ref role="1NtTu8" to="6o2a:$td8qPViAK" resolve="first" />
+              <node concept="1sVBvm" id="$td8qQ3ssJ" role="1sWHZn">
+                <node concept="3SHvHV" id="$td8qQ3ssK" role="2wV5jI" />
+              </node>
+            </node>
+            <node concept="3F0ifn" id="$td8qQ36ve" role="3EZMnx">
+              <property role="3F0ifm" value="through:" />
+            </node>
+            <node concept="1iCGBv" id="$td8qQ36vf" role="3EZMnx">
+              <property role="1$x2rV" value="&lt;select last&gt;" />
+              <ref role="1NtTu8" to="6o2a:$td8qPViAL" resolve="last" />
+              <node concept="1sVBvm" id="$td8qQ3ssL" role="1sWHZn">
+                <node concept="3SHvHV" id="$td8qQ3ssM" role="2wV5jI" />
+              </node>
+            </node>
+          </node>
+          <node concept="3EZMnI" id="$td8qQ36vk" role="3EZMnx">
+            <node concept="2iRfu4" id="$td8qQ36vl" role="2iSdaV" />
+            <node concept="3F0ifn" id="$td8qQ36vj" role="3EZMnx">
+              <property role="3F0ifm" value="distinguish absent / present-empty:" />
+            </node>
+            <node concept="3F0A7n" id="$td8qQ36vi" role="3EZMnx">
+              <ref role="1NtTu8" to="6o2a:$td8qPViAM" resolve="distinguishEmpty" />
+            </node>
+          </node>
+          <node concept="PMmxH" id="$td8qQ36vm" role="3EZMnx">
+            <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
           </node>
         </node>
-        <node concept="3F0ifn" id="$td8qQ36ve" role="3EZMnx">
-          <property role="3F0ifm" value="through:" />
-        </node>
-        <node concept="1iCGBv" id="$td8qQ36vf" role="3EZMnx">
-          <property role="1$x2rV" value="&lt;select last&gt;" />
-          <ref role="1NtTu8" to="6o2a:$td8qPViAL" resolve="last" />
-          <node concept="1sVBvm" id="$td8qQ3ssL" role="1sWHZn">
-            <node concept="3SHvHV" id="$td8qQ3ssM" role="2wV5jI" />
-          </node>
-        </node>
-      </node>
-      <node concept="3EZMnI" id="$td8qQ36vk" role="3EZMnx">
-        <node concept="2iRfu4" id="$td8qQ36vl" role="2iSdaV" />
-        <node concept="3F0ifn" id="$td8qQ36vj" role="3EZMnx">
-          <property role="3F0ifm" value="distinguish absent / present-empty:" />
-        </node>
-        <node concept="3F0A7n" id="$td8qQ36vi" role="3EZMnx">
-          <ref role="1NtTu8" to="6o2a:$td8qPViAM" resolve="distinguishEmpty" />
-        </node>
-      </node>
-      <node concept="PMmxH" id="$td8qQ36vm" role="3EZMnx">
-        <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
       </node>
     </node>
   </node>
