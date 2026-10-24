@@ -78,8 +78,10 @@ public final class MetaBnfSmokeTest {
                     model(project, "r:50e696ba-6dbe-4374-8573-c5102cf3ceca(mbnf.sandbox.UsabilityFixture)"));
             checkConstraints(environment, project, usability);
             onEdt(() -> project.getModelAccess().executeCommand(() -> UsabilityAnnotationsTest.run(usability, grammar)));
+            onEdt(() -> project.getModelAccess().executeCommand(() -> UsabilityEditorsTest.run(usability)));
             checkConstraints(environment, project, usability);
             System.out.println("SMOKE: native usability annotation CRUD, diagnostics, and persistence are clean");
+            System.out.println("SMOKE: dedicated annotation editor fields, completions, and evidence editing are clean");
             SModel rascalImport = project.getModelAccess().computeReadAction(() ->
                     model(project, RASCAL_IMPORT_FIXTURE));
             checkConstraints(environment, project, rascalImport);

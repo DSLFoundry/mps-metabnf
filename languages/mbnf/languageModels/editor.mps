@@ -62,6 +62,7 @@
       <concept id="1223387125302" name="jetbrains.mps.lang.editor.structure.QueryFunction_Boolean" flags="in" index="3nzxsE" />
       <concept id="1088185857835" name="jetbrains.mps.lang.editor.structure.InlineEditorComponent" flags="ig" index="1sVBvm" />
       <concept id="1139848536355" name="jetbrains.mps.lang.editor.structure.CellModel_WithRole" flags="ng" index="1$h60E">
+        <property id="1139852716018" name="noTargetText" index="1$x2rV" />
         <property id="1140017977771" name="readOnly" index="1Intyy" />
         <property id="1140114345053" name="allowEmptyText" index="1O74Pk" />
         <reference id="1140103550593" name="relationDeclaration" index="1NtTu8" />
@@ -83,6 +84,7 @@
       </concept>
       <concept id="1073389882823" name="jetbrains.mps.lang.editor.structure.CellModel_RefNode" flags="sg" stub="730538219795960754" index="3F1sOY" />
       <concept id="1073390211982" name="jetbrains.mps.lang.editor.structure.CellModel_RefNodeList" flags="sg" stub="2794558372793454595" index="3F2HdR" />
+      <concept id="625126330682908270" name="jetbrains.mps.lang.editor.structure.CellModel_ReferencePresentation" flags="sg" stub="730538219795961225" index="3SHvHV" />
       <concept id="1166049232041" name="jetbrains.mps.lang.editor.structure.AbstractComponent" flags="ng" index="1XWOmA">
         <reference id="1166049300910" name="conceptDeclaration" index="1XX52x" />
       </concept>
@@ -742,6 +744,167 @@
       </node>
       <node concept="3F0A7n" id="1qPaejjkMBk" role="3EZMnx">
         <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+      </node>
+    </node>
+  </node>
+  <node concept="PKFIW" id="$td8qQ36ux">
+    <property role="TrG5h" value="AnnotationProvenance" />
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:$td8qPViA$" resolve="UsabilityAnnotation" />
+    <node concept="3EZMnI" id="$td8qQ36uG" role="2wV5jI">
+      <node concept="2iRkQZ" id="$td8qQ36uH" role="2iSdaV" />
+      <node concept="3EZMnI" id="$td8qQ36uB" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36uC" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36uz" role="3EZMnx">
+          <property role="3F0ifm" value="origin:" />
+        </node>
+        <node concept="3F0A7n" id="$td8qQ36u$" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:$td8qPViA_" resolve="origin" />
+        </node>
+        <node concept="3F0ifn" id="$td8qQ36u_" role="3EZMnx">
+          <property role="3F0ifm" value="suppressed:" />
+        </node>
+        <node concept="3F0A7n" id="$td8qQ36uA" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:$td8qPViAA" resolve="suppressed" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="$td8qQ36uE" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36uF" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36uD" role="3EZMnx">
+          <property role="3F0ifm" value="evidence:" />
+        </node>
+        <node concept="3F0A7n" id="$td8qQ36uy" role="3EZMnx">
+          <property role="1O74Pk" value="true" />
+          <ref role="1NtTu8" to="6o2a:$td8qPViAB" resolve="evidence" />
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="$td8qQ36uP">
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:$td8qPViAz" resolve="UsabilityAnnotations" />
+    <node concept="3EZMnI" id="$td8qQ36uQ" role="2wV5jI">
+      <node concept="2iRkQZ" id="$td8qQ36uR" role="2iSdaV" />
+      <node concept="3EZMnI" id="$td8qQ36uM" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36uN" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36uL" role="3EZMnx">
+          <property role="3F0ifm" value="usability for grammar:" />
+        </node>
+        <node concept="1iCGBv" id="$td8qQ36uK" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;select grammar&gt;" />
+          <ref role="1NtTu8" to="6o2a:$td8qPViAC" resolve="grammar" />
+          <node concept="1sVBvm" id="$td8qQ3ssB" role="1sWHZn">
+            <node concept="3SHvHV" id="$td8qQ3ssC" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="3F0ifn" id="$td8qQ36uO" role="3EZMnx">
+        <property role="3F0ifm" value="annotations:" />
+      </node>
+      <node concept="3F2HdR" id="$td8qQ36uI" role="3EZMnx">
+        <ref role="1NtTu8" to="6o2a:$td8qPViAD" resolve="annotations" />
+        <node concept="2iRkQZ" id="$td8qQ36uJ" role="2czzBx" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="$td8qQ36uX">
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:$td8qPViAE" resolve="FlagAnnotation" />
+    <node concept="3EZMnI" id="$td8qQ36uY" role="2wV5jI">
+      <node concept="2iRkQZ" id="$td8qQ36uZ" role="2iSdaV" />
+      <node concept="3EZMnI" id="$td8qQ36uU" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36uV" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36uT" role="3EZMnx">
+          <property role="3F0ifm" value="flag:" />
+        </node>
+        <node concept="1iCGBv" id="$td8qQ36uS" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;select target&gt;" />
+          <ref role="1NtTu8" to="6o2a:$td8qPViAF" resolve="target" />
+          <node concept="1sVBvm" id="$td8qQ3ssD" role="1sWHZn">
+            <node concept="3SHvHV" id="$td8qQ3ssE" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="PMmxH" id="$td8qQ36uW" role="3EZMnx">
+        <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="$td8qQ36v5">
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:$td8qPViAG" resolve="ListAnnotation" />
+    <node concept="3EZMnI" id="$td8qQ36v6" role="2wV5jI">
+      <node concept="2iRkQZ" id="$td8qQ36v7" role="2iSdaV" />
+      <node concept="3EZMnI" id="$td8qQ36v2" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36v3" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36v1" role="3EZMnx">
+          <property role="3F0ifm" value="list:" />
+        </node>
+        <node concept="1iCGBv" id="$td8qQ36v0" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;select target&gt;" />
+          <ref role="1NtTu8" to="6o2a:$td8qPViAH" resolve="target" />
+          <node concept="1sVBvm" id="$td8qQ3ssF" role="1sWHZn">
+            <node concept="3SHvHV" id="$td8qQ3ssG" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="PMmxH" id="$td8qQ36v4" role="3EZMnx">
+        <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="$td8qQ36vn">
+    <property role="3GE5qa" value="usability" />
+    <ref role="1XX52x" to="6o2a:$td8qPViAI" resolve="OptionalGroupAnnotation" />
+    <node concept="3EZMnI" id="$td8qQ36vo" role="2wV5jI">
+      <node concept="2iRkQZ" id="$td8qQ36vp" role="2iSdaV" />
+      <node concept="3EZMnI" id="$td8qQ36va" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36vb" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36v9" role="3EZMnx">
+          <property role="3F0ifm" value="optional group in rule:" />
+        </node>
+        <node concept="1iCGBv" id="$td8qQ36v8" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;select owner&gt;" />
+          <ref role="1NtTu8" to="6o2a:$td8qPViAJ" resolve="owner" />
+          <node concept="1sVBvm" id="$td8qQ3ssH" role="1sWHZn">
+            <node concept="3SHvHV" id="$td8qQ3ssI" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="$td8qQ36vg" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36vh" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36vc" role="3EZMnx">
+          <property role="3F0ifm" value="from:" />
+        </node>
+        <node concept="1iCGBv" id="$td8qQ36vd" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;select first&gt;" />
+          <ref role="1NtTu8" to="6o2a:$td8qPViAK" resolve="first" />
+          <node concept="1sVBvm" id="$td8qQ3ssJ" role="1sWHZn">
+            <node concept="3SHvHV" id="$td8qQ3ssK" role="2wV5jI" />
+          </node>
+        </node>
+        <node concept="3F0ifn" id="$td8qQ36ve" role="3EZMnx">
+          <property role="3F0ifm" value="through:" />
+        </node>
+        <node concept="1iCGBv" id="$td8qQ36vf" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;select last&gt;" />
+          <ref role="1NtTu8" to="6o2a:$td8qPViAL" resolve="last" />
+          <node concept="1sVBvm" id="$td8qQ3ssL" role="1sWHZn">
+            <node concept="3SHvHV" id="$td8qQ3ssM" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="$td8qQ36vk" role="3EZMnx">
+        <node concept="2iRfu4" id="$td8qQ36vl" role="2iSdaV" />
+        <node concept="3F0ifn" id="$td8qQ36vj" role="3EZMnx">
+          <property role="3F0ifm" value="distinguish absent / present-empty:" />
+        </node>
+        <node concept="3F0A7n" id="$td8qQ36vi" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:$td8qPViAM" resolve="distinguishEmpty" />
+        </node>
+      </node>
+      <node concept="PMmxH" id="$td8qQ36vm" role="3EZMnx">
+        <ref role="PMmxG" node="$td8qQ36ux" resolve="AnnotationProvenance" />
       </node>
     </node>
   </node>

@@ -53,9 +53,22 @@ editor cell type, or structural-lowering policy is stored in these annotations.
 
 After building `metabnf`, the generated class is
 `metabnf.plugin.UsabilityAnnotations`. UI code can call its static methods;
-model-access providers can invoke the same class. The schema is also accessible
-through MPS's reflective editor. There is no separate agent persistence format,
-dedicated annotation UI, or automatic importer enrichment yet.
+model-access providers can invoke the same class. Dedicated projectional editors
+present the annotation set and all three annotation kinds, with target-reference
+completion, editable origin/evidence/suppression, and the optional group's
+absent-versus-present-empty setting. There is no separate agent persistence
+format or automatic importer enrichment.
+
+Open `mbnf.sandbox.UsabilityFixture` to explore these editors. Create a
+`UsabilityAnnotations` root through the model's **New Root** menu, select its
+grammar reference using completion, and add flag/list/optional-group entries
+in the vertical annotations list using native completion. Reference cells
+select existing grammar nodes rather than editing their names. Origins and
+booleans use native value completion. Evidence is editable and may be cleared
+for authored intent; inferred/suggested intent requires evidence.
+The editors use normal MPS editing/undo. Semantic validation remains in the
+shared service's inspection diagnostics; the editors do not prevent every
+intermediate invalid state or implement automatic inference.
 
 | Operation | Signature |
 | --- | --- |
@@ -170,4 +183,8 @@ cross-grammar rejection, cross-model imports, stable identities and native
 save/reload. It adds metadata to the copied Demo and then runs the existing
 generation/import/compile/reference and source-AST assertions unchanged.
 `buildLanguages` additionally builds the unannotated checked-in languages.
-No editor-interaction, inference, or backend behavior is claimed by these tests.
+The editor regression constructs the real native editor cell tree, checks
+editable fields, reference cells and origin/boolean completion, and edits
+evidence and the empty-group setting through property cells. Desktop
+appearance, keyboard-event interaction, inference, and generated-language
+backend behavior are not claimed by these tests.
