@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "Exp": {
+      "concept": "Example.structure.Exp",
+      "children": {
+        "Exp": "Operand"
+      }
+    }
+  }
+}

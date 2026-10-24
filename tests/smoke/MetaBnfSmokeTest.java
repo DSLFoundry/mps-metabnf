@@ -49,6 +49,10 @@ import java.util.stream.Collectors;
 public final class MetaBnfSmokeTest {
     private static final String GRAMMAR =
             "r:eef72bc7-c17d-410f-855b-33f3f37b989b(mbnf.sandbox.Demo)";
+    private static final String RASCAL_IMPORT_FIXTURE =
+            "r:3410db29-a096-503f-b5d6-1a2ce3c230b5(mbnf.sandbox.RascalImportFixture)";
+    private static final String RASCAL_TEXT_IMPORT_FIXTURE =
+            "r:697425fa-dfaa-5cd9-8971-6ed844586d5f(mbnf.sandbox.RascalTextImportFixture)";
     private static final String[] ASPECTS = {
             "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)",
             "r:fd18fece-0619-420e-acfb-80ca89a441e4(Demo.editor)",
@@ -66,6 +70,14 @@ public final class MetaBnfSmokeTest {
             SModel grammar = project.getModelAccess().computeReadAction(() -> model(project, GRAMMAR));
             checkConstraints(environment, project, grammar);
             System.out.println("SMOKE: native MPS grammar constraints are clean");
+            SModel rascalImport = project.getModelAccess().computeReadAction(() ->
+                    model(project, RASCAL_IMPORT_FIXTURE));
+            checkConstraints(environment, project, rascalImport);
+            project.getModelAccess().computeReadAction(() -> {
+                validateRascalImportFixture(rascalImport);
+                return null;
+            });
+            System.out.println("SMOKE: imported Rascal grammar model satisfies MetaBNF constraints");
             List<SModel> aspects = project.getModelAccess().computeReadAction(() ->
                     Arrays.stream(ASPECTS).map(ref -> model(project, ref)).collect(Collectors.toList()));
             onEdt(() -> project.getModelAccess().executeCommand(() -> {
@@ -129,6 +141,22 @@ public final class MetaBnfSmokeTest {
                 checkConstraints(environment, project, aspect);
             }
             System.out.println("SMOKE: imported all Demo aspects; references survive removal of transients");
+        } finally {
+            environment.closeProject(project);
+        }
+    }
+
+    public static void validateGeneratedAst(Environment environment) throws Exception {
+        File projectDirectory = new File(System.getProperty("metabnf.smoke.project"));
+        Project project = environment.openProject(projectDirectory);
+        try {
+            SModel rascalTextImport = project.getModelAccess().computeReadAction(() ->
+                    model(project, RASCAL_TEXT_IMPORT_FIXTURE));
+            project.getModelAccess().computeReadAction(() -> {
+                validateRascalTextImportFixture(rascalTextImport);
+                return null;
+            });
+            System.out.println("SMOKE: parsed Rascal text uses the generated-language MPS registry");
         } finally {
             environment.closeProject(project);
         }
@@ -266,6 +294,62 @@ public final class MetaBnfSmokeTest {
                     "Generated aspect still references a transient: " + reference.getTargetNodeReference());
         }
         node.getChildren().forEach(MetaBnfSmokeTest::validateReferences);
+    }
+
+    private static void validateRascalImportFixture(SModel model) {
+        List<SNode> modelRoots = roots(model);
+        require(modelRoots.size() == 1, "Expected one imported Rascal grammar root");
+        SNode root = modelRoots.get(0);
+        require("metabnf.structure.grammar".equals(root.getConcept().getQualifiedName()),
+                "Imported Rascal model root is not a MetaBNF grammar");
+        Set<String> concepts = new HashSet<>();
+        collectConcepts(root, concepts);
+        require(concepts.contains("metabnf.structure.TerminalRule"),
+                "Imported Rascal grammar has no lexical rule");
+        require(concepts.contains("metabnf.structure.NonterminalRule"),
+                "Imported Rascal grammar has no sort rule");
+        require(concepts.contains("metabnf.structure.TerminalReference"),
+                "Imported Rascal grammar has no lexical reference");
+        require(concepts.contains("metabnf.structure.ChoiceRule"),
+                "Imported Rascal grammar lost its production alternatives");
+        require(concepts.contains("metabnf.structure.NonterminalReference"),
+                "Imported Rascal grammar has no sort reference");
+        require(concepts.contains("metabnf.structure.Keyword"),
+                "Imported Rascal grammar has no literal keyword");
+        require(concepts.contains("jetbrains.mps.baseLanguage.regexp.structure.IntervalSymbolClassPart"),
+                "Imported Rascal lexical expression lost its character range");
+        validateReferences(root);
+    }
+
+    private static void collectConcepts(SNode node, Set<String> concepts) {
+        concepts.add(node.getConcept().getQualifiedName());
+        node.getChildren().forEach(child -> collectConcepts(child, concepts));
+    }
+
+    private static void validateRascalTextImportFixture(SModel model) {
+        List<SNode> modelRoots = roots(model);
+        require(modelRoots.size() == 1, "Expected one parsed Rascal text root");
+        SNode root = modelRoots.get(0);
+        require("Demo.structure.Program".equals(root.getConcept().getQualifiedName()),
+                "Parsed Rascal text has the wrong generated-language root concept");
+        SNode assignment = findConcept(root, "Demo.structure.Assignment");
+        require(assignment != null, "Parsed Rascal text has no Assignment node");
+        SNode number = findConcept(assignment, "Demo.structure.Number");
+        require(number != null, "Parsed Rascal text has no Number node");
+        validateReferences(root);
+    }
+
+    private static SNode findConcept(SNode node, String conceptName) {
+        if (conceptName.equals(node.getConcept().getQualifiedName())) {
+            return node;
+        }
+        for (SNode child : node.getChildren()) {
+            SNode match = findConcept(child, conceptName);
+            if (match != null) {
+                return match;
+            }
+        }
+        return null;
     }
 
     private static SModel model(Project project, String reference) {

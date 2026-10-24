@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rascal-grammar format-version="1" module="Example">
+  <starts>
+    <start name="Program"/>
+  </starts>
+  <rules>
+    <rule name="IDENTIFIER" kind="lexical">
+      <choice>
+        <production>
+          <sequence>
+            <character-class>
+              <range start="65" end="90"/>
+            </character-class>
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+    <rule name="Program" kind="sort">
+      <choice>
+        <production>
+          <sequence>
+            <literal value="hello"/>
+            <lexical name="IDENTIFIER"/>
+            <optional>
+              <sort name="Suffix"/>
+            </optional>
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+    <rule name="Suffix" kind="sort">
+      <choice>
+        <production>
+          <sequence>
+            <literal value="!"/>
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+  </rules>
+</rascal-grammar>

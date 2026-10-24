@@ -13,6 +13,7 @@
   </facets>
   <dependencies>
     <dependency reexport="false">2417e694-c9d2-48c2-b396-c9ab05f8d822(GenPlan)</dependency>
+    <dependency reexport="false">48bed45b-b394-4796-8621-cea28d56a6da(Demo)</dependency>
   </dependencies>
   <languageVersions>
     <language slang="l:48bed45b-b394-4796-8621-cea28d56a6da:Demo" version="0" />
@@ -30,7 +31,13 @@
     <language slang="l:9c03c641-469f-49e7-aeed-44a3d19b7253:metabnf" version="0" />
   </languageVersions>
   <dependencyVersions>
+    <module reference="3f233e7f-b8a6-46d2-a57f-795d56775243(Annotations)" version="0" />
+    <module reference="48bed45b-b394-4796-8621-cea28d56a6da(Demo)" version="0" />
     <module reference="2417e694-c9d2-48c2-b396-c9ab05f8d822(GenPlan)" version="0" />
+    <module reference="6354ebe7-c22a-4a0f-ac54-50b52ab9b065(JDK)" version="0" />
+    <module reference="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea(MPS.Core)" version="0" />
+    <module reference="8865b7a8-5271-43d3-884c-6fd1d9cfdd34(MPS.OpenAPI)" version="0" />
+    <module reference="ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)" version="0" />
     <module reference="74814277-11d5-4959-8d6e-72e99bea6823(mbnf.sandbox)" version="0" />
   </dependencyVersions>
 </solution>

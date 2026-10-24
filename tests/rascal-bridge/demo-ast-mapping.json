@@ -1,0 +1,40 @@
+{
+  "rules": {
+    "Program": {
+      "concept": "Demo.structure.Program",
+      "properties": {
+        "Identifier": {
+          "token": "IDENTIFIER"
+        }
+      },
+      "children": {
+        "Statements": "Statements"
+      }
+    },
+    "Statements": {
+      "concept": "Demo.structure.Statements",
+      "children": {
+        "Assignment": "Statement"
+      }
+    },
+    "Assignment": {
+      "concept": "Demo.structure.Assignment",
+      "properties": {
+        "Identifier": {
+          "token": "IDENTIFIER"
+        }
+      },
+      "children": {
+        "NUMBER": "Expression"
+      }
+    },
+    "NUMBER": {
+      "concept": "Demo.structure.Number",
+      "properties": {
+        "NumberValue": {
+          "self": true
+        }
+      }
+    }
+  }
+}

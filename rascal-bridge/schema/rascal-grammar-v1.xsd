@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="rascal-grammar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="starts">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:group ref="symbol" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="rules">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:group ref="production"/>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" use="required"/>
+                  <xs:attribute name="kind" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="sort"/>
+                        <xs:enumeration value="lexical"/>
+                        <xs:enumeration value="layout"/>
+                        <xs:enumeration value="keyword"/>
+                        <xs:enumeration value="parameterized-sort"/>
+                        <xs:enumeration value="parameterized-lexical"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="format-version" type="xs:positiveInteger" use="required"/>
+      <xs:attribute name="module" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:group name="production">
+    <xs:choice>
+      <xs:element name="production">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sequence">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:group ref="symbol" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="choice">
+        <xs:complexType>
+          <xs:group ref="production" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="priority">
+        <xs:complexType>
+          <xs:group ref="production" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="associativity">
+        <xs:complexType>
+          <xs:group ref="production" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:attribute name="kind" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="left"/>
+                <xs:enumeration value="right"/>
+                <xs:enumeration value="non-associative"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="reference">
+        <xs:complexType>
+          <xs:attribute name="constructor" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:group>
+
+  <xs:group name="symbol">
+    <xs:choice>
+      <xs:element name="start" type="namedSymbol"/>
+      <xs:element name="sort" type="namedSymbol"/>
+      <xs:element name="lexical" type="namedSymbol"/>
+      <xs:element name="layout" type="namedSymbol"/>
+      <xs:element name="keyword" type="namedSymbol"/>
+      <xs:element name="literal" type="valuedSymbol"/>
+      <xs:element name="case-insensitive-literal" type="valuedSymbol"/>
+      <xs:element name="empty" type="emptySymbol"/>
+      <xs:element name="optional" type="nestedSymbol"/>
+      <xs:element name="one-or-more" type="nestedSymbol"/>
+      <xs:element name="zero-or-more" type="nestedSymbol"/>
+      <xs:element name="sequence" type="symbolList"/>
+      <xs:element name="choice" type="symbolList"/>
+      <xs:element name="parameterized-sort" type="namedSymbolList"/>
+      <xs:element name="parameterized-lexical" type="namedSymbolList"/>
+      <xs:element name="character-class">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="range" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="start" type="xs:integer" use="required"/>
+                <xs:attribute name="end" type="xs:integer" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="one-or-more-sep" type="separatedSymbol"/>
+      <xs:element name="zero-or-more-sep" type="separatedSymbol"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:complexType name="namedSymbol">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="valuedSymbol">
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="emptySymbol"/>
+  <xs:complexType name="nestedSymbol">
+    <xs:group ref="symbol"/>
+  </xs:complexType>
+  <xs:complexType name="symbolList">
+    <xs:group ref="symbol" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:complexType>
+  <xs:complexType name="namedSymbolList">
+    <xs:group ref="symbol" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="separatedSymbol">
+    <xs:sequence>
+      <xs:element name="element">
+        <xs:complexType>
+          <xs:group ref="symbol"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="separators" type="symbolList"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

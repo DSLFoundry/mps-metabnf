@@ -51,6 +51,27 @@ buildLanguages.configure {
     description = "Builds all checked-in languages and solutions in an isolated source copy."
 }
 
+val compileRascalBridgePlugin = tasks.register<JavaCompile>("compileRascalBridgePlugin") {
+    group = "build"
+    description = "Compiles the MPS Tools-menu plugin for the Rascal bridge."
+    source(fileTree("mps-plugin/src/main/java") { include("**/*.java") })
+    classpath = files(mpsDefaults.mpsHome.map { home ->
+        fileTree(home.asFile) { include("lib/*.jar", "plugins/**/*.jar") }
+    })
+    destinationDirectory.set(layout.buildDirectory.dir("rascal-bridge-plugin/classes"))
+    sourceCompatibility = "21"
+    targetCompatibility = "21"
+    options.release.set(21)
+    options.encoding = "UTF-8"
+}
+
+val rascalBridgePluginJar = tasks.register<Jar>("rascalBridgePluginJar") {
+    dependsOn(compileRascalBridgePlugin)
+    archiveFileName.set("metabnf-rascal-bridge.jar")
+    destinationDirectory.set(layout.buildDirectory.dir("rascal-bridge-plugin"))
+    from(compileRascalBridgePlugin)
+}
+
 val smokeTest = registerMpsAnt("smokeTest", "smoke", "mps-smoke")
 smokeTest.configure {
     group = "verification"
@@ -59,7 +80,7 @@ smokeTest.configure {
 }
 
 val packageLanguages = tasks.register<Zip>("packageLanguages") {
-    dependsOn(buildLanguages)
+    dependsOn(buildLanguages, rascalBridgePluginJar)
     group = "distribution"
     description = "Packages the compiled MetaBNF languages and generation plan as an MPS module library."
     archiveBaseName = "metabnf"
@@ -74,6 +95,27 @@ val packageLanguages = tasks.register<Zip>("packageLanguages") {
             exclude("**/source_gen/**", "**/source_gen.caches/**")
         }
         from("README.md", "LICENSE")
+    }
+    into("plugins/metabnf-rascal-bridge") {
+        from("mps-plugin/src/main/resources")
+        from(rascalBridgePluginJar) {
+            into("lib")
+        }
+        from("LICENSE")
+        from("rascal-bridge/README.md")
+        into("rascal-bridge") {
+            from("rascal-bridge") {
+                include("*.py", "src/**/*.rsc")
+                exclude("test.py", "test_*.py")
+            }
+        }
+        from("languages/mbnf/sandbox/models/Demo.mps") {
+            into("templates")
+        }
+        from("languages/mbnf/sandbox/models/mbnf/python.mps") {
+            into("templates")
+            rename { "python.mps" }
+        }
     }
     doFirst {
         check(layout.buildDirectory.file(
@@ -91,7 +133,7 @@ tasks.assemble {
 }
 
 tasks.check {
-    dependsOn(smokeTest)
+    dependsOn(smokeTest, compileRascalBridgePlugin)
 }
 
 tasks.wrapper {

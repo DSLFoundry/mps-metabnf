@@ -15,6 +15,7 @@
     <tempfile property="smoke.dir" destdir="${java.io.tmpdir}" prefix="metabnf-smoke-" />
     <property name="smoke.project" location="${smoke.dir}/project" />
     <echo message="Smoke-test artifacts: ${smoke.dir}" />
+    <mkdir dir="${smoke.dir}/tmp" />
     <copy todir="${smoke.project}">
       <fileset dir="${repo.root}">
         <include name=".mps/*.xml" />
@@ -45,6 +46,7 @@
       <jvmargs>
         <arg value="-Xmx2g" />
         <arg value="-ea" />
+        <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
         <arg value="-Didea.system.path=${smoke.dir}/system" />
         <arg value="-Didea.log.path=${smoke.dir}/log" />
@@ -81,6 +83,7 @@
       <jvmargs>
         <arg value="-Xmx2g" />
         <arg value="-ea" />
+        <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
         <arg value="-Dmetabnf.smoke.project=${smoke.project}" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
         <arg value="-Didea.system.path=${smoke.dir}/system" />
@@ -91,7 +94,7 @@
 
   <target name="import" depends="core,run-harness" />
 
-  <target name="compile-demo">
+  <target name="compile-demo" depends="import">
     <echo message="Rebuilding Demo solely from the imported generated aspects." />
     <delete dir="${smoke.project}/languages/Demo/source_gen" />
     <delete dir="${smoke.project}/languages/Demo/source_gen.caches" />
@@ -105,6 +108,7 @@
       <jvmargs>
         <arg value="-Xmx2g" />
         <arg value="-ea" />
+        <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
         <arg value="-Didea.system.path=${smoke.dir}/system" />
         <arg value="-Didea.log.path=${smoke.dir}/log" />
@@ -120,7 +124,34 @@
     <fail unless="demo.compiled" message="Demo's generated structure, editor, and textGen descriptors were not compiled." />
   </target>
 
-  <target name="smoke" depends="import,compile-demo">
+  <target name="validate-ast" depends="compile-demo">
+    <exec executable="python" failonerror="true">
+      <arg value="${basedir}/../../rascal-bridge/refresh_mps_registry.py" />
+      <arg value="--model" />
+      <arg value="${smoke.project}/languages/mbnf/sandbox/models/RascalTextImportFixture.mps" />
+      <arg value="--structure-model" />
+      <arg value="${smoke.project}/languages/Demo/models/structure.mps" />
+    </exec>
+    <runMPS mpsHome="${mps.home}" solution="df89e477-654a-4695-bb44-4ca739a68e93(metabnf.smoketest)"
+            startClass="metabnf.smoketest.MetaBnfSmokeTest" startMethod="validateGeneratedAst">
+      <repository>
+        <modules dir="${smoke.project}/languages" />
+        <modules dir="${smoke.project}/solutions" />
+        <modules dir="${smoke.dir}/harness" />
+      </repository>
+      <jvmargs>
+        <arg value="-Xmx2g" />
+        <arg value="-ea" />
+        <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
+        <arg value="-Dmetabnf.smoke.project=${smoke.project}" />
+        <arg value="-Didea.config.path=${smoke.dir}/config" />
+        <arg value="-Didea.system.path=${smoke.dir}/system" />
+        <arg value="-Didea.log.path=${smoke.dir}/log" />
+      </jvmargs>
+    </runMPS>
+  </target>
+
+  <target name="smoke" depends="validate-ast">
     <echo message="MetaBNF smoke test passed. Artifacts: ${smoke.dir}" />
   </target>
 
@@ -137,6 +168,7 @@
       <jvmargs>
         <arg value="-Xmx2g" />
         <arg value="-ea" />
+        <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
         <arg value="-Didea.system.path=${smoke.dir}/system" />
         <arg value="-Didea.log.path=${smoke.dir}/log" />

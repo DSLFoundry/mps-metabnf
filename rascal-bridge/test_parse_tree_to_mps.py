@@ -1,0 +1,113 @@
+import importlib.util
+import json
+import tempfile
+import unittest
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+
+MODULE_PATH = Path(__file__).with_name("parse_tree_to_mps.py")
+SPEC = importlib.util.spec_from_file_location("parse_tree_to_mps", MODULE_PATH)
+importer = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(importer)
+
+
+class ParseTreeToMpsTest(unittest.TestCase):
+    def setUp(self):
+        self.temporary_directory = tempfile.TemporaryDirectory()
+        self.directory = Path(self.temporary_directory.name)
+        self.template = self.directory / "TargetTemplate.mps"
+        self.parse_tree = self.directory / "parse.xml"
+        self.mapping = self.directory / "mapping.json"
+        self.output = self.directory / "Parsed.mps"
+
+        model = ET.Element(
+            "model",
+            {"ref": "r:11111111-1111-1111-1111-111111111111(example.target.Template)"},
+        )
+        registry = ET.SubElement(model, "registry")
+        language = ET.SubElement(registry, "language", {"name": "example.target"})
+        program = ET.SubElement(
+            language,
+            "concept",
+            {"id": "100", "name": "example.target.Program", "index": "ProgramConcept"},
+        )
+        ET.SubElement(program, "property", {"id": "101", "name": "name", "index": "nameRole"})
+        ET.SubElement(program, "child", {"id": "102", "name": "children", "index": "childrenRole"})
+        child = ET.SubElement(
+            language,
+            "concept",
+            {"id": "200", "name": "example.target.Child", "index": "ChildConcept"},
+        )
+        ET.SubElement(child, "property", {"id": "201", "name": "value", "index": "valueRole"})
+        ET.SubElement(model, "node", {"concept": "ProgramConcept", "id": "TemplateNode"})
+        ET.ElementTree(model).write(self.template, encoding="UTF-8")
+
+        parse_result = ET.Element("parse-result")
+        root = ET.SubElement(parse_result, "node", {"rule": "Program"})
+        ET.SubElement(root, "token", {"rule": "IDENTIFIER", "value": "alpha"})
+        child_node = ET.SubElement(root, "node", {"rule": "Child"})
+        ET.SubElement(child_node, "character", {"codepoint": "33"})
+        ET.ElementTree(parse_result).write(self.parse_tree, encoding="UTF-8")
+        self.mapping.write_text(
+            json.dumps(
+                {
+                    "rules": {
+                        "Program": {
+                            "concept": "example.target.Program",
+                            "properties": {"name": {"token": "IDENTIFIER"}},
+                            "children": {"Child": "children"},
+                        },
+                        "Child": {
+                            "concept": "example.target.Child",
+                            "properties": {"value": {"literal": "suffix"}},
+                        },
+                    }
+                }
+            ),
+            encoding="utf-8",
+        )
+
+    def tearDown(self):
+        self.temporary_directory.cleanup()
+
+    def test_maps_parse_tree_to_target_mps_model(self):
+        importer.import_parse_tree(
+            self.parse_tree, self.template, self.mapping, self.output, "Parsed"
+        )
+        model = ET.parse(self.output).getroot()
+        self.assertIn("(example.target.Parsed)", model.get("ref"))
+        self.assertEqual(len(model.findall("node")), 1)
+
+        root = model.find("node")
+        self.assertEqual(root.get("concept"), "ProgramConcept")
+        self.assertEqual(root.find("property").attrib, {"role": "nameRole", "value": "alpha"})
+        self.assertEqual(
+            root.find("property[@role='TrG5h']").attrib,
+            {"role": "TrG5h", "value": "Parsed"},
+        )
+        self.assertIsNotNone(
+            model.find(
+                "registry/language[@name='jetbrains.mps.lang.core']/"
+                "concept[@name='jetbrains.mps.lang.core.structure.INamedConcept']/"
+                "property[@index='TrG5h']"
+            )
+        )
+        child = root.find("node")
+        self.assertEqual(child.get("concept"), "ChildConcept")
+        self.assertEqual(child.get("role"), "childrenRole")
+        self.assertEqual(
+            child.find("property").attrib,
+            {"role": "valueRole", "value": "suffix"},
+        )
+
+    def test_rejects_unmapped_ast_rule(self):
+        self.mapping.write_text(json.dumps({"rules": {}}), encoding="utf-8")
+        with self.assertRaisesRegex(importer.ImportError, "No AST mapping"):
+            importer.import_parse_tree(
+                self.parse_tree, self.template, self.mapping, self.output, "Parsed"
+            )
+
+
+if __name__ == "__main__":
+    unittest.main()

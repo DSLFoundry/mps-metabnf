@@ -10,11 +10,11 @@ In the meantime, another MPS project named MetaBNF appeared: [MetaBNF by Porsche
 # Current status
 The current status of MetaBNF is: it works for basic cases, but is not yet feature-complete w.r.t. editor usability. There are no industrial or large-scale applications yet that have battle tested it.
 
-Also, grammars are written manually at the moment and there is no import (e.g. from antlr or similar).
+The optional [Rascal bridge](rascal-bridge/README.md) now imports a supported subset of Rascal grammars into MetaBNF and generates Rascal parsers from MetaBNF grammars to map parsed text into an existing MPS language. It requires an explicit AST mapping, and does not yet cover all Rascal grammar constructs. Other grammar importers, such as ANTLR, are not available yet.
 
 # Where this could go
 The starting point that is MetaBNF today, is already useful, but not its full potential. Here are some research/extension ideas:
-- Create powerful parsers for the language, interfacing with Rascal (something along the lines of [rascal-mps](https://github.com/cwi-swat/rascal-mps), but it needs a bit more work) which has one of the most powerful parser systems in the world
+- Extend the [Rascal bridge](rascal-bridge/README.md) beyond its current grammar subset and improve its integration with MPS (building on work such as [rascal-mps](https://github.com/cwi-swat/rascal-mps))
 - PX/MX/UX improvements to find good ways to improve usability of text-based languages. Some research was done in this direction, and there is a body of [MPS Extensions](github.com/jetbrains/mps-extensions) (e.g. grammar cells, widgets, etc.) that can be used to improve the programming/modeling/usage experience for text-based languages bridged to/from MPS.
 - Link to the research work mentioned above on Ingrid in order to have a class of bridges through antlr. An interesting research question there is how much can be automated and kept up-to-date using a library like [the antlr4 grammas on github](https://github.com/antlr/grammars-v4).
 - Use MetBNF in combination with textual language workbenches (Rascal, MontiCore, Spoofax, etc.) to investigate/research a formal relation between object grammars (which would be the closest formalism to describe what MPS does) with grammars.
@@ -29,7 +29,7 @@ Any kind of contribution or improvement would be helpful. To give a few ideas:
 - Make a pull request if you want to contribute fixes, features, or other types of ideas.
 
 # How to build
-There are no dependencies to thirdparty plugins, so the [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version you have to install) can be used.
+The MetaBNF languages have no third-party plugin dependencies, so they can be used with [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version to install). The optional Rascal bridge plugin uses a separately installed Rascal runtime and Python; see its [usage instructions](rascal-bridge/README.md).
 
 Open the MPS project in the MPS IDE and rebuild the `metabnf` and `metabnf.aspectgen` languages and the `GenPlan` solution.
 
@@ -47,7 +47,7 @@ On Windows:
 .\gradlew.bat build
 ```
 
-On Linux, use `./gradlew build` (or `xvfb-run --auto-servernum ./gradlew build` on a machine without a display). `build` compiles all languages and solutions, packages the core languages and generation plan, and runs the README's clean Demo generation/import workflow. To run just that workflow, use `smokeTest`; to compile and package without the smoke test, use `assemble`.
+On Linux, use `./gradlew build` (or `xvfb-run --auto-servernum ./gradlew build` on a machine without a display). `build` compiles all languages and solutions, compiles and packages the optional Rascal bridge plugin, and runs the clean Demo generation/import smoke test. To run just that workflow, use `smokeTest`; to compile and package without the smoke test, use `assemble`.
 
 The build and test use separate source copies under `build/mps-build` and `build/mps-smoke`, with isolated MPS settings, caches, and logs. They do not change your source models, open projects, or IDE settings. Each task starts afresh; its artifacts remain available until the next run or `clean`. The smoke test builds the core languages, checks the source grammar with MPS's native constraint checker, empties Demo's structure/editor/textGen in the copy, rebuilds the grammar twice, and executes **Import Generated Language** followed by **Import Remaining Language Aspects** on the final transient model.
 
@@ -59,7 +59,7 @@ For local development, `-PmpsHomeDir=C:\path\to\MPS` selects an existing MPS ins
 
 GitHub Actions builds and smoketests on Linux and Windows for pull requests and development branches, uploading the compiled module ZIP and diagnostics. Pushes to `main` run the same build and smoke test on Linux, publish `com.dslfoundry:metabnf:<version>@zip` to GitHub Packages, and attach the ZIP to a GitHub prerelease. CI versions include the run ID and attempt so retries do not overwrite existing packages. Publishing uses the repository's built-in `GITHUB_TOKEN`; no personal token, reviewer assignment, or approval environment is required.
 
-The ZIP under `build/distributions` contains compiled MPS modules and their source models, not an IDE plugin. Extract it and add its `metabnf` directory as a project library in MPS 2026.1. Locally, `publishToMavenLocal` installs the ZIP and POM into your Maven repository; remote `publish` requires `GITHUB_ACTOR` and `GITHUB_TOKEN`. Use `-PreleaseVersion=...` to set a deliberate publication version.
+The ZIP under `build/distributions` contains the compiled MPS module library under `metabnf/` and the optional IDE plugin under `plugins/metabnf-rascal-bridge/`. Add the module library as a project library in MPS 2026.1; install the plugin separately as described in the [Rascal bridge guide](rascal-bridge/README.md). The plugin does not bundle the Rascal runtime. Locally, `publishToMavenLocal` installs the ZIP and POM into your Maven repository; remote `publish` requires `GITHUB_ACTOR` and `GITHUB_TOKEN`. Use `-PreleaseVersion=...` to set a deliberate publication version.
 
 # How to use
 - First specify a MetaBNF model (using the MetaBNF language) in a model (see mbnf.sandbox/mbnf/sandbox/Demo model for an example)

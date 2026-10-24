@@ -18,3 +18,7 @@ junit*.properties
 # Gradle state and isolated build/test projects
 .gradle/
 build/
+
+# Python bridge bytecode caches
+__pycache__/
+*.py[cod]
