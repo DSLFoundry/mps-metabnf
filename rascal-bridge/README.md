@@ -18,7 +18,7 @@ The ZIP in `build/distributions` contains the MetaBNF module library under
 the module library in MPS as usual. Copy the plugin directory into the MPS
 installation's `plugins` directory and restart MPS.
 
-In MPS, choose **Tools → Rascal / MetaBNF…** and select one of the four
+In MPS, choose **Tools → Rascal / ANTLR / MetaBNF…** and select one of the four Rascal
 operations. Grammar import accepts a `.rsc` file and creates an MPS MetaBNF
 model; grammar export writes Rascal source from a MetaBNF model. Source-model
 import parses a source file with a Rascal or MetaBNF grammar and creates an

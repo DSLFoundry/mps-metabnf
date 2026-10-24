@@ -4,4 +4,5 @@
 # To regenerate this file, run: ./gradlew :dependencies --write-locks
 com.jetbrains.jdk:jbr_jcef:25.0.3-b329.124=jbr
 com.jetbrains:mps:2026.1.1=mps
+org.antlr:antlr4:4.13.2=antlrTool
 empty=

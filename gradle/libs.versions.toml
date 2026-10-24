@@ -2,6 +2,7 @@
 mps = "2026.1.1"
 jbr = "25.0.3-b329.124"
 mpsPlugin = "2.1.1"
+antlr = "4.13.2"
 
 [libraries]
 mps = { module = "com.jetbrains:mps", version.ref = "mps" }

@@ -197,9 +197,12 @@ def import_grammar(
     model_name: str,
     template_path: Path = TEMPLATE,
     regex_template_path: Path = REGEX_TEMPLATE,
+    origin: str = "Rascal",
 ) -> None:
     if not NAME_PATTERN.fullmatch(model_name):
         raise ImportError(f"Invalid MPS model name: {model_name!r}")
+    if not NAME_PATTERN.fullmatch(origin):
+        raise ImportError(f"Invalid grammar origin: {origin!r}")
     document = ET.parse(xml_path).getroot()
     start_name, rule_elements, rules = validate_interchange(document)
 
@@ -224,7 +227,7 @@ def import_grammar(
             node = factory.create("3xJKux", "t8saQ")
             alternatives: list[tuple[ET.Element, ET.Element]] = []
             for index, production in enumerate(rule_productions, start=1):
-                alternative_name = f"{name}__RascalAlternative{index}"
+                alternative_name = f"{name}__{origin}Alternative{index}"
                 if alternative_name in rules:
                     raise ImportError(f"Synthetic alternative name collides with rule {alternative_name}")
                 alternative_node = factory.create("3xhzZY", "t8saQ")
@@ -242,7 +245,7 @@ def import_grammar(
             raise ImportError(f"Multiple productions are supported only for sort rules: {name}")
 
     group = factory.create("t8saL", "3xJMYo")
-    property_node(group, "TrG5h", "Rascal")
+    property_node(group, "TrG5h", origin)
     for rule_node in rule_nodes.values():
         group.append(rule_node)
     for _, alternative_node in all_rules:

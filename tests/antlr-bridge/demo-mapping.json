@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "program": {
+      "concept": "Demo.structure.Program",
+      "properties": {"Identifier": {"token": "IDENTIFIER"}},
+      "children": {"statements": "Statements"}
+    },
+    "statements": {
+      "concept": "Demo.structure.Statements",
+      "children": {"assignment": "Statement"}
+    },
+    "assignment": {
+      "concept": "Demo.structure.Assignment",
+      "properties": {"Identifier": {"token": "IDENTIFIER"}},
+      "children": {"NUMBER": "Expression"}
+    },
+    "NUMBER": {
+      "concept": "Demo.structure.Number",
+      "properties": {"NumberValue": {"self": true}}
+    }
+  }
+}

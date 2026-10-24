@@ -17,9 +17,14 @@ repositories {
     mavenCentral()
 }
 
+val antlrTool = configurations.create("antlrTool") {
+    isTransitive = false
+}
+
 dependencies {
     mps(libs.mps)
     jbr(libs.jbr)
+    add(antlrTool.name, "org.antlr:antlr4:${libs.versions.antlr.get()}:complete")
 }
 
 dependencyLocking {
@@ -53,7 +58,7 @@ buildLanguages.configure {
 
 val compileRascalBridgePlugin = tasks.register<JavaCompile>("compileRascalBridgePlugin") {
     group = "build"
-    description = "Compiles the MPS Tools-menu plugin for the Rascal bridge."
+    description = "Compiles the MPS Tools-menu plugin for the Rascal and ANTLR bridges."
     source(fileTree("mps-plugin/src/main/java") { include("**/*.java") })
     classpath = files(mpsDefaults.mpsHome.map { home ->
         fileTree(home.asFile) { include("lib/*.jar", "plugins/**/*.jar") }
@@ -77,6 +82,47 @@ smokeTest.configure {
     group = "verification"
     description = "Regenerates Demo using the README actions and checks imports, references, and compilation."
     mustRunAfter(buildLanguages)
+}
+
+val prepareAntlr = tasks.register<Sync>("prepareAntlr") {
+    from(antlrTool)
+    into(layout.buildDirectory.dir("antlr"))
+}
+
+smokeTest.configure {
+    dependsOn(prepareAntlr)
+    pathProperties.put("antlr.jar", layout.buildDirectory.file(
+        "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
+    ).map { it.asFile })
+}
+
+val antlrBridgeTest = tasks.register<Exec>("antlrBridgeTest") {
+    dependsOn(prepareAntlr)
+    group = "verification"
+    description = "Tests ANTLR grammar import and interpreted source-to-MPS mapping."
+    workingDir(projectDir)
+    commandLine(
+        providers.gradleProperty("pythonExecutable").getOrElse(
+            if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+        ),
+        "-m", "unittest", "discover", "-s", "antlr-bridge", "-p", "test_*.py", "-v"
+    )
+    environment("ANTLR_JAR", layout.buildDirectory.file(
+        "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
+    ).get().asFile.absolutePath)
+    environment("JAVA_HOME", System.getProperty("java.home"))
+}
+
+val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
+    group = "verification"
+    description = "Tests the shared grammar and AST-to-MPS bridge converters."
+    workingDir(projectDir)
+    commandLine(
+        providers.gradleProperty("pythonExecutable").getOrElse(
+            if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+        ),
+        "-m", "unittest", "discover", "-s", "rascal-bridge", "-p", "test_*.py", "-v"
+    )
 }
 
 val packageLanguages = tasks.register<Zip>("packageLanguages") {
@@ -105,8 +151,13 @@ val packageLanguages = tasks.register<Zip>("packageLanguages") {
         from("rascal-bridge/README.md")
         into("rascal-bridge") {
             from("rascal-bridge") {
-                include("*.py", "src/**/*.rsc")
+                include("*.py", "src/**/*.rsc", "README.md")
                 exclude("test.py", "test_*.py")
+            }
+        }
+        into("antlr-bridge") {
+            from("antlr-bridge") {
+                include("bridge.py", "src/AntlrBridge.java", "README.md")
             }
         }
         from("languages/mbnf/sandbox/models/Demo.mps") {
@@ -128,12 +179,31 @@ tasks.named("zip") {
     enabled = false
 }
 
+val verifyParserBridgeDistribution = tasks.register<Exec>("verifyParserBridgeDistribution") {
+    dependsOn(packageLanguages, prepareAntlr)
+    group = "verification"
+    description = "Exercises ANTLR imports using only the packaged bridge resources."
+    workingDir(projectDir)
+    commandLine(
+        providers.gradleProperty("pythonExecutable").getOrElse(
+            if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+        ),
+        "tests/antlr-bridge/check_distribution.py",
+        packageLanguages.get().archiveFile.get().asFile.absolutePath,
+        layout.buildDirectory.file(
+            "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
+        ).get().asFile.absolutePath
+    )
+    environment("JAVA_HOME", System.getProperty("java.home"))
+}
+
 tasks.assemble {
     dependsOn(packageLanguages)
 }
 
 tasks.check {
-    dependsOn(smokeTest, compileRascalBridgePlugin)
+    dependsOn(smokeTest, compileRascalBridgePlugin, antlrBridgeTest, rascalBridgeTest,
+        verifyParserBridgeDistribution)
 }
 
 tasks.wrapper {

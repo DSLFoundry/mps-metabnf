@@ -53,6 +53,10 @@ public final class MetaBnfSmokeTest {
             "r:3410db29-a096-503f-b5d6-1a2ce3c230b5(mbnf.sandbox.RascalImportFixture)";
     private static final String RASCAL_TEXT_IMPORT_FIXTURE =
             "r:697425fa-dfaa-5cd9-8971-6ed844586d5f(mbnf.sandbox.RascalTextImportFixture)";
+    private static final String ANTLR_IMPORT_FIXTURE =
+            "r:0ffc7c16-4eda-58e9-a320-b6f6af236236(mbnf.sandbox.AntlrImportFixture)";
+    private static final String ANTLR_TEXT_IMPORT_FIXTURE =
+            "r:0751bb48-fd71-5c1d-ae3a-b462d244a442(mbnf.sandbox.AntlrTextImportFixture)";
     private static final String[] ASPECTS = {
             "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)",
             "r:fd18fece-0619-420e-acfb-80ca89a441e4(Demo.editor)",
@@ -74,10 +78,18 @@ public final class MetaBnfSmokeTest {
                     model(project, RASCAL_IMPORT_FIXTURE));
             checkConstraints(environment, project, rascalImport);
             project.getModelAccess().computeReadAction(() -> {
-                validateRascalImportFixture(rascalImport);
+                validateImportedGrammarFixture(rascalImport);
                 return null;
             });
             System.out.println("SMOKE: imported Rascal grammar model satisfies MetaBNF constraints");
+            SModel antlrImport = project.getModelAccess().computeReadAction(() ->
+                    model(project, ANTLR_IMPORT_FIXTURE));
+            checkConstraints(environment, project, antlrImport);
+            project.getModelAccess().computeReadAction(() -> {
+                validateImportedGrammarFixture(antlrImport);
+                return null;
+            });
+            System.out.println("SMOKE: freshly imported ANTLR grammar satisfies MetaBNF constraints");
             List<SModel> aspects = project.getModelAccess().computeReadAction(() ->
                     Arrays.stream(ASPECTS).map(ref -> model(project, ref)).collect(Collectors.toList()));
             onEdt(() -> project.getModelAccess().executeCommand(() -> {
@@ -153,10 +165,17 @@ public final class MetaBnfSmokeTest {
             SModel rascalTextImport = project.getModelAccess().computeReadAction(() ->
                     model(project, RASCAL_TEXT_IMPORT_FIXTURE));
             project.getModelAccess().computeReadAction(() -> {
-                validateRascalTextImportFixture(rascalTextImport);
+                validateParsedTextFixture(rascalTextImport);
                 return null;
             });
             System.out.println("SMOKE: parsed Rascal text uses the generated-language MPS registry");
+            SModel antlrTextImport = project.getModelAccess().computeReadAction(() ->
+                    model(project, ANTLR_TEXT_IMPORT_FIXTURE));
+            project.getModelAccess().computeReadAction(() -> {
+                validateParsedTextFixture(antlrTextImport);
+                return null;
+            });
+            System.out.println("SMOKE: parsed ANTLR text uses the generated-language MPS registry");
         } finally {
             environment.closeProject(project);
         }
@@ -296,7 +315,7 @@ public final class MetaBnfSmokeTest {
         node.getChildren().forEach(MetaBnfSmokeTest::validateReferences);
     }
 
-    private static void validateRascalImportFixture(SModel model) {
+    private static void validateImportedGrammarFixture(SModel model) {
         List<SNode> modelRoots = roots(model);
         require(modelRoots.size() == 1, "Expected one imported Rascal grammar root");
         SNode root = modelRoots.get(0);
@@ -326,7 +345,7 @@ public final class MetaBnfSmokeTest {
         node.getChildren().forEach(child -> collectConcepts(child, concepts));
     }
 
-    private static void validateRascalTextImportFixture(SModel model) {
+    private static void validateParsedTextFixture(SModel model) {
         List<SNode> modelRoots = roots(model);
         require(modelRoots.size() == 1, "Expected one parsed Rascal text root");
         SNode root = modelRoots.get(0);

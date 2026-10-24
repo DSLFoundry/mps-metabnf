@@ -1,15 +1,15 @@
 <idea-plugin>
   <id>com.dslfoundry.metabnf.rascalbridge</id>
-  <name>MetaBNF Rascal Bridge</name>
+  <name>MetaBNF Parser Bridges</name>
   <vendor>DSLFoundry</vendor>
-  <description>Import and export Rascal grammars and mapped source models in MPS.</description>
+  <description>Import Rascal and ANTLR grammars and mapped source models in MPS; export Rascal grammars and source.</description>
   <idea-version since-build="261" />
   <depends>com.intellij.modules.platform</depends>
   <actions>
     <action id="metabnf.rascalBridge"
             class="metabnf.rascal.RascalBridgeAction"
-            text="Rascal / MetaBNF…"
-            description="Import or export Rascal grammars and source models">
+            text="Rascal / ANTLR / MetaBNF…"
+            description="Import Rascal or ANTLR grammars and source models">
       <add-to-group group-id="ToolsMenu" anchor="last" />
     </action>
   </actions>

@@ -30,7 +30,9 @@ public final class RascalBridgeAction extends AnAction {
       "Import Rascal grammar into MetaBNF",
       "Export MetaBNF grammar as Rascal",
       "Import source model into MPS",
-      "Export MPS model as source"
+      "Export MPS model as source",
+      "Import ANTLR grammar into MetaBNF",
+      "Import ANTLR source model into MPS"
   };
   private static final Preferences PREFERENCES =
       Preferences.userNodeForPackage(RascalBridgeAction.class);
@@ -44,13 +46,13 @@ public final class RascalBridgeAction extends AnAction {
   public void actionPerformed(AnActionEvent event) {
     Project project = event.getProject();
     if (project == null) {
-      showMessage("Open an MPS project before using the Rascal bridge.", true);
+      showMessage("Open an MPS project before using the parser bridges.", true);
       return;
     }
     String operation = (String) JOptionPane.showInputDialog(
         null,
         "Choose an import or export operation.",
-        "Rascal / MetaBNF",
+        "Rascal / ANTLR / MetaBNF",
         JOptionPane.PLAIN_MESSAGE,
         null,
         OPERATIONS,
@@ -69,11 +71,57 @@ public final class RascalBridgeAction extends AnAction {
         case "Export MetaBNF grammar as Rascal" -> exportGrammar(bridge);
         case "Import source model into MPS" -> importSourceModel(bridge);
         case "Export MPS model as source" -> exportSourceModel(bridge);
-        default -> throw new IllegalStateException("Unknown Rascal bridge operation.");
+        case "Import ANTLR grammar into MetaBNF" -> importAntlr(pluginRoot, false);
+        case "Import ANTLR source model into MPS" -> importAntlr(pluginRoot, true);
+        default -> throw new IllegalStateException("Unknown parser bridge operation.");
       }
     } catch (IOException | URISyntaxException error) {
       showMessage(error.getMessage(), true);
     }
+  }
+
+  private static void importAntlr(Path pluginRoot, boolean textImport) throws IOException {
+    Path bridge = pluginRoot.resolve("antlr-bridge");
+    if (!Files.isRegularFile(bridge.resolve("src/AntlrBridge.java"))) {
+      throw new IOException("The installed ANTLR bridge resources are incomplete.");
+    }
+    Path grammar = chooseOpenFile("Select a combined ANTLR 4 grammar", "ANTLR grammar", "g4");
+    if (grammar == null) return;
+    String start = JOptionPane.showInputDialog(null, "Parser start rule:", "program");
+    if (start == null) return;
+    Path source = textImport ? chooseOpenFile("Select the source text", "Source text", "txt") : null;
+    if (textImport && source == null) return;
+    Path template = textImport
+        ? chooseOpenFile("Select the target MPS model template", "MPS model", "mps")
+        : pluginRoot.resolve("templates/Demo.mps");
+    if (template == null) return;
+    Path mapping = textImport
+        ? chooseOpenFile("Select the AST mapping configuration", "Mapping", "json") : null;
+    if (textImport && mapping == null) return;
+    Path output = chooseSaveFile("Save the imported model under an MPS model root", "MPS model", "mps");
+    if (output == null) return;
+    String previous = PREFERENCES.get("antlrJar", "");
+    Path jar = chooseFile("Select the ANTLR 4 complete JAR", "JAR",
+        previous.isBlank() ? null : Paths.get(previous), "jar");
+    if (jar == null) return;
+    PREFERENCES.put("antlrJar", jar.toString());
+    runWorkflow("Importing ANTLR " + (textImport ? "source model" : "grammar"),
+        output, bridge, workingBridge -> {
+          List<String> arguments = new ArrayList<>(List.of(
+              textImport ? "text" : "grammar",
+              "--antlr-jar", jar.toString(),
+              "--grammar", grammar.toString(),
+              "--start", start,
+              "--output", output.toString(),
+              "--model-name", fileStem(output),
+              "--template", template.toString()));
+          if (textImport) {
+            arguments.addAll(List.of("--input-text", source.toString(), "--mapping", mapping.toString()));
+          } else {
+            arguments.addAll(List.of("--regex-template", pluginRoot.resolve("templates/python.mps").toString()));
+          }
+          runPython(workingBridge, "bridge.py", arguments.toArray(String[]::new));
+        });
   }
 
   private static void importGrammar(Path pluginRoot, Path bridge) throws IOException {
@@ -216,9 +264,12 @@ public final class RascalBridgeAction extends AnAction {
       Path bridge,
       Workflow workflow) throws IOException {
     Path temporaryRoot = Files.createTempDirectory("metabnf-rascal-");
-    Path workingBridge = temporaryRoot.resolve("rascal-bridge");
+    Path workingBridge = temporaryRoot.resolve(bridge.getFileName());
     try {
       copyBridge(bridge, workingBridge);
+      if (bridge.getFileName().toString().equals("antlr-bridge")) {
+        copyBridge(bridge.getParent().resolve("rascal-bridge"), temporaryRoot.resolve("rascal-bridge"));
+      }
     } catch (IOException error) {
       deleteTree(temporaryRoot);
       throw error;
@@ -250,7 +301,7 @@ public final class RascalBridgeAction extends AnAction {
     ProcessBuilder builder = new ProcessBuilder(command)
         .directory(bridge.toFile())
         .redirectErrorStream(true);
-    builder.environment().putIfAbsent("JAVA_HOME", System.getProperty("java.home"));
+    builder.environment().put("JAVA_HOME", System.getProperty("java.home"));
     Process process = builder.start();
     byte[] output = process.getInputStream().readAllBytes();
     int exitCode = process.waitFor();
@@ -267,7 +318,8 @@ public final class RascalBridgeAction extends AnAction {
         if (relative.toString().isEmpty()) continue;
         if (Files.isDirectory(path)) {
           Files.createDirectories(target.resolve(relative));
-        } else if (path.toString().endsWith(".py") || path.toString().endsWith(".rsc")) {
+        } else if (path.toString().endsWith(".py") || path.toString().endsWith(".rsc")
+            || path.toString().endsWith(".java")) {
           Path destination = target.resolve(relative);
           Files.createDirectories(destination.getParent());
           Files.copy(path, destination);
@@ -312,7 +364,7 @@ public final class RascalBridgeAction extends AnAction {
     SwingUtilities.invokeLater(() -> {
       Component parent = KeyboardFocusManager.getCurrentKeyboardFocusManager().getActiveWindow();
       JOptionPane.showMessageDialog(
-          parent, message, "Rascal / MetaBNF",
+          parent, message, "Rascal / ANTLR / MetaBNF",
           error ? JOptionPane.ERROR_MESSAGE : JOptionPane.INFORMATION_MESSAGE);
     });
   }

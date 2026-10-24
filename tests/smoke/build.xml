@@ -2,6 +2,10 @@
   <property environment="env" />
   <property name="mps.home" value="${env.MPS_HOME}" />
   <property name="repo.root" location="../.." />
+  <property name="antlr.jar" location="${repo.root}/build/antlr/antlr4-4.13.2-complete.jar" />
+  <condition property="python.executable" value="python" else="python3">
+    <os family="windows" />
+  </condition>
   <available file="${mps.home}/lib/ant/lib/ant-mps.jar" property="mps.available" />
   <fail unless="mps.available" message="Set MPS_HOME or -Dmps.home to an MPS 2026.1 installation." />
 
@@ -69,7 +73,46 @@
     </javac>
   </target>
 
-  <target name="run-harness" depends="compile-harness">
+  <target name="antlr-fixture" depends="prepare">
+    <exec executable="${python.executable}" failonerror="true">
+      <env key="JAVA_HOME" value="${java.home}" />
+      <arg value="${repo.root}/antlr-bridge/bridge.py" />
+      <arg value="grammar" />
+      <arg value="--antlr-jar" />
+      <arg value="${antlr.jar}" />
+      <arg value="--grammar" />
+      <arg value="${repo.root}/tests/antlr-bridge/Mini.g4" />
+      <arg value="--start" />
+      <arg value="program" />
+      <arg value="--model-name" />
+      <arg value="AntlrImportFixture" />
+      <arg value="--output" />
+      <arg value="${smoke.project}/languages/mbnf/sandbox/models/AntlrImportFixture.mps" />
+    </exec>
+    <exec executable="${python.executable}" failonerror="true">
+      <env key="JAVA_HOME" value="${java.home}" />
+      <arg value="${repo.root}/antlr-bridge/bridge.py" />
+      <arg value="text" />
+      <arg value="--antlr-jar" />
+      <arg value="${antlr.jar}" />
+      <arg value="--grammar" />
+      <arg value="${repo.root}/tests/antlr-bridge/DemoText.g4" />
+      <arg value="--start" />
+      <arg value="program" />
+      <arg value="--input-text" />
+      <arg value="${repo.root}/tests/antlr-bridge/program.txt" />
+      <arg value="--template" />
+      <arg value="${smoke.project}/languages/mbnf/sandbox/models/langtest.mps" />
+      <arg value="--mapping" />
+      <arg value="${repo.root}/tests/antlr-bridge/demo-mapping.json" />
+      <arg value="--model-name" />
+      <arg value="AntlrTextImportFixture" />
+      <arg value="--output" />
+      <arg value="${smoke.project}/languages/mbnf/sandbox/models/AntlrTextImportFixture.mps" />
+    </exec>
+  </target>
+
+  <target name="run-harness" depends="compile-harness,antlr-fixture">
     <delete dir="${smoke.project}/languages/Demo/source_gen" />
     <delete dir="${smoke.project}/languages/Demo/source_gen.caches" />
     <delete dir="${smoke.project}/languages/Demo/classes_gen" />
@@ -125,10 +168,17 @@
   </target>
 
   <target name="validate-ast" depends="compile-demo">
-    <exec executable="python" failonerror="true">
+    <exec executable="${python.executable}" failonerror="true">
       <arg value="${basedir}/../../rascal-bridge/refresh_mps_registry.py" />
       <arg value="--model" />
       <arg value="${smoke.project}/languages/mbnf/sandbox/models/RascalTextImportFixture.mps" />
+      <arg value="--structure-model" />
+      <arg value="${smoke.project}/languages/Demo/models/structure.mps" />
+    </exec>
+    <exec executable="${python.executable}" failonerror="true">
+      <arg value="${repo.root}/rascal-bridge/refresh_mps_registry.py" />
+      <arg value="--model" />
+      <arg value="${smoke.project}/languages/mbnf/sandbox/models/AntlrTextImportFixture.mps" />
       <arg value="--structure-model" />
       <arg value="${smoke.project}/languages/Demo/models/structure.mps" />
     </exec>
