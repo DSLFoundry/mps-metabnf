@@ -19,6 +19,9 @@ junit*.properties
 .gradle/
 build/
 
+# Java parser adapter and bundled tools prepared by Gradle for the native language module
+languages/mbnf/parser-bridge/
+
 # Python bridge bytecode caches
 __pycache__/
 *.py[cod]

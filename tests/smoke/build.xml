@@ -34,6 +34,9 @@
         <exclude name="**/classes_gen/**" />
       </fileset>
     </copy>
+    <copy todir="${smoke.project}/languages/mbnf/parser-bridge">
+      <fileset dir="${repo.root}/languages/mbnf/parser-bridge" />
+    </copy>
     <copy file="${basedir}/smoketest.msd" todir="${smoke.dir}/harness" />
   </target>
 
@@ -61,15 +64,15 @@
   <target name="compile-harness" depends="prepare">
     <mkdir dir="${smoke.dir}/harness/classes" />
     <javac srcdir="${basedir}" destdir="${smoke.dir}/harness/classes"
-           includes="MetaBnfSmokeTest.java,UsabilityAnnotationsTest.java,UsabilityEditorsTest.java,BundledGrammarImportTest.java,metabnf/rascal/GrammarModelImporter.java,metabnf/rascal/GrammarTools.java" includeantruntime="false" encoding="UTF-8"
+           includes="MetaBnfSmokeTest.java,UsabilityAnnotationsTest.java,UsabilityEditorsTest.java,BundledGrammarImportTest.java,NativeGrammarActionsTest.java" includeantruntime="false" encoding="UTF-8"
            fork="true" executable="${java.home}/bin/javac">
-      <src path="${repo.root}/mps-plugin/src/main/java" />
       <classpath>
         <fileset dir="${mps.home}/lib" includes="*.jar" />
         <fileset dir="${mps.home}/lib/ant/lib" includes="*.jar" />
         <fileset dir="${mps.home}/lib/mpsant" includes="*.jar" />
         <fileset dir="${mps.home}/plugins/mps-core/lib" includes="*.jar" />
         <pathelement location="${smoke.project}/languages/mbnf/classes_gen" />
+        <pathelement location="${smoke.project}/languages/mbnf/parser-bridge/lib/metabnf-rascal-bridge.jar" />
       </classpath>
     </javac>
   </target>
@@ -129,7 +132,6 @@
         <arg value="-ea" />
         <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
         <arg value="-Dmetabnf.smoke.project=${smoke.project}" />
-        <arg value="-Dmetabnf.parser.tools=${parser.tools}" />
         <arg value="-Dmetabnf.smoke.repo=${repo.root}" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
         <arg value="-Didea.system.path=${smoke.dir}/system" />

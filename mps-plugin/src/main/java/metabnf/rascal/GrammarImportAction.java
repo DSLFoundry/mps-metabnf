@@ -1,11 +1,8 @@
 package metabnf.rascal;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
-import jetbrains.mps.ide.project.ProjectHelper;
 import jetbrains.mps.project.MPSProject;
 import jetbrains.mps.project.Solution;
 import org.jetbrains.mps.openapi.model.EditableSModel;
@@ -21,28 +18,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public final class GrammarImportAction extends AnAction {
-    private final String preferredTool;
-
-    public GrammarImportAction() { this(null); }
-
-    public GrammarImportAction(String preferredTool) { this.preferredTool = preferredTool; }
-
+public final class GrammarImportAction {
     private record Target(String label, SModelReference reference) {
         @Override public String toString() { return label; }
     }
 
-    @Override
-    public void update(AnActionEvent event) {
-        event.getPresentation().setEnabledAndVisible(event.getProject() != null);
-    }
-
-    @Override
-    public void actionPerformed(AnActionEvent event) {
-        var ideaProject = event.getProject();
-        if (ideaProject == null) return;
-        MPSProject project = ProjectHelper.fromIdeaProject(ideaProject);
-        if (project == null) return;
+    public static void open(MPSProject project, String preferredTool) {
+        var ideaProject = project.getProject();
         String tool = preferredTool != null ? preferredTool : (String) JOptionPane.showInputDialog(null,
                 "Grammar format:", "Import grammar into MetaBNF", JOptionPane.QUESTION_MESSAGE,
                 null, new String[]{"ANTLR", "Rascal"}, "ANTLR");
@@ -95,8 +77,7 @@ public final class GrammarImportAction extends AnAction {
             @Override public void run(ProgressIndicator indicator) {
                 Path work = null;
                 try {
-                    Path plugin = Path.of(GrammarImportAction.class.getProtectionDomain()
-                            .getCodeSource().getLocation().toURI()).getParent().getParent();
+                    Path plugin = GrammarTools.resourceRoot();
                     work = Files.createTempDirectory("metabnf-grammar-");
                     indicator.setIndeterminate(true);
                     indicator.setText("Reading " + source.getFileName() + " with bundled " + tool);

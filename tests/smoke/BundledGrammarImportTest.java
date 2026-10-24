@@ -16,7 +16,7 @@ import java.util.List;
 
 final class BundledGrammarImportTest {
     static void run(Environment environment, Project project, SModel target) throws Exception {
-        Path tools = Path.of(System.getProperty("metabnf.parser.tools"));
+        Path tools = GrammarTools.resourceRoot();
         Path repo = Path.of(System.getProperty("metabnf.smoke.repo"));
         var sentinelConcept = project.getModelAccess().computeReadAction(() -> {
             for (SNode root : target.getRootNodes()) {

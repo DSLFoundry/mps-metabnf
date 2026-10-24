@@ -1,26 +1,28 @@
 # Rascal bridge prototype
 
 This directory contains the bridge implementation and tests for the
-Rascal/MetaBNF integration. The MPS Tools-menu plugin supplies native file
+Rascal/MetaBNF integration. The existing MetaBNF language's Tools actions supply native file
 dialogs for grammar and mapped source-model import/export; XML interchange is
 temporary, and users do not need to open or maintain it.
 
-## Install and use the MPS plugin
+## Use in the existing MetaBNF project
 
-Build the MPS module library and plugin package from the repository root:
+Build the MPS module library from the repository root:
 
 ```sh
 ./gradlew assemble --no-daemon --console=plain
 ```
 
 The ZIP in `build/distributions` contains the MetaBNF module library under
-`metabnf/` and the MPS plugin under `plugins/metabnf-rascal-bridge/`. Install
-the module library in MPS as usual. Copy the plugin directory into the MPS
-installation's `plugins` directory and restart MPS.
+`metabnf/`, including the parser bridge resources in the language module.
+Add the complete module library to your MPS project. There is no IDE plugin
+to install. In a source checkout, run `prepareParserBridge`, open the existing
+project, and rebuild `metabnf`. See [setup](../docs/metabnf-base.md#setup).
 
-For grammar import, choose **Tools → Import Grammar into MetaBNF…**, select
-Rascal and a `.rsc` file, then an existing editable target model and generated
-language name. The plugin bundles Rascal 0.43.0 and ANTLR 4.13.2, invokes them
+For grammar import, choose **Tools → Import Rascal Grammar into MetaBNF...**
+(or the combined **Import Grammar into MetaBNF...** action and select Rascal),
+then a `.rsc` file, an existing editable target model and generated
+language name. MetaBNF bundles Rascal 0.43.0 and ANTLR 4.13.2, invokes them
 using MPS's Java runtime, and saves native MPS nodes: **no Python or separately
 downloaded JAR is required**. See the
 [complete grammar import instructions](../docs/importing-grammars.md).
@@ -38,7 +40,7 @@ needs the runtime. Source-model import/export also asks for a target model templ
 and an AST mapping configuration: the target MPS language must already be
 generated, and its rule-to-concept mapping must be defined. Python 3 must be
 available as `python` on Windows or `python3` elsewhere; override the
-executable with the `metabnf.python` system property if needed. The plugin
+executable with the `metabnf.python` system property if needed. The bridge
 uses MPS's Java runtime for Rascal commands. Source grammar, source text, MPS
 models, and Rascal source are selected through file dialogs; the bridge's XML
 interchange is kept in a temporary directory.
@@ -108,9 +110,9 @@ Maven POM declares BSD-2-Clause and notes the older EPL-1.0 files. The
 `Grammar`, `Modules`, and Rascal syntax modules loaded by this bridge have
 EPL-1.0 headers in that artifact.
 
-The plugin now distributes the unmodified Rascal release as an isolated Java
+The language module distributes the unmodified Rascal release as an isolated Java
 tool, together with ANTLR. MetaBNF's own code remains Apache-2.0; the tools and
-their dependencies retain their own terms. Every plugin package includes a
+their dependencies retain their own terms. Every module distribution includes a
 component inventory, upstream license/copyright notices, supplementary full
 license texts and corresponding source artifacts, including EPL-covered
 sources. See [third-party/README.md](../third-party/README.md) and retain that

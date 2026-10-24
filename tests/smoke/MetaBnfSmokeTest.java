@@ -71,6 +71,8 @@ public final class MetaBnfSmokeTest {
         File projectDirectory = new File(System.getProperty("metabnf.smoke.project"));
         Project project = environment.openProject(projectDirectory);
         try {
+            onEdt(() -> NativeGrammarActionsTest.run((MPSProject) project));
+            System.out.println("SMOKE: native ANTLR/Rascal actions registered in Tools without an installed IDE plugin");
             SModel grammar = project.getModelAccess().computeReadAction(() -> model(project, GRAMMAR));
             checkConstraints(environment, project, grammar);
             System.out.println("SMOKE: native MPS grammar constraints are clean");

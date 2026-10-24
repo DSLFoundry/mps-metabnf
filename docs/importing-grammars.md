@@ -1,6 +1,6 @@
 # Import ANTLR or Rascal grammar files in MPS
 
-The parser bridge plugin bundles **ANTLR 4.13.2** and **Rascal 0.43.0**.
+MetaBNF bundles **ANTLR 4.13.2** and **Rascal 0.43.0** inside its language module.
 Grammar import uses MPS's Java runtime: **no Python, separate tool download,
 external JAR selection, or network access is needed at import time**.
 This imports a supported subset, not arbitrary ANTLR/Rascal grammars.
@@ -11,11 +11,16 @@ Use MPS 2026.1. Build the distribution with `.\gradlew.bat assemble` on Windows
 (`./gradlew assemble` elsewhere), or obtain a published distribution ZIP.
 The build downloads the pinned tools and legal/source materials.
 
-Extract the ZIP. Add its `metabnf` directory as an MPS project library, and
-copy the entire `plugins/metabnf-rascal-bridge` directory into the MPS
-installation's `plugins` directory. Restart MPS. Retain `tools` and
-`third-party` alongside `lib`; copying just the plugin JAR is insufficient.
+For a source checkout, run `.\gradlew.bat prepareParserBridge`, open the
+existing MPS project, and rebuild `metabnf`. For a distribution, extract the
+ZIP and add its complete `metabnf` directory as an MPS project library.
+The actions are native declarations in `metabnf.plugin`: **no separately
+installed IDE plugin or second MPS project is needed**.
+
+Keep `languages\mbnf\parser-bridge` with the language module. It contains
+`lib`, `tools`, and `third-party`; copying just the adapter JAR is insufficient.
 The separate Java subprocesses isolate parser dependencies from the IDE.
+See [setup and missing-menu troubleshooting](metabnf-base.md#setup).
 
 ## Import
 
@@ -25,13 +30,15 @@ The separate Java subprocesses isolate parser dependencies from the IDE.
 3. Select **ANTLR** (`.g4`) or **Rascal** (`.rsc`), then choose the grammar file.
    For ANTLR, enter its parser start rule, for example `program`. Rascal uses
    the module's declared start sort.
+   Alternatively choose **Tools > Import ANTLR Grammar into MetaBNF...** or
+   **Tools > Import Rascal Grammar into MetaBNF...** to skip the format chooser.
 4. Select the target model and a simple generated-language name, for example
    `Mini`. The importer creates and saves native MPS nodes in that model,
    using native language imports and references; it does not write `.mps` XML.
 5. Open the target in Logical View and review/check the grammar. Add usability
    decorations as needed. Import does **not** generate a language or infer
-   source-to-AST mappings. For generation, follow the root README's
-   **How to use** instructions.
+   source-to-AST mappings. For generation, follow the core guide's
+   [language generation instructions](metabnf-base.md#generate-an-mps-language).
 
 Other target roots are preserved. An existing grammar is never replaced.
 Parsing/validation happen before the target is mutated; unsupported constructs
@@ -71,7 +78,7 @@ Python command-line scripts remain available for compatibility; they are not
 used by the new grammar-file import path.
 
 MetaBNF remains Apache-2.0. Bundled tools and their dependencies retain their
-own licenses. Every plugin package includes upstream notices, supplementary
+own licenses. Every module distribution includes upstream notices, supplementary
 license texts, component inventory, and corresponding source artifacts in
 `third-party`. See [the redistribution guide](../third-party/README.md).
 User-supplied grammars have their own licenses.

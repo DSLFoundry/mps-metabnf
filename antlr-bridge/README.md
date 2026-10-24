@@ -7,9 +7,11 @@ generating or executing user Java code.
 
 ## Requirements and licensing
 
-For **MPS grammar import**, install the parser bridge plugin with its bundled
-**ANTLR 4.13.2 complete JAR** and Java bridge. No Python or separate JAR is
-needed; see [Import grammar files in MPS](../docs/importing-grammars.md).
+For **MPS grammar import**, use the native actions in the existing MetaBNF
+language with its bundled **ANTLR 4.13.2 complete JAR** and Java bridge.
+No Python, separate JAR download or IDE-plugin installation is needed; see
+[Import grammar files in MPS](../docs/importing-grammars.md) and the
+[core user guide](../docs/metabnf-base.md).
 
 The optional legacy source-model/portable CLI workflows still use Python 3.10+,
 a Java runtime supporting source-file launching with its compiler module
@@ -33,7 +35,8 @@ directory when redistributing. See [redistribution details](../third-party/READM
 
 ## Usage
 
-In MPS, choose **Tools > Import Grammar into MetaBNF...**, select ANTLR, the
+In MPS, choose **Tools > Import ANTLR Grammar into MetaBNF...** (or the combined
+**Import Grammar into MetaBNF...** action and select ANTLR), then the
 `.g4` file, parser start rule, existing editable target model, and generated
 language name. Native nodes are saved in that model; existing grammars are
 never overwritten. See the [step-by-step guide](../docs/importing-grammars.md).

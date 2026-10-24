@@ -5,13 +5,18 @@ components are **not relicensed** under Apache-2.0. No upstream endorsement
 is implied. Their licenses, disclaimers, copyright notices and applicable
 patent terms continue to apply.
 
-The plugin distributes unmodified ANTLR 4.13.2 complete and Rascal 0.43.0
+In a distribution, the complete legal/source directory is
+`metabnf/languages/mbnf/parser-bridge/third-party`. The paths below are relative
+to that directory. A copy of this guide at the library root is only a pointer;
+the accompanying source JARs and licenses remain with the language module.
+
+The language module distributes unmodified ANTLR 4.13.2 complete and Rascal 0.43.0
 distribution JARs in `tools/`. Tools run in separate Java processes, not the
-IDE plugin's classloader. MetaBNF's exporter/importer glue is separate
+IDE/module classloader. MetaBNF's exporter/importer glue is separate
 Apache-2.0 code. The ANTLR bridge JAR is built from this repository's
 `antlr-bridge/src/AntlrBridge.java`.
 
-## License and source materials supplied with every plugin package
+## License and source materials supplied with every module distribution
 
 - `parser-components.tsv` inventories the identified shaded components,
   versions and license families. It includes components lacking embedded
@@ -60,5 +65,5 @@ as independent runtime artifacts.
 Regenerate Gradle dependency locks, rebuild the legal directory, inspect all
 new license families and source coverage, and run the packaged-tool and native
 import regressions before publishing. Never strip this `third-party/`
-directory from a redistributed plugin. It deliberately adds download/archive
+directory from a redistributed language module. It deliberately adds download/archive
 size to make copyright notices and corresponding sources available offline.

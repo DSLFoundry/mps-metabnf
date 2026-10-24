@@ -1,8 +1,5 @@
 package metabnf.rascal;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 
@@ -13,7 +10,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,7 +21,7 @@ import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.prefs.Preferences;
 
-public final class RascalBridgeAction extends AnAction {
+public final class RascalBridgeAction {
   private static final String[] OPERATIONS = {
       "Import Rascal grammar into MetaBNF",
       "Export MetaBNF grammar as Rascal",
@@ -37,18 +33,7 @@ public final class RascalBridgeAction extends AnAction {
   private static final Preferences PREFERENCES =
       Preferences.userNodeForPackage(RascalBridgeAction.class);
 
-  @Override
-  public void update(AnActionEvent event) {
-    event.getPresentation().setEnabledAndVisible(event.getProject() != null);
-  }
-
-  @Override
-  public void actionPerformed(AnActionEvent event) {
-    Project project = event.getProject();
-    if (project == null) {
-      showMessage("Open an MPS project before using the parser bridges.", true);
-      return;
-    }
+  public static void open(jetbrains.mps.project.MPSProject mpsProject) {
     String operation = (String) JOptionPane.showInputDialog(
         null,
         "Choose an import or export operation.",
@@ -62,11 +47,11 @@ public final class RascalBridgeAction extends AnAction {
     }
     if (operation.equals("Import Rascal grammar into MetaBNF")
         || operation.equals("Import ANTLR grammar into MetaBNF")) {
-      new GrammarImportAction(operation.contains("ANTLR") ? "ANTLR" : "Rascal").actionPerformed(event);
+      GrammarImportAction.open(mpsProject, operation.contains("ANTLR") ? "ANTLR" : "Rascal");
       return;
     }
     try {
-      Path pluginRoot = pluginRoot();
+      Path pluginRoot = GrammarTools.resourceRoot();
       Path bridge = pluginRoot.resolve("rascal-bridge");
       if (!Files.isDirectory(bridge.resolve("src"))) {
         throw new IOException("The installed Rascal bridge resources are incomplete.");
@@ -78,7 +63,7 @@ public final class RascalBridgeAction extends AnAction {
         case "Import ANTLR source model into MPS" -> importAntlr(pluginRoot, true);
         default -> throw new IllegalStateException("Unknown parser bridge operation.");
       }
-    } catch (IOException | URISyntaxException error) {
+    } catch (IOException error) {
       showMessage(error.getMessage(), true);
     }
   }
@@ -320,12 +305,6 @@ public final class RascalBridgeAction extends AnAction {
     if (file != null) {
       file.refresh(false, true);
     }
-  }
-
-  private static Path pluginRoot() throws URISyntaxException {
-    Path jar = Paths.get(
-        RascalBridgeAction.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-    return jar.getParent().getParent();
   }
 
   private static String fileStem(Path path) {

@@ -12,8 +12,20 @@ public final class PackagedGrammarToolsTest {
         Path work = Files.createTempDirectory("metabnf-packaged-java-");
         try {
             Path plugin = work.resolve("plugin");
-            String prefix = "plugins/metabnf-rascal-bridge/";
+            String prefix = "metabnf/languages/mbnf/parser-bridge/";
             try (ZipFile zip = new ZipFile(args[0])) {
+                if (zip.stream().anyMatch(entry -> entry.getName().startsWith("plugins/"))) {
+                    throw new AssertionError("Distribution still requires a separately installed IDE plugin");
+                }
+                for (String required : List.of("docs/README.md", "docs/metabnf-base.md", "docs/importing-grammars.md",
+                        "languages/mbnf/classes_gen/metabnf/plugin/ImportGrammar_Action.class",
+                        "languages/mbnf/classes_gen/metabnf/plugin/ImportAntlrGrammar_Action.class",
+                        "languages/mbnf/classes_gen/metabnf/plugin/ImportRascalGrammar_Action.class",
+                        "languages/mbnf/classes_gen/metabnf/plugin/ParserBridgeUtilities_Action.class")) {
+                    if (zip.getEntry("metabnf/" + required) == null) {
+                        throw new AssertionError("Missing native module action or user documentation: " + required);
+                    }
+                }
                 for (String required : List.of("tools/antlr/antlr-bridge.jar",
                         "tools/antlr/antlr4-4.13.2-complete.jar", "tools/rascal/rascal-0.43.0.jar",
                         "third-party/sources/rascal-0.43.0-sources.jar",
@@ -64,6 +76,8 @@ public final class PackagedGrammarToolsTest {
                     plugin.resolve("lib/metabnf-rascal-bridge.jar").toUri().toURL()}, ClassLoader.getPlatformClassLoader())) {
                 var export = loader.loadClass("metabnf.rascal.GrammarTools").getMethod("export",
                         Path.class, String.class, Path.class, String.class, Path.class, BooleanSupplier.class);
+                Path located = (Path) loader.loadClass("metabnf.rascal.GrammarTools").getMethod("resourceRoot").invoke(null);
+                if (!located.equals(plugin)) throw new AssertionError("Bundled runtime resource lookup escaped its module");
                 for (String tool : List.of("ANTLR", "Rascal")) {
                     Path invocation = Files.createDirectory(work.resolve(tool));
                     Path source = fixtures.resolve(tool.equals("ANTLR")

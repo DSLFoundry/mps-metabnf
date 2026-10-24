@@ -13,6 +13,24 @@ import java.util.function.BooleanSupplier;
 
 /** Runs bundled tools outside the IDE classloader; no Python or runtime downloads. */
 public final class GrammarTools {
+    public static Path resourceRoot() throws IOException {
+        var resource = GrammarTools.class.getResource("GrammarTools.class");
+        if (resource == null || !resource.getProtocol().equals("jar")) {
+            throw new IOException("Parser bridge JAR is missing. Run Gradle prepareParserBridge, then rebuild MetaBNF.");
+        }
+        try {
+            var connection = (java.net.JarURLConnection) resource.openConnection();
+            Path root = Path.of(connection.getJarFileURL().toURI()).getParent().getParent();
+            if (!Files.isDirectory(root.resolve("tools"))) {
+                throw new IOException("Bundled parser tools are missing beside " + root.resolve("lib")
+                        + ". Run Gradle prepareParserBridge or restore the complete module library.");
+            }
+            return root;
+        } catch (java.net.URISyntaxException failure) {
+            throw new IOException("Invalid parser bridge resource location: " + resource, failure);
+        }
+    }
+
     public static Path export(Path plugin, String tool, Path source, String start,
                               Path work, BooleanSupplier cancelled) throws Exception {
         Path output = work.resolve("grammar.xml");

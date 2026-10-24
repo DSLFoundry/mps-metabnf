@@ -12,7 +12,7 @@ from pathlib import Path
 def check_distribution(archive: Path, jar: Path) -> None:
     root = Path(__file__).resolve().parents[2]
     fixtures = root / "tests" / "antlr-bridge"
-    prefix = "plugins/metabnf-rascal-bridge/"
+    prefix = "metabnf/languages/mbnf/parser-bridge/"
     resources = (
         "antlr-bridge/bridge.py", "antlr-bridge/src/AntlrBridge.java",
         "antlr-bridge/README.md", "rascal-bridge/README.md", "rascal-bridge/import_to_mps.py",
@@ -30,7 +30,7 @@ def check_distribution(archive: Path, jar: Path) -> None:
             if any("/test_" in name for name in names):
                 raise ValueError("Development test scripts must not be packaged")
             bundle.extractall(directory)
-        plugin = Path(directory) / "plugins" / "metabnf-rascal-bridge"
+        plugin = Path(directory) / "metabnf" / "languages" / "mbnf" / "parser-bridge"
         command = [sys.executable, str(plugin / "antlr-bridge" / "bridge.py")]
         common = ["--antlr-jar", str(jar.resolve()), "--start", "program"]
         grammar_output = Path(directory) / "ImportedGrammar.mps"

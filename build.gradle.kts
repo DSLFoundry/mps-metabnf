@@ -190,7 +190,7 @@ buildLanguages.configure {
 
 val compileRascalBridgePlugin = tasks.register<JavaCompile>("compileRascalBridgePlugin") {
     group = "build"
-    description = "Compiles the MPS Tools-menu plugin for the Rascal and ANTLR bridges."
+    description = "Compiles the Java adapter used by MetaBNF's native parser actions."
     source(fileTree("mps-plugin/src/main/java") { include("**/*.java") })
     classpath = files(mpsDefaults.mpsHome.map { home ->
         fileTree(home.asFile) { include("lib/*.jar", "plugins/**/*.jar") }
@@ -209,6 +209,32 @@ val rascalBridgePluginJar = tasks.register<Jar>("rascalBridgePluginJar") {
     from(compileRascalBridgePlugin)
 }
 
+val prepareParserBridge = tasks.register<Sync>("prepareParserBridge") {
+    dependsOn(rascalBridgePluginJar, stageParserTools, prepareParserLegal)
+    group = "build setup"
+    description = "Prepares Java parser dependencies inside the existing MetaBNF language module; no IDE plugin installation."
+    into("languages/mbnf/parser-bridge")
+    from(rascalBridgePluginJar) { into("lib") }
+    from(stageParserTools)
+    from(prepareParserLegal) { into("third-party") }
+    from("LICENSE", "mps-plugin/README.md")
+    into("docs") { from("docs") }
+    into("rascal-bridge") {
+        from("rascal-bridge") {
+            include("*.py", "src/**/*.rsc", "README.md")
+            exclude("test.py", "test_*.py")
+        }
+    }
+    into("antlr-bridge") {
+        from("antlr-bridge") { include("bridge.py", "src/AntlrBridge.java", "README.md") }
+    }
+    into("templates") {
+        from("languages/mbnf/sandbox/models/Demo.mps")
+        from("languages/mbnf/sandbox/models/mbnf/python.mps") { rename { "python.mps" } }
+    }
+}
+buildLanguages.configure { dependsOn(prepareParserBridge) }
+
 val smokeTest = registerMpsAnt("smokeTest", "smoke", "mps-smoke")
 smokeTest.configure {
     group = "verification"
@@ -222,11 +248,10 @@ val prepareAntlr = tasks.register<Sync>("prepareAntlr") {
 }
 
 smokeTest.configure {
-    dependsOn(prepareAntlr, stageParserTools)
+    dependsOn(prepareAntlr, prepareParserBridge)
     pathProperties.put("antlr.jar", layout.buildDirectory.file(
         "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
     ).map { it.asFile })
-    pathProperties.put("parser.tools", layout.buildDirectory.dir("parser-tools/plugin").map { it.asFile })
 }
 
 val antlrBridgeTest = tasks.register<Exec>("antlrBridgeTest") {
@@ -274,36 +299,12 @@ val packageLanguages = tasks.register<Zip>("packageLanguages") {
             exclude("**/source_gen/**", "**/source_gen.caches/**")
         }
         from("README.md", "LICENSE")
+        into("docs") { from("docs") }
+        into("antlr-bridge") { from("antlr-bridge/README.md") }
+        into("rascal-bridge") { from("rascal-bridge/README.md") }
+        into("third-party") { from("third-party/README.md") }
     }
-    into("plugins/metabnf-rascal-bridge") {
-        from("mps-plugin/src/main/resources")
-        from(rascalBridgePluginJar) {
-            into("lib")
-        }
-        from("LICENSE")
-        from(stageParserTools)
-        from(prepareParserLegal) { into("third-party") }
-        from("mps-plugin/README.md")
-        into("docs") { from("docs/importing-grammars.md") }
-        into("rascal-bridge") {
-            from("rascal-bridge") {
-                include("*.py", "src/**/*.rsc", "README.md")
-                exclude("test.py", "test_*.py")
-            }
-        }
-        into("antlr-bridge") {
-            from("antlr-bridge") {
-                include("bridge.py", "src/AntlrBridge.java", "README.md")
-            }
-        }
-        from("languages/mbnf/sandbox/models/Demo.mps") {
-            into("templates")
-        }
-        from("languages/mbnf/sandbox/models/mbnf/python.mps") {
-            into("templates")
-            rename { "python.mps" }
-        }
-    }
+    into("metabnf/languages/mbnf/parser-bridge") { from(prepareParserBridge) }
     doFirst {
         check(layout.buildDirectory.file(
             "mps-build/project/languages/mbnf/classes_gen/metabnf/structure/StructureAspectDescriptor.class"
@@ -374,7 +375,7 @@ publishing {
                 name = "MetaBNF"
                 description = "Compiled MetaBNF MPS languages and generation plan for MPS ${libs.versions.mps.get()}. " +
                     "MetaBNF code is Apache-2.0; bundled parser tools retain their own licenses, notices and " +
-                    "corresponding sources supplied in the plugin's third-party directory."
+                    "corresponding sources supplied in the language module's parser-bridge/third-party directory."
                 url = "https://github.com/DSLFoundry/mps-metabnf"
                 licenses {
                     license {

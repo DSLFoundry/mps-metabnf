@@ -4,11 +4,14 @@
     <modelRoot contentPath="${module}" type="default">
       <sourceRoot location="languageModels" />
     </modelRoot>
-    <modelRoot contentPath="${module}" type="java_classes" />
+    <modelRoot contentPath="${module}" type="java_classes">
+      <sourceRoot location="parser-bridge/lib/metabnf-rascal-bridge.jar" />
+    </modelRoot>
   </models>
   <facets>
     <facet type="java" compile="mps" classes="mps" ext="yes">
       <classes generated="true" path="${module}/classes_gen" />
+      <library location="${module}/parser-bridge/lib/metabnf-rascal-bridge.jar" />
     </facet>
   </facets>
   <accessoryModels />

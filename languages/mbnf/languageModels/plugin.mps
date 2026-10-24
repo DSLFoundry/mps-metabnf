@@ -34,6 +34,7 @@
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" />
     <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" />
     <import index="2k9e" ref="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea/java:jetbrains.mps.smodel.adapter.structure(MPS.Core/)" />
+    <import index="gp1f" ref="9c03c641-469f-49e7-aeed-44a3d19b7253/java:metabnf.rascal(metabnf/)" />
   </imports>
   <registry>
     <language id="a247e09e-2435-45ba-b8d2-07e93feba96a" name="jetbrains.mps.baseLanguage.tuples">
@@ -47,7 +48,9 @@
       </concept>
       <concept id="1203071646776" name="jetbrains.mps.lang.plugin.structure.ActionDeclaration" flags="ng" index="sE7Ow">
         <property id="1205250923097" name="caption" index="2uzpH1" />
+        <property id="7458746815261976739" name="requiredAccess" index="2YLI8m" />
         <property id="4692598989365753297" name="updateInBackground" index="1rBW0U" />
+        <property id="1213273179528" name="description" index="1WHSii" />
         <child id="1203083461638" name="executeFunction" index="tncku" />
         <child id="1217413222820" name="parameter" index="1NuT2Z" />
       </concept>
@@ -455,6 +458,18 @@
       </node>
       <node concept="tCFHf" id="21ByT8TIFWB" role="ftvYc">
         <ref role="tCJdB" node="21ByT8TI$$c" resolve="RestructureLanguageAspects" />
+      </node>
+      <node concept="tCFHf" id="1ingAWfsp8s" role="ftvYc">
+        <ref role="tCJdB" node="1ingAWfsp8b" resolve="ImportGrammar" />
+      </node>
+      <node concept="tCFHf" id="1ingAWfsp8I" role="ftvYc">
+        <ref role="tCJdB" node="1ingAWfsp8t" resolve="ImportAntlrGrammar" />
+      </node>
+      <node concept="tCFHf" id="1ingAWfsp90" role="ftvYc">
+        <ref role="tCJdB" node="1ingAWfsp8J" resolve="ImportRascalGrammar" />
+      </node>
+      <node concept="tCFHf" id="1ingAWfsp9g" role="ftvYc">
+        <ref role="tCJdB" node="1ingAWfsp91" resolve="ParserBridgeUtilities" />
       </node>
     </node>
     <node concept="tT9cl" id="6xuOfB$zJUv" role="2f5YQi">
@@ -6767,6 +6782,125 @@
         </node>
         <node concept="3uibUv" id="$td8qQ26m1" role="11_B2D">
           <ref role="3uigEE" to="wyt6:~Object" resolve="Object" />
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="sE7Ow" id="1ingAWfsp8b">
+    <property role="TrG5h" value="ImportGrammar" />
+    <property role="2uzpH1" value="Import Grammar into MetaBNF..." />
+    <property role="1WHSii" value="Import grammar files with bundled Java tools into an editable model" />
+    <property role="1rBW0U" value="true" />
+    <property role="2YLI8m" value="6u2MFnph2wS/none" />
+    <node concept="1DS2jV" id="1ingAWfsp8c" role="1NuT2Z">
+      <property role="TrG5h" value="project" />
+      <ref role="1DUlNI" to="qq03:~MPSCommonDataKeys.MPS_PROJECT" resolve="MPS_PROJECT" />
+      <node concept="1oajcY" id="1ingAWfsp8d" role="1oa70y" />
+    </node>
+    <node concept="tnohg" id="1ingAWfsp8e" role="tncku">
+      <node concept="3clFbS" id="1ingAWfsp8f" role="2VODD2">
+        <node concept="3clFbF" id="1ingAWfsp8h" role="3cqZAp">
+          <node concept="2YIFZM" id="1ingAWfsp8l" role="3clFbG">
+            <ref role="1Pybhc" to="gp1f:~GrammarImportAction" resolve="GrammarImportAction" />
+            <ref role="37wK5l" to="gp1f:~GrammarImportAction.open(jetbrains.mps.project.MPSProject,java.lang.String)" resolve="open" />
+            <node concept="2OqwBi" id="1ingAWfsp8p" role="37wK5m">
+              <node concept="2WthIp" id="1ingAWfsp8q" role="2Oq$k0" />
+              <node concept="1DTwFV" id="1ingAWfsp8r" role="2OqNvi">
+                <ref role="2WH_rO" node="1ingAWfsp8c" resolve="project" />
+              </node>
+            </node>
+            <node concept="10Nm6u" id="1ingAWfsp8n" role="37wK5m" />
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="sE7Ow" id="1ingAWfsp8t">
+    <property role="TrG5h" value="ImportAntlrGrammar" />
+    <property role="2uzpH1" value="Import ANTLR Grammar into MetaBNF..." />
+    <property role="1WHSii" value="Import grammar files with bundled Java tools into an editable model" />
+    <property role="1rBW0U" value="true" />
+    <property role="2YLI8m" value="6u2MFnph2wS/none" />
+    <node concept="1DS2jV" id="1ingAWfsp8u" role="1NuT2Z">
+      <property role="TrG5h" value="project" />
+      <ref role="1DUlNI" to="qq03:~MPSCommonDataKeys.MPS_PROJECT" resolve="MPS_PROJECT" />
+      <node concept="1oajcY" id="1ingAWfsp8v" role="1oa70y" />
+    </node>
+    <node concept="tnohg" id="1ingAWfsp8w" role="tncku">
+      <node concept="3clFbS" id="1ingAWfsp8x" role="2VODD2">
+        <node concept="3clFbF" id="1ingAWfsp8z" role="3cqZAp">
+          <node concept="2YIFZM" id="1ingAWfsp8B" role="3clFbG">
+            <ref role="1Pybhc" to="gp1f:~GrammarImportAction" resolve="GrammarImportAction" />
+            <ref role="37wK5l" to="gp1f:~GrammarImportAction.open(jetbrains.mps.project.MPSProject,java.lang.String)" resolve="open" />
+            <node concept="2OqwBi" id="1ingAWfsp8F" role="37wK5m">
+              <node concept="2WthIp" id="1ingAWfsp8G" role="2Oq$k0" />
+              <node concept="1DTwFV" id="1ingAWfsp8H" role="2OqNvi">
+                <ref role="2WH_rO" node="1ingAWfsp8u" resolve="project" />
+              </node>
+            </node>
+            <node concept="Xl_RD" id="1ingAWfsp8D" role="37wK5m">
+              <property role="Xl_RC" value="ANTLR" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="sE7Ow" id="1ingAWfsp8J">
+    <property role="TrG5h" value="ImportRascalGrammar" />
+    <property role="2uzpH1" value="Import Rascal Grammar into MetaBNF..." />
+    <property role="1WHSii" value="Import grammar files with bundled Java tools into an editable model" />
+    <property role="1rBW0U" value="true" />
+    <property role="2YLI8m" value="6u2MFnph2wS/none" />
+    <node concept="1DS2jV" id="1ingAWfsp8K" role="1NuT2Z">
+      <property role="TrG5h" value="project" />
+      <ref role="1DUlNI" to="qq03:~MPSCommonDataKeys.MPS_PROJECT" resolve="MPS_PROJECT" />
+      <node concept="1oajcY" id="1ingAWfsp8L" role="1oa70y" />
+    </node>
+    <node concept="tnohg" id="1ingAWfsp8M" role="tncku">
+      <node concept="3clFbS" id="1ingAWfsp8N" role="2VODD2">
+        <node concept="3clFbF" id="1ingAWfsp8P" role="3cqZAp">
+          <node concept="2YIFZM" id="1ingAWfsp8T" role="3clFbG">
+            <ref role="1Pybhc" to="gp1f:~GrammarImportAction" resolve="GrammarImportAction" />
+            <ref role="37wK5l" to="gp1f:~GrammarImportAction.open(jetbrains.mps.project.MPSProject,java.lang.String)" resolve="open" />
+            <node concept="2OqwBi" id="1ingAWfsp8X" role="37wK5m">
+              <node concept="2WthIp" id="1ingAWfsp8Y" role="2Oq$k0" />
+              <node concept="1DTwFV" id="1ingAWfsp8Z" role="2OqNvi">
+                <ref role="2WH_rO" node="1ingAWfsp8K" resolve="project" />
+              </node>
+            </node>
+            <node concept="Xl_RD" id="1ingAWfsp8V" role="37wK5m">
+              <property role="Xl_RC" value="Rascal" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="sE7Ow" id="1ingAWfsp91">
+    <property role="TrG5h" value="ParserBridgeUtilities" />
+    <property role="2uzpH1" value="Parser Bridge Utilities (legacy Python)..." />
+    <property role="1WHSii" value="Optional source-model import/export and Rascal grammar export; requires Python" />
+    <property role="1rBW0U" value="true" />
+    <property role="2YLI8m" value="6u2MFnph2wS/none" />
+    <node concept="1DS2jV" id="1ingAWfsp92" role="1NuT2Z">
+      <property role="TrG5h" value="project" />
+      <ref role="1DUlNI" to="qq03:~MPSCommonDataKeys.MPS_PROJECT" resolve="MPS_PROJECT" />
+      <node concept="1oajcY" id="1ingAWfsp93" role="1oa70y" />
+    </node>
+    <node concept="tnohg" id="1ingAWfsp94" role="tncku">
+      <node concept="3clFbS" id="1ingAWfsp95" role="2VODD2">
+        <node concept="3clFbF" id="1ingAWfsp97" role="3cqZAp">
+          <node concept="2YIFZM" id="1ingAWfsp9a" role="3clFbG">
+            <ref role="1Pybhc" to="gp1f:~RascalBridgeAction" resolve="RascalBridgeAction" />
+            <ref role="37wK5l" to="gp1f:~RascalBridgeAction.open(jetbrains.mps.project.MPSProject)" resolve="open" />
+            <node concept="2OqwBi" id="1ingAWfsp9d" role="37wK5m">
+              <node concept="2WthIp" id="1ingAWfsp9e" role="2Oq$k0" />
+              <node concept="1DTwFV" id="1ingAWfsp9f" role="2OqNvi">
+                <ref role="2WH_rO" node="1ingAWfsp92" resolve="project" />
+              </node>
+            </node>
+          </node>
         </node>
       </node>
     </node>
