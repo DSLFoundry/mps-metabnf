@@ -213,7 +213,7 @@
       <dirset dir="${mps.home}/plugins" includes="*" />
     </path>
     <pathconvert property="mps.plugins" refid="bundled.plugins" />
-    <echo message="EDITOR: compiling checked-in generated Demo aspects and native interaction fixtures." />
+    <echo message="NATIVE: compiling checked-in Demo aspects, editor interactions and ownership regressions." />
     <mps.make mpsHome="${mps.home}" failOnError="true">
       <repository>
         <modules dir="${smoke.project}/languages" />
@@ -230,7 +230,7 @@
         <arg value="-Didea.log.path=${smoke.dir}/log" />
       </jvmargs>
     </mps.make>
-    <echo message="EDITOR: starting native MPS editor tests; assertion failures are separate from make failures." />
+    <echo message="NATIVE: starting MPS editor and regeneration tests; assertion failures are separate from make failures." />
     <launchtests mpsHome="${mps.home}" autoPluginDiscovery="true" haltOnFailure="true"
                  reports="${smoke.dir}/editor-reports">
       <project path="${smoke.project}" />

@@ -1,7 +1,9 @@
 # Native editor interaction tests
 
-The `metabnf.editor.tests` solution uses MPS `EditorTestCase` fixtures, not
-model-mutating helper calls. Use the MPS and Java runtime selected by the
+The editor tests in `metabnf.editor.tests` use MPS `EditorTestCase` fixtures, not
+model-mutating helper calls. The solution also contains separate native
+[regeneration ownership tests](protected-regeneration.md).
+Use the MPS and Java runtime selected by the
 [build catalog](../gradle/libs.versions.toml).
 
 ```powershell
@@ -43,13 +45,11 @@ smoke contract. Set the invoking process's `JAVA_HOME` to the runtime reported b
 `mops wrapper` if the wrapper launcher needs it.
 
 Editor fixtures deliberately run before the smoke pipeline replaces Demo's
-aspects. The current generator allocates new concept/property identities on
-replacement, so a fixture authored against one generation cannot yet be reused
-against the next. The suite therefore proves interaction with compiled generated
-editors, **not** identity stability across regeneration. That compatibility and
-ownership contract is tracked in
-[protected regeneration (#17)](https://github.com/DSLFoundry/mps-metabnf/issues/17);
-the tests do not hide it by rewriting fixture registries at runtime.
+aspects. The legacy importer and deliberate fresh creation allocate different
+concept/property identities, whereas protected adoption retains existing ones.
+The three editor fixtures prove interaction with compiled generated editors;
+separate ownership fixtures and the protected smoke path check regeneration.
+The tests do not hide identity changes by rewriting fixture registries at runtime.
 
 ## Adding a pattern fixture
 

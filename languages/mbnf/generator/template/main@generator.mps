@@ -2166,6 +2166,10 @@
       <property role="OYnhT" value="Semantic usability metadata is not generated" />
       <ref role="aOQi4" to="6o2a:14wlUfKK6zf" resolve="GenerationProfile" />
     </node>
+    <node concept="aNPBN" id="7Q_67PUJ0aR" role="aQYdv">
+      <property role="OYnhT" value="Semantic usability metadata is not generated" />
+      <ref role="aOQi4" to="6o2a:7Q_67PU$yi5" resolve="GenerationLedger" />
+    </node>
   </node>
 </model>
 

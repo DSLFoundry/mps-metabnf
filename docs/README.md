@@ -11,6 +11,7 @@ authoring, generation, every MetaBNF Tools action, and troubleshooting.
 | [Typed usability annotations](usability-annotations.md) | Flag/list/optional-group intent, projectional authoring, provenance, suppression, validation and native service APIs |
 | [Profiles and enrichment](profiles-and-enrichment.md) | Preview/apply pattern recognition, conservative reimport transfer, projection choices, native Inspector and backend compatibility |
 | [Native editor interaction tests](editor-interaction-tests.md) | Generated Demo keyboard/action fixtures, caret/undo assertions, CI registration and failure diagnostics |
+| [Protected regeneration](protected-regeneration.md) | Reviewed adoption/updates, ownership and extension boundaries, stable identities, preview/apply API and failure guarantees |
 
 For optional legacy source/model mapping and Rascal export, see the
 [ANTLR bridge guide](../antlr-bridge/README.md) and

@@ -34,6 +34,15 @@ final class NativeGrammarActionsTest {
             require(event.getPresentation().isEnabledAndVisible(),
                     "Native import requires a model selection instead of just an open project: " + id);
         }
+        var regeneration = manager.getAction("metabnf.plugin.ProtectedRegeneration_Action");
+        require(regeneration != null, "Protected regeneration action was not registered");
+        require(Arrays.asList(((ActionGroup) group).getChildren(null)).contains(regeneration),
+                "Protected regeneration action is not in the MetaBNF Tools group");
+        var regenerationEvent = AnActionEvent.createFromDataContext("metabnf-smoke", new Presentation(),
+                key -> MPSCommonDataKeys.MPS_PROJECT.is(key) ? project : null);
+        regeneration.update(regenerationEvent);
+        require(!regenerationEvent.getPresentation().isEnabled(),
+                "Protected regeneration must require a selected generated model");
         java.nio.file.Path root;
         try {
             root = GrammarTools.resourceRoot();

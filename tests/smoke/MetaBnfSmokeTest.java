@@ -28,6 +28,7 @@ import jetbrains.mps.tool.builder.make.BuildMakeService;
 import jetbrains.mps.tool.environment.Environment;
 import metabnf.plugin.ImportLanguage_Action;
 import metabnf.plugin.ImportRemainingAspects_Action;
+import metabnf.regeneration.ProtectedRegeneration;
 import org.jetbrains.mps.openapi.model.EditableSModel;
 import org.jetbrains.mps.openapi.model.SModel;
 import org.jetbrains.mps.openapi.model.SNode;
@@ -168,9 +169,79 @@ public final class MetaBnfSmokeTest {
                 checkConstraints(environment, project, aspect);
             }
             System.out.println("SMOKE: imported all Demo aspects; references survive removal of transients");
+            verifyProtectedRegeneration(environment, project, grammar, aspects);
         } finally {
             environment.closeProject(project);
         }
+    }
+
+    private static void verifyProtectedRegeneration(Environment environment, Project project,
+                                                    SModel grammarModel, List<SModel> aspects) throws Exception {
+        SNode grammar = project.getModelAccess().computeReadAction(() ->
+                grammarModel.getNode(PersistenceFacade.getInstance().createNodeId("6508006283257465258")));
+        List<String> legacy = project.getModelAccess().computeReadAction(() -> aspectState(aspects));
+        regenerateProtected(project, grammarModel, grammar, aspects, "ADOPT ");
+        project.getModelAccess().runReadAction(() ->
+                require(legacy.equals(aspectState(aspects)), "Reviewed adoption changed legacy artifact identities"));
+        String owned = project.getModelAccess().computeReadAction(() -> grammarState(grammarModel));
+        regenerateProtected(project, grammarModel, grammar, aspects, "UNCHANGED ");
+        project.getModelAccess().runReadAction(() -> {
+            require(legacy.equals(aspectState(aspects)), "Repeated adoption changed generated artifacts");
+            require(owned.equals(grammarState(grammarModel)), "Repeated generation changed ownership metadata");
+        });
+        System.out.println("SMOKE: reviewed adoption preserves all Demo identities and repeat generation is unchanged");
+
+        onEdt(() -> project.getModelAccess().executeCommand(() -> {
+            for (SModel aspect : aspects) {
+                roots(aspect).forEach(aspect::removeRootNode);
+            }
+            roots(grammarModel).stream().filter(root ->
+                    root.getConcept().getName().equals("GenerationLedger")).forEach(grammarModel::removeRootNode);
+        }));
+        regenerateProtected(project, grammarModel, grammar, aspects, "CREATE ");
+        List<String> created = project.getModelAccess().computeReadAction(() -> aspectState(aspects));
+        regenerateProtected(project, grammarModel, grammar, aspects, "UNCHANGED ");
+        project.getModelAccess().runReadAction(() ->
+                require(created.equals(aspectState(aspects)), "Fresh protected generation is not repeatable"));
+        onEdt(() -> project.getModelAccess().executeCommand(() -> {
+            project.getComponent(TransientModelsProvider.class).removeAllTransients(true);
+            validateAspects(aspects);
+            ((EditableSModel) grammarModel).save();
+            for (SModel aspect : aspects) {
+                ((EditableSModel) aspect).save();
+            }
+            ((AbstractModule) aspects.get(0).getModule()).save();
+        }));
+        checkConstraints(environment, project, grammarModel);
+        for (SModel aspect : aspects) {
+            checkConstraints(environment, project, aspect);
+        }
+        System.out.println("SMOKE: fresh protected generation is repeatable and all references survive transient disposal");
+    }
+
+    private static void regenerateProtected(Project project, SModel grammarModel, SNode grammar,
+                                            List<SModel> aspects, String decision) throws Exception {
+        project.getComponent(GenerationSettingsProvider.class).getGenerationSettings().setSaveTransientModels(true);
+        onEdt(() -> project.getModelAccess().executeCommand(() ->
+                project.getComponent(TransientModelsProvider.class).removeAllTransients(true)));
+        List<IMessage> messages = new ArrayList<>();
+        require(make(project, grammarModel, messages), "Protected regeneration failed: " + messages);
+        ProtectedRegeneration.Preview preview = project.getModelAccess().computeReadAction(() ->
+                ProtectedRegeneration.preview(grammar, roots(finalTransientModel(project)), aspects, null));
+        require(preview.applicable(), "Protected generation conflicts: " + preview.conflicts());
+        require(preview.decisions().size() == 30 && preview.decisions().stream().allMatch(item -> item.startsWith(decision)),
+                "Unexpected protected generation decisions: " + preview.decisions());
+        onEdt(() -> project.getModelAccess().executeCommand(() -> ProtectedRegeneration.apply(preview)));
+    }
+
+    private static List<String> aspectState(List<SModel> aspects) {
+        return aspects.stream().flatMap(aspect -> roots(aspect).stream())
+                .map(root -> ProtectedRegeneration.snapshot(root, false)).sorted().collect(Collectors.toList());
+    }
+
+    private static String grammarState(SModel grammar) {
+        return roots(grammar).stream().map(root -> ProtectedRegeneration.snapshot(root, false))
+                .sorted().collect(Collectors.joining("\n"));
     }
 
     public static void validateGeneratedAst(Environment environment) throws Exception {
@@ -191,6 +262,19 @@ public final class MetaBnfSmokeTest {
                 return null;
             });
             System.out.println("SMOKE: parsed ANTLR text uses the generated-language MPS registry");
+            SModel grammarModel = project.getModelAccess().computeReadAction(() -> model(project, GRAMMAR));
+            SNode grammar = project.getModelAccess().computeReadAction(() ->
+                    grammarModel.getNode(PersistenceFacade.getInstance().createNodeId("6508006283257465258")));
+            List<SModel> aspects = project.getModelAccess().computeReadAction(() ->
+                    Arrays.stream(ASPECTS).map(ref -> model(project, ref)).collect(Collectors.toList()));
+            List<String> before = project.getModelAccess().computeReadAction(() -> aspectState(aspects));
+            String source = project.getModelAccess().computeReadAction(() -> grammarState(grammarModel));
+            regenerateProtected(project, grammarModel, grammar, aspects, "UNCHANGED ");
+            project.getModelAccess().runReadAction(() -> {
+                require(before.equals(aspectState(aspects)), "Reloaded regeneration changed generated artifacts");
+                require(source.equals(grammarState(grammarModel)), "Reloaded regeneration changed ownership metadata");
+            });
+            System.out.println("SMOKE: protected regeneration remains unchanged after persistence and process reload");
         } finally {
             environment.closeProject(project);
         }

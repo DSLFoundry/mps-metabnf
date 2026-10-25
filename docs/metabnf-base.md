@@ -109,6 +109,9 @@ states; use shared-service inspection to diagnose intermediate invalid metadata.
 Use a new/disposable target language first. **The generated-aspect workflow
 moves generated nodes into real language aspects; it is not a safe merge of
 arbitrary hand-maintained aspect contents.** Save/commit existing work first.
+For reviewed adoption and updates of existing generated roots, use
+[protected regeneration](protected-regeneration.md) instead of the original
+append/move import actions below.
 
 1. Create a language in Logical View with the same name as the grammar's
    `language` field. Ensure its structure, editor and textGen aspects exist.
@@ -145,6 +148,7 @@ model context, normally the final transient model described above.
 | **Import Rascal Grammar into MetaBNF...** | Direct Rascal `.rsc` entry point using its declared start sort. Same native importer. |
 | **Import Generated Language** | From a final transient model, import generated structure into the language identified by its target injector. First supported generation-import step. |
 | **Import Remaining Language Aspects** | From the same final transient model, import editor and textGen after structure. Second supported step. |
+| **Preview Protected Regeneration...** | Review all generated aspects together, adopt semantically identical legacy roots without changing identities, and apply ownership-protected updates. Requires the final transient model; conflicts block apply. |
 | **Import to module** | Legacy experimental action: currently selects the repository's **Python** language in its implementation, rather than offering an arbitrary target-module chooser. Do not use it as the general generation workflow. |
 | **Import to module (Test Version)** | Legacy Python-specific experiment: initially puts generated aspects together into `Python.structure`. Not a supported alternative for another target language. |
 | **Fix language aspect structure** | Legacy companion to that test workflow: moves editor/textGen declarations from `Python.structure` into `Python.editor`/`Python.textGen`. It is **not** a generic repair of the selected language. |

@@ -280,17 +280,30 @@ smokeTest.configure {
         }
         val expected = setOf("NumberTyping", "NumberDeletion", "NumberUndo").map {
             "metabnf.editor.tests.interactions.${it}_Test.test_$it()"
-        }.toSet()
+        }.toSet() + setOf(
+            "reviewedAdoptionPreservesIdentity", "stalePreviewRejectsBeforeMutation",
+            "conflictingOwnedEditIsProtected", "extensionSurvivesUpdate", "freshCreationIsStable",
+            "ambiguousAdoptionIsBlocked", "legacyConflictIsBlocked", "unavailableProfileIsRejected",
+            "nonGrammarSourceIsRejected"
+        ).map { "metabnf.editor.tests.regeneration.RegenerationOwnership_Test.test_$it()" } + setOf(
+            "mapOrderIndependent", "scalarTypesAreDistinct", "invalidMapKeysAreRejected"
+        ).map { "metabnf.editor.tests.regeneration.GenerationFingerprints_Test.test_$it()" }
         check(cases.size == expected.size && cases.toSet() == expected) {
             "Unexpected native editor-test inventory: expected $expected, got $cases; see $reports"
         }
-        logger.lifecycle("EDITOR: ${cases.size} native interaction tests passed; inventory verified.")
+        logger.lifecycle("NATIVE: ${cases.size} editor interaction and regeneration tests passed; inventory verified.")
     }
 }
 
 tasks.register("editorInteractionTest") {
     group = "verification"
     description = "Runs native editor conformance on generated Demo, then the fresh-generation smoke pipeline."
+    dependsOn(smokeTest)
+}
+
+tasks.register("regenerationTest") {
+    group = "verification"
+    description = "Runs native generated-ownership regressions and the fresh-generation smoke pipeline."
     dependsOn(smokeTest)
 }
 

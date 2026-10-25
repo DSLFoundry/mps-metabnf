@@ -1493,5 +1493,140 @@
       </node>
     </node>
   </node>
+  <node concept="24kQdi" id="7Q_67PUJ0ap">
+    <property role="3GE5qa" value="regeneration" />
+    <ref role="1XX52x" to="6o2a:7Q_67PU$yi5" resolve="GenerationLedger" />
+    <node concept="3EZMnI" id="7Q_67PUJ0aq" role="2wV5jI">
+      <node concept="2iRkQZ" id="7Q_67PUJ0ar" role="2iSdaV" />
+      <node concept="3F0ifn" id="7Q_67PUJ09X" role="3EZMnx">
+        <property role="3F0ifm" value="Generated ownership ledger (managed by reviewed regeneration)" />
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0a2" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0a3" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0a1" role="3EZMnx">
+          <property role="3F0ifm" value="grammar:" />
+        </node>
+        <node concept="1iCGBv" id="7Q_67PUJ09Y" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;missing grammar&gt;" />
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yif" resolve="grammar" />
+          <node concept="1sVBvm" id="7Q_67PUJ09Z" role="1sWHZn">
+            <node concept="3SHvHV" id="7Q_67PUJ0a0" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0a7" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0a8" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0a6" role="3EZMnx">
+          <property role="3F0ifm" value="version:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0a5" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yi7" resolve="version" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0ab" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0ac" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0aa" role="3EZMnx">
+          <property role="3F0ifm" value="generatorVersion:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0a9" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yi8" resolve="generatorVersion" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0af" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0ag" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0ae" role="3EZMnx">
+          <property role="3F0ifm" value="toolchain:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0ad" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yi9" resolve="toolchain" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0aj" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0ak" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0ai" role="3EZMnx">
+          <property role="3F0ifm" value="inputFingerprint:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0ah" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yia" resolve="inputFingerprint" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0an" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0ao" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0am" role="3EZMnx">
+          <property role="3F0ifm" value="profileFingerprint:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0al" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yib" resolve="profileFingerprint" />
+        </node>
+      </node>
+      <node concept="3F0ifn" id="7Q_67PUJ0a4" role="3EZMnx">
+        <property role="3F0ifm" value="Whole-root generated artifacts; keep handwritten extensions in separate roots" />
+      </node>
+      <node concept="3F2HdR" id="7Q_67PUJ09V" role="3EZMnx">
+        <ref role="1NtTu8" to="6o2a:7Q_67PU$yig" resolve="artifacts" />
+        <node concept="2iRkQZ" id="7Q_67PUJ09W" role="2czzBx" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="7Q_67PUJ0aO">
+    <property role="3GE5qa" value="regeneration" />
+    <ref role="1XX52x" to="6o2a:7Q_67PU$yi6" resolve="GeneratedArtifact" />
+    <node concept="3EZMnI" id="7Q_67PUJ0aP" role="2wV5jI">
+      <node concept="2iRkQZ" id="7Q_67PUJ0aQ" role="2iSdaV" />
+      <node concept="3EZMnI" id="7Q_67PUJ0au" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0av" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0at" role="3EZMnx">
+          <property role="3F0ifm" value="artifact:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0as" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yic" resolve="artifactKey" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0a$" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0a_" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0az" role="3EZMnx">
+          <property role="3F0ifm" value="source:" />
+        </node>
+        <node concept="1iCGBv" id="7Q_67PUJ0aw" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;missing source&gt;" />
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yih" resolve="source" />
+          <node concept="1sVBvm" id="7Q_67PUJ0ax" role="1sWHZn">
+            <node concept="3SHvHV" id="7Q_67PUJ0ay" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0aE" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0aF" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0aD" role="3EZMnx">
+          <property role="3F0ifm" value="target:" />
+        </node>
+        <node concept="1iCGBv" id="7Q_67PUJ0aA" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;missing target&gt;" />
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yii" resolve="target" />
+          <node concept="1sVBvm" id="7Q_67PUJ0aB" role="1sWHZn">
+            <node concept="3SHvHV" id="7Q_67PUJ0aC" role="2wV5jI" />
+          </node>
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0aI" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0aJ" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0aH" role="3EZMnx">
+          <property role="3F0ifm" value="decision:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0aG" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yie" resolve="decision" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7Q_67PUJ0aM" role="3EZMnx">
+        <node concept="2iRfu4" id="7Q_67PUJ0aN" role="2iSdaV" />
+        <node concept="3F0ifn" id="7Q_67PUJ0aL" role="3EZMnx">
+          <property role="3F0ifm" value="baseline:" />
+        </node>
+        <node concept="3F0A7n" id="7Q_67PUJ0aK" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7Q_67PU$yid" resolve="baseline" />
+        </node>
+      </node>
+    </node>
+  </node>
 </model>
 

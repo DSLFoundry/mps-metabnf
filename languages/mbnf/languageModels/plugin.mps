@@ -36,6 +36,7 @@
     <import index="2k9e" ref="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea/java:jetbrains.mps.smodel.adapter.structure(MPS.Core/)" />
     <import index="gp1f" ref="9c03c641-469f-49e7-aeed-44a3d19b7253/java:metabnf.rascal(metabnf/)" />
     <import index="9toz" ref="9c03c641-469f-49e7-aeed-44a3d19b7253/java:metabnf.usability(metabnf/)" />
+    <import index="gzg6" ref="r:bd169fc2-8807-4d2c-b3fa-cc287f3c07b0(metabnf.regeneration)" />
   </imports>
   <registry>
     <language id="a247e09e-2435-45ba-b8d2-07e93feba96a" name="jetbrains.mps.baseLanguage.tuples">
@@ -480,6 +481,9 @@
       </node>
       <node concept="tCFHf" id="719uA0HlT0_" role="ftvYc">
         <ref role="tCJdB" node="719uA0HlT0e" resolve="TransferEnrichmentMetadata" />
+      </node>
+      <node concept="tCFHf" id="7Q_67PURZ_F" role="ftvYc">
+        <ref role="tCJdB" node="7Q_67PURZ$p" resolve="ProtectedRegeneration" />
       </node>
     </node>
     <node concept="tT9cl" id="6xuOfB$zJUv" role="2f5YQi">
@@ -7138,6 +7142,46 @@
           </node>
         </node>
       </node>
+    </node>
+  </node>
+  <node concept="sE7Ow" id="7Q_67PURZ$p">
+    <property role="TrG5h" value="ProtectedRegeneration" />
+    <property role="2uzpH1" value="Preview Protected Regeneration..." />
+    <property role="1rBW0U" value="true" />
+    <property role="1WHSii" value="Review source-traced adoption and updates before modifying generated aspects" />
+    <property role="2YLI8m" value="6u2MFnph2wS/none" />
+    <node concept="tnohg" id="7Q_67PURZ$q" role="tncku">
+      <node concept="3clFbS" id="7Q_67PURZ$r" role="2VODD2">
+        <node concept="3clFbF" id="7Q_67PURZ_s" role="3cqZAp">
+          <node concept="2YIFZM" id="7Q_67PURZ_w" role="3clFbG">
+            <ref role="1Pybhc" to="gzg6:7Q_67PUOb_o" resolve="RegenerationActions" />
+            <ref role="37wK5l" to="gzg6:7Q_67PUObB7" resolve="open" />
+            <node concept="2OqwBi" id="7Q_67PURZ_l" role="37wK5m">
+              <node concept="2WthIp" id="7Q_67PURZ_m" role="2Oq$k0" />
+              <node concept="1DTwFV" id="7Q_67PURZ_n" role="2OqNvi">
+                <ref role="2WH_rO" node="7Q_67PURZ_f" resolve="project" />
+              </node>
+            </node>
+            <node concept="2OqwBi" id="7Q_67PURZ_o" role="37wK5m">
+              <node concept="2WthIp" id="7Q_67PURZ_p" role="2Oq$k0" />
+              <node concept="3gHZIF" id="7Q_67PURZ_q" role="2OqNvi">
+                <ref role="2WH_rO" node="7Q_67PURZ_h" resolve="model" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1DS2jV" id="7Q_67PURZ_f" role="1NuT2Z">
+      <property role="TrG5h" value="project" />
+      <ref role="1DUlNI" to="qq03:~MPSCommonDataKeys.MPS_PROJECT" resolve="MPS_PROJECT" />
+      <node concept="1oajcY" id="7Q_67PURZ_g" role="1oa70y" />
+    </node>
+    <node concept="2S4$dB" id="7Q_67PURZ_h" role="1NuT2Z">
+      <property role="TrG5h" value="model" />
+      <node concept="3Tm6S6" id="7Q_67PURZ_i" role="1B3o_S" />
+      <node concept="1oajcY" id="7Q_67PURZ_j" role="1oa70y" />
+      <node concept="H_c77" id="7Q_67PURZ_k" role="1tU5fm" />
     </node>
   </node>
 </model>

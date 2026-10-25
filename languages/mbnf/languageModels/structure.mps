@@ -789,5 +789,83 @@
       <ref role="20lvS9" to="tpck:gw2VY9q" resolve="BaseConcept" />
     </node>
   </node>
+  <node concept="1TIwiD" id="7Q_67PU$yi5">
+    <property role="TrG5h" value="GenerationLedger" />
+    <property role="EcuMT" value="9053669553104626821" />
+    <property role="19KtqR" value="true" />
+    <property role="3GE5qa" value="regeneration" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="7Q_67PU$yi7" role="1TKVEl">
+      <property role="TrG5h" value="version" />
+      <property role="IQ2nx" value="9053669553104626823" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7Q_67PU$yi8" role="1TKVEl">
+      <property role="TrG5h" value="generatorVersion" />
+      <property role="IQ2nx" value="9053669553104626824" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7Q_67PU$yi9" role="1TKVEl">
+      <property role="TrG5h" value="toolchain" />
+      <property role="IQ2nx" value="9053669553104626825" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7Q_67PU$yia" role="1TKVEl">
+      <property role="TrG5h" value="inputFingerprint" />
+      <property role="IQ2nx" value="9053669553104626826" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7Q_67PU$yib" role="1TKVEl">
+      <property role="TrG5h" value="profileFingerprint" />
+      <property role="IQ2nx" value="9053669553104626827" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="7Q_67PU$yif" role="1TKVEi">
+      <property role="20kJfa" value="grammar" />
+      <property role="IQ2ns" value="9053669553104626831" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2b2ZYR3vfui" resolve="grammar" />
+    </node>
+    <node concept="1TJgyj" id="7Q_67PU$yig" role="1TKVEi">
+      <property role="20kJfa" value="artifacts" />
+      <property role="IQ2ns" value="9053669553104626832" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <ref role="20lvS9" node="7Q_67PU$yi6" resolve="GeneratedArtifact" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="7Q_67PU$yi6">
+    <property role="TrG5h" value="GeneratedArtifact" />
+    <property role="EcuMT" value="9053669553104626822" />
+    <property role="3GE5qa" value="regeneration" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="7Q_67PU$yic" role="1TKVEl">
+      <property role="TrG5h" value="artifactKey" />
+      <property role="IQ2nx" value="9053669553104626828" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7Q_67PU$yid" role="1TKVEl">
+      <property role="TrG5h" value="baseline" />
+      <property role="IQ2nx" value="9053669553104626829" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7Q_67PU$yie" role="1TKVEl">
+      <property role="TrG5h" value="decision" />
+      <property role="IQ2nx" value="9053669553104626830" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="7Q_67PU$yih" role="1TKVEi">
+      <property role="20kJfa" value="source" />
+      <property role="IQ2ns" value="9053669553104626833" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    </node>
+    <node concept="1TJgyj" id="7Q_67PU$yii" role="1TKVEi">
+      <property role="20kJfa" value="target" />
+      <property role="IQ2ns" value="9053669553104626834" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    </node>
+  </node>
 </model>
 
