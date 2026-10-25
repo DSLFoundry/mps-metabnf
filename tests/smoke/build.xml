@@ -131,6 +131,7 @@
         <arg value="-Xmx2g" />
         <arg value="-ea" />
         <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
+        <arg value="-Djna.boot.library.path=${mps.home}/lib/jna/amd64" />
         <arg value="-Dmetabnf.smoke.project=${smoke.project}" />
         <arg value="-Dmetabnf.smoke.repo=${repo.root}" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
@@ -198,6 +199,7 @@
         <arg value="-Xmx2g" />
         <arg value="-ea" />
         <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
+        <arg value="-Djna.boot.library.path=${mps.home}/lib/jna/amd64" />
         <arg value="-Dmetabnf.smoke.project=${smoke.project}" />
         <arg value="-Didea.config.path=${smoke.dir}/config" />
         <arg value="-Didea.system.path=${smoke.dir}/system" />
@@ -206,7 +208,54 @@
     </runMPS>
   </target>
 
-  <target name="smoke" depends="validate-ast">
+  <target name="editor-tests" depends="core">
+    <path id="bundled.plugins">
+      <dirset dir="${mps.home}/plugins" includes="*" />
+    </path>
+    <pathconvert property="mps.plugins" refid="bundled.plugins" />
+    <echo message="EDITOR: compiling checked-in generated Demo aspects and native interaction fixtures." />
+    <mps.make mpsHome="${mps.home}" failOnError="true">
+      <repository>
+        <modules dir="${smoke.project}/languages" />
+        <modules dir="${smoke.project}/solutions" />
+      </repository>
+      <module file="${smoke.project}/languages/Demo/Demo.mpl" />
+      <module file="${smoke.project}/solutions/metabnf.editor.tests/metabnf.editor.tests.msd" />
+      <jvmargs>
+        <arg value="-Xmx2g" />
+        <arg value="-ea" />
+        <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
+        <arg value="-Didea.config.path=${smoke.dir}/config" />
+        <arg value="-Didea.system.path=${smoke.dir}/system" />
+        <arg value="-Didea.log.path=${smoke.dir}/log" />
+      </jvmargs>
+    </mps.make>
+    <echo message="EDITOR: starting native MPS editor tests; assertion failures are separate from make failures." />
+    <launchtests mpsHome="${mps.home}" autoPluginDiscovery="true" haltOnFailure="true"
+                 reports="${smoke.dir}/editor-reports">
+      <project path="${smoke.project}" />
+      <repository>
+        <modules dir="${smoke.project}/languages" />
+        <modules dir="${smoke.project}/solutions" />
+      </repository>
+      <testmodules>
+        <fileset dir="${smoke.project}/solutions/metabnf.editor.tests" includes="metabnf.editor.tests.msd" />
+      </testmodules>
+      <jvmargs>
+        <arg value="-Xmx2g" />
+        <arg value="-ea" />
+        <arg value="-Djava.awt.headless=true" />
+        <arg value="-Djna.boot.library.path=${mps.home}/lib/jna/amd64" />
+        <arg value="-Dplugin.path=${mps.plugins}" />
+        <arg value="-Djava.io.tmpdir=${smoke.dir}/tmp" />
+        <arg value="-Didea.config.path=${smoke.dir}/editor-config" />
+        <arg value="-Didea.system.path=${smoke.dir}/editor-system" />
+        <arg value="-Didea.log.path=${smoke.dir}/editor-log" />
+      </jvmargs>
+    </launchtests>
+  </target>
+
+  <target name="smoke" depends="editor-tests,validate-ast">
     <echo message="MetaBNF smoke test passed. Artifacts: ${smoke.dir}" />
   </target>
 

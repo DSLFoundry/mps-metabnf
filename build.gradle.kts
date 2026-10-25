@@ -257,9 +257,41 @@ val prepareAntlr = tasks.register<Sync>("prepareAntlr") {
 
 smokeTest.configure {
     dependsOn(prepareAntlr, prepareParserBridge)
+    timeout.set(java.time.Duration.ofMinutes(15))
     pathProperties.put("antlr.jar", layout.buildDirectory.file(
         "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
     ).map { it.asFile })
+    doLast {
+        val reports = layout.buildDirectory.dir("mps-smoke/editor-reports").get().asFile
+        val factory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
+        val cases = fileTree(reports).matching { include("TEST-*.xml") }.files.flatMap { report ->
+            val document = factory.newDocumentBuilder().parse(report)
+            val nodes = document.getElementsByTagName("testcase")
+            (0 until nodes.length).map { index ->
+                val element = nodes.item(index) as org.w3c.dom.Element
+                check(element.getElementsByTagName("failure").length == 0 &&
+                    element.getElementsByTagName("error").length == 0 &&
+                    element.getElementsByTagName("skipped").length == 0) {
+                    "Editor test failed or skipped: ${element.getAttribute("classname")} (${report.name})"
+                }
+                element.getAttribute("classname") + "." + element.getAttribute("name")
+            }
+        }
+        val expected = setOf("NumberTyping", "NumberDeletion", "NumberUndo").map {
+            "metabnf.editor.tests.interactions.${it}_Test.test_$it()"
+        }.toSet()
+        check(cases.size == expected.size && cases.toSet() == expected) {
+            "Unexpected native editor-test inventory: expected $expected, got $cases; see $reports"
+        }
+        logger.lifecycle("EDITOR: ${cases.size} native interaction tests passed; inventory verified.")
+    }
+}
+
+tasks.register("editorInteractionTest") {
+    group = "verification"
+    description = "Runs native editor conformance on generated Demo, then the fresh-generation smoke pipeline."
+    dependsOn(smokeTest)
 }
 
 val antlrBridgeTest = tasks.register<Exec>("antlrBridgeTest") {

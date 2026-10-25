@@ -54,6 +54,8 @@ jobs:
           path: |
             build-ci.log
             build/mps-*/log/**
+            build/mps-*/editor-log/**
+            build/mps-*/editor-reports/**
             build/mps-*/project/**/*.mps
             build/mps-*/project/**/*.mpl
             build/reports/**

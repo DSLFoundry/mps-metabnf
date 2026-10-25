@@ -10,6 +10,7 @@ authoring, generation, every MetaBNF Tools action, and troubleshooting.
 | [Import ANTLR and Rascal grammar files](importing-grammars.md) | Native Tools actions, bundled Java tools, supported subsets, target models, cancellation and failures |
 | [Typed usability annotations](usability-annotations.md) | Flag/list/optional-group intent, projectional authoring, provenance, suppression, validation and native service APIs |
 | [Profiles and enrichment](profiles-and-enrichment.md) | Preview/apply pattern recognition, conservative reimport transfer, projection choices, native Inspector and backend compatibility |
+| [Native editor interaction tests](editor-interaction-tests.md) | Generated Demo keyboard/action fixtures, caret/undo assertions, CI registration and failure diagnostics |
 
 For optional legacy source/model mapping and Rascal export, see the
 [ANTLR bridge guide](../antlr-bridge/README.md) and
