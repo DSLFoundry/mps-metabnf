@@ -197,7 +197,11 @@ val compileRascalBridgePlugin = tasks.register<JavaCompile>("compileRascalBridge
     description = "Compiles the Java adapter used by MetaBNF's native parser actions."
     source(fileTree("mps-plugin/src/main/java") { include("**/*.java") })
     classpath = files(mpsDefaults.mpsHome.map { home ->
-        fileTree(home.asFile) { include("lib/*.jar", "plugins/**/*.jar") }
+        // Embedded compiler distributions contain IntelliJ classes that must not shadow the platform API.
+        files(
+            home.dir("lib").asFileTree.matching { include("*.jar") },
+            home.dir("plugins").asFileTree.matching { include("*/lib/*.jar") }
+        )
     })
     destinationDirectory.set(layout.buildDirectory.dir("rascal-bridge-plugin/classes"))
     sourceCompatibility = "21"

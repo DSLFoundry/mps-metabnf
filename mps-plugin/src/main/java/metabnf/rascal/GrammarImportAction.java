@@ -1,8 +1,6 @@
 package metabnf.rascal;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.ModalityState;
-import com.intellij.openapi.progress.PerformInBackgroundOption;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import jetbrains.mps.project.MPSProject;
@@ -78,8 +76,7 @@ public final class GrammarImportAction {
             return;
         }
         // The target can change after discovery; resolve and validate it again in the import command.
-        Task.Backgroundable task = new Task.Backgroundable(ideaProject, "Importing " + tool + " grammar", true,
-                PerformInBackgroundOption.ALWAYS_BACKGROUND) {
+        Task.Backgroundable task = new Task.Backgroundable(ideaProject, "Importing " + tool + " grammar", true) {
             @Override public void run(ProgressIndicator indicator) {
                 Path work = null;
                 try {
@@ -108,7 +105,7 @@ public final class GrammarImportAction {
                                             + failure.getMessage() + "\nThe imported grammar is retained. Inspect metadata before retrying.",
                                     "MetaBNF enrichment", JOptionPane.ERROR_MESSAGE);
                         }
-                    }, ModalityState.nonModal());
+                    });
                 } catch (com.intellij.openapi.progress.ProcessCanceledException cancelled) {
                     throw cancelled;
                 } catch (InterruptedException cancelled) {
