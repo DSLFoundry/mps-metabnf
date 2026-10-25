@@ -1,6 +1,7 @@
 # MetaBNF user documentation
 
-Use JetBrains MPS 2026.1. Start with the core guide; it covers setup, grammar
+Use the JetBrains MPS version pinned in the
+[build version catalog](../gradle/libs.versions.toml). Start with the core guide; it covers setup, grammar
 authoring, generation, every MetaBNF Tools action, and troubleshooting.
 
 | Guide | What it covers |

@@ -8,7 +8,8 @@ converter for arbitrary textual languages.
 
 ## Setup
 
-Use **JetBrains MPS 2026.1**. Save existing work before upgrading; if MPS
+Use the **JetBrains MPS version pinned in the
+[build version catalog](../gradle/libs.versions.toml)**. Save existing work before upgrading; if MPS
 reports pending migrations, run **Run Migration Assistant** through
 **Find Action** (Ctrl+Shift+A), then rebuild.
 

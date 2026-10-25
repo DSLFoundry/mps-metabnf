@@ -7,7 +7,8 @@ This imports a supported subset, not arbitrary ANTLR/Rascal grammars.
 
 ## Install
 
-Use MPS 2026.1. Build the distribution with `.\gradlew.bat assemble` on Windows
+Use the MPS version pinned in the [build version catalog](../gradle/libs.versions.toml).
+Build the distribution with `.\gradlew.bat assemble` on Windows
 (`./gradlew assemble` elsewhere), or obtain a published distribution ZIP.
 The build downloads the pinned tools and legal/source materials.
 

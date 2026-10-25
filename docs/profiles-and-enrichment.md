@@ -69,9 +69,12 @@ Use **Tools > Configure Generation Profile...**. Choose `vanilla` or the explici
 the action again displays its computed inspection. Profiles are version `1`.
 The native root can also be created through **New Root**.
 
-**Vanilla** declares MPS 2026.1 and the capability descriptors below.
+**Vanilla** declares the project's pinned MPS toolchain and the capability
+descriptors below. See the [build version catalog](../gradle/libs.versions.toml)
+for the selected platform and the profile's structured inspection for its
+declared requirements.
 **Grammar Cells is blocked**, not supported: the inspected local MPS-extensions
-checkout targets prerelease build `263.6259.116`, not this project's MPS 2026.1.
+checkout targets a different prerelease platform than this project's pinned MPS.
 No compatible Grammar Cells backend has been verified or bundled. Selecting
 that profile produces `MBNF_BACKEND_UNAVAILABLE`, never a platform change or
 silent fallback.
