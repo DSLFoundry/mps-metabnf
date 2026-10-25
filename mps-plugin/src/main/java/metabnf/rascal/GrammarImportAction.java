@@ -1,6 +1,8 @@
 package metabnf.rascal;
 
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ModalityState;
+import com.intellij.openapi.progress.PerformInBackgroundOption;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import jetbrains.mps.project.MPSProject;
@@ -75,7 +77,9 @@ public final class GrammarImportAction {
             error("Enter a simple language identifier, for example Mini.");
             return;
         }
-        new Task.Backgroundable(ideaProject, "Importing " + tool + " grammar", true) {
+        // The target can change after discovery; resolve and validate it again in the import command.
+        Task.Backgroundable task = new Task.Backgroundable(ideaProject, "Importing " + tool + " grammar", true,
+                PerformInBackgroundOption.ALWAYS_BACKGROUND) {
             @Override public void run(ProgressIndicator indicator) {
                 Path work = null;
                 try {
@@ -86,6 +90,7 @@ public final class GrammarImportAction {
                     Path interchange = GrammarTools.export(plugin, tool, source, start, work, indicator::isCanceled);
                     GrammarModelImporter.Grammar grammar = GrammarModelImporter.read(interchange);
                     indicator.checkCanceled();
+                    // Import and dialogs need the EDT; wait to report command failures before finishing the task.
                     ApplicationManager.getApplication().invokeAndWait(() -> {
                         if (ideaProject.isDisposed() || indicator.isCanceled()) return;
                         SNodeReference[] imported = new SNodeReference[1];
@@ -103,7 +108,7 @@ public final class GrammarImportAction {
                                             + failure.getMessage() + "\nThe imported grammar is retained. Inspect metadata before retrying.",
                                     "MetaBNF enrichment", JOptionPane.ERROR_MESSAGE);
                         }
-                    });
+                    }, ModalityState.nonModal());
                 } catch (com.intellij.openapi.progress.ProcessCanceledException cancelled) {
                     throw cancelled;
                 } catch (InterruptedException cancelled) {
@@ -119,10 +124,13 @@ public final class GrammarImportAction {
                     }
                 }
             }
-        }.queue();
+        };
+        // Run the bundled parser off the EDT so the IDE stays responsive and cancellation remains available.
+        task.queue();
     }
 
     private static void error(String message) {
+        // Failures can originate in the parser worker; show the notification on the EDT.
         ApplicationManager.getApplication().invokeLater(() ->
                 JOptionPane.showMessageDialog(null, message, "MetaBNF grammar import", JOptionPane.ERROR_MESSAGE));
     }
