@@ -11,3 +11,4 @@ dependencies text merge=mps
 gradlew text eol=lf
 gradlew.bat text eol=crlf
 gradle/wrapper/gradle-wrapper.jar binary
+third-party/licenses/* text eol=lf

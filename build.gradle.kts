@@ -98,6 +98,7 @@ val stageParserTools = tasks.register<Sync>("stageParserTools") {
 }
 val downloadParserLicenses = tasks.register("downloadParserLicenses") {
     inputs.file("third-party/license-resources.tsv")
+    inputs.dir("third-party/licenses")
     outputs.dir(layout.buildDirectory.dir("parser-tools/upstream-licenses"))
     doLast {
         file("third-party/license-resources.tsv").readLines()
@@ -105,7 +106,10 @@ val downloadParserLicenses = tasks.register("downloadParserLicenses") {
                 val (name, expected, url) = line.split('|')
                 val destination = layout.buildDirectory.file("parser-tools/upstream-licenses/$name").get().asFile
                 destination.parentFile.mkdirs()
-                if (!destination.exists()) {
+                val retained = file("third-party/licenses/$name")
+                if (retained.exists()) {
+                    retained.copyTo(destination, overwrite = true)
+                } else if (!destination.exists()) {
                     java.net.URI(url).toURL().openStream().use { input ->
                         destination.outputStream().use { input.copyTo(it) }
                     }
@@ -119,7 +123,7 @@ val downloadParserLicenses = tasks.register("downloadParserLicenses") {
 val prepareParserLegal = tasks.register<Sync>("prepareParserLegal") {
     dependsOn(prepareRascal, downloadParserLicenses)
     into(layout.buildDirectory.dir("parser-tools/legal"))
-    from("third-party")
+    from("third-party") { exclude("licenses/**") }
     from("LICENSE") { rename { "MetaBNF-LICENSE" } }
     from(downloadParserLicenses) { into("licenses") }
     from(parserLegalArtifacts) { into("reference-artifacts") }

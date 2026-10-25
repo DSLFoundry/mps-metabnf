@@ -25,6 +25,11 @@ Apache-2.0 code. The ANTLR bridge JAR is built from this repository's
 - `licenses/` contains full supplementary upstream license texts and LSP4J's
   notice. `license-resources.tsv` records their upstream locations and
   SHA-256 hashes; changed content fails the build for review.
+  The exact previously verified ASM text is retained in the source checkout's
+  `third-party/licenses/ASM-LICENSE`: its upstream now returns an HTML bot
+  challenge on CI. The same checksum is enforced, and its notice was
+  cross-checked against the included ASM source artifact. Retaining it avoids
+  accepting a challenge page or weakening redistribution checks.
 - `notices/<artifact>/` preserves each original archive's license, notice
   and Maven metadata paths without merging conflicting filenames.
 - `source-headers/` reproduces original copyright/license headers from Java
