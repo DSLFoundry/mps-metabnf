@@ -1,11 +1,13 @@
 # Typed usability annotations
 
 This is the foundation for [issue #3](https://github.com/DSLFoundry/mps-metabnf/issues/3):
-native semantic metadata, not an editor backend. The shared recognizer and
+native semantic metadata, separate from editor backend selection. The shared recognizer and
 profile resolver are described in [Profiles and enrichment](profiles-and-enrichment.md).
 Existing grammars need no migration or annotations. Generators explicitly drop
-annotation-set roots; adding metadata does not change generated structure,
-editors, text generators, or parser mappings at this stage.
+annotation-set roots. The vanilla generator now supports existing flags and
+approved whole-rule optional groups as described in
+[interactive flags and groups](interactive-flags-and-groups.md). Metadata never
+silently lowers flat ranges or rewrites parser mappings.
 
 ## Native schema
 
@@ -40,7 +42,8 @@ Enrichment respects these decisions without applying AST/mapping transforms.
 | `PatternAnnotation` | Grammar-local `target`, typed `pattern` and `mappingImpact`; review a flag/list/group/literal-choice interpretation without lowering AST nodes |
 
 `OptionalGroupAnnotation.distinguishEmpty` records whether absent and
-present-but-empty groups must remain distinct when implemented. It does not
+present-but-empty groups must remain distinct. The supported existing-child
+route preserves this distinction. The annotation does not
 introduce an AST node or change the grammar's cardinalities. Where the current
 grammar cannot encode that distinction, a later explicit lowering/mapping
 decision is needed. Endpoints reference term identities, so inserting terms

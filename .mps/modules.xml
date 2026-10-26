@@ -3,6 +3,7 @@
   <component name="MPSProject">
     <projectModules>
       <modulePath path="$PROJECT_DIR$/languages/Demo/Demo.mpl" folder="test" />
+      <modulePath path="$PROJECT_DIR$/languages/DemoUsability/DemoUsability.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/Python/Python.mpl" folder="test" />
       <modulePath path="$PROJECT_DIR$/languages/TestLanguage/TestLanguage.mpl" folder="test" />
       <modulePath path="$PROJECT_DIR$/languages/mbnf/mbnf.mpl" folder="" />

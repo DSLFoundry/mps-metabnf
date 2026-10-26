@@ -278,7 +278,14 @@ smokeTest.configure {
                 element.getAttribute("classname") + "." + element.getAttribute("name")
             }
         }
-        val expected = setOf("NumberTyping", "NumberDeletion", "NumberUndo").map {
+        val expected = setOf(
+            "NumberTyping", "NumberDeletion", "NumberUndo",
+            "FlagTyping", "FlagDeletion", "FlagUndo", "FlagFormToggle",
+            "FlagCompletion", "FlagContextRemoval",
+            "GroupTrigger", "GroupTriggerUndo", "GroupEmptyRemoval",
+            "GroupPopulatedRemovalRequiresApproval", "GroupPopulatedRemoval",
+            "GroupPopulatedRemovalUndo"
+        ).map {
             "metabnf.editor.tests.interactions.${it}_Test.test_$it()"
         }.toSet() + setOf(
             "reviewedAdoptionPreservesIdentity", "stalePreviewRejectsBeforeMutation",
@@ -287,7 +294,15 @@ smokeTest.configure {
             "nonGrammarSourceIsRejected"
         ).map { "metabnf.editor.tests.regeneration.RegenerationOwnership_Test.test_$it()" } + setOf(
             "mapOrderIndependent", "scalarTypesAreDistinct", "invalidMapKeysAreRejected"
-        ).map { "metabnf.editor.tests.regeneration.GenerationFingerprints_Test.test_$it()" }
+        ).map { "metabnf.editor.tests.regeneration.GenerationFingerprints_Test.test_$it()" } + setOf(
+            "implicitFlagRoutes", "autoReleasesExplicitOverride", "copiedOccurrenceUsesSourceTrace",
+            "unavailableBackendIsRejected", "unimplementedProjectionIsRejected",
+            "existingOptionalChildIsAccepted", "flatRangeNeedsExplicitLowering",
+            "mandatoryChildIsNotOptionalStorage", "unapprovedIntentDoesNotLower",
+            "actualGeneratedProfileControls", "nativePersistenceRetainsFlagAndEmptyClause",
+            "ruleOverridesRemainProjectionLocal", "suppressionCannotHideInvalidAuthoredMetadata",
+            "actualGenerationRejectsUnsupportedBackendAndFlatRange"
+        ).map { "metabnf.editor.tests.usability.InteractiveGeneration_Test.test_$it()" }
         check(cases.size == expected.size && cases.toSet() == expected) {
             "Unexpected native editor-test inventory: expected $expected, got $cases; see $reports"
         }

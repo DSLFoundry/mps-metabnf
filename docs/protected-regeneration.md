@@ -13,8 +13,9 @@ Use the MPS and Java runtime pinned in the [build catalog](../gradle/libs.versio
    bootstrap, follow the [core guide](metabnf-base.md).
 3. Select the final transient model, then choose
    **Tools > Preview Protected Regeneration...**.
-4. Select the default vanilla profile or one of the grammar's generation
-   profiles. Review the fingerprint, decisions and any conflicts.
+4. Review the grammar's same-model generation profile, or the default vanilla
+   profile when none is configured. Review the fingerprint, decisions and
+   any conflicts.
 5. Approve only the intended ownership and changes. Check/rebuild the target
    language afterward. Cancellation does not change models.
 
@@ -68,7 +69,9 @@ preview.applicable();
 ProtectedRegeneration.apply(preview);
 ```
 
-Here `profile == null` selects the default vanilla profile. Non-null profiles
+Here `profile == null` records the default vanilla profile. Automation must pass
+the same-model profile consumed by generation when one is configured; the Tools
+action does not offer a misleading default alongside it. Non-null profiles
 must belong to the grammar and pass shared profile inspection. Inputs are native
 nodes/models: use retained **final** generated roots and all corresponding
 target aspects together. The source grammar and affected models must be editable
@@ -109,14 +112,16 @@ generation, stale plans, generated edits, extension survival during an update,
 ambiguous/conflicting legacy roots, unavailable profiles and non-grammar inputs.
 They use real temporary MPS modules. Three native `BTestCase` tests check order-independent
 metadata fingerprints, distinct scalar types and rejected invalid map keys.
-CI enforces their exact inventory alongside the three native editor tests.
+CI enforces their exact inventory alongside the native editor/usability tests.
 The isolated smoke pipeline additionally exercises legacy import, reviewed
 adoption, fresh protected creation and repeated generation of all Demo aspects,
 reference cleanup, native constraints, subsequent compilation and unchanged
 generation after persistence/process reload.
 
-This is protection/provenance for the current basic generator, not delivery of
-the future interactive flag, optional-group, list, block or expression policies.
+This service provides protection/provenance, not interaction policies.
+Supported flags and optional children are described
+[separately](interactive-flags-and-groups.md); list, block and expression
+policies are not implied by ownership protection.
 Grammar Cells remains unavailable until a compatible backend is verified.
 Native checks, generation, compilation and any applicable migration checks are
 separate gates; this repository does not currently have a CI normalization/

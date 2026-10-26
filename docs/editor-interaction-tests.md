@@ -25,6 +25,15 @@ The baseline interaction contract covers:
 | NumberDeletion | Invoke the registered MPS Backspace action after `12` | Number value `1`, caret at end |
 | NumberUndo | Type `2` after `1`, invoke the registered IDE Undo action | Number value `1`, caret restored |
 
+The [interactive flag/group contract](interactive-flags-and-groups.md) adds
+typing, deletion, Undo, Inspector toggling, keyword completion and contextual
+removal. Optional-child fixtures cover trigger/payload focus, empty removal,
+first-attempt protection of populated content, deliberate removal and Undo.
+They assert independent before/result ASTs, caret/selection, and exact TextGen.
+Separate `NodesTestCase` fixtures exercise profile overrides, original-source
+traces, storage rejection, actual generated control shapes, and disposable
+native file save/load with absent, empty and populated children.
+
 Typing uses MPS's real key-event dispatcher. Backspace and Undo use native
 `InvokeActionStatement` nodes because the low-level dispatcher does not route
 those global shortcuts through the IDE action system in this headless runner.
@@ -37,6 +46,7 @@ For a quicker local iteration after preparing the project wrapper:
 ```powershell
 .\build\mopsw.cmd check model 'metabnf.editor.tests.interactions@tests' --limit 0
 .\build\mopsw.cmd test 'metabnf.editor.tests.interactions@tests' --json
+.\build\mopsw.cmd test 'metabnf.editor.tests.usability@tests' --json
 ```
 
 This command tests the currently generated Demo. The Gradle command additionally
@@ -47,7 +57,7 @@ smoke contract. Set the invoking process's `JAVA_HOME` to the runtime reported b
 Editor fixtures deliberately run before the smoke pipeline replaces Demo's
 aspects. The legacy importer and deliberate fresh creation allocate different
 concept/property identities, whereas protected adoption retains existing ones.
-The three editor fixtures prove interaction with compiled generated editors;
+The editor fixtures prove interaction with compiled generated editors;
 separate ownership fixtures and the protected smoke path check regeneration.
 The tests do not hide identity changes by rewriting fixture registries at runtime.
 
@@ -61,8 +71,8 @@ registered editor actions; include undo. Where a feature supports persistence
 or export, add independent reload and syntax assertions to its smoke coverage.
 Do not claim those capabilities from caret/AST assertions alone.
 
-The Number fixtures establish the baseline editing/undo contract, not coverage
-of future flags, optional groups, lists, blocks, expressions or serialization.
+The Number fixtures establish the baseline editing/undo contract. Flag/group
+coverage does not establish list, block, expression, or parser/mapping coverage.
 Each new interaction needs its own applicable contract cases and an explicit
 supported/unsupported matrix. Update the exact inventory in `build.gradle.kts`
 when registering fixtures; empty, skipped, missing or duplicate cases fail.
@@ -78,5 +88,5 @@ and bounds the smoke pipeline to 15 minutes. CI uploads those diagnostics.
 
 A negative control is to change only NumberTyping's expected Number value from
 `12` to `99` using native MPS editing, run the mops command, require nonzero exit
-and `TEST_FAILED` with three discovered tests, then restore `12` natively and
+and `TEST_FAILED` with the expected nonempty inventory, then restore `12` natively and
 rerun. Do not hand-edit model persistence or leave the negative control enabled.

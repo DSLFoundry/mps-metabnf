@@ -11831,25 +11831,6 @@
             </node>
           </node>
         </node>
-        <node concept="3clFbF" id="7Q_67PUObHi" role="3cqZAp">
-          <node concept="2OqwBi" id="7Q_67PUOpbl" role="3clFbG">
-            <node concept="37vLTw" id="7Q_67PUOoo9" role="2Oq$k0">
-              <ref role="3cqZAo" node="7Q_67PUObHc" resolve="profiles" />
-            </node>
-            <node concept="liA8E" id="7Q_67PUOpbm" role="2OqNvi">
-              <ref role="37wK5l" to="33ny:~List.add(java.lang.Object)" resolve="add" />
-              <node concept="2ShNRf" id="7Q_67PUOpqy" role="37wK5m">
-                <node concept="1pGfFk" id="7Q_67PUOpqH" role="2ShVmc">
-                  <ref role="37wK5l" node="7Q_67PUOb_$" resolve="RegenerationActions.ProfileOption" />
-                  <node concept="Xl_RD" id="7Q_67PUOpqI" role="37wK5m">
-                    <property role="Xl_RC" value="Default vanilla (automatic)" />
-                  </node>
-                  <node concept="10Nm6u" id="7Q_67PUOpqJ" role="37wK5m" />
-                </node>
-              </node>
-            </node>
-          </node>
-        </node>
         <node concept="1DcWWT" id="7Q_67PUObHn" role="3cqZAp">
           <node concept="2OqwBi" id="7Q_67PUOpr2" role="1DdaDG">
             <node concept="liA8E" id="7Q_67PUOpr3" role="2OqNvi">
@@ -11943,6 +11924,37 @@
                           </node>
                         </node>
                       </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node concept="3clFbJ" id="39m6c$KjKs4" role="3cqZAp">
+          <node concept="2OqwBi" id="39m6c$KjKs1" role="3clFbw">
+            <node concept="37vLTw" id="39m6c$KjKs2" role="2Oq$k0">
+              <ref role="3cqZAo" node="7Q_67PUObHc" resolve="profiles" />
+            </node>
+            <node concept="liA8E" id="39m6c$KjKs3" role="2OqNvi">
+              <ref role="37wK5l" to="33ny:~List.isEmpty()" resolve="isEmpty" />
+            </node>
+          </node>
+          <node concept="3clFbS" id="39m6c$KjKs5" role="3clFbx">
+            <node concept="3clFbF" id="7Q_67PUObHi" role="3cqZAp">
+              <node concept="2OqwBi" id="7Q_67PUOpbl" role="3clFbG">
+                <node concept="37vLTw" id="7Q_67PUOoo9" role="2Oq$k0">
+                  <ref role="3cqZAo" node="7Q_67PUObHc" resolve="profiles" />
+                </node>
+                <node concept="liA8E" id="7Q_67PUOpbm" role="2OqNvi">
+                  <ref role="37wK5l" to="33ny:~List.add(java.lang.Object)" resolve="add" />
+                  <node concept="2ShNRf" id="7Q_67PUOpqy" role="37wK5m">
+                    <node concept="1pGfFk" id="7Q_67PUOpqH" role="2ShVmc">
+                      <ref role="37wK5l" node="7Q_67PUOb_$" resolve="RegenerationActions.ProfileOption" />
+                      <node concept="Xl_RD" id="7Q_67PUOpqI" role="37wK5m">
+                        <property role="Xl_RC" value="Default vanilla (automatic)" />
+                      </node>
+                      <node concept="10Nm6u" id="7Q_67PUOpqJ" role="37wK5m" />
                     </node>
                   </node>
                 </node>

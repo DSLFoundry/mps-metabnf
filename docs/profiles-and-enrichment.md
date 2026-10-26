@@ -1,8 +1,9 @@
 # Generation profiles and grammar enrichment
 
-These are native metadata operations in the existing MPS project. They do not
-lower ASTs, rewrite mappings, or generate interactive widgets. Build/setup is
-described in [MetaBNF basics](metabnf-base.md).
+These are native metadata operations in the existing MPS project. Generation
+consumes flag selections for the textual editor and Inspector form; enrichment
+itself does not lower ASTs, rewrite mappings, or generate widgets. Build/setup
+is described in [MetaBNF basics](metabnf-base.md).
 
 ## Preview enrichment
 
@@ -93,7 +94,10 @@ Add `ImplementationSelection` children using normal MPS completion:
 | OptionalGroup | `vanilla.inline-group` | `vanilla.form-group` |
 | LiteralChoice | `vanilla.literal-choice` | `vanilla.choice-field` |
 
-These are selection descriptors, **not generated checkbox/form implementations**.
+The flag's `vanilla.keyword` and `vanilla.checkbox` descriptors are implemented
+for Textual and Form, including explicit opposite selections. Form means the
+same node's MPS Inspector, not a separate AST. Other entries, including Table
+and `vanilla.form-group`, remain capability descriptors, not generated policies.
 Explicit `grammar-cells.flag` / `grammar-cells.list` choices under vanilla are
 incompatible errors. Unknown IDs, duplicate selections, stale targets and
 unsupported profile versions are also diagnosed.
@@ -103,6 +107,13 @@ rule default, pattern default, narrow form/table policy, then profile-wide
 textual default. `auto` releases that level to the remaining rules. Explicit
 choices remain fixed when lower-priority defaults change. Textual/form/table
 selections are independent and do not modify grammar syntax.
+
+The generator consumes at most one profile beside the original grammar.
+No profile selects vanilla flag defaults. Cross-model profiles can be resolved
+through the service but are not discovered by generation. Native source traces,
+not copied node IDs or names, connect intermediate flags to occurrence choices.
+Regenerate after changing selections; profiles are not live editor switches.
+See [interactive flags and groups](interactive-flags-and-groups.md).
 
 Select a profile or selection in the projectional editor and open the MPS
 **Inspector**. It computes implementation, origin, reason, alternatives,
@@ -137,6 +148,8 @@ transactional if native creation/saving itself fails: inspect before retrying.
 
 Resolution returns `implementation`, `origin`, `reason`, `alternatives`,
 `requirements`, and `generationMetadata` with profile ID/version, MPS version,
-dependencies and `capabilityOnly=true`. Both metadata root types are explicitly
-dropped by the existing language generator; current explicit mapping and
-round-trip workflows continue to consume the original grammar.
+dependencies and `capabilityOnly=true`. That marker describes the resolver's
+output: resolving returns a descriptor and does not execute generation. It does
+not mean every descriptor lacks a renderer. Both metadata root types are
+excluded from generated ASTs; existing explicit mapping and round-trip workflows
+continue to consume the original grammar.
