@@ -6,6 +6,7 @@ authoring, generation, every MetaBNF Tools action, and troubleshooting.
 
 | Guide | What it covers |
 | --- | --- |
+| [Vision and approach](vision-and-approach.md) | Why MetaBNF exists: reuse textual parsers, import to MetaBNF, adorn for projectional usability, generate |
 | [MetaBNF basics and actions](metabnf-base.md) | Open/use MetaBNF, write and decorate grammars, generate languages, import generated aspects, action limitations |
 | [Import ANTLR and Rascal grammar files](importing-grammars.md) | Native Tools actions, bundled Java tools, supported subsets, target models, cancellation and failures |
 | [Typed usability annotations](usability-annotations.md) | Flag/list/optional-group intent, projectional authoring, provenance, suppression, validation and native service APIs |

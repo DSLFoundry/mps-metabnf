@@ -3,6 +3,14 @@ Grammar-based MPS-language specification and generation
 This version of MetaBNF works on MPS 2026.1
 
 # Rationale
+MetaBNF connects textual DSLs with MPS, where DSLs are projectional. It does not rebuild a textual language by hand. Instead, it reuses the language's existing parsers and grammars as much as possible:
+
+1. **Import** the textual grammar, for example from ANTLR or Rascal, into an EBNF-like MetaBNF grammar in MPS.
+2. **Adorn** that grammar with typed usability annotations, such as flags, lists, optional groups and projection choices, that make the projectional version pleasant to use.
+3. **Generate** the MPS language, while the original parser remains available to import existing source text.
+
+See [Vision and approach](docs/vision-and-approach.md) for the full picture.
+
 This language tries to achieve similar results as [Ingrid](https://github.com/premun/ingrid) (see also [Ingrid-CS](https://github.com/vaclav/MPS_CSharp) for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
 
 In the meantime, another MPS project named MetaBNF appeared: [MetaBNF by Porsche](https://github.com/porscheofficial/MetaBNF). The approach of Porsche's project is similar to this project, but with a smaller scope, focused on editors, not on parsing. The developer was contacted on the MPS Slack to discuss opportunities to work together or to merge, but no response so far.
@@ -22,6 +30,7 @@ Start at the [user documentation index](docs/README.md).
 
 | Guide | Contents |
 | --- | --- |
+| [Vision and approach](docs/vision-and-approach.md) | Why MetaBNF exists and how import, adornment and generation fit together |
 | [MetaBNF basics and all actions](docs/metabnf-base.md) | Setup, grammar authoring, decoration, language generation, every Tools action, legacy limitations and troubleshooting |
 | [ANTLR and Rascal grammar import](docs/importing-grammars.md) | Java-only import, bundled tools, target models and supported subsets |
 | [Usability annotations](docs/usability-annotations.md) | Projectional authoring, provenance, suppression and native inspection APIs |
