@@ -286,7 +286,7 @@ smokeTest.configure {
             "FlagCompletion", "FlagContextRemoval",
             "GroupTrigger", "GroupTriggerUndo", "GroupEmptyRemoval",
             "GroupPopulatedRemovalRequiresApproval", "GroupPopulatedRemoval",
-            "GroupPopulatedRemovalUndo", "StateMachineMatrixHint"
+            "GroupPopulatedRemovalUndo", "StateMachineMatrixHint", "StateMachineProjectionSwitchNoChange"
         ).map {
             "metabnf.editor.tests.interactions.${it}_Test.test_$it()"
         }.toSet() + setOf(
