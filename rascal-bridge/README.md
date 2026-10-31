@@ -27,8 +27,8 @@ using MPS's Java runtime, and saves native MPS nodes: **no Python or separately
 downloaded JAR is required**. See the
 [complete grammar import instructions](../docs/importing-grammars.md).
 
-Optional **Tools → Parser Bridge Utilities (legacy Python)…** retains the
-older source/export operations. Grammar export writes Rascal source from a
+Optional **Tools → Parser Bridge Utilities (legacy Python)…** provides the
+source/export operations. Grammar export writes Rascal source from a
 MetaBNF model. Source-model
 import parses a source file with a Rascal or MetaBNF grammar and creates an
 MPS model; source-model export serializes a mapped MPS model back to text.
@@ -44,6 +44,16 @@ executable with the `metabnf.python` system property if needed. The bridge
 uses MPS's Java runtime for Rascal commands. Source grammar, source text, MPS
 models, and Rascal source are selected through file dialogs; the bridge's XML
 interchange is kept in a temporary directory.
+
+## Mapping suggestions
+
+The opt-in [AST mapping advisor](../docs/ast-mapping-suggestions.md) combines
+shared grammar interchange with a Code Mode export of the target metamodel.
+It suggests structurally compatible configuration, preserves explicit keys,
+and reports ambiguity and mapping drift. Review its output and pass the
+reviewed mapping to the existing source-model import command; neither importer
+uses suggestions implicitly. Constrained datatype choices and reference
+resolution require explicit decisions.
 
 ## Run the tests
 

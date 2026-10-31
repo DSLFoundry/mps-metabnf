@@ -72,6 +72,16 @@ not become AST children. Rebuild the target language before using its models;
 the template must contain the target concepts and role registry entries.
 This is a tree mapper, not a symbol/reference resolver.
 
+## Mapping suggestions
+
+The opt-in [AST mapping advisor](../docs/ast-mapping-suggestions.md) combines
+shared grammar interchange with a Code Mode export of the target metamodel.
+It suggests structurally compatible configuration, preserves explicit keys,
+and reports ambiguity and mapping drift. Review its output and pass the
+reviewed mapping to the existing source-model import command; neither importer
+uses suggestions implicitly. Constrained datatype choices and reference
+resolution require explicit decisions.
+
 ## Supported scope
 
 Both operations currently require one self-contained **combined ANTLR 4
