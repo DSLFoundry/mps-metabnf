@@ -33,7 +33,7 @@ final class BundledGrammarImportTest {
             Path work = Files.createTempDirectory("metabnf-bundled-test-");
             try {
                 Path source = repo.resolve(tool.equals("ANTLR")
-                        ? "tests/antlr-bridge/Mini.g4" : "tests/rascal-bridge/hello-grammar.rsc");
+                        ? "tests/antlr-bridge/GrammarCoverage.g4" : "tests/rascal-bridge/GrammarCoverage.rsc");
                 Path output = GrammarTools.export(tools, tool, source, "program", work, () -> false);
                 var grammar = GrammarModelImporter.read(output);
                 ApplicationManager.getApplication().invokeAndWait(() -> project.getModelAccess().executeCommand(() -> {
@@ -84,7 +84,7 @@ final class BundledGrammarImportTest {
                     GrammarModelImporter.read(bad);
                     throw new AssertionError("Unsupported precedence was silently accepted");
                 } catch (IllegalArgumentException expected) {
-                    require(expected.getMessage().contains("choice"), "Unexpected interchange rejection: " + expected);
+                    require(expected.getMessage().contains("Priority/associativity"), "Unexpected interchange rejection: " + expected);
                 }
                 for (String extra : List.of(
                         Files.readString(output).replace("</rascal-grammar>", "<layout/></rascal-grammar>"),

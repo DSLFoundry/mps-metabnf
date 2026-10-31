@@ -50,6 +50,8 @@ def one_child(parent: ET.Element, tag: str, description: str) -> ET.Element:
 
 
 def productions(rule: ET.Element) -> list[ET.Element]:
+    if any(item.tag in {"priority", "associativity"} for item in list(rule)):
+        raise ImportError(f"Priority and associativity are not supported for rule {rule.get('name')}")
     choice = one_child(rule, "choice", f"choice for rule {rule.get('name')}")
     result = list(choice)
     if not result or any(item.tag != "production" for item in result):
@@ -89,7 +91,7 @@ def validate_interchange(document: ET.Element) -> tuple[str, list[ET.Element], d
             raise ImportError(f"Unsupported rule name: {name!r}")
         if name in rules:
             raise ImportError(f"Duplicate rule name: {name}")
-        if kind not in {"sort", "lexical"}:
+        if kind not in {"sort", "lexical", "layout"}:
             raise ImportError(f"Unsupported rule kind for {name}: {kind!r}")
         rules[name] = rule
     if not rules:
@@ -99,22 +101,21 @@ def validate_interchange(document: ET.Element) -> tuple[str, list[ET.Element], d
 
     for name, rule in rules.items():
         alternatives = productions(rule)
-        if rule.get("kind") == "lexical" and len(alternatives) != 1:
-            raise ImportError(f"Lexical rule {name} must have exactly one production")
+        is_lexical = rule.get("kind") in {"lexical", "layout"}
+        if is_lexical and len(alternatives) != 1:
+            raise ImportError(f"Lexical/layout rule {name} must have exactly one production")
         for alternative in alternatives:
             production = one_child(alternative, "sequence", f"sequence for rule {name}")
-            if rule.get("kind") == "lexical":
-                symbols = list(production)
-                if len(symbols) != 1 or symbols[0].tag not in {"literal", "character-class"}:
-                    raise ImportError(
-                        f"Lexical rule {name} must contain one literal or character class"
-                    )
+            symbols = list(production)
+            if is_lexical:
+                expression = lexical_expression(production)
+                validate_regex(expression, name)
                 continue
-            for symbol in list(production):
+            for symbol in symbols:
                 base_symbol, _ = unwrap_cardinality(symbol)
                 if base_symbol.tag in {"literal", "empty"}:
                     continue
-                if base_symbol.tag not in {"sort", "lexical"}:
+                if base_symbol.tag not in {"sort", "lexical", "layout"}:
                     raise ImportError(
                         f"Unsupported symbol {base_symbol.tag!r} in sort rule {name}"
                     )
@@ -128,6 +129,52 @@ def validate_interchange(document: ET.Element) -> tuple[str, list[ET.Element], d
                         f"but that rule is {target.get('kind')}"
                     )
     return start_name, rule_elements, rules
+
+
+def lexical_expression(sequence: ET.Element) -> ET.Element:
+    symbols = list(sequence)
+    if not symbols:
+        raise ImportError("Lexical/layout rule must contain one expression")
+    if len(symbols) == 1:
+        return symbols[0]
+    expression = ET.Element("sequence")
+    expression.extend(symbols)
+    return expression
+
+
+def validate_regex(symbol: ET.Element, rule_name: str) -> None:
+    allowed = {"literal", "empty", "character-class", "sequence", "choice",
+               "optional", "one-or-more", "zero-or-more"}
+    if symbol.tag not in allowed:
+        raise ImportError(f"Unsupported lexical expression {symbol.tag!r} in {rule_name}")
+    if symbol.tag in {"sequence", "choice"}:
+        children = list(symbol)
+        if not children:
+            raise ImportError(f"Empty lexical {symbol.tag} in {rule_name}")
+        for child in children:
+            validate_regex(child, rule_name)
+        return
+    if symbol.tag in {"optional", "one-or-more", "zero-or-more"}:
+        child = one_child(symbol, "*", f"expression inside {symbol.tag} in {rule_name}")
+        validate_regex(child, rule_name)
+        return
+    if symbol.tag == "literal":
+        if symbol.get("value") is None or list(symbol):
+            raise ImportError(f"Invalid lexical literal in {rule_name}")
+        return
+    if symbol.tag == "empty":
+        if list(symbol):
+            raise ImportError(f"Invalid empty lexical expression in {rule_name}")
+        return
+    if symbol.tag == "character-class":
+        ranges = symbol.findall("range")
+        if not ranges or len(ranges) != len(list(symbol)):
+            raise ImportError(f"Invalid character class in {rule_name}")
+        for char_range in ranges:
+            start = parse_codepoint(char_range.get("start"), "start")
+            end = parse_codepoint(char_range.get("end"), "end")
+            if start > end or list(char_range):
+                raise ImportError(f"Invalid character range in {rule_name}: {start}..{end}")
 
 
 def unwrap_cardinality(symbol: ET.Element) -> tuple[ET.Element, str]:
@@ -149,36 +196,71 @@ def unwrap_cardinality(symbol: ET.Element) -> tuple[ET.Element, str]:
 def create_regex(
     factory: NodeFactory, symbol: ET.Element, parent: ET.Element, role: str
 ) -> ET.Element:
-    if symbol.tag == "literal":
-        text = symbol.get("value")
+    regex = regex_node(factory, symbol, role)
+    parent.append(regex)
+    return regex
+
+
+def regex_node(factory: NodeFactory, symbol: ET.Element, role: str | None = None) -> ET.Element:
+    if symbol.tag in {"literal", "empty"}:
+        text = "" if symbol.tag == "empty" else symbol.get("value")
         if text is None:
             raise ImportError("Literal symbol is missing its value")
         regex = factory.create("1OC9wW", role)
         property_node(regex, "1OCb_u", text)
-        parent.append(regex)
         return regex
 
-    if symbol.tag != "character-class":
-        raise ImportError(f"Unsupported lexical expression: {symbol.tag}")
-    ranges = symbol.findall("range")
-    if not ranges:
-        raise ImportError("Empty character classes cannot be represented in MetaBNF")
-    regex = factory.create("1SSJmt", role)
-    for char_range in ranges:
-        start = parse_codepoint(char_range.get("start"), "start")
-        end = parse_codepoint(char_range.get("end"), "end")
-        if start > end:
-            raise ImportError(f"Invalid character range: {start}..{end}")
-        if start == end:
-            part = factory.create("1T6I$Y", "1T5LoC")
-            property_node(part, "1T6KD9", chr(start))
-        else:
-            part = factory.create("1T8lYq", "1T5LoC")
-            property_node(part, "1T8p8b", chr(start))
-            property_node(part, "1T8pRJ", chr(end))
-        regex.append(part)
-    parent.append(regex)
-    return regex
+    if symbol.tag == "character-class":
+        regex = factory.create("1SSJmt", role)
+        for char_range in symbol.findall("range"):
+            start = parse_codepoint(char_range.get("start"), "start")
+            end = parse_codepoint(char_range.get("end"), "end")
+            if start > end:
+                raise ImportError(f"Invalid character range: {start}..{end}")
+            if start == end:
+                part = factory.create("1T6I$Y", "1T5LoC")
+                property_node(part, "1T6KD9", chr(start))
+            else:
+                part = factory.create("1T8lYq", "1T5LoC")
+                property_node(part, "1T8p8b", chr(start))
+                property_node(part, "1T8pRJ", chr(end))
+            regex.append(part)
+        return regex
+
+    if symbol.tag in {"sequence", "choice"}:
+        children = list(symbol)
+        if not children:
+            raise ImportError(f"Empty lexical {symbol.tag} cannot be represented in MetaBNF")
+        concept, left_role, right_role = (
+            ("1OJ37Q", "1OLpdg", "1OLqdY") if symbol.tag == "sequence"
+            else ("1OCdqh", "1OLpdg", "1OLqdY")
+        )
+        root_role = role
+        result = regex_node(factory, children[0])
+        for child in children[1:]:
+            combined = factory.create(concept, root_role)
+            result.set("role", left_role)
+            combined.append(result)
+            combined.append(regex_node(factory, child, right_role))
+            result = combined
+        if root_role is not None:
+            result.set("role", root_role)
+        return result
+
+    if symbol.tag in {"optional", "one-or-more", "zero-or-more"}:
+        child = one_child(symbol, "*", f"expression inside {symbol.tag}")
+        if symbol.tag == "optional":
+            result = factory.create("1OCdqh", role)
+            empty = factory.create("1OC9wW", "1OLpdg")
+            property_node(empty, "1OCb_u", "")
+            result.append(empty)
+            result.append(regex_node(factory, child, "1OLqdY"))
+            return result
+        result = factory.create("1OClNT" if symbol.tag == "one-or-more" else "1OCmVF", role)
+        result.append(regex_node(factory, child, "1OLDsb"))
+        return result
+
+    raise ImportError(f"Unsupported lexical expression: {symbol.tag}")
 
 
 def parse_codepoint(value: str | None, bound: str) -> int:
@@ -277,7 +359,7 @@ def import_grammar(
         else:
             sequence = one_child(productions(rule)[0], "sequence", "production sequence")
             inline = factory.create("1Qi9sc", "q_eir")
-            create_regex(factory, list(sequence)[0], inline, "1QigWp")
+            create_regex(factory, lexical_expression(sequence), inline, "1QigWp")
             rule_node.append(inline)
 
     grammar = factory.create("3xJwxZ")
@@ -325,6 +407,8 @@ def add_term(
     else:
         if cardinality != "ExactlyOne":
             raise ImportError("Cardinality operators on lexical references are unsupported")
+        if base.tag not in {"lexical", "layout"}:
+            raise ImportError(f"Unsupported reference symbol: {base.tag}")
         reference = factory.create("2GSJ2k", "3xhzZr")
         reference_node(reference, "2GQAiS", target, name)
     parent.append(reference)

@@ -56,6 +56,8 @@ def rascal_character(codepoint: int) -> str:
     char = chr(codepoint)
     if char in {"\\", "]", "-", "^"}:
         return "\\" + char
+    if char == " ":
+        return r"\u0020"
     if char in "\n\r\t":
         return {"\n": "\\n", "\r": "\\r", "\t": "\\t"}[char]
     return char
@@ -95,7 +97,7 @@ def symbol_expression(symbol: ET.Element) -> str:
     raise ImportError(f"Unsupported symbol for Rascal parser generation: {tag}")
 
 
-def production_expression(production: ET.Element) -> str:
+def production_expression(production: ET.Element, strip_layout: bool = False) -> str:
     if production.tag != "production":
         raise ImportError(
             f"Unsupported production construct for Rascal parser generation: {production.tag}"
@@ -103,7 +105,8 @@ def production_expression(production: ET.Element) -> str:
     sequence = production.find("sequence")
     if sequence is None:
         raise ImportError("Production is missing its sequence")
-    return " ".join(symbol_expression(symbol) for symbol in sequence) or '""'
+    symbols = [symbol for symbol in sequence if not (strip_layout and symbol.tag == "layout")]
+    return " ".join(symbol_expression(symbol) for symbol in symbols) or '""'
 
 
 def generate_module(grammar_path: Path, module_name: str, executable: bool = True) -> str:
@@ -120,10 +123,10 @@ def generate_module(grammar_path: Path, module_name: str, executable: bool = Tru
         if len(productions) != 1 or productions[0].tag != "choice":
             raise ImportError(f"Rule {name} must contain one plain choice")
         alternatives = list(productions[0])
-        expressions = [production_expression(item) for item in alternatives]
+        expressions = [production_expression(item, strip_layout=(kind == "sort")) for item in alternatives]
         if not expressions:
             raise ImportError(f"Rule {name} has no productions")
-        declaration_kind = "lexical" if kind == "lexical" else "syntax"
+        declaration_kind = "layout" if kind == "layout" else "lexical" if kind == "lexical" else "syntax"
         separator = " | " if declaration_kind == "syntax" else " "
         if declaration_kind == "lexical" and len(expressions) != 1:
             raise ImportError(f"Lexical rule {name} must have exactly one production")

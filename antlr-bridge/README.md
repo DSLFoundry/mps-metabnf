@@ -82,38 +82,27 @@ reviewed mapping to the existing source-model import command; neither importer
 uses suggestions implicitly. Constrained datatype choices and reference
 resolution require explicit decisions.
 
-## Supported scope
+## Supported scope and semantics
 
-Both operations currently require one self-contained **combined ANTLR 4
-grammar**. Imports, split lexer/parser grammars, options, embedded actions,
-semantic predicates, custom token/channel declarations, and exception handlers
-are rejected explicitly. This avoids silently ignoring target-language
-semantics or executing grammar actions.
+| Priority | Grammar-to-MetaBNF conversion | Source parsing with ANTLR |
+| --- | --- | --- |
+| 1. Core | One self-contained combined grammar; parser alternatives, literal keywords, parser/token references, optional and repeated parser expressions. A trailing EOF on the start rule is omitted. | Uses ANTLR's validated original lexer/parser and interpreter, including multi-character tokens and parser repetition. |
+| 2. Rich expressions | Grouped parser alternatives lower to deterministic synthetic sort rules. Lexer literal/class alternatives and nested sequence, choice, group, `?`, `+`, and `*` expressions become nested MetaBNF regexp nodes. Group lowering preserves accepted language but changes parse-tree shape. | ANTLR's own lexer behavior, `skip` rules and left-recursive expression rules are preserved by interpreting the original grammar. |
+| 3. Unsupported semantics | Split lexer/parser grammars, grammar imports, `tokenVocab`, options, embedded actions/predicates, labels, exception handlers, lexer commands/channels, lexer fragments/references, and left-recursive parser rules are rejected explicitly. Lexer priority/layout semantics are not reconstructed. | Embedded actions and semantic predicates are rejected, never executed. Lexer/parser errors and unconsumed trailing input fail. |
 
-Grammar-to-MetaBNF conversion supports parser alternatives, literal keywords,
-rule/token references, optional/repeated parser-rule references, and lexer
-rules consisting of one literal or BMP character set. Labels are not MPS
-concept names. A trailing EOF in the start rule is omitted. Only a sole lexer
-alternative with `-> skip` is omitted as layout; other lexer commands are
-unsupported. Lexer priority and ANTLR layout behavior are not reproduced by
-MetaBNF conversion. Left recursion is rejected here because conversion would
-lose precedence semantics. Unsupported groups, token cardinalities, lexer
-fragments, and more complex lexical expressions fail rather than approximate.
-The generated grammar is a starting point for MetaBNF decoration, not a
-claim of equivalent language generation.
+Grammar conversion is deliberately narrower than ANTLR itself. A grouped parser
+rule is represented by synthetic `_AntlrGroupN` rules, so downstream parse-tree
+shape and rule names differ although the accepted language is retained. Lexer
+commands such as `-> skip` cannot be represented faithfully and fail with an
+explicit diagnostic; they are not silently omitted. Left recursion remains
+available for source parsing, but import rejects it rather than losing its
+precedence/associativity. Unsupported constructs are errors, not approximations.
 
-Source parsing instead interprets the original validated ANTLR grammar and
-lexer. It supports multi-character tokens, parser repetition, skip rules, and
-ANTLR's left-recursive expression rules. A nonrecursive entry rule around
-such expressions is recommended (for example, `program : expr EOF;`).
-Lexer/parser errors and unconsumed trailing input are failures, even when the
-entry rule does not explicitly contain EOF. XML-invalid token values fail
-explicitly. The mapping rejects unmapped nodes/tokens instead of guessing.
-
-Inputs are never overwritten, and invalid grammar/input/mapping failures do
-not replace an existing output model. No native MPS checker is run by the
-portable CLI: reload, check, and build imported models with their target
-languages in MPS.
+The Java bridge validates the grammar with the bundled ANTLR Tool API. It does
+not generate or execute grammar-supplied Java. The source mapper also rejects
+unmapped AST nodes/tokens instead of guessing. See
+[Import grammar files in MPS](../docs/importing-grammars.md) for the prioritized
+cross-bridge matrix and native smoke-test coverage.
 
 ## Regression checks
 
