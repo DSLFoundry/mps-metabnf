@@ -1,10 +1,9 @@
 # Typed usability annotations
 
-This is the foundation for [issue #3](https://github.com/DSLFoundry/mps-metabnf/issues/3):
-native semantic metadata, separate from editor backend selection. The shared recognizer and
+Usability annotations are native semantic metadata, separate from editor backend selection. The shared recognizer and
 profile resolver are described in [Profiles and enrichment](profiles-and-enrichment.md).
 Existing grammars need no migration or annotations. Generators explicitly drop
-annotation-set roots. The vanilla generator now supports existing flags and
+annotation-set roots. The vanilla generator supports existing flags and
 approved whole-rule optional groups as described in
 [interactive flags and groups](interactive-flags-and-groups.md). Metadata never
 silently lowers flat ranges or rewrites parser mappings.

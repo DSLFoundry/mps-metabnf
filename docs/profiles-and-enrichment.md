@@ -32,8 +32,8 @@ remain unchanged.
 Safe decorations are `Inferred`. Interpretations that could change node shape,
 absence semantics, or source/model mapping are `Suggested` and carry
 `mappingImpact` and evidence. **Approval records intent only**, not permission
-for this operation to change the AST or mappings (the mapping work remains
-[issue #5](https://github.com/DSLFoundry/mps-metabnf/issues/5)).
+for this operation to change the AST or mappings; mapping changes require
+explicit user mappings.
 In the native annotation editor, change the origin to `Authored` to approve;
 keep `Suggested` and set suppression to `true` to reject without losing evidence.
 Authored annotations cannot be suppressed.

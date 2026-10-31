@@ -34,12 +34,12 @@ Do not infer semantic equivalence from similar printed text alone.
 | C# / mps-dflat (first candidate) | ANTLR grammars-v4 `csharp/v7` at `7bb150f62f54e587f18e323b71fa0309bdec5056`; hand-built reference [DSLFoundry/mps-dflat](https://github.com/DSLFoundry/mps-dflat) at `98a92f2ece2d5eb6cec01a4e12d1e615f744808a` | Start with simple expression and statement construction, then list/block insertion and editing only where both models expose equivalent semantics. mps-dflat has native expression editor tests. | The C# parser and lexer are separate grammars; the parser uses `tokenVocab` and a custom base class. The current importer requires one self-contained combined grammar and rejects this input shape. The grammar header contains both “MIT License” and “Eclipse Public License - v 1.0” notices; the applicable terms for the file have not been independently established, so do not check it in or redistribute it until reviewed. mps-dflat's pinned revision updates to MPS 2025.1; compatibility with this project’s pinned MPS must be verified. No end-to-end comparison has run. |
 | C/C++ / mbeddr (second-pair candidate) | Candidate MPS references: [mbeddr/mbeddr.core](https://github.com/mbeddr/mbeddr.core) (EPL-2.0) and [DSLFoundry/mbeddr.cpp](https://github.com/DSLFoundry/mbeddr.cpp) (EPL-1.0). | Potential statement, block, and expression interactions if a compatible textual grammar and overlapping native model slice are verified. | The inspected repository trees did not contain `.g4` or `.rsc` grammar sources. This pair is not selected until a suitable grammar, revision, license, importer overlap, and compatible MPS build are verified. A Kotlin MPS counterpart was not established by the repository search. |
 
-The source-revision and license corpus belongs in #7; this matrix records only
-the comparison candidates and their relevance to this protocol. The C# pair is
-the first comparison target, but its upstream grammar is not currently
-importable or cleared for redistribution. See [grammar import](importing-grammars.md)
-and #4 for the importer subset. Do not treat candidate selection as a completed
-comparison.
+This matrix records only the comparison candidates and their relevance to this
+protocol; the grammar corpus with revisions and licenses is maintained
+separately. The C# pair is the first comparison target, but its upstream
+grammar is not currently importable or cleared for redistribution. See
+[grammar import](importing-grammars.md) for the importer subset. Candidate
+selection is not a completed comparison.
 
 ## Result reporting
 
