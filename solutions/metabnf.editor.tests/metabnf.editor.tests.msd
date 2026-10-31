@@ -25,6 +25,7 @@
     <dependency reexport="false">215c4c45-ba99-49f5-9ab7-4b6901a63cfd(MPS.Generator)</dependency>
     <dependency reexport="false">18bc6592-03a6-4e29-a83a-7ff23bde13ba(jetbrains.mps.lang.editor)</dependency>
     <dependency reexport="false">602c36ad-cc55-47ff-8c40-73d7f12f035c(jetbrains.mps.lang.editor.forms)</dependency>
+    <dependency reexport="false">6b032bf9-b24f-4771-b578-88633736228d(CSharpComparison)</dependency>
   </dependencies>
   <languageVersions>
     <language slang="l:48bed45b-b394-4796-8621-cea28d56a6da:Demo" version="0" />

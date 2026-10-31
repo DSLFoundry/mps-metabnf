@@ -15,6 +15,7 @@
     <dependency reexport="false">2417e694-c9d2-48c2-b396-c9ab05f8d822(GenPlan)</dependency>
     <dependency reexport="false">48bed45b-b394-4796-8621-cea28d56a6da(Demo)</dependency>
     <dependency reexport="false">711aebfa-a9db-4765-b49c-bbdc45921ab7(DemoUsability)</dependency>
+    <dependency reexport="false">6b032bf9-b24f-4771-b578-88633736228d(CSharpComparison)</dependency>
   </dependencies>
   <languageVersions>
     <language slang="l:48bed45b-b394-4796-8621-cea28d56a6da:Demo" version="0" />
