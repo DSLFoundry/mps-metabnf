@@ -1,6 +1,7 @@
 """Authored benchmark controls only; these tests do not operate either native editor."""
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -117,6 +118,26 @@ class ComparativeEditorFixtureTest(unittest.TestCase):
                 self.assertTrue(scenario["focus"])
                 self.assertTrue(scenario["initialFocus"])
                 self.assertTrue(scenario["undo"])
+        native = load("native-outcomes.json")
+        self.assertEqual("generated-side-authored-native-subset-not-head-to-head", native["scope"])
+        self.assertEqual(40, len(native["fixtureCommit"]))
+        digest = hashlib.sha256((FIXTURES / "CSharpComparison.g4").read_text(
+            encoding="utf-8-sig").encode("utf-8")).hexdigest()
+        self.assertEqual(digest, native["grammar"]["canonicalLfSha256"])
+        self.assertEqual("rejected", native["upstreamGrammar"]["nativeImport"])
+        self.assertEqual("fail", native["wholeProgramFileExport"]["status"])
+        self.assertEqual({s["id"] for s in self.manifest["scenarios"]},
+                         {s["scenario"] for s in native["observations"]})
+        for observation in native["observations"]:
+            self.assertEqual("blocked", observation["referenceNative"])
+            self.assertIn(observation["before"], self.generated)
+            self.assertIn(observation["after"], self.generated)
+            if observation["generatedNative"] == "pass":
+                self.assertIn(observation["scenario"], {"expression-caret", "export-and-reload"})
+                self.assertEqual(self.reference[observation["after"]], observation["actualResultFacts"])
+            else:
+                self.assertEqual("blocked", observation["generatedNative"])
+                self.assertTrue(observation["reason"])
         for state, expectation in self.generated.items():
             with self.subTest(state=state):
                 self.assertEqual(self.reference[state], reference_facts(expectation))
