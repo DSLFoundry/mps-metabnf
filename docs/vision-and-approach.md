@@ -49,7 +49,9 @@ translation cannot infer.
 ## Out of scope today
 
 The current bridges support subsets of ANTLR and Rascal. They do not infer
-AST mappings or resolve cross-references. Annotation-driven usability
+AST mappings. Source-model imports resolve explicit references through the
+loaded target language's native MPS scope, while portable serialization supports
+model-scoped references without language-specific semantic checks. Annotation-driven usability
 transformations are only partly implemented. See the
 [README status](../README.md#current-status) and the individual guides for
 details.

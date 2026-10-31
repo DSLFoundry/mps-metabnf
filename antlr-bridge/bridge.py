@@ -80,6 +80,12 @@ def import_antlr_grammar(
         import_grammar(interchange, output, model_name, template, regex_template, origin="Antlr")
 
 
+def parse_antlr_text(
+    jar: Path, grammar: Path, start: str, source: Path, output: Path,
+) -> None:
+    run_antlr(jar, grammar, start, output, source)
+
+
 def import_antlr_text(
     jar: Path, grammar: Path, start: str, source: Path, template: Path,
     mapping: Path, output: Path, model_name: str,
@@ -96,26 +102,34 @@ def import_antlr_text(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("operation", choices=("grammar", "text"))
+    parser.add_argument("operation", choices=("grammar", "text", "parse"))
     parser.add_argument("--antlr-jar", required=True, type=Path)
     parser.add_argument("--grammar", required=True, type=Path)
     parser.add_argument("--start", required=True, help="ANTLR parser start rule")
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--model-name", required=True)
+    parser.add_argument("--model-name")
     parser.add_argument("--template", type=Path, default=TEMPLATE)
     parser.add_argument("--regex-template", type=Path, default=REGEX_TEMPLATE)
     parser.add_argument("--input-text", type=Path)
     parser.add_argument("--mapping", type=Path)
     args = parser.parse_args()
     try:
+        if args.operation == "parse":
+            if args.input_text is None:
+                parser.error("parse requires --input-text")
+            parse_antlr_text(args.antlr_jar, args.grammar, args.start, args.input_text, args.output)
+            print(f"Parsed ANTLR source {args.input_text} into {args.output}")
+            return 0
         if args.operation == "grammar":
+            if args.model_name is None:
+                parser.error("grammar import requires --model-name")
             import_antlr_grammar(
                 args.antlr_jar, args.grammar, args.start, args.output, args.model_name,
                 args.template, args.regex_template,
             )
         else:
-            if args.input_text is None or args.mapping is None:
-                parser.error("text import requires --input-text and --mapping")
+            if args.input_text is None or args.mapping is None or args.model_name is None:
+                parser.error("text import requires --input-text, --mapping, and --model-name")
             import_antlr_text(
                 args.antlr_jar, args.grammar, args.start, args.input_text, args.template,
                 args.mapping, args.output, args.model_name,
