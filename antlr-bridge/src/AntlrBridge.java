@@ -141,6 +141,7 @@ public final class AntlrBridge {
         for (GrammarAST rule : children(ruleList)) {
             rules.put(rule.getChild(0).getText(), rule);
         }
+        SyntheticRules synthetic = new SyntheticRules(rules.keySet());
         var text = new java.io.StringWriter();
         XMLStreamWriter xml = XMLOutputFactory.newFactory().createXMLStreamWriter(text);
         xml.writeStartDocument("UTF-8", "1.0");
@@ -159,33 +160,63 @@ public final class AntlrBridge {
             if (rule.getFirstChildWithType(ANTLRParser.RULEMODIFIERS) != null) {
                 throw new IllegalArgumentException("Rule modifiers cannot be imported: " + name);
             }
-            if (lexical && skipped(rule)) continue;
             if (!lexical && grammar.getRule(name) instanceof LeftRecursiveRule) {
                 throw new IllegalArgumentException(
                         "Left-recursive grammar import would lose precedence: " + name);
             }
+            GrammarAST block = (GrammarAST) rule.getFirstChildWithType(ANTLRParser.BLOCK);
+            List<GrammarAST> alternatives = children(block);
+            if (lexical) rejectLexerCommands(alternatives, name);
             xml.writeStartElement("rule");
             xml.writeAttribute("name", name);
             xml.writeAttribute("kind", lexical ? "lexical" : "sort");
             xml.writeStartElement("choice");
-            GrammarAST block = (GrammarAST) rule.getFirstChildWithType(ANTLRParser.BLOCK);
-            for (GrammarAST alternative : children(block)) {
-                if (alternative.getType() != ANTLRParser.ALT) {
-                    throw unsupported(alternative);
-                }
+            if (lexical) {
                 xml.writeStartElement("production");
                 xml.writeStartElement("sequence");
-                List<GrammarAST> symbols = children(alternative);
-                for (int i = 0; i < symbols.size(); i++) {
-                    GrammarAST symbol = symbols.get(i);
-                    if (symbol.getType() == ANTLRParser.TOKEN_REF
-                            && symbol.getText().equals("EOF")) {
-                        if (!name.equals(start) || i != symbols.size() - 1) {
-                            throw new IllegalArgumentException("EOF is only supported at the end of the start rule");
+                writeLexerExpression(alternatives, grammar, name, xml);
+                xml.writeEndElement();
+                xml.writeEndElement();
+            } else {
+                for (GrammarAST alternative : alternatives) {
+                    if (alternative.getType() != ANTLRParser.ALT) throw unsupported(alternative);
+                    xml.writeStartElement("production");
+                    xml.writeStartElement("sequence");
+                    List<GrammarAST> symbols = children(alternative);
+                    for (int i = 0; i < symbols.size(); i++) {
+                        GrammarAST symbol = symbols.get(i);
+                        if (symbol.getType() == ANTLRParser.TOKEN_REF
+                                && symbol.getText().equals("EOF")) {
+                            if (!name.equals(start) || i != symbols.size() - 1) {
+                                throw new IllegalArgumentException(
+                                        "EOF is only supported at the end of the start rule");
+                            }
+                            continue;
                         }
-                        continue;
+                        parserSymbolXml(symbol, xml, synthetic);
                     }
-                    symbolXml(symbol, grammar, name, xml);
+                    xml.writeEndElement();
+                    xml.writeEndElement();
+                }
+            }
+            xml.writeEndElement();
+            xml.writeEndElement();
+        }
+        for (int index = 0; index < synthetic.rules.size(); index++) {
+            SyntheticRule generated = synthetic.rules.get(index);
+            xml.writeStartElement("rule");
+            xml.writeAttribute("name", generated.name);
+            xml.writeAttribute("kind", "sort");
+            xml.writeStartElement("choice");
+            for (GrammarAST alternative : generated.alternatives) {
+                if (alternative.getType() != ANTLRParser.ALT) throw unsupported(alternative);
+                xml.writeStartElement("production");
+                xml.writeStartElement("sequence");
+                for (GrammarAST symbol : children(alternative)) {
+                    if (symbol.getType() == ANTLRParser.TOKEN_REF && symbol.getText().equals("EOF")) {
+                        throw new IllegalArgumentException("EOF is unsupported inside grouped parser rules");
+                    }
+                    parserSymbolXml(symbol, xml, synthetic);
                 }
                 xml.writeEndElement();
                 xml.writeEndElement();
@@ -200,55 +231,67 @@ public final class AntlrBridge {
         return xmlText(text);
     }
 
-    private static boolean skipped(GrammarAST node) {
-        GrammarAST block = (GrammarAST) node.getFirstChildWithType(ANTLRParser.BLOCK);
-        List<GrammarAST> alternatives = children(block);
-        boolean skip = false;
+    private static void rejectLexerCommands(List<GrammarAST> alternatives, String rule) {
         for (GrammarAST alternative : alternatives) {
-            if (alternative.getType() != ANTLRParser.LEXER_ALT_ACTION) continue;
-            List<GrammarAST> parts = children(alternative);
-            if (parts.size() != 2 || !parts.get(1).getText().equals("skip")) {
-                throw new IllegalArgumentException("Only skip lexer commands can be imported");
+            if (alternative.getType() == ANTLRParser.LEXER_ALT_ACTION) {
+                throw new IllegalArgumentException(
+                        "ANTLR lexer commands, including skip, cannot be preserved in MetaBNF grammar import: "
+                        + rule);
             }
-            skip = true;
+            if (alternative.getType() != ANTLRParser.ALT) throw unsupported(alternative);
+            for (GrammarAST part : children(alternative)) {
+                if (part.getType() == ANTLRParser.LEXER_ALT_ACTION) {
+                    throw new IllegalArgumentException(
+                            "ANTLR lexer commands, including skip, cannot be preserved in MetaBNF grammar import: "
+                            + rule);
+                }
+            }
         }
-        if (skip && alternatives.size() != 1) {
-            throw new IllegalArgumentException("Cannot discard a lexer rule with mixed skip alternatives");
-        }
-        return skip;
     }
 
-    private static void symbolXml(GrammarAST symbol, Grammar grammar, String ruleName,
-                                  XMLStreamWriter xml)
+    private static void writeLexerExpression(List<GrammarAST> alternatives, Grammar grammar,
+                                             String ruleName, XMLStreamWriter xml)
             throws Exception {
+        if (alternatives.isEmpty()) throw new IllegalArgumentException("Lexer rule has no alternatives: " + ruleName);
+        if (alternatives.size() == 1) {
+            writeLexerSequence(alternatives.get(0), grammar, ruleName, xml);
+            return;
+        }
+        xml.writeStartElement("choice");
+        for (GrammarAST alternative : alternatives) {
+            xml.writeStartElement("sequence");
+            for (GrammarAST symbol : children(alternative)) {
+                lexicalSymbolXml(symbol, grammar, ruleName, xml);
+            }
+            xml.writeEndElement();
+        }
+        xml.writeEndElement();
+    }
+
+    private static void writeLexerSequence(GrammarAST alternative, Grammar grammar,
+                                           String ruleName, XMLStreamWriter xml)
+            throws Exception {
+        if (alternative.getType() != ANTLRParser.ALT) throw unsupported(alternative);
+        List<GrammarAST> symbols = children(alternative);
+        if (symbols.isEmpty()) {
+            xml.writeEmptyElement("empty");
+        } else if (symbols.size() == 1) {
+            lexicalSymbolXml(symbols.get(0), grammar, ruleName, xml);
+        } else {
+            xml.writeStartElement("sequence");
+            for (GrammarAST symbol : symbols) lexicalSymbolXml(symbol, grammar, ruleName, xml);
+            xml.writeEndElement();
+        }
+    }
+
+    private static void lexicalSymbolXml(GrammarAST symbol, Grammar grammar, String ruleName,
+                                         XMLStreamWriter xml) throws Exception {
         switch (symbol.getType()) {
             case ANTLRParser.STRING_LITERAL -> {
                 String value = CharSupport.getStringFromGrammarStringLiteral(symbol.getText());
                 if (value == null) throw unsupported(symbol);
                 xml.writeEmptyElement("literal");
                 xml.writeAttribute("value", value);
-            }
-            case ANTLRParser.RULE_REF, ANTLRParser.TOKEN_REF -> {
-                xml.writeEmptyElement(symbol.getType() == ANTLRParser.RULE_REF ? "sort" : "lexical");
-                xml.writeAttribute("name", symbol.getText());
-            }
-            case ANTLRParser.OPTIONAL, ANTLRParser.CLOSURE, ANTLRParser.POSITIVE_CLOSURE -> {
-                GrammarAST block = (GrammarAST) symbol.getChild(0);
-                List<GrammarAST> alternatives = children(block);
-                if (alternatives.size() != 1 || alternatives.get(0).getChildCount() != 1) {
-                    throw new IllegalArgumentException("Only single-rule cardinalities can be imported");
-                }
-                GrammarAST nested = (GrammarAST) alternatives.get(0).getChild(0);
-                if (nested.getType() != ANTLRParser.RULE_REF) {
-                    throw new IllegalArgumentException("Only parser-rule cardinalities can be imported");
-                }
-                xml.writeStartElement(switch (symbol.getType()) {
-                    case ANTLRParser.OPTIONAL -> "optional";
-                    case ANTLRParser.CLOSURE -> "zero-or-more";
-                    default -> "one-or-more";
-                });
-                symbolXml(nested, grammar, ruleName, xml);
-                xml.writeEndElement();
             }
             case ANTLRParser.LEXER_CHAR_SET -> {
                 xml.writeStartElement("character-class");
@@ -262,9 +305,93 @@ public final class AntlrBridge {
                 }
                 xml.writeEndElement();
             }
+            case ANTLRParser.OPTIONAL, ANTLRParser.CLOSURE, ANTLRParser.POSITIVE_CLOSURE -> {
+                GrammarAST block = (GrammarAST) symbol.getChild(0);
+                List<GrammarAST> alternatives = children(block);
+                String wrapper = switch (symbol.getType()) {
+                    case ANTLRParser.OPTIONAL -> "optional";
+                    case ANTLRParser.CLOSURE -> "zero-or-more";
+                    default -> "one-or-more";
+                };
+                xml.writeStartElement(wrapper);
+                writeLexerExpression(alternatives, grammar, ruleName, xml);
+                xml.writeEndElement();
+            }
+            case ANTLRParser.BLOCK -> writeLexerExpression(children(symbol), grammar, ruleName, xml);
+            case ANTLRParser.EPSILON -> xml.writeEmptyElement("empty");
+            case ANTLRParser.RULE_REF, ANTLRParser.TOKEN_REF ->
+                    throw new IllegalArgumentException(
+                            "ANTLR lexer rule references/fragments are unsupported in MetaBNF grammar import: "
+                            + symbol.getText());
             case ANTLRParser.ASSIGN, ANTLRParser.PLUS_ASSIGN ->
-                symbolXml((GrammarAST) symbol.getChild(1), grammar, ruleName, xml);
-            case ANTLRParser.EPSILON -> { }
+                    throw new IllegalArgumentException("ANTLR lexer labels cannot be preserved: " + symbol.getText());
+            default -> throw unsupported(symbol);
+        }
+    }
+
+    private static final class SyntheticRule {
+        final String name;
+        final List<GrammarAST> alternatives;
+
+        SyntheticRule(String name, List<GrammarAST> alternatives) {
+            this.name = name;
+            this.alternatives = alternatives;
+        }
+    }
+
+    private static final class SyntheticRules {
+        final List<SyntheticRule> rules = new ArrayList<>();
+        final java.util.Set<String> usedNames = new java.util.HashSet<>();
+        int nextId = 1;
+
+        SyntheticRules(java.util.Set<String> names) { usedNames.addAll(names); }
+
+        String add(GrammarAST block) {
+            String name;
+            do { name = "_AntlrGroup" + nextId++; } while (!usedNames.add(name));
+            List<GrammarAST> alternatives = children(block);
+            if (alternatives.isEmpty()) throw new IllegalArgumentException("Empty ANTLR parser group");
+            rules.add(new SyntheticRule(name, alternatives));
+            return name;
+        }
+    }
+
+    private static void parserSymbolXml(GrammarAST symbol, XMLStreamWriter xml,
+                                        SyntheticRules synthetic) throws Exception {
+        switch (symbol.getType()) {
+            case ANTLRParser.STRING_LITERAL -> {
+                String value = CharSupport.getStringFromGrammarStringLiteral(symbol.getText());
+                if (value == null) throw unsupported(symbol);
+                xml.writeEmptyElement("literal");
+                xml.writeAttribute("value", value);
+            }
+            case ANTLRParser.RULE_REF, ANTLRParser.TOKEN_REF -> {
+                xml.writeEmptyElement(symbol.getType() == ANTLRParser.RULE_REF ? "sort" : "lexical");
+                xml.writeAttribute("name", symbol.getText());
+            }
+            case ANTLRParser.BLOCK -> {
+                String generated = synthetic.add(symbol);
+                xml.writeEmptyElement("sort");
+                xml.writeAttribute("name", generated);
+            }
+            case ANTLRParser.OPTIONAL, ANTLRParser.CLOSURE, ANTLRParser.POSITIVE_CLOSURE -> {
+                GrammarAST block = (GrammarAST) symbol.getChild(0);
+                List<GrammarAST> alternatives = children(block);
+                String wrapper = switch (symbol.getType()) {
+                    case ANTLRParser.OPTIONAL -> "optional";
+                    case ANTLRParser.CLOSURE -> "zero-or-more";
+                    default -> "one-or-more";
+                };
+                String generated = synthetic.add(block);
+                xml.writeStartElement(wrapper);
+                xml.writeEmptyElement("sort");
+                xml.writeAttribute("name", generated);
+                xml.writeEndElement();
+            }
+            case ANTLRParser.EPSILON -> xml.writeEmptyElement("empty");
+            case ANTLRParser.ASSIGN, ANTLRParser.PLUS_ASSIGN ->
+                    throw new IllegalArgumentException(
+                            "ANTLR element labels cannot be preserved in MetaBNF grammar import: " + symbol.getText());
             default -> throw unsupported(symbol);
         }
     }

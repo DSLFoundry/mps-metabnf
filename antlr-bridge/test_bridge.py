@@ -52,6 +52,40 @@ class AntlrBridgeTest(unittest.TestCase):
         ids = {node.get("id") for node in model.findall(".//node")}
         self.assertTrue(all(ref.get("node") in ids for ref in model.findall(".//node/ref")))
 
+    def test_imports_grouped_parser_and_compound_lexer_expressions(self):
+        grammar = FIXTURES / "GrammarCoverage.g4"
+        interchange = self.directory / "coverage.xml"
+        run_antlr(JAR, grammar, "program", interchange)
+        root = ET.parse(interchange).getroot()
+        generated = [rule for rule in root.findall("./rules/rule")
+                     if rule.get("name", "").startswith("_AntlrGroup")]
+        self.assertGreaterEqual(len(generated), 2)
+        identifier = root.find("./rules/rule[@name='ID']")
+        self.assertIsNotNone(identifier.find("choice/production/sequence/sequence"))
+        self.assertIsNotNone(identifier.find(".//one-or-more/character-class"))
+        self.assertIsNotNone(identifier.find(".//zero-or-more/character-class"))
+
+        model = self.directory / "GrammarCoverage.mps"
+        import_antlr_grammar(JAR, grammar, "program", model, "GrammarCoverage")
+        imported = ET.parse(model).getroot()
+        concepts = {node.get("concept") for node in imported.findall(".//node")}
+        self.assertTrue({"1OJ37Q", "1OCdqh", "1OClNT", "1OCmVF"} <= concepts)
+        names = {prop.get("value") for prop in imported.findall(".//property[@role='TrG5h']")}
+        self.assertTrue(any(name.startswith("_AntlrGroup") for name in names))
+
+        for text in ("alpha+Beta", "true"):
+            with self.subTest(text=text):
+                run_antlr(JAR, grammar, "program", self.output, self.source(text))
+                self.assertIsNotNone(ET.parse(self.output).find("./node[@rule='program']"))
+        with self.assertRaises(AntlrError):
+            run_antlr(JAR, grammar, "program", self.output, self.source("alpha+"))
+
+    def test_rejects_skip_commands_for_meta_bnf_grammar_import(self):
+        grammar = self.grammar(r"program : 'x' EOF; WS : [ \t\r\n]+ -> skip;")
+        with self.assertRaisesRegex(AntlrError, "lexer commands, including skip"):
+            import_antlr_grammar(JAR, grammar, "program", self.output, "UnsupportedSkip")
+        self.assertFalse(self.output.exists())
+
     def test_parses_original_antlr_lexer_and_maps_empty_single_and_multiple_statements(self):
         cases = (
             ("program P {}", []),
@@ -106,10 +140,24 @@ class AntlrBridgeTest(unittest.TestCase):
                     run_antlr(JAR, self.grammar(rules), "program", self.output, self.source("x"))
                 self.assertFalse(self.output.exists())
 
+    def test_rejects_split_grammars_imports_and_token_vocab(self):
+        grammars = (
+            "parser grammar Sample; program : 'x';",
+            "lexer grammar Sample; TOKEN : 'x';",
+            "grammar Sample; import Shared; program : 'x';",
+            "grammar Sample; options { tokenVocab=Shared; } program : TOKEN;",
+        )
+        for source in grammars:
+            with self.subTest(source=source):
+                grammar = self.directory / "Unsupported.g4"
+                grammar.write_text(source, encoding="utf-8")
+                with self.assertRaises((AntlrError, ValueError)):
+                    import_antlr_grammar(JAR, grammar, "program", self.output, "Unsupported")
+                self.assertFalse(self.output.exists())
+
     def test_rejects_unsupported_grammar_features_without_replacing_output(self):
         for rules in (
             "options { caseInsensitive=true; } program : 'x';",
-            "program : ('x' 'y')?;",
             "program : ID; ID : 'x' -> channel(HIDDEN);",
             "program : ID; ID : CHAR; fragment CHAR : [a-z];",
             "program : ID; ID : 'x' | ' ' -> skip;",
@@ -157,11 +205,10 @@ class AntlrBridgeTest(unittest.TestCase):
                     run_antlr(JAR, grammar, start, self.output)
                 self.assertFalse(self.output.exists())
 
-    def test_rejects_unsupported_lexical_cardinality_without_writing_model(self):
-        with self.assertRaisesRegex(AntlrError, "Only parser-rule cardinalities"):
-            import_antlr_grammar(
-                JAR, FIXTURES / "DemoText.g4", "program", self.output, "Unsupported"
-            )
+    def test_rejects_lexer_rule_references_without_writing_model(self):
+        grammar = self.grammar("program : NUMBER EOF; NUMBER : DIGIT+; DIGIT : [0-9];")
+        with self.assertRaisesRegex(AntlrError, "lexer rule references/fragments"):
+            import_antlr_grammar(JAR, grammar, "program", self.output, "Unsupported")
         self.assertFalse(self.output.exists())
 
     def test_rejects_left_recursion_for_grammar_import(self):
