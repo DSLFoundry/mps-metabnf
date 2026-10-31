@@ -64,7 +64,7 @@
   <target name="compile-harness" depends="prepare">
     <mkdir dir="${smoke.dir}/harness/classes" />
     <javac srcdir="${basedir}" destdir="${smoke.dir}/harness/classes"
-           includes="MetaBnfSmokeTest.java,UsabilityAnnotationsTest.java,UsabilityEditorsTest.java,ProfilesEnrichmentTest.java,BundledGrammarImportTest.java,NativeGrammarActionsTest.java" includeantruntime="false" encoding="UTF-8"
+           includes="MetaBnfSmokeTest.java,UsabilityAnnotationsTest.java,UsabilityEditorsTest.java,ProfilesEnrichmentTest.java,BundledGrammarImportTest.java,NativeGrammarActionsTest.java,SourceModelResolutionTest.java" includeantruntime="false" encoding="UTF-8"
            fork="true" executable="${java.home}/bin/javac">
       <classpath>
         <fileset dir="${mps.home}/lib" includes="*.jar" />

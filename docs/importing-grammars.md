@@ -77,12 +77,17 @@ and external-module grammar dependencies are not supported. See the
 
 ## Legacy utilities and licensing
 
-**Tools > Parser Bridge Utilities (legacy Python)...** retains optional
-source-model import/export and Rascal grammar export. Those older workflows
-still require Python, explicit mappings/templates, and a selected parser JAR.
-Their grammar-import choices redirect to the new native importer. The portable
-Python command-line scripts remain available for compatibility; they are not
-used by the new grammar-file import path.
+**Tools > Parser Bridge Utilities (legacy Python)...** provides source-model
+import/export and Rascal grammar export. Source-model import requires Python,
+an explicit AST mapping, and the parser runtime for the selected grammar. It
+maps parsed roots into native nodes in a selected editable target model.
+Reference mappings are separate from child mappings and use the loaded MPS
+reference link's scope, target concept, and identifier-property metadata. The
+importer supports forward references, rejects missing or ambiguous targets,
+and removes the imported roots when resolution fails. The portable Python
+serializer accepts explicit model scope but does not execute MPS scope providers
+or semantic checks. See the [Rascal bridge guide](../rascal-bridge/README.md#current-capabilities-and-limits)
+for the mapping shape and validation limits.
 
 MetaBNF remains Apache-2.0. Bundled tools and their dependencies retain their
 own licenses. Every module distribution includes upstream notices, supplementary

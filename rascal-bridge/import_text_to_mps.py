@@ -18,6 +18,27 @@ class TextImportError(RuntimeError):
     """The grammar, parser, or mapping could not produce an MPS model."""
 
 
+def parse_text_to_tree(
+    rascal_jar: Path, grammar: Path, input_text: Path, parse_tree_output: Path
+) -> None:
+    grammar_path = grammar.resolve()
+    try:
+        if grammar_path.suffix.lower() == ".mps":
+            with tempfile.TemporaryDirectory(prefix="metabnf-grammar-") as temporary_directory:
+                interchange = Path(temporary_directory) / "grammar.xml"
+                export_model(grammar_path, interchange, grammar_path.stem)
+                parse_text(rascal_jar, interchange, input_text, parse_tree_output)
+        elif grammar_path.suffix.lower() == ".rsc":
+            with tempfile.TemporaryDirectory(prefix="metabnf-grammar-") as temporary_directory:
+                interchange = Path(temporary_directory) / "grammar.xml"
+                import_rascal_file(rascal_jar, grammar_path, interchange)
+                parse_text(rascal_jar, interchange, input_text, parse_tree_output)
+        else:
+            parse_text(rascal_jar, grammar_path, input_text, parse_tree_output)
+    except (ExportError, GrammarError, OSError, ParserRunError, RascalImportError) as error:
+        raise TextImportError(str(error)) from error
+
+
 def import_text(
     rascal_jar: Path,
     grammar: Path,
@@ -100,12 +121,19 @@ def main() -> int:
     parser.add_argument("--rascal-jar", required=True, type=Path)
     parser.add_argument("--grammar", required=True, type=Path)
     parser.add_argument("--input-text", required=True, type=Path)
-    parser.add_argument("--template", required=True, type=Path)
-    parser.add_argument("--mapping", required=True, type=Path)
-    parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--model-name", required=True)
+    parser.add_argument("--template", type=Path)
+    parser.add_argument("--mapping", type=Path)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--model-name")
+    parser.add_argument("--parse-tree-output", type=Path)
     args = parser.parse_args()
     try:
+        if args.parse_tree_output is not None:
+            parse_text_to_tree(args.rascal_jar, args.grammar, args.input_text, args.parse_tree_output)
+            print(f"Parsed {args.input_text} into {args.parse_tree_output}")
+            return 0
+        if args.template is None or args.mapping is None or args.output is None or args.model_name is None:
+            parser.error("model import requires --template, --mapping, --output, and --model-name")
         import_text(
             args.rascal_jar,
             args.grammar,

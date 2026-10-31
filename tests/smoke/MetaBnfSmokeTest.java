@@ -90,6 +90,16 @@ public final class MetaBnfSmokeTest {
             System.out.println("SMOKE: profile resolution, native inspectors, enrichment previews/idempotence and reimport preservation are clean");
             BundledGrammarImportTest.run(environment, project, usability);
             System.out.println("SMOKE: bundled ANTLR/Rascal Java tools import native grammars without Python");
+            SModel structure = project.getModelAccess().computeReadAction(() -> model(project, ASPECTS[0]));
+            onEdt(() -> project.getModelAccess().executeCommand(() -> {
+                try {
+                    SourceModelResolutionTest.run(structure, projectDirectory.toPath());
+                } catch (Exception failure) {
+                    throw new RuntimeException(failure);
+                }
+            }));
+            checkConstraints(environment, project, structure);
+            System.out.println("SMOKE: source import resolves prior and forward native references and rejects invalid targets");
             SModel rascalImport = project.getModelAccess().computeReadAction(() ->
                     model(project, RASCAL_IMPORT_FIXTURE));
             checkConstraints(environment, project, rascalImport);

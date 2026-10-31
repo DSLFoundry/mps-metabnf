@@ -1,5 +1,6 @@
 package metabnf.rascal;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 
@@ -58,9 +59,9 @@ public final class RascalBridgeAction {
       }
       switch (operation) {
         case "Export MetaBNF grammar as Rascal" -> exportGrammar(bridge);
-        case "Import source model into MPS" -> importSourceModel(bridge);
+        case "Import source model into MPS" -> importSourceModel(mpsProject, bridge);
         case "Export MPS model as source" -> exportSourceModel(bridge);
-        case "Import ANTLR source model into MPS" -> importAntlr(pluginRoot, true);
+        case "Import ANTLR source model into MPS" -> importAntlr(mpsProject, pluginRoot, true);
         default -> throw new IllegalStateException("Unknown parser bridge operation.");
       }
     } catch (IOException error) {
@@ -68,7 +69,8 @@ public final class RascalBridgeAction {
     }
   }
 
-  private static void importAntlr(Path pluginRoot, boolean textImport) throws IOException {
+  private static void importAntlr(
+      jetbrains.mps.project.MPSProject mpsProject, Path pluginRoot, boolean textImport) throws IOException {
     Path bridge = pluginRoot.resolve("antlr-bridge");
     if (!Files.isRegularFile(bridge.resolve("src/AntlrBridge.java"))) {
       throw new IOException("The installed ANTLR bridge resources are incomplete.");
@@ -77,39 +79,41 @@ public final class RascalBridgeAction {
     if (grammar == null) return;
     String start = JOptionPane.showInputDialog(null, "Parser start rule:", "program");
     if (start == null) return;
-    Path source = textImport ? chooseOpenFile("Select the source text", "Source text", "txt") : null;
-    if (textImport && source == null) return;
-    Path template = textImport
-        ? chooseOpenFile("Select the target MPS model template", "MPS model", "mps")
-        : pluginRoot.resolve("templates/Demo.mps");
-    if (template == null) return;
-    Path mapping = textImport
-        ? chooseOpenFile("Select the AST mapping configuration", "Mapping", "json") : null;
-    if (textImport && mapping == null) return;
-    Path output = chooseSaveFile("Save the imported model under an MPS model root", "MPS model", "mps");
+    if (!start.matches("[A-Za-z_][A-Za-z0-9_]*")) {
+      showMessage("Enter a parser start rule name.", true);
+      return;
+    }
+    if (textImport) {
+      Path source = chooseOpenFile("Select the source text", "Source text", "txt");
+      if (source == null) return;
+      Path mapping = chooseOpenFile("Select the AST mapping configuration", "Mapping", "json");
+      if (mapping == null) return;
+      Target target = chooseTargetModel(mpsProject);
+      if (target == null) return;
+      String previous = PREFERENCES.get("antlrJar", "");
+      Path jar = chooseFile("Select the ANTLR 4 complete JAR", "JAR",
+          previous.isBlank() ? null : Paths.get(previous), "jar");
+      if (jar == null) return;
+      PREFERENCES.put("antlrJar", jar.toString());
+      runNativeSourceImport("Importing ANTLR source model", mpsProject, target, bridge, mapping,
+          (workingBridge, parseTree) -> runPython(workingBridge, "bridge.py",
+              "parse", "--antlr-jar", jar.toString(), "--grammar", grammar.toString(),
+              "--start", start, "--input-text", source.toString(), "--output", parseTree.toString()));
+      return;
+    }
+    Path template = pluginRoot.resolve("templates/Demo.mps");
+    Path output = chooseSaveFile("Save the imported grammar model", "MPS model", "mps");
     if (output == null) return;
     String previous = PREFERENCES.get("antlrJar", "");
     Path jar = chooseFile("Select the ANTLR 4 complete JAR", "JAR",
         previous.isBlank() ? null : Paths.get(previous), "jar");
     if (jar == null) return;
     PREFERENCES.put("antlrJar", jar.toString());
-    runWorkflow("Importing ANTLR " + (textImport ? "source model" : "grammar"),
-        output, bridge, workingBridge -> {
-          List<String> arguments = new ArrayList<>(List.of(
-              textImport ? "text" : "grammar",
-              "--antlr-jar", jar.toString(),
-              "--grammar", grammar.toString(),
-              "--start", start,
-              "--output", output.toString(),
-              "--model-name", fileStem(output),
-              "--template", template.toString()));
-          if (textImport) {
-            arguments.addAll(List.of("--input-text", source.toString(), "--mapping", mapping.toString()));
-          } else {
-            arguments.addAll(List.of("--regex-template", pluginRoot.resolve("templates/python.mps").toString()));
-          }
-          runPython(workingBridge, "bridge.py", arguments.toArray(String[]::new));
-        });
+    runWorkflow("Importing ANTLR grammar", output, bridge, workingBridge ->
+        runPython(workingBridge, "bridge.py",
+            "grammar", "--antlr-jar", jar.toString(), "--grammar", grammar.toString(),
+            "--start", start, "--output", output.toString(), "--model-name", fileStem(output),
+            "--template", template.toString()));
   }
 
   private static void exportGrammar(Path bridge) throws IOException {
@@ -128,30 +132,102 @@ public final class RascalBridgeAction {
             "--module-name", moduleName));
   }
 
-  private static void importSourceModel(Path bridge) throws IOException {
+  private static void importSourceModel(
+      jetbrains.mps.project.MPSProject mpsProject, Path bridge) throws IOException {
     Path grammar = chooseOpenFile(
         "Select a Rascal or MetaBNF grammar", "Grammar sources", "rsc", "mps");
     if (grammar == null) return;
     Path source = chooseOpenFile("Select the source text", "Source text", "txt");
     if (source == null) return;
-    Path template = chooseOpenFile("Select the target MPS model template", "MPS model", "mps");
-    if (template == null) return;
     Path mapping = chooseOpenFile("Select the AST mapping configuration", "Mapping", "json");
     if (mapping == null) return;
-    Path output = chooseSaveFile(
-        "Save the imported model under the target language's MPS model root", "MPS model", "mps");
-    if (output == null) return;
+    Target target = chooseTargetModel(mpsProject);
+    if (target == null) return;
     Path rascalJar = chooseRascalJar();
     if (rascalJar == null) return;
-    runWorkflow("Importing source model", output, bridge, workingBridge ->
-        runPython(workingBridge, "import_text_to_mps.py",
-            "--rascal-jar", rascalJar.toString(),
-            "--grammar", grammar.toString(),
-            "--input-text", source.toString(),
-            "--template", template.toString(),
-            "--mapping", mapping.toString(),
-            "--output", output.toString(),
-            "--model-name", fileStem(output)));
+    runNativeSourceImport("Importing source model", mpsProject, target, bridge, mapping,
+        (workingBridge, parseTree) -> runPython(workingBridge, "import_text_to_mps.py",
+            "--rascal-jar", rascalJar.toString(), "--grammar", grammar.toString(),
+            "--input-text", source.toString(), "--parse-tree-output", parseTree.toString()));
+  }
+
+  private record Target(String label, org.jetbrains.mps.openapi.model.SModelReference reference) {
+    @Override public String toString() { return label; }
+  }
+
+  private static Target chooseTargetModel(jetbrains.mps.project.MPSProject mpsProject) {
+    List<Target> targets = mpsProject.getModelAccess().computeReadAction(() -> {
+      List<Target> result = new ArrayList<>();
+      for (jetbrains.mps.project.Solution solution :
+          mpsProject.getProjectModules(jetbrains.mps.project.Solution.class)) {
+        for (org.jetbrains.mps.openapi.model.SModel model : solution.getModels()) {
+          if (model instanceof org.jetbrains.mps.openapi.model.EditableSModel && !model.isReadOnly()
+              && model.getName().getStereotype().isEmpty()) {
+            result.add(new Target(model.getName().toString(), model.getReference()));
+          }
+        }
+      }
+      result.sort(java.util.Comparator.comparing(Target::label));
+      return result;
+    });
+    if (targets.isEmpty()) {
+      showMessage("Create an editable model in a project solution first (New > Model).", true);
+      return null;
+    }
+    return (Target) JOptionPane.showInputDialog(null,
+        "Target model (the selected model must use the mapped MPS language):",
+        "Import source model into MPS", JOptionPane.QUESTION_MESSAGE,
+        null, targets.toArray(), targets.get(0));
+  }
+
+  @FunctionalInterface
+  private interface ParseWorkflow {
+    void run(Path workingBridge, Path parseTree) throws Exception;
+  }
+
+  private static void runNativeSourceImport(
+      String label, jetbrains.mps.project.MPSProject mpsProject, Target target,
+      Path bridge, Path mapping, ParseWorkflow workflow) throws IOException {
+    Path temporaryRoot = Files.createTempDirectory("metabnf-source-import-");
+    Path workingBridge = temporaryRoot.resolve(bridge.getFileName());
+    try {
+      copyBridge(bridge, workingBridge);
+      if (bridge.getFileName().toString().equals("antlr-bridge")) {
+        copyBridge(bridge.getParent().resolve("rascal-bridge"), temporaryRoot.resolve("rascal-bridge"));
+      }
+    } catch (IOException error) {
+      deleteTree(temporaryRoot);
+      throw error;
+    }
+    CompletableFuture.runAsync(() -> {
+      try {
+        Path parseTree = temporaryRoot.resolve("parse-result.xml");
+        workflow.run(workingBridge, parseTree);
+        SourceModelImporter.Result[] imported = new SourceModelImporter.Result[1];
+        ApplicationManager.getApplication().invokeAndWait(() -> {
+          if (mpsProject.getProject().isDisposed()) return;
+          mpsProject.getModelAccess().executeCommand(() -> {
+            org.jetbrains.mps.openapi.model.SModel model = target.reference().resolve(mpsProject.getRepository());
+            if (model == null) throw new IllegalStateException("Target model was removed during import");
+            try {
+              imported[0] = SourceModelImporter.importInto(model, parseTree, mapping);
+            } catch (Exception failure) {
+              throw new IllegalStateException(failure.getMessage(), failure);
+            }
+          });
+        });
+        if (imported[0] != null) {
+          showMessage("Imported " + imported[0].roots().size() + " root node(s) and "
+              + imported[0].references() + " reference(s) into " + target.label()
+              + ". References were resolved with the target language's native MPS scope.", false);
+        }
+      } catch (Exception error) {
+        showMessage(label + " failed:\n" + error.getMessage()
+            + "\nNo AST is retained when a mapped reference cannot be resolved.", true);
+      } finally {
+        deleteTree(temporaryRoot);
+      }
+    });
   }
 
   private static void exportSourceModel(Path bridge) throws IOException {
