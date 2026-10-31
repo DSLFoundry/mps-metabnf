@@ -26,6 +26,7 @@ final class ProfilesEnrichmentTest {
     static void run(SModel model, SModel demo) {
         SNode grammar = roots(model).stream().filter(node -> is(node, "grammar")).findFirst().orElseThrow();
         profiles(model, grammar);
+        serializationProfiles(model, grammar);
         roots(model).forEach(model::removeRootNode);
         grammar = GrammarModelImporter.importInto(model, fixture(), "Patterns", "ANTLR");
         SNode nativeEnum = create(model, "EnumRule");
@@ -224,6 +225,34 @@ final class ProfilesEnrichmentTest {
         enumeration(choice, "projection", "Form");
         require(((List<?>) GenerationProfiles.inspect(profile).get("diagnostics")).isEmpty(), "Clean profile has diagnostics");
         model.removeRootNode(profile);
+    }
+
+    private static void serializationProfiles(SModel model, SNode grammar) {
+        String syntax = fingerprint(grammar);
+        SNode flag = tree(grammar).stream().filter(node -> is(node, "Flag")).findFirst().orElseThrow();
+        for (String id : List.of("plaintextgen", "plaintextflow")) {
+            Map<String, Object> descriptor = GenerationProfiles.descriptor(id);
+            require(Boolean.FALSE.equals(descriptor.get("available"))
+                    && descriptor.get("kind").equals("serialization"), "Optional serialization backend was treated as available: " + descriptor);
+            List<?> requirements = (List<?>) descriptor.get("requirements");
+            require(requirements.stream().anyMatch(value -> value.toString().contains("com.dslfoundry.plaintextgen")),
+                    "PlainTextGen dependency is not explicit: " + requirements);
+            if (id.equals("plaintextflow")) {
+                require(requirements.stream().anyMatch(value -> value.toString().contains("com.dslfoundry.plaintextflow")),
+                        "PlainTextFlow dependency is not explicit: " + requirements);
+            }
+            SNode profile = GenerationProfiles.createProfile(model, grammar, id);
+            try {
+                List<?> diagnostics = (List<?>) GenerationProfiles.inspect(profile).get("diagnostics");
+                require(diagnostics.toString().contains("MBNF_BACKEND_UNAVAILABLE"),
+                        "Unverified optional backend did not produce a structured diagnostic: " + diagnostics);
+                rejected("MBNF_BACKEND_UNAVAILABLE", () -> GenerationProfiles.validateForGeneration(profile));
+                rejected("MBNF_BACKEND_UNAVAILABLE", () -> GenerationProfiles.resolve(profile, flag, "Flag", "Textual"));
+            } finally {
+                model.removeRootNode(profile);
+            }
+        }
+        require(syntax.equals(fingerprint(grammar)), "Serialization profiles changed source grammar syntax");
     }
 
     private static void suggestionEditor(SModel model, SNode suggestion) {

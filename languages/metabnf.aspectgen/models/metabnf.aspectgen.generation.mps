@@ -699,6 +699,15 @@
                 </node>
               </node>
             </node>
+            <node concept="3clFbF" id="7x9tIKVuVSq" role="3cqZAp">
+              <node concept="2YIFZM" id="7x9tIKVuVSo" role="3clFbG">
+                <ref role="1Pybhc" to="9toz:~GenerationProfiles" resolve="GenerationProfiles" />
+                <ref role="37wK5l" to="9toz:~GenerationProfiles.validateForGeneration(org.jetbrains.mps.openapi.model.SNode)" resolve="validateForGeneration" />
+                <node concept="37vLTw" id="7x9tIKVuVSp" role="37wK5m">
+                  <ref role="3cqZAo" node="2RLAZYDKbVg" resolve="profile" />
+                </node>
+              </node>
+            </node>
           </node>
         </node>
         <node concept="1DcWWT" id="2RLAZYDKbW4" role="3cqZAp">

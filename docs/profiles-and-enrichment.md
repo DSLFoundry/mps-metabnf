@@ -65,8 +65,9 @@ Generation-profile implementation selections are not copied by this action.
 
 ## Configure a generation profile
 
-Use **Tools > Configure Generation Profile...**. Choose `vanilla` or the explicit
-`grammar-cells` profile. This creates a native `GenerationProfile` root; invoking
+Use **Tools > Configure Generation Profile...**. Choose `vanilla`, the explicit
+`grammar-cells` profile, or one of the optional `plaintextgen` / `plaintextflow`
+serialization profiles. This creates a native `GenerationProfile` root; invoking
 the action again displays its computed inspection. Profiles are version `1`.
 The native root can also be created through **New Root**.
 
@@ -79,6 +80,19 @@ checkout targets a different prerelease platform than this project's pinned MPS.
 No compatible Grammar Cells backend has been verified or bundled. Selecting
 that profile produces `MBNF_BACKEND_UNAVAILABLE`, never a platform change or
 silent fallback.
+
+The `plaintextgen` and `plaintextflow` profiles describe optional plain-text
+serialization backends; they do not change the default `TextGen` or install a
+plugin. `plaintextgen` requires the `com.dslfoundry.plaintextgen` language/plugin
+and an MPS 2026.1-compatible release. `plaintextflow` additionally requires
+`com.dslfoundry.plaintextflow` and PlainTextGen. Neither backend is currently
+verified against this project's pinned MPS 2026.1.1 build, so both profiles are
+explicitly unavailable and produce `MBNF_BACKEND_UNAVAILABLE` during generation
+and resolution. They never fall back to vanilla. Check the [PlainTextGen
+project](https://github.com/DSLFoundry/mps-plaintextgen) and its
+[release compatibility](https://plugins.jetbrains.com/plugin/8444-mps-plaintext-generator/versions)
+before enabling them. These descriptors preserve the optional dependency
+boundary; no PlainTextGen/Flow language is added to the project build.
 
 Add `ImplementationSelection` children using normal MPS completion:
 

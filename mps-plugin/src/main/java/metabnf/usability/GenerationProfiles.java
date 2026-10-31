@@ -18,6 +18,8 @@ public final class GenerationProfiles {
     public static final String MPS_BUILD = "261.25134.877";
     private static final Set<String> PATTERNS = Set.of("Flag", "List", "OptionalGroup", "LiteralChoice");
     private static final Set<String> PROJECTIONS = Set.of("Textual", "Form", "Table");
+    private static final Set<String> PROFILES = Set.of("vanilla", "grammar-cells", "plaintextgen", "plaintextflow");
+    private static final Set<String> SERIALIZATION_PROFILES = Set.of("plaintextgen", "plaintextflow");
     private static final Map<String, List<String>> IMPLEMENTATIONS = Map.of(
             "Flag", List.of("vanilla.keyword", "vanilla.checkbox", "grammar-cells.flag"),
             "List", List.of("vanilla.sequence", "vanilla.vertical-list", "grammar-cells.list"),
@@ -28,20 +30,38 @@ public final class GenerationProfiles {
     private record Subject(SNode node, SNode target, String pattern, boolean annotation) {}
 
     public static Map<String, Object> descriptor(String id) {
-        if (!Set.of("vanilla", "grammar-cells").contains(id)) {
-            throw failure("MBNF_UNKNOWN_PROFILE", null, "Unknown profile: " + id, "Use vanilla or grammar-cells");
+        if (!PROFILES.contains(id)) {
+            throw failure("MBNF_UNKNOWN_PROFILE", null, "Unknown profile: " + id,
+                    "Use vanilla, grammar-cells, plaintextgen, or plaintextflow");
         }
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("id", id);
         result.put("version", VERSION);
         result.put("mps", MPS);
         result.put("mpsBuild", MPS_BUILD);
-        result.put("requirements", id.equals("vanilla") ? List.of("MPS " + MPS + " / " + MPS_BUILD)
-                : List.of("MPS " + MPS + " / " + MPS_BUILD, "com.mbeddr.mpsutil.grammarcells: verified 2026.1 build required"));
+        result.put("kind", SERIALIZATION_PROFILES.contains(id) ? "serialization" : "projection");
+        result.put("backend", id.equals("plaintextgen") ? "PlainTextGen"
+                : id.equals("plaintextflow") ? "PlainTextFlow" : id);
+        result.put("requirements", switch (id) {
+            case "vanilla" -> List.of("MPS " + MPS + " / " + MPS_BUILD);
+            case "grammar-cells" -> List.of("MPS " + MPS + " / " + MPS_BUILD,
+                    "com.mbeddr.mpsutil.grammarcells: verified 2026.1 build required");
+            case "plaintextgen" -> List.of("MPS " + MPS + " / " + MPS_BUILD,
+                    "com.dslfoundry.plaintextgen: compatible MPS 2026.1 release required");
+            case "plaintextflow" -> List.of("MPS " + MPS + " / " + MPS_BUILD,
+                    "com.dslfoundry.plaintextgen: compatible MPS 2026.1 release required",
+                    "com.dslfoundry.plaintextflow: compatible MPS 2026.1 release required");
+            default -> throw new IllegalStateException(id);
+        });
         result.put("available", id.equals("vanilla"));
-        result.put("reason", id.equals("vanilla") ? "Bundled vanilla MPS capability descriptors"
-                : "Blocked: inspected sibling MPS-extensions targets 263.6259.116, not MPS 2026.1; no compatible backend verified");
-        result.put("capabilities", IMPLEMENTATIONS);
+        result.put("reason", switch (id) {
+            case "vanilla" -> "Bundled vanilla MPS capability descriptors";
+            case "grammar-cells" -> "Blocked: inspected sibling MPS-extensions targets 263.6259.116, not MPS 2026.1; no compatible backend verified";
+            case "plaintextgen" -> "Blocked: PlainTextGen is optional and no compatible MPS 2026.1 backend has been verified";
+            case "plaintextflow" -> "Blocked: PlainTextFlow requires PlainTextGen and no compatible MPS 2026.1 backends have been verified";
+            default -> throw new IllegalStateException(id);
+        });
+        result.put("capabilities", SERIALIZATION_PROFILES.contains(id) ? Map.of() : IMPLEMENTATIONS);
         return result;
     }
 
@@ -82,6 +102,12 @@ public final class GenerationProfiles {
         put(choice, "implementation", implementation);
         if (existing.isEmpty()) add(profile, "selections", choice);
         return choice;
+    }
+
+    public static void validateForGeneration(SNode profile) {
+        if (profile == null) return;
+        validate(profile);
+        requireAvailable(profile, descriptor(get(profile, "profileId")));
     }
 
     public static Map<String, Object> resolve(SNode profile, SNode occurrence, String pattern, String projection) {
@@ -137,11 +163,7 @@ public final class GenerationProfiles {
         validateSelection(grammar, "Occurrence", occurrence, pattern, projection);
         String id = get(profile, "profileId");
         Map<String, Object> descriptor = descriptor(id);
-        if (!Boolean.TRUE.equals(descriptor.get("available"))) {
-            throw failure("MBNF_BACKEND_UNAVAILABLE", profile,
-                    id + "@" + get(profile, "version") + ": " + descriptor.get("reason"),
-                    "Use vanilla@1 or verify a compatible Grammar Cells backend without changing the MPS platform");
-        }
+        requireAvailable(profile, descriptor);
         if (!approved && !applicable(occurrence, pattern)) {
             throw failure("MBNF_PATTERN_NOT_APPLICABLE", occurrence, pattern + " does not apply to this occurrence",
                     "Resolve a compatible annotation target");
@@ -192,6 +214,16 @@ public final class GenerationProfiles {
         result.put("generationMetadata", Map.of("profile", id, "version", VERSION, "mps", MPS, "mpsBuild", MPS_BUILD,
                 "requirements", descriptor.get("requirements"), "capabilityOnly", true));
         return result;
+    }
+
+    private static void requireAvailable(SNode profile, Map<String, Object> descriptor) {
+        if (Boolean.TRUE.equals(descriptor.get("available"))) return;
+        String id = descriptor.get("id").toString();
+        String remedy = id.equals("grammar-cells")
+                ? "Use vanilla@1 or verify a compatible Grammar Cells backend without changing the MPS platform"
+                : "Install and verify every listed compatible optional backend, or use vanilla@1; no fallback is performed";
+        throw failure("MBNF_BACKEND_UNAVAILABLE", profile,
+                id + "@" + get(profile, "version") + ": " + descriptor.get("reason"), remedy);
     }
 
     public static Map<String, Object> inspect(SNode profile) {
