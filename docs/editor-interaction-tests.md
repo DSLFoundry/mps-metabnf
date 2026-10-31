@@ -92,9 +92,13 @@ Do not claim those capabilities from caret/AST assertions alone.
 
 The Number fixtures establish the baseline editing/undo contract. Flag/group
 coverage does not establish list, block, expression, or parser/mapping coverage.
-Each new interaction needs its own applicable contract cases and an explicit
-supported/unsupported matrix. Update the exact inventory in `build.gradle.kts`
-when registering fixtures; empty, skipped, missing or duplicate cases fail.
+The expression smoke regression exercises the structural recognizer's rejection
+of unrelated Demo grammar rules and the Java precedence/rendering helpers; it is
+not a native expression editor interaction test. No generated expression-family
+operator actions are currently claimed. Each new interaction needs its own
+applicable contract cases and an explicit supported/unsupported matrix. Update
+the exact inventory in `build.gradle.kts` when registering fixtures; empty,
+skipped, missing or duplicate cases fail.
 
 ## Reading failures
 

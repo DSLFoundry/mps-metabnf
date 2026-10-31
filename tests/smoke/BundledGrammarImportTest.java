@@ -5,6 +5,7 @@ import jetbrains.mps.project.Project;
 import jetbrains.mps.tool.environment.Environment;
 import metabnf.rascal.GrammarModelImporter;
 import metabnf.rascal.GrammarTools;
+import metabnf.usability.ExpressionFamilies;
 import metabnf.usability.GrammarEnrichment;
 import metabnf.usability.ModelNodes;
 import jetbrains.mps.smodel.CopyUtil;
@@ -30,7 +31,9 @@ final class BundledGrammarImportTest {
             throw new AssertionError("Missing original annotation fixture");
         });
         for (String tool : List.of("ANTLR", "Rascal")) {
-            Path work = Files.createTempDirectory("metabnf-bundled-test-");
+            Path work = repo.resolve("build/bundled-grammar-test-" + tool.toLowerCase());
+            if (Files.exists(work)) GrammarTools.cleanup(work);
+            Files.createDirectories(work);
             try {
                 Path source = repo.resolve(tool.equals("ANTLR")
                         ? "tests/antlr-bridge/GrammarCoverage.g4" : "tests/rascal-bridge/GrammarCoverage.rsc");
@@ -45,6 +48,20 @@ final class BundledGrammarImportTest {
                     var sentinelReference = sentinel.getReference();
                     SNode imported = GrammarModelImporter.importInto(target, grammar, "Bundled" + tool, tool);
                     validate(imported);
+                    if (tool.equals("ANTLR")) {
+                        SNode grammarGroup = ModelNodes.children(imported, "rules").get(0);
+                        SNode flatExpression = ModelNodes.children(grammarGroup, "rules").stream()
+                                .filter(rule -> "expression".equals(ModelNodes.get(rule, "name")))
+                                .findFirst().orElseThrow(() -> new AssertionError("Flat expression rule was not imported"));
+                        List<SNode> flatTerms = ModelNodes.children(flatExpression, "terms");
+                        require(flatTerms.size() == 2
+                                        && "ZeroOrMore".equals(ModelNodes.enumeration(flatTerms.get(1), "card")),
+                                "Ambiguous flat expression structure or repetition was not preserved");
+                        require(ExpressionFamilies.recognize(imported).stream().noneMatch(candidate ->
+                                        List.of("ExpressionPrefix", "ExpressionPostfix", "ExpressionInfix",
+                                                "ExpressionTernary", "ExpressionLayered").contains(candidate.family())),
+                                "Flat repeated operators acquired inferred precedence/associativity instead of remaining ambiguous");
+                    }
                     var reference = imported.getReference();
                     ((EditableSModel) target).reloadFromSource();
                     SNode restored = reference.resolve(project.getRepository());
@@ -99,6 +116,7 @@ final class BundledGrammarImportTest {
                     }
                 }
                 if (tool.equals("ANTLR")) {
+                    verifyStratifiedExpressionImport(tools, repo, work);
                     Path rejectedWork = Files.createDirectory(work.resolve("reject"));
                     Path unsupported = work.resolve("Bad.g4");
                     Files.writeString(unsupported, "grammar Bad; program: {true}? 'x' EOF;");
@@ -107,6 +125,28 @@ final class BundledGrammarImportTest {
                         throw new AssertionError("ANTLR predicate was silently accepted");
                     } catch (java.io.IOException expected) {
                         require(expected.getMessage().contains("Unsupported ANTLR"), "Tool diagnostics were lost");
+                    }
+                    Path recursiveWork = Files.createDirectory(work.resolve("left-recursive"));
+                    Path recursive = work.resolve("LeftRecursive.g4");
+                    Files.writeString(recursive, "grammar LeftRecursive; program: expression EOF; "
+                            + "expression: expression '+' expression | ID; ID: [a-z]+;");
+                    try {
+                        GrammarTools.export(tools, "ANTLR", recursive, "program", recursiveWork, () -> false);
+                        throw new AssertionError("Left-recursive expression import guessed precedence");
+                    } catch (java.io.IOException expected) {
+                        require(expected.getMessage().contains("lose precedence"),
+                                "Left-recursion rejection lost its precedence diagnostic: " + expected.getMessage());
+                    }
+                } else {
+                    String associativity = Files.readString(output)
+                            .replace("</choice>", "</choice><associativity/>");
+                    Files.writeString(bad, associativity);
+                    try {
+                        GrammarModelImporter.read(bad);
+                        throw new AssertionError("Unsupported associativity was silently accepted");
+                    } catch (IllegalArgumentException expected) {
+                        require(expected.getMessage().contains("Priority/associativity"),
+                                "Unexpected associativity rejection: " + expected);
                     }
                 }
             } finally {
@@ -148,6 +188,39 @@ final class BundledGrammarImportTest {
             System.out.println("SMOKE: recorded the current MudDB native text-property constraint incompatibility");
         } finally {
             GrammarTools.cleanup(corpusWork);
+        }
+    }
+
+    private static void verifyStratifiedExpressionImport(Path tools, Path repo, Path work) throws Exception {
+        Path expressionWork = Files.createDirectory(work.resolve("stratified-expression"));
+        try {
+            Path source = repo.resolve("tests/antlr-bridge/ExpressionFamilies.g4");
+            Path interchange = GrammarTools.export(tools, "ANTLR", source, "program", expressionWork, () -> false);
+            GrammarModelImporter.Grammar grammar = GrammarModelImporter.read(interchange);
+            var byName = grammar.rules().stream().collect(java.util.stream.Collectors.toMap(
+                    GrammarModelImporter.Rule::name, rule -> rule));
+            var sum = byName.get("sum");
+            var product = byName.get("product");
+            require(sum != null && product != null, "Stratified expression rules were discarded during import");
+            require(sum.alternatives().size() == 1
+                            && sum.alternatives().get(0).stream().anyMatch(symbol ->
+                            symbol.kind().equals("sort") && symbol.value().equals("product"))
+                            && sum.alternatives().get(0).stream().anyMatch(symbol ->
+                            symbol.cardinality().equals("ZeroOrMore")),
+                    "Additive precedence layer was flattened or its repetition was lost");
+            require(product.alternatives().size() == 1
+                            && product.alternatives().get(0).stream().anyMatch(symbol ->
+                            symbol.kind().equals("sort") && symbol.value().equals("atom"))
+                            && product.alternatives().get(0).stream().anyMatch(symbol ->
+                            symbol.cardinality().equals("ZeroOrMore")),
+                    "Multiplicative precedence layer was flattened or its repetition was lost");
+            List<String> literals = grammar.rules().stream().flatMap(rule -> rule.alternatives().stream())
+                    .flatMap(List::stream).filter(symbol -> symbol.kind().equals("literal"))
+                    .map(GrammarModelImporter.Symbol::value).toList();
+            require(literals.containsAll(List.of("+", "-", "*", "/")),
+                    "Expression operators were lost while preserving the explicit grammar layers");
+        } finally {
+            GrammarTools.cleanup(expressionWork);
         }
     }
 

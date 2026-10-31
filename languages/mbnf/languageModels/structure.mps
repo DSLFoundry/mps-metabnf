@@ -663,6 +663,51 @@
       <property role="3tVfz5" value="1234082659529943238" />
       <property role="1L1pqM" value="LiteralChoice" />
     </node>
+    <node concept="25R33" id="7EHZiBAt002" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000002" />
+      <property role="TrG5h" value="ExpressionLiteral" />
+      <property role="1L1pqM" value="ExpressionLiteral" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt003" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000003" />
+      <property role="TrG5h" value="ExpressionPrefix" />
+      <property role="1L1pqM" value="ExpressionPrefix" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt004" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000004" />
+      <property role="TrG5h" value="ExpressionPostfix" />
+      <property role="1L1pqM" value="ExpressionPostfix" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt005" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000005" />
+      <property role="TrG5h" value="ExpressionInfix" />
+      <property role="1L1pqM" value="ExpressionInfix" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt006" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000006" />
+      <property role="TrG5h" value="ExpressionTernary" />
+      <property role="1L1pqM" value="ExpressionTernary" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt007" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000007" />
+      <property role="TrG5h" value="ExpressionGrouping" />
+      <property role="1L1pqM" value="ExpressionGrouping" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt008" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000008" />
+      <property role="TrG5h" value="ExpressionIndexAccess" />
+      <property role="1L1pqM" value="ExpressionIndexAccess" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt009" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000009" />
+      <property role="TrG5h" value="ExpressionMemberAccess" />
+      <property role="1L1pqM" value="ExpressionMemberAccess" />
+    </node>
+    <node concept="25R33" id="7EHZiBAt00a" role="25R1y">
+      <property role="3tVfz5" value="8840000000000000010" />
+      <property role="TrG5h" value="ExpressionLayered" />
+      <property role="1L1pqM" value="ExpressionLayered" />
+    </node>
   </node>
   <node concept="25R3W" id="14wlUfKK6z7">
     <property role="TrG5h" value="EditorProjection" />
@@ -772,6 +817,12 @@
     <property role="EcuMT" value="1234082659529943258" />
     <property role="3GE5qa" value="usability" />
     <ref role="1TJDcQ" node="$td8qPViA$" resolve="UsabilityAnnotation" />
+    <node concept="1TJgyj" id="14wlUfKK6zt" role="1TKVEi">
+      <property role="20kJfa" value="target" />
+      <property role="IQ2ns" value="1234082659529943261" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    </node>
     <node concept="1TJgyi" id="14wlUfKK6zr" role="1TKVEl">
       <property role="TrG5h" value="pattern" />
       <property role="IQ2nx" value="1234082659529943259" />
@@ -782,11 +833,45 @@
       <property role="IQ2nx" value="1234082659529943260" />
       <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
     </node>
-    <node concept="1TJgyj" id="14wlUfKK6zt" role="1TKVEi">
-      <property role="20kJfa" value="target" />
-      <property role="IQ2ns" value="1234082659529943261" />
-      <property role="20lbJX" value="fLJekj4/_1" />
-      <ref role="20lvS9" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="7EHZiBAt01$" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000100" />
+      <property role="TrG5h" value="operandRoles" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7EHZiBAt01_" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000101" />
+      <property role="TrG5h" value="precedence" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7EHZiBAt01A" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000102" />
+      <property role="TrG5h" value="associativity" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7EHZiBAt01B" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000103" />
+      <property role="TrG5h" value="wrappingPolicy" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7EHZiBAt01C" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000104" />
+      <property role="TrG5h" value="replacementPolicy" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7EHZiBAt01D" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000105" />
+      <property role="TrG5h" value="deletionPolicy" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7EHZiBAt01E" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000106" />
+      <property role="TrG5h" value="focusPolicy" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="7EHZiBAt01F" role="1TKVEl">
+      <property role="IQ2nx" value="8840000000000000107" />
+      <property role="TrG5h" value="foldingPolicy" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
   </node>
   <node concept="1TIwiD" id="7Q_67PU$yi5">

@@ -71,6 +71,20 @@ constructs whose meaning cannot be represented faithfully.
 | 3. Precedence and behavior | Priority and associativity productions are rejected explicitly; MetaBNF has no equivalent precedence model. Separated repetitions and lexical-reference cardinalities are unsupported. | Parser left recursion is rejected for grammar import because precedence/associativity would be lost. Lexer commands (including `skip`/channels), fragments and lexer-rule references are rejected; lexer priority/layout behavior is not inferred. |
 | 4. Dependencies and code | External-module dependencies and unsupported Rascal symbols fail explicitly. | Split lexer/parser grammars, imports, `tokenVocab`, options, embedded actions/predicates, labels, and exception handlers fail explicitly. Actions and predicates are never executed. |
 
+Expression-precedence import remains deliberately limited:
+
+| Source form | Current result | Meaning |
+| --- | --- | --- |
+| Stratified rules that encode precedence structurally (for example `Expression -> Term`, `Term -> Factor`) | The rule/reference structure is imported as written | No precedence annotation is inferred; source parser behavior has not been independently proven by this structural import |
+| ANTLR parser left recursion | Rejected with a precedence-loss diagnostic | No rewrite or precedence guess is applied |
+| Rascal `priority` or `associativity` productions | Rejected explicitly | These source semantics are not represented in the native grammar |
+| Ambiguous or unsupported precedence notation | Rejected or retained only as ordinary grammar structure when the importer can parse it | The importer does not choose a binding order |
+
+Expression-family enrichment is a separate review step: it can suggest
+structural roles but does not restore precedence lost by an import. See
+[profiles and enrichment](profiles-and-enrichment.md) for the annotation and
+backend support matrix.
+
 Rascal interchange records layout references explicitly for native MetaBNF
 import. Generated Rascal parsers restore the declared layout and avoid duplicate
 explicit references. The native MetaBNF model stores these as ordinary terminal

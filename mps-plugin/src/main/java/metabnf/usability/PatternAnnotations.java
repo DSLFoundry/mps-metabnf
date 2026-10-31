@@ -1,6 +1,7 @@
 package metabnf.usability;
 
 import org.jetbrains.mps.openapi.model.SNode;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import static metabnf.usability.ModelNodes.*;
@@ -15,6 +16,7 @@ public final class PatternAnnotations {
         try {
             bool(annotation, "mappingImpact");
             String pattern = enumeration(annotation, "pattern");
+            if (ExpressionFamilies.isExpressionPattern(pattern)) return ExpressionFamilies.validation(set, annotation);
             if (!Set.of("Flag", "List", "OptionalGroup", "LiteralChoice").contains(pattern)) return "Unsupported pattern enum";
             if ((pattern.equals("Flag") || pattern.equals("List") || pattern.equals("OptionalGroup"))
                     && !is(node, "NonterminalReference")) return "This pattern requires a nonterminal-reference occurrence";
@@ -33,8 +35,17 @@ public final class PatternAnnotations {
     }
 
     public static Map<String, Object> inspect(SNode annotation) {
-        return Map.of("target", ref(target(annotation, "target")), "pattern", enumeration(annotation, "pattern"),
-                "mappingImpact", bool(annotation, "mappingImpact"),
-                "recognitionKey", get(annotation, "recognitionKey"));
+        Map<String, Object> semantics = new LinkedHashMap<>();
+        for (String field : Set.of("operandRoles", "precedence", "associativity", "wrappingPolicy",
+                "replacementPolicy", "deletionPolicy", "focusPolicy", "foldingPolicy")) {
+            semantics.put(field, get(annotation, field));
+        }
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("target", ref(target(annotation, "target")));
+        result.put("pattern", enumeration(annotation, "pattern"));
+        result.put("mappingImpact", bool(annotation, "mappingImpact"));
+        result.put("recognitionKey", get(annotation, "recognitionKey"));
+        result.put("expressionSemantics", semantics);
+        return result;
     }
 }

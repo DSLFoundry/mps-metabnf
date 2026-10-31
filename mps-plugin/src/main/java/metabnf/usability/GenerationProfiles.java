@@ -106,6 +106,16 @@ public final class GenerationProfiles {
                     "Review the suggestion; approve as authored with suppression cleared before resolving it");
         }
         Subject subject = subject(annotation);
+        if (is(annotation, "PatternAnnotation")) {
+            String invalid = PatternAnnotations.validation(annotation.getParent(), annotation);
+            if (!invalid.isEmpty()) throw failure("MBNF_INVALID_PATTERN", annotation, invalid, "Review pattern target/cardinality and authored semantics");
+        }
+        if (subject == null && is(annotation, "PatternAnnotation")
+                && ExpressionFamilies.isExpressionPattern(enumeration(annotation, "pattern"))) {
+            throw failure("MBNF_EXPRESSION_INTERACTIONS_UNAVAILABLE", annotation,
+                    "Expression metadata is recognized, but no profile-selected expression interaction backend is installed",
+                    "Keep the interpretation suggested or use an explicitly supported native editor path");
+        }
         if (subject == null || !within(subject.target, grammar)) {
             throw failure("MBNF_INVALID_ANNOTATION", annotation, "Invalid semantic attachment", "Review annotation kind/target");
         }
@@ -124,10 +134,6 @@ public final class GenerationProfiles {
                 throw failure("MBNF_INVALID_RANGE", annotation, "Optional group endpoints are no longer ordered terms of its owner",
                         "Review the authored range");
             }
-        }
-        if (is(annotation, "PatternAnnotation")) {
-            String invalid = PatternAnnotations.validation(annotation.getParent(), annotation);
-            if (!invalid.isEmpty()) throw failure("MBNF_INVALID_PATTERN", annotation, invalid, "Review pattern target/cardinality");
         }
         return resolve(profile, subject.target, subject.pattern, projection, true);
     }
@@ -287,7 +293,11 @@ public final class GenerationProfiles {
     }
 
     private static Subject subject(SNode annotation) {
-        if (is(annotation, "PatternAnnotation")) return new Subject(annotation, target(annotation, "target"), enumeration(annotation, "pattern"), true);
+        if (is(annotation, "PatternAnnotation")) {
+            String pattern = enumeration(annotation, "pattern");
+            if (ExpressionFamilies.isExpressionPattern(pattern)) return null;
+            return new Subject(annotation, target(annotation, "target"), pattern, true);
+        }
         if (is(annotation, "FlagAnnotation")) return new Subject(annotation, target(annotation, "target"), "Flag", true);
         if (is(annotation, "ListAnnotation")) return new Subject(annotation, target(annotation, "target"), "List", true);
         if (is(annotation, "OptionalGroupAnnotation")) return new Subject(annotation, target(annotation, "first"), "OptionalGroup", true);
@@ -310,6 +320,10 @@ public final class GenerationProfiles {
             for (SNode annotation : children(root, "annotations")) {
                 if (bool(annotation, "suppressed") || enumeration(annotation, "origin").equals("Suggested")) continue;
                 Subject subject = subject(annotation);
+                if (subject == null && is(annotation, "PatternAnnotation")
+                        && ExpressionFamilies.isExpressionPattern(enumeration(annotation, "pattern"))) {
+                    subject = new Subject(annotation, target(annotation, "target"), enumeration(annotation, "pattern"), true);
+                }
                 if (subject != null && seen.add(ref(subject.target) + ":" + subject.pattern)) result.add(subject);
             }
         }

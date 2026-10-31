@@ -23,6 +23,7 @@ Recognition uses structure, not names:
 | Optional reference to a keyword-led sequence with payload | Suggested optional group; retain absent/present-empty distinction |
 | Finite distinct literal alternatives, including an optional reference to them | Suggested exclusive literal choice, not independent flags |
 | Exact `head (separator head)*` helper structure | Suggested separated-list interpretation; do not collapse the helper AST |
+| Recursive/literal expression-like rule shapes | Suggested expression-family candidates with explicit operand-role evidence; precedence, associativity, and folding are never inferred |
 
 Repeated modifiers remain lists, not booleans. Unsupported, cyclic, duplicate
 literal alternatives and similar-looking nonmatching separated-list forms do
@@ -101,6 +102,16 @@ and `vanilla.form-group`, remain capability descriptors, not generated policies.
 Explicit `grammar-cells.flag` / `grammar-cells.list` choices under vanilla are
 incompatible errors. Unknown IDs, duplicate selections, stale targets and
 unsupported profile versions are also diagnosed.
+
+Expression-family metadata is not a profile backend. `resolveAnnotation` rejects
+an authored expression pattern with `MBNF_EXPRESSION_INTERACTIONS_UNAVAILABLE`;
+there are no generated expression operator actions, precedence-aware AST
+rewrites, or expression-specific editor interactions in this version. The
+recognizer can suggest literal/prefix/postfix/infix/ternary/grouping/index/
+member/layered shapes for review. The Java helper library has explicit
+precedence-safe rendering, replacement, wrapping, and token-boundary splitting
+contracts, but those helpers are not wired into generated editor actions or
+profile resolution. Do not treat them as fulfillment of an expression backend.
 
 Resolution is deterministic: active projection's occurrence override, then
 rule default, pattern default, narrow form/table policy, then profile-wide
