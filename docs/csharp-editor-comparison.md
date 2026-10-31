@@ -58,6 +58,12 @@ This task must not be reported as a native editor comparison. It checks authored
 syntax, grammar interchange conversion, normalized AST facts, invalid inputs,
 and the scenario/expectation inventory. It creates no MPS models. Expectations
 are checked-in data, never snapshots regenerated from observed results.
+`generated-expectations.json` is the authored semantic tree contract;
+`reference-expectations.json` is an independently authored ordered/path-based
+fact contract. Agreement between these files checks fixture consistency, not
+native reference behavior. Scenario syntax is parser input, not an export-byte
+golden for either editor. Each native adapter must supply its own exact export
+golden before executing, then compare normalized export semantics separately.
 
 Before executing either editor, write a separate native adapter that constructs
 its initial model from that side's expectations, maps semantic paths to that
@@ -87,6 +93,20 @@ be recorded as unmatched rather than replacing it with a different construct.
 | Removal and undo | Delete the second return; one undo restores it and its semantic focus. | Authored syntax and AST control only. | Blocked. | Blocked. | All native observations blocked. |
 | Expression caret | Replace right operand `2` with `3`, retaining left operand `1`. | Authored syntax and AST control only. | Blocked. | Blocked. | All native observations blocked. |
 | Export and reload | Preserve ordered nested blocks and return payload facts. | Authored syntax and AST control only. | Blocked. | Blocked. | No native export or reload observed. |
+
+The fixture control passes five tests: all nine authored states match both
+semantic contracts; grammar interchange conversion succeeds; eight malformed
+or out-of-slice inputs are rejected; the seven-scenario inventory is complete;
+and a three-operand sum normalizes left-associatively. Reports remain under
+`build/comparative-editor-fixture-test.log` and control artifacts under
+`build/comparative-editor/`. These are ANTLR parser/interchange observations,
+not native import, generation, or editor observations.
+
+A copied build cache alone does not provide per-module ignored generated
+classes. Worktree native diagnostics report 48 of 59 modules loaded, with 11
+not built, including MetaBNF and Demo. Native instance searches and edits must
+not proceed in that state; prepare/build the required modules before authoring
+native adapters. The project daemon is stopped after diagnostics.
 
 The runnable control is bounded evidence about fixture/parser consistency, not
 about keys, caret behavior, undo, native persistence, or exported syntax. The

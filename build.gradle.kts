@@ -341,6 +341,23 @@ val antlrBridgeTest = tasks.register<Exec>("antlrBridgeTest") {
     environment("JAVA_HOME", System.getProperty("java.home"))
 }
 
+val comparativeEditorFixtureTest = tasks.register<Exec>("comparativeEditorFixtureTest") {
+    dependsOn(prepareAntlr)
+    group = "verification"
+    description = "Checks authored C#-like comparison fixtures, not native editor behavior."
+    workingDir(projectDir)
+    commandLine(
+        providers.gradleProperty("pythonExecutable").getOrElse(
+            if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+        ),
+        "-m", "unittest", "discover", "-s", "tests/comparative-editor", "-p", "test_*.py", "-v"
+    )
+    environment("ANTLR_JAR", layout.buildDirectory.file(
+        "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
+    ).get().asFile.absolutePath)
+    environment("JAVA_HOME", System.getProperty("java.home"))
+}
+
 val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
     dependsOn(prepareRascal)
     group = "verification"
@@ -429,7 +446,7 @@ tasks.assemble {
 }
 
 tasks.check {
-    dependsOn(smokeTest, compileRascalBridgePlugin, antlrBridgeTest, rascalBridgeTest,
+    dependsOn(smokeTest, compileRascalBridgePlugin, antlrBridgeTest, rascalBridgeTest, comparativeEditorFixtureTest,
         verifyParserBridgeDistribution, verifyBundledGrammarTools)
 }
 

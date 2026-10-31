@@ -1,0 +1,11 @@
+{
+  "empty": ["$:block:0"],
+  "bare": ["$:block:1", "$.0:return:absent"],
+  "two": ["$:block:2", "$.0:return:absent", "$.1:return:number(1)"],
+  "nested": ["$:block:1", "$.0:block:1", "$.0.0:return:absent"],
+  "nested-appended": ["$:block:1", "$.0:block:2", "$.0.0:return:absent", "$.0.1:return:number(1)"],
+  "payload": ["$:block:1", "$.0:return:number(1)"],
+  "sum": ["$:block:1", "$.0:return:add(number(1),number(2))"],
+  "sum-edited": ["$:block:1", "$.0:return:add(number(1),number(3))"],
+  "persistent": ["$:block:2", "$.0:block:1", "$.0.0:return:add(number(1),number(2))", "$.1:return:absent"]
+}
