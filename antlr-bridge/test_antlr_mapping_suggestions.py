@@ -43,8 +43,8 @@ class AntlrMappingSuggestionsTest(unittest.TestCase):
                                         capture_output=True, text=True)
                 self.assertEqual(0, result.returncode, result.stderr)
                 tree = ET.parse(parse_xml).getroot()[0]
-                actual = map_tree(tree, report["mapping"]["rules"], registry, MpsNodeFactory())
-                expected = map_tree(tree, explicit["rules"], registry, MpsNodeFactory())
+                actual = map_tree(tree, report["mapping"]["rules"], registry, MpsNodeFactory(), [])
+                expected = map_tree(tree, explicit["rules"], registry, MpsNodeFactory(), [])
                 self.assertEqual(ET.tostring(expected), ET.tostring(actual))
                 self.assertEqual(count, len(actual.find("node").findall("node")))
             self.assertEqual({"program", "statements", "assignment"}, set(report["suggestions"]))

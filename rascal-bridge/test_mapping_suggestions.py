@@ -242,8 +242,8 @@ class MappingSuggestionsTest(unittest.TestCase):
                 assignment = ET.SubElement(statements, "node", rule="Assignment")
                 ET.SubElement(assignment, "token", rule="IDENTIFIER", value="X")
                 ET.SubElement(assignment, "token", rule="NUMBER", value=str(i))
-            actual = map_tree(tree, report["mapping"]["rules"], registry, MpsNodeFactory())
-            baseline = map_tree(tree, expected["rules"], registry, MpsNodeFactory())
+            actual = map_tree(tree, report["mapping"]["rules"], registry, MpsNodeFactory(), [])
+            baseline = map_tree(tree, expected["rules"], registry, MpsNodeFactory(), [])
             self.assertEqual(ET.tostring(baseline), ET.tostring(actual))
             self.assertEqual(count, len(actual.find("node").findall("node")))
 
