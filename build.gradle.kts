@@ -286,7 +286,10 @@ smokeTest.configure {
             "FlagCompletion", "FlagContextRemoval",
             "GroupTrigger", "GroupTriggerUndo", "GroupEmptyRemoval",
             "GroupPopulatedRemovalRequiresApproval", "GroupPopulatedRemoval",
-            "GroupPopulatedRemovalUndo"
+            "GroupPopulatedRemovalUndo",
+            "ExpressionOperandInsertion", "ExpressionLeftOperandInsertion", "ExpressionInsertionGrouping",
+            "ExpressionOperatorReplacementGrouping", "ExpressionOperatorReplacementUndo",
+            "ExpressionGroupRemoval", "ExpressionGroupRemovalRefused", "ExpressionGroupRemovalUndo"
         ).map {
             "metabnf.editor.tests.interactions.${it}_Test.test_$it()"
         }.toSet() + setOf(

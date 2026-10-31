@@ -172,6 +172,20 @@
         <child id="561929395184684826" name="statements" index="336h3k" />
       </concept>
       <concept id="330703645346546541" name="DemoUsability.structure.Statement" flags="ng" index="2um2pr" />
+      <concept id="8300000000000100007" name="DemoUsability.structure.Group" flags="ng" index="w$02x">
+        <child id="8300000000000100008" name="inner" index="w$02I" />
+      </concept>
+      <concept id="8300000000000100003" name="DemoUsability.structure.BinaryExpression" flags="ng" index="w$02_">
+        <property id="8300000000000100004" name="operator" index="w$02y" />
+        <child id="8300000000000100006" name="right" index="w$02w" />
+        <child id="8300000000000100005" name="left" index="w$02z" />
+      </concept>
+      <concept id="8300000000000100001" name="DemoUsability.structure.Operand" flags="ng" index="w$02B">
+        <property id="8300000000000100002" name="name" index="w$02$" />
+      </concept>
+      <concept id="8300000000000100100" name="DemoUsability.structure.Calculation" flags="ng" index="w$042">
+        <child id="8300000000000100101" name="expression" index="w$043" />
+      </concept>
     </language>
     <language id="f61473f9-130f-42f6-b98d-6c438812c2f6" name="jetbrains.mps.baseLanguage.unitTest">
       <concept id="8427750732757990717" name="jetbrains.mps.baseLanguage.unitTest.structure.BinaryAssert" flags="nn" index="3tpDYu">
@@ -1809,6 +1823,663 @@
             <property role="LIFWa" value="4" />
             <property role="p6zMq" value="4" />
             <property role="p6zMs" value="4" />
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuNFfz">
+    <property role="TrG5h" value="ExpressionOperatorReplacementGrouping" />
+    <property role="3YCmrE" value="Replacing a tighter operator with an equal-precedence one groups the right operand" />
+    <node concept="3clFbS" id="11IbrVuNFf$" role="LjaKd">
+      <node concept="2TK7Tu" id="11IbrVuNFf_" role="3cqZAp">
+        <property role="2TTd_B" value="-" />
+      </node>
+      <node concept="3vlDli" id="11IbrVuNFfA" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuNFfB" role="3tpDZB">
+          <property role="Xl_RC" value="calc a+(b-c)" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuNFfC" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuNFfD" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuNFfE" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuNFfF" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuNFfG" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuNFfH" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuNFfI" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionOperatorReplacementGrouping: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFfJ" role="25YQCW">
+      <node concept="w$042" id="11IbrVuNFfK" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFfL" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFfM" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02_" id="11IbrVuNFfN" role="w$02w">
+            <property role="w$02y" value="*" />
+            <node concept="w$02B" id="11IbrVuNFfO" role="w$02z">
+              <property role="w$02$" value="b" />
+            </node>
+            <node concept="w$02B" id="11IbrVuNFfP" role="w$02w">
+              <property role="w$02$" value="c" />
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFfQ" role="lGtFl">
+              <property role="LIFWd" value="operator" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="0" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFfR" role="25YQFr">
+      <node concept="w$042" id="11IbrVuNFfS" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFfT" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFfU" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02x" id="11IbrVuNFfV" role="w$02w">
+            <node concept="w$02_" id="11IbrVuNFfW" role="w$02I">
+              <property role="w$02y" value="-" />
+              <node concept="w$02B" id="11IbrVuNFfX" role="w$02z">
+                <property role="w$02$" value="b" />
+              </node>
+              <node concept="w$02B" id="11IbrVuNFfY" role="w$02w">
+                <property role="w$02$" value="c" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuNFg0">
+    <property role="TrG5h" value="ExpressionOperatorReplacementUndo" />
+    <property role="3YCmrE" value="One Undo restores the operator and the original grouping" />
+    <node concept="3clFbS" id="11IbrVuNFg1" role="LjaKd">
+      <node concept="2TK7Tu" id="11IbrVuNFg2" role="3cqZAp">
+        <property role="2TTd_B" value="-" />
+      </node>
+      <node concept="2HxZob" id="11IbrVuNFg3" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuNFg4" role="3iKnsn">
+          <property role="3iKnse" value="$Undo" />
+        </node>
+      </node>
+      <node concept="3vlDli" id="11IbrVuNFg5" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuNFg6" role="3tpDZB">
+          <property role="Xl_RC" value="calc a+b*c" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuNFg7" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuNFg8" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuNFg9" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuNFga" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuNFgb" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuNFgc" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuNFgd" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionOperatorReplacementUndo: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFge" role="25YQCW">
+      <node concept="w$042" id="11IbrVuNFgf" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFgg" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFgh" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02_" id="11IbrVuNFgi" role="w$02w">
+            <property role="w$02y" value="*" />
+            <node concept="w$02B" id="11IbrVuNFgj" role="w$02z">
+              <property role="w$02$" value="b" />
+            </node>
+            <node concept="w$02B" id="11IbrVuNFgk" role="w$02w">
+              <property role="w$02$" value="c" />
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFgl" role="lGtFl">
+              <property role="LIFWd" value="operator" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="0" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFgm" role="25YQFr">
+      <node concept="w$042" id="11IbrVuNFgn" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFgo" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFgp" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02_" id="11IbrVuNFgq" role="w$02w">
+            <property role="w$02y" value="*" />
+            <node concept="w$02B" id="11IbrVuNFgr" role="w$02z">
+              <property role="w$02$" value="b" />
+            </node>
+            <node concept="w$02B" id="11IbrVuNFgs" role="w$02w">
+              <property role="w$02$" value="c" />
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFgt" role="lGtFl">
+              <property role="LIFWd" value="operator" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="0" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuNFgu">
+    <property role="TrG5h" value="ExpressionGroupRemoval" />
+    <property role="3YCmrE" value="Removing redundant grouping parentheses preserves the tree" />
+    <node concept="3clFbS" id="11IbrVuNFgv" role="LjaKd">
+      <node concept="2HxZob" id="11IbrVuNFgw" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuNFgx" role="3iKnsn">
+          <property role="3iKnse" value="jetbrains.mps.ide.editor.actions.Backspace_Action" />
+        </node>
+      </node>
+      <node concept="3vlDli" id="11IbrVuNFgy" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuNFgz" role="3tpDZB">
+          <property role="Xl_RC" value="calc a+b*c" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuNFg$" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuNFg_" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuNFgA" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuNFgB" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuNFgC" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuNFgD" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuNFgE" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionGroupRemoval: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFgF" role="25YQCW">
+      <node concept="w$042" id="11IbrVuNFgG" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFgH" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFgI" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02x" id="11IbrVuNFgJ" role="w$02w">
+            <node concept="w$02_" id="11IbrVuNFgK" role="w$02I">
+              <property role="w$02y" value="*" />
+              <node concept="w$02B" id="11IbrVuNFgL" role="w$02z">
+                <property role="w$02$" value="b" />
+              </node>
+              <node concept="w$02B" id="11IbrVuNFgM" role="w$02w">
+                <property role="w$02$" value="c" />
+              </node>
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFgN" role="lGtFl">
+              <property role="LIFWd" value="close" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFgO" role="25YQFr">
+      <node concept="w$042" id="11IbrVuNFgP" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFgQ" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFgR" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02_" id="11IbrVuNFgS" role="w$02w">
+            <property role="w$02y" value="*" />
+            <node concept="w$02B" id="11IbrVuNFgT" role="w$02z">
+              <property role="w$02$" value="b" />
+            </node>
+            <node concept="w$02B" id="11IbrVuNFgU" role="w$02w">
+              <property role="w$02$" value="c" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuNFgV">
+    <property role="TrG5h" value="ExpressionGroupRemovalRefused" />
+    <property role="3YCmrE" value="Grouping parentheses required by precedence are not removed" />
+    <node concept="3clFbS" id="11IbrVuNFgW" role="LjaKd">
+      <node concept="2HxZob" id="11IbrVuNFgX" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuNFgY" role="3iKnsn">
+          <property role="3iKnse" value="jetbrains.mps.ide.editor.actions.Backspace_Action" />
+        </node>
+      </node>
+      <node concept="3vlDli" id="11IbrVuNFgZ" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuNFh0" role="3tpDZB">
+          <property role="Xl_RC" value="calc (a+b)*c" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuNFh1" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuNFh2" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuNFh3" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuNFh4" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuNFh5" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuNFh6" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuNFh7" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionGroupRemovalRefused: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFh8" role="25YQCW">
+      <node concept="w$042" id="11IbrVuNFh9" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFha" role="w$043">
+          <property role="w$02y" value="*" />
+          <node concept="w$02x" id="11IbrVuNFhb" role="w$02z">
+            <node concept="w$02_" id="11IbrVuNFhc" role="w$02I">
+              <property role="w$02y" value="+" />
+              <node concept="w$02B" id="11IbrVuNFhd" role="w$02z">
+                <property role="w$02$" value="a" />
+              </node>
+              <node concept="w$02B" id="11IbrVuNFhe" role="w$02w">
+                <property role="w$02$" value="b" />
+              </node>
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFhf" role="lGtFl">
+              <property role="LIFWd" value="close" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+          <node concept="w$02B" id="11IbrVuNFhg" role="w$02w">
+            <property role="w$02$" value="c" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFhh" role="25YQFr">
+      <node concept="w$042" id="11IbrVuNFhi" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFhj" role="w$043">
+          <property role="w$02y" value="*" />
+          <node concept="w$02x" id="11IbrVuNFhk" role="w$02z">
+            <node concept="w$02_" id="11IbrVuNFhl" role="w$02I">
+              <property role="w$02y" value="+" />
+              <node concept="w$02B" id="11IbrVuNFhm" role="w$02z">
+                <property role="w$02$" value="a" />
+              </node>
+              <node concept="w$02B" id="11IbrVuNFhn" role="w$02w">
+                <property role="w$02$" value="b" />
+              </node>
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFho" role="lGtFl">
+              <property role="LIFWd" value="close" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+          <node concept="w$02B" id="11IbrVuNFhp" role="w$02w">
+            <property role="w$02$" value="c" />
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuNFhq">
+    <property role="TrG5h" value="ExpressionGroupRemovalUndo" />
+    <property role="3YCmrE" value="One Undo restores removed grouping parentheses" />
+    <node concept="3clFbS" id="11IbrVuNFhr" role="LjaKd">
+      <node concept="2HxZob" id="11IbrVuNFhs" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuNFht" role="3iKnsn">
+          <property role="3iKnse" value="jetbrains.mps.ide.editor.actions.Backspace_Action" />
+        </node>
+      </node>
+      <node concept="2HxZob" id="11IbrVuNFhu" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuNFhv" role="3iKnsn">
+          <property role="3iKnse" value="$Undo" />
+        </node>
+      </node>
+      <node concept="3vlDli" id="11IbrVuNFhw" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuNFhx" role="3tpDZB">
+          <property role="Xl_RC" value="calc a+(b*c)" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuNFhy" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuNFhz" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuNFh$" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuNFh_" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuNFhA" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuNFhB" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuNFhC" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionGroupRemovalUndo: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFhD" role="25YQCW">
+      <node concept="w$042" id="11IbrVuNFhE" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFhF" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFhG" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02x" id="11IbrVuNFhH" role="w$02w">
+            <node concept="w$02_" id="11IbrVuNFhI" role="w$02I">
+              <property role="w$02y" value="*" />
+              <node concept="w$02B" id="11IbrVuNFhJ" role="w$02z">
+                <property role="w$02$" value="b" />
+              </node>
+              <node concept="w$02B" id="11IbrVuNFhK" role="w$02w">
+                <property role="w$02$" value="c" />
+              </node>
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFhL" role="lGtFl">
+              <property role="LIFWd" value="close" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuNFhM" role="25YQFr">
+      <node concept="w$042" id="11IbrVuNFhN" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuNFhO" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuNFhP" role="w$02z">
+            <property role="w$02$" value="a" />
+          </node>
+          <node concept="w$02x" id="11IbrVuNFhQ" role="w$02w">
+            <node concept="w$02_" id="11IbrVuNFhR" role="w$02I">
+              <property role="w$02y" value="*" />
+              <node concept="w$02B" id="11IbrVuNFhS" role="w$02z">
+                <property role="w$02$" value="b" />
+              </node>
+              <node concept="w$02B" id="11IbrVuNFhT" role="w$02w">
+                <property role="w$02$" value="c" />
+              </node>
+            </node>
+            <node concept="LIFWc" id="11IbrVuNFhU" role="lGtFl">
+              <property role="LIFWd" value="close" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuTsF2">
+    <property role="TrG5h" value="ExpressionLeftOperandInsertion" />
+    <property role="3YCmrE" value="Appending to a left operand nests the new operand under that operand" />
+    <node concept="3clFbS" id="11IbrVuTsF3" role="LjaKd">
+      <node concept="2HxZob" id="11IbrVuTsF4" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuTsF5" role="3iKnsn">
+          <property role="3iKnse" value="jetbrains.mps.ide.editor.actions.Insert_Action" />
+        </node>
+      </node>
+      <node concept="2TK7Tu" id="11IbrVuTsF6" role="3cqZAp">
+        <property role="2TTd_B" value="c" />
+      </node>
+      <node concept="3vlDli" id="11IbrVuTsF7" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuTsF8" role="3tpDZB">
+          <property role="Xl_RC" value="calc a+c+b" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuTsF9" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuTsFa" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuTsFb" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuTsFc" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuTsFd" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuTsFe" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuTsFf" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionLeftOperandInsertion: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuTsFg" role="25YQCW">
+      <node concept="w$042" id="11IbrVuTsFh" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuTsFi" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02B" id="11IbrVuTsFj" role="w$02z">
+            <property role="w$02$" value="a" />
+            <node concept="LIFWc" id="11IbrVuTsFk" role="lGtFl">
+              <property role="LIFWd" value="property_name" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+          <node concept="w$02B" id="11IbrVuTsFl" role="w$02w">
+            <property role="w$02$" value="b" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuTsFm" role="25YQFr">
+      <node concept="w$042" id="11IbrVuTsFn" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuTsFo" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02_" id="11IbrVuTsFp" role="w$02z">
+            <property role="w$02y" value="+" />
+            <node concept="w$02B" id="11IbrVuTsFq" role="w$02z">
+              <property role="w$02$" value="a" />
+            </node>
+            <node concept="w$02B" id="11IbrVuTsFr" role="w$02w">
+              <property role="w$02$" value="c" />
+              <node concept="LIFWc" id="11IbrVuTsFs" role="lGtFl">
+                <property role="LIFWd" value="property_name" />
+                <property role="LIFWa" value="1" />
+                <property role="p6zMq" value="1" />
+                <property role="p6zMs" value="1" />
+              </node>
+            </node>
+          </node>
+          <node concept="w$02B" id="11IbrVuTsFt" role="w$02w">
+            <property role="w$02$" value="b" />
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuWD4$">
+    <property role="TrG5h" value="ExpressionOperandInsertion" />
+    <property role="3YCmrE" value="Insert at the end of an expression appends an operand to the whole expression" />
+    <node concept="3clFbS" id="11IbrVuWD4_" role="LjaKd">
+      <node concept="2HxZob" id="11IbrVuWD4A" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuWD4B" role="3iKnsn">
+          <property role="3iKnse" value="jetbrains.mps.ide.editor.actions.Insert_Action" />
+        </node>
+      </node>
+      <node concept="2TK7Tu" id="11IbrVuWD4C" role="3cqZAp">
+        <property role="2TTd_B" value="b" />
+      </node>
+      <node concept="2HxZob" id="11IbrVuWD4D" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuWD4E" role="3iKnsn">
+          <property role="3iKnse" value="jetbrains.mps.ide.editor.actions.Insert_Action" />
+        </node>
+      </node>
+      <node concept="2TK7Tu" id="11IbrVuWD4F" role="3cqZAp">
+        <property role="2TTd_B" value="c" />
+      </node>
+      <node concept="3vlDli" id="11IbrVuWD4G" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuWD4H" role="3tpDZB">
+          <property role="Xl_RC" value="calc a+b+c" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuWD4I" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuWD4J" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuWD4K" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuWD4L" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuWD4M" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuWD4N" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuWD4O" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionOperandInsertion: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuWD4P" role="25YQCW">
+      <node concept="w$042" id="11IbrVuWD4Q" role="1qenE9">
+        <node concept="w$02B" id="11IbrVuWD4R" role="w$043">
+          <property role="w$02$" value="a" />
+          <node concept="LIFWc" id="11IbrVuWD4S" role="lGtFl">
+            <property role="LIFWd" value="property_name" />
+            <property role="LIFWa" value="1" />
+            <property role="p6zMq" value="1" />
+            <property role="p6zMs" value="1" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuWD4T" role="25YQFr">
+      <node concept="w$042" id="11IbrVuWD4U" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuWD4V" role="w$043">
+          <property role="w$02y" value="+" />
+          <node concept="w$02_" id="11IbrVuWD4W" role="w$02z">
+            <property role="w$02y" value="+" />
+            <node concept="w$02B" id="11IbrVuWD4X" role="w$02z">
+              <property role="w$02$" value="a" />
+            </node>
+            <node concept="w$02B" id="11IbrVuWD4Y" role="w$02w">
+              <property role="w$02$" value="b" />
+            </node>
+          </node>
+          <node concept="w$02B" id="11IbrVuWD4Z" role="w$02w">
+            <property role="w$02$" value="c" />
+            <node concept="LIFWc" id="11IbrVuWD50" role="lGtFl">
+              <property role="LIFWd" value="property_name" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="LiM7Y" id="11IbrVuYiex">
+    <property role="TrG5h" value="ExpressionInsertionGrouping" />
+    <property role="3YCmrE" value="Insert at an operand of a tighter operator groups the new lower-precedence operation" />
+    <node concept="3clFbS" id="11IbrVuYiey" role="LjaKd">
+      <node concept="2HxZob" id="11IbrVuYiez" role="3cqZAp">
+        <node concept="3iKlGA" id="11IbrVuYie$" role="3iKnsn">
+          <property role="3iKnse" value="jetbrains.mps.ide.editor.actions.Insert_Action" />
+        </node>
+      </node>
+      <node concept="2TK7Tu" id="11IbrVuYie_" role="3cqZAp">
+        <property role="2TTd_B" value="d" />
+      </node>
+      <node concept="3vlDli" id="11IbrVuYieA" role="3cqZAp">
+        <node concept="Xl_RD" id="11IbrVuYieB" role="3tpDZB">
+          <property role="Xl_RC" value="calc (a+d)*b" />
+        </node>
+        <node concept="2YIFZM" id="11IbrVuYieC" role="3tpDZA">
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <ref role="37wK5l" node="54cyhNXDh5E" resolve="exportLf" />
+          <node concept="1jxXqW" id="11IbrVuYieD" role="37wK5m" />
+          <node concept="2OqwBi" id="11IbrVuYieE" role="37wK5m">
+            <node concept="369mXd" id="11IbrVuYieF" role="2Oq$k0" />
+            <node concept="liA8E" id="11IbrVuYieG" role="2OqNvi">
+              <ref role="37wK5l" to="exr9:~EditorComponent.getEditedNode()" resolve="getEditedNode" />
+            </node>
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="11IbrVuYieH" role="3_9lra">
+          <node concept="Xl_RD" id="11IbrVuYieI" role="3_1BAH">
+            <property role="Xl_RC" value="ExpressionInsertionGrouping: expected exact TextGen of the resulting expression" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuYieJ" role="25YQCW">
+      <node concept="w$042" id="11IbrVuYieK" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuYieL" role="w$043">
+          <property role="w$02y" value="*" />
+          <node concept="w$02B" id="11IbrVuYieM" role="w$02z">
+            <property role="w$02$" value="a" />
+            <node concept="LIFWc" id="11IbrVuYieN" role="lGtFl">
+              <property role="LIFWd" value="property_name" />
+              <property role="LIFWa" value="1" />
+              <property role="p6zMq" value="1" />
+              <property role="p6zMs" value="1" />
+            </node>
+          </node>
+          <node concept="w$02B" id="11IbrVuYieO" role="w$02w">
+            <property role="w$02$" value="b" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1qefOq" id="11IbrVuYieP" role="25YQFr">
+      <node concept="w$042" id="11IbrVuYieQ" role="1qenE9">
+        <node concept="w$02_" id="11IbrVuYieR" role="w$043">
+          <property role="w$02y" value="*" />
+          <node concept="w$02x" id="11IbrVuYieS" role="w$02z">
+            <node concept="w$02_" id="11IbrVuYieT" role="w$02I">
+              <property role="w$02y" value="+" />
+              <node concept="w$02B" id="11IbrVuYieU" role="w$02z">
+                <property role="w$02$" value="a" />
+              </node>
+              <node concept="w$02B" id="11IbrVuYieV" role="w$02w">
+                <property role="w$02$" value="d" />
+                <node concept="LIFWc" id="11IbrVuYieW" role="lGtFl">
+                  <property role="LIFWd" value="property_name" />
+                  <property role="LIFWa" value="1" />
+                  <property role="p6zMq" value="1" />
+                  <property role="p6zMs" value="1" />
+                </node>
+              </node>
+            </node>
+          </node>
+          <node concept="w$02B" id="11IbrVuYieX" role="w$02w">
+            <property role="w$02$" value="b" />
           </node>
         </node>
       </node>
