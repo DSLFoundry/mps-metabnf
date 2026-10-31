@@ -66,8 +66,10 @@ declarations. Rendering follows the supplied AST and never rebalances it.
 These expression fields are metadata only. The current profile resolver has
 no installed expression-interaction backend and rejects approved expression
 resolution with `MBNF_EXPRESSION_INTERACTIONS_UNAVAILABLE`. It does not claim
-to generate precedence-safe editor actions; see the support matrix in
-[Profiles and enrichment](profiles-and-enrichment.md).
+to generate precedence-safe editor actions from annotations; the hand-modeled
+reference interactions are described in
+[Editor interaction tests](editor-interaction-tests.md), and the support matrix
+is in [Profiles and enrichment](profiles-and-enrichment.md).
 
 Existing `Name`, `IdReference`, cardinality, separator, indentation, and newline
 facilities remain authoritative and unchanged. No implementation/profile ID,

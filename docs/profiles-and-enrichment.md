@@ -104,14 +104,16 @@ incompatible errors. Unknown IDs, duplicate selections, stale targets and
 unsupported profile versions are also diagnosed.
 
 Expression-family metadata is not a profile backend. `resolveAnnotation` rejects
-an authored expression pattern with `MBNF_EXPRESSION_INTERACTIONS_UNAVAILABLE`;
-there are no generated expression operator actions, precedence-aware AST
-rewrites, or expression-specific editor interactions in this version. The
+an authored expression pattern with `MBNF_EXPRESSION_INTERACTIONS_UNAVAILABLE`:
+the generator does not yet emit expression operator actions for a grammar. The
+checked-in `DemoUsability` fixture hand-models a precedence-safe reference
+backend (insert, operator replacement, group removal; see
+[Editor interaction tests](editor-interaction-tests.md)), which proves the
+interaction contract but is not selected through profile resolution. The
 recognizer can suggest literal/prefix/postfix/infix/ternary/grouping/index/
 member/layered shapes for review. The Java helper library has explicit
 precedence-safe rendering, replacement, wrapping, and token-boundary splitting
-contracts, but those helpers are not wired into generated editor actions or
-profile resolution. Do not treat them as fulfillment of an expression backend.
+contracts. Do not treat either as fulfillment of a generated expression backend.
 
 Resolution is deterministic: active projection's occurrence override, then
 rule default, pattern default, narrow form/table policy, then profile-wide
