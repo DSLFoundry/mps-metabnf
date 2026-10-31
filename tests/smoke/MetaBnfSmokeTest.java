@@ -291,12 +291,17 @@ public final class MetaBnfSmokeTest {
     }
 
     static void checkConstraints(Environment environment, Project project, SModel model) {
+        List<IssueKindReportItem> problems = constraintProblems(environment, project, model);
+        require(problems.isEmpty(), model.getName() + " constraint errors: " + problems);
+    }
+
+    static List<IssueKindReportItem> constraintProblems(Environment environment, Project project, SModel model) {
         List<IssueKindReportItem> problems = new ArrayList<>();
         new ModelCheckerBuilder(new ModelCheckerBuilder.ModelsExtractorImpl())
                 .createChecker(Collections.singletonList(new ConstraintsChecker(environment.getPlatform())))
                 .check(ModelCheckerBuilder.ItemsToCheck.forSingleModel(model), project.getRepository(),
                         problems::add, new EmptyProgressMonitor());
-        require(problems.isEmpty(), model.getName() + " constraint errors: " + problems);
+        return problems;
     }
 
     private static boolean make(Project project, SModel model, List<IMessage> messages) throws Exception {

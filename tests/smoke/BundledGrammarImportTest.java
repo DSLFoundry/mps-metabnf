@@ -77,6 +77,7 @@ final class BundledGrammarImportTest {
                     require(before.equals(ModelNodes.fingerprint(restored)), tool + " enrichment changed grammar/mapping input");
                     ((EditableSModel) target).save();
                 }));
+                System.out.println("SMOKE: validating bundled " + tool + " grammar in native MPS");
                 MetaBnfSmokeTest.checkConstraints(environment, project, target);
                 Path bad = work.resolve("unsupported.xml");
                 Files.writeString(bad, Files.readString(output).replace("<choice>", "<priority>").replace("</choice>", "</priority>"));
@@ -111,6 +112,42 @@ final class BundledGrammarImportTest {
             } finally {
                 GrammarTools.cleanup(work);
             }
+        }
+        Path corpusWork = repo.resolve("build/corpus-validation/native-muddb");
+        if (Files.exists(corpusWork)) GrammarTools.cleanup(corpusWork);
+        Files.createDirectories(corpusWork);
+        try {
+            Path source = repo.resolve("tests/corpus/antlr/muddb.g4");
+            Path output = GrammarTools.export(tools, "ANTLR", source, "db", corpusWork, () -> false);
+            var grammar = GrammarModelImporter.read(output);
+            ApplicationManager.getApplication().invokeAndWait(() -> project.getModelAccess().executeCommand(() -> {
+                List<SNode> roots = new ArrayList<>();
+                target.getRootNodes().forEach(roots::add);
+                roots.forEach(target::removeRootNode);
+                SNode sentinel = target.createNode(sentinelConcept);
+                target.addRootNode(sentinel);
+                var sentinelReference = sentinel.getReference();
+                SNode imported = GrammarModelImporter.importInto(target, grammar, "MuddbCorpus", "ANTLR");
+                validate(imported);
+                var reference = imported.getReference();
+                ((EditableSModel) target).reloadFromSource();
+                SNode restored = reference.resolve(project.getRepository());
+                require(restored != null, "Native corpus import did not persist");
+                SNode restoredSentinel = sentinelReference.resolve(project.getRepository());
+                require(restoredSentinel != null, "Native corpus import lost another target root");
+                validate(restored);
+                target.removeRootNode(restoredSentinel);
+                ((EditableSModel) target).save();
+            }));
+            System.out.println("SMOKE: checking accepted upstream MudDB grammar in native MPS");
+            var corpusProblems = MetaBnfSmokeTest.constraintProblems(environment, project, target);
+            require(corpusProblems.size() == 1
+                            && corpusProblems.get(0).toString().contains(
+                            "Property constraint violation for the property \"text\""),
+                    "Unexpected native MudDB constraint outcome: " + corpusProblems);
+            System.out.println("SMOKE: recorded the current MudDB native text-property constraint incompatibility");
+        } finally {
+            GrammarTools.cleanup(corpusWork);
         }
     }
 

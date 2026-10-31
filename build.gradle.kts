@@ -342,8 +342,9 @@ val antlrBridgeTest = tasks.register<Exec>("antlrBridgeTest") {
 }
 
 val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
+    dependsOn(prepareRascal)
     group = "verification"
-    description = "Tests the shared grammar and AST-to-MPS bridge converters."
+    description = "Tests Rascal grammar conversion, source parsing, and the pinned compatibility corpus."
     workingDir(projectDir)
     commandLine(
         providers.gradleProperty("pythonExecutable").getOrElse(
@@ -351,6 +352,8 @@ val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
         ),
         "-m", "unittest", "discover", "-s", "rascal-bridge", "-p", "test_*.py", "-v"
     )
+    environment("RASCAL_JAR", layout.buildDirectory.file("rascal/rascal-0.43.0.jar").get().asFile.absolutePath)
+    environment("JAVA_HOME", System.getProperty("java.home"))
 }
 
 val packageLanguages = tasks.register<Zip>("packageLanguages") {

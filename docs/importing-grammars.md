@@ -84,7 +84,8 @@ semantics are distinct from grammar conversion.
 
 Neither import claims arbitrary grammar compatibility. Unsupported constructs
 produce an error rather than being silently dropped or approximated. See the
-[ANTLR guide](../antlr-bridge/README.md) and
+[representative grammar corpus and observed outcomes](grammar-corpus-compatibility.md),
+[ANTLR guide](../antlr-bridge/README.md), and
 [Rascal guide](../rascal-bridge/README.md) for precise details and test tasks.
 
 ## Legacy utilities and licensing
