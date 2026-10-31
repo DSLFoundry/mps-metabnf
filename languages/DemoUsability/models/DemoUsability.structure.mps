@@ -34,6 +34,9 @@
       </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
+      <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
+        <property id="1193676396447" name="virtualPackage" index="3GE5qa" />
+      </concept>
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
         <property id="1169194664001" name="name" index="TrG5h" />
       </concept>
@@ -107,6 +110,27 @@
       <property role="20kJfa" value="statements" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
       <ref role="20lvS9" node="pokUpJQ$xE" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="7Owspc8yxr">
+    <property role="1pbfSe" value="405467652" />
+    <property role="TrG5h" value="Block" />
+    <property role="34LRSv" value="begin" />
+    <property role="EcuMT" value="273754124767157402" />
+    <property role="3GE5qa" value="" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyj" id="odE2kWcFue" role="1TKVEi">
+      <property role="20kJfa" value="statements" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <property role="IQ2ns" value="561929395184684826" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <ref role="20lvS9" node="pokUpJQ$xE" resolve="Statement" />
+    </node>
+    <node concept="1TJgyj" id="B4Qkm2DZ1D" role="1TKVEi">
+      <property role="20kJfa" value="child" />
+      <property role="IQ2ns" value="370756925354297355" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <ref role="20lvS9" node="7Owspc8yxr" resolve="Block" />
     </node>
   </node>
 </model>

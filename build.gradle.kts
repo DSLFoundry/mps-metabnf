@@ -280,6 +280,8 @@ smokeTest.configure {
         }
         val expected = setOf(
             "NumberTyping", "NumberDeletion", "NumberUndo",
+            "BlockEmptyListTyping", "BlockSeparatorInsertion", "BlockNestedEmptyListTyping",
+            "BlockLastStatementRemoval", "BlockLastStatementRemovalUndo", "BlockEndBoundaryInsertion",
             "FlagTyping", "FlagDeletion", "FlagUndo", "FlagFormToggle",
             "FlagCompletion", "FlagContextRemoval",
             "GroupTrigger", "GroupTriggerUndo", "GroupEmptyRemoval",

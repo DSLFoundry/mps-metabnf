@@ -1383,12 +1383,12 @@
           </node>
         </node>
       </node>
-      <node concept="3Tm6S6" id="2RLAZYDKbZc" role="1B3o_S" />
       <node concept="3Tqbb2" id="2RLAZYE1IcK" role="3clF45" />
       <node concept="37vLTG" id="2RLAZYDODr2" role="3clF46">
         <property role="TrG5h" value="originalModel" />
         <node concept="H_c77" id="2RLAZYE1IcL" role="1tU5fm" />
       </node>
+      <node concept="3Tm6S6" id="1Z4N_lqKspt" role="1B3o_S" />
     </node>
     <node concept="2YIFZL" id="2RLAZYDKbZe" role="jymVt">
       <property role="TrG5h" value="grammar" />
@@ -1768,6 +1768,34 @@
       </node>
       <node concept="3Tm6S6" id="2RLAZYE1HOA" role="1B3o_S" />
       <node concept="3cqZAl" id="2RLAZYE1HOB" role="3clF45" />
+    </node>
+    <node concept="2YIFZL" id="54cyhNX$W8U" role="jymVt">
+      <property role="TrG5h" value="listTarget" />
+      <node concept="37vLTG" id="54cyhNX$W8V" role="3clF46">
+        <property role="TrG5h" value="input" />
+        <node concept="3uibUv" id="54cyhNX$W8W" role="1tU5fm">
+          <ref role="3uigEE" to="mhbf:~SNode" resolve="SNode" />
+        </node>
+      </node>
+      <node concept="3clFbS" id="54cyhNX$W8X" role="3clF47">
+        <node concept="3cpWs6" id="54cyhNX$W8Y" role="3cqZAp">
+          <node concept="2OqwBi" id="54cyhNX$W9H" role="3cqZAk">
+            <node concept="37vLTw" id="54cyhNX$W9x" role="2Oq$k0">
+              <ref role="3cqZAo" node="54cyhNX$W8V" resolve="input" />
+            </node>
+            <node concept="liA8E" id="54cyhNX$W9I" role="2OqNvi">
+              <ref role="37wK5l" to="mhbf:~SNode.getReferenceTarget(org.jetbrains.mps.openapi.language.SReferenceLink)" resolve="getReferenceTarget" />
+              <node concept="37vLTw" id="54cyhNX$W9J" role="37wK5m">
+                <ref role="3cqZAo" node="2RLAZYDKbTQ" resolve="RULE" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3Tm1VV" id="54cyhNX$W91" role="1B3o_S" />
+      <node concept="3uibUv" id="54cyhNX$W92" role="3clF45">
+        <ref role="3uigEE" to="mhbf:~SNode" resolve="SNode" />
+      </node>
     </node>
   </node>
 </model>

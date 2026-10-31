@@ -229,7 +229,7 @@ public final class MetaBnfSmokeTest {
         ProtectedRegeneration.Preview preview = project.getModelAccess().computeReadAction(() ->
                 ProtectedRegeneration.preview(grammar, roots(finalTransientModel(project)), aspects, null));
         require(preview.applicable(), "Protected generation conflicts: " + preview.conflicts());
-        require(preview.decisions().size() == 30 && preview.decisions().stream().allMatch(item -> item.startsWith(decision)),
+        require(preview.decisions().size() == 31 && preview.decisions().stream().allMatch(item -> item.startsWith(decision)),
                 "Unexpected protected generation decisions: " + preview.decisions());
         onEdt(() -> project.getModelAccess().executeCommand(() -> ProtectedRegeneration.apply(preview)));
     }
@@ -353,7 +353,29 @@ public final class MetaBnfSmokeTest {
         Set<String> names = roots(aspects.get(0)).stream()
                 .map(node -> node.getProperty("name")).collect(Collectors.toSet());
         require(STRUCTURE_NAMES.equals(names), "Unexpected generated Demo structure: " + names);
-        require(roots(aspects.get(1)).size() == 8, "Expected eight generated Demo editors");
+        List<SNode> editorRoots = roots(aspects.get(1));
+        String editorRootSummary = editorRoots.stream()
+                .map(root -> root.getConcept().getName() + "#" + root.getProperty("name") + "#" + root.getNodeId())
+                .collect(Collectors.joining(", "));
+        require(editorRoots.size() == 9, "Expected eight generated Demo editors and one list action map, got "
+                + editorRoots.size() + ": " + editorRootSummary);
+        require(editorRoots.stream().filter(root ->
+                        "jetbrains.mps.lang.editor.structure.ConceptEditorDeclaration"
+                                .equals(root.getConcept().getQualifiedName())).count() == 8,
+                "Expected eight generated Demo editors");
+        SNode listActionMap = editorRoots.stream().filter(root ->
+                        "jetbrains.mps.lang.editor.structure.CellActionMapDeclaration"
+                                .equals(root.getConcept().getQualifiedName())
+                                && "OptionalRepeatedList_ActionMap".equals(root.getProperty("name")))
+                .findFirst().orElse(null);
+        require(listActionMap != null, "The generated Demo editor is missing its repeated-list action map");
+        Set<String> actionIds = new HashSet<>();
+        for (SNode item : listActionMap.getChildren("item")) {
+            actionIds.add(item.getProperty("actionId"));
+        }
+        require(actionIds.equals(new HashSet<>(Arrays.asList(
+                        "g_hAxAO/delete_action_id", "13S4mXuSN7V/insert_action_id"))),
+                "The generated Demo list action map should support Delete and Enter, got " + actionIds);
         require(roots(aspects.get(2)).size() == 8, "Expected eight generated Demo text generators");
         for (SModel aspect : aspects) {
             validatePersistentImports(aspect);

@@ -24,19 +24,38 @@ The baseline interaction contract covers:
 | NumberTyping | Type `2` after `1` | Number value `12`, caret at end |
 | NumberDeletion | Invoke the registered MPS Backspace action after `12` | Number value `1`, caret at end |
 | NumberUndo | Type `2` after `1`, invoke the registered IDE Undo action | Number value `1`, caret restored |
+| BlockEmptyListTyping | Invoke MPS completion and Enter at the empty `statements` placeholder | First `Statement` inserted; exact TextGen `begin\n    skipend` after line-ending normalization |
+| BlockSeparatorInsertion | Create the first statement, type `;`, invoke completion and Enter | Second `Statement` inserted; selection is on its constant cell at the end of `skip`; exact TextGen `begin\n    skip;skipend` after line-ending normalization |
+| BlockEndBoundaryInsertion | Invoke `Insert_Action` at the last statement of a populated Block | Sibling `Statement` appended; no optional child Block; exact TextGen; selection on the new statement's constant cell |
+| BlockNestedEmptyListTyping | Invoke completion and Enter at a nested Block's empty `statements` placeholder | `Statement` inserted into that nested Block, not a further optional child; selection on its constant cell |
 
 The [interactive flag/group contract](interactive-flags-and-groups.md) adds
 typing, deletion, Undo, Inspector toggling, keyword completion and contextual
 removal. Optional-child fixtures cover trigger/payload focus, empty removal,
 first-attempt protection of populated content, deliberate removal and Undo.
 They assert independent before/result ASTs, caret/selection, and exact TextGen.
+`BlockEmptyListTyping` targets the inner `empty_statements` placeholder rather
+than the `list` collection wrapper; it verifies the resulting AST and exact
+TextGen, but does not assert the post-insertion caret position.
+`BlockSeparatorInsertion` exercises the fixture's declared semicolon separator
+and verifies the second statement's AST position, exact TextGen, and
+post-insertion selection on that statement's `Constant_7h2wce_a0` cell at
+caret/selection offset 4. This is a fixture-specific generated cell identity,
+not a generic list-navigation policy. `BlockNestedEmptyListTyping` verifies
+that Enter in a nested empty list leaves the optional recursive child absent
+and selects the new nested statement at the corresponding constant cell.
+The [list, block, and trivia contract](list-block-editing.md) records the
+separate cardinality, boundary, block, and non-semantic trivia requirements.
 Separate `NodesTestCase` fixtures exercise profile overrides, original-source
 traces, storage rejection, actual generated control shapes, and disposable
 native file save/load with absent, empty and populated children.
 
-Typing uses MPS's real key-event dispatcher. Backspace and Undo use native
-`InvokeActionStatement` nodes because the low-level dispatcher does not route
-those global shortcuts through the IDE action system in this headless runner.
+Text typing uses MPS's real key-event dispatcher. The low-level dispatcher does
+not route the global `Insert_Action`, Backspace, or Undo through key events in
+this headless runner; tests of those actions should use native
+`InvokeActionStatement` nodes. The empty-list fixtures' completion-and-Enter
+sequence is a separate behavior and does not establish populated-list
+`Insert_Action` behavior or physical Enter-key binding.
 The tests open a real MPS node editor, compare before/result nodes using the
 native matcher, assert cell identity and caret/selection, and dispose the editor.
 They do not substitute direct property setters for the interaction.
