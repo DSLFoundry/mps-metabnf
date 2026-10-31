@@ -1,0 +1,292 @@
+{
+  "schema": 1,
+  "scope": "generated-side-authored-native-subset-not-head-to-head",
+  "fixtureCommit": "33b993e7c841965d0299799e71bbcd1bbb745cb8",
+  "grammar": {
+    "path": "tests/comparative-editor/CSharpComparison.g4",
+    "origin": "independently authored; not extracted from grammars-v4",
+    "license": "Apache-2.0",
+    "canonicalLfSha256": "c43ef8394d7adf86dc904a0e088def3417b49ef72c3b041b1e466f44c185922f"
+  },
+  "upstreamGrammar": {
+    "repository": "antlr/grammars-v4",
+    "revision": "7bb150f62f54e587f18e323b71fa0309bdec5056",
+    "path": "csharp/v7/CSharpParser.g4",
+    "nativeImport": "rejected",
+    "diagnostic": "Only self-contained combined ANTLR 4 grammars are supported",
+    "licensing": "blocked: MIT and EPL-1.0 notices require applicable-terms review; not redistributed"
+  },
+  "reference": {
+    "repository": "DSLFoundry/mps-dflat",
+    "revision": "98a92f2ece2d5eb6cec01a4e12d1e615f744808a",
+    "license": "Apache-2.0",
+    "nativeBuild": "blocked",
+    "nativeCheck": "blocked",
+    "nativeTests": "blocked",
+    "reason": "Exact MPS/mbeddr 2025.1 dependencies are not resolved/pinned; no independent runtime adapter executed. Compatibility with 2026.1.1 is unverified, not disproved."
+  },
+  "runtime": {
+    "mps": "2026.1.1",
+    "jbr": "25.0.3+1-b329.124",
+    "mops": "0.4.0-SNAPSHOT",
+    "mbeddr": "not used by generated side; reference unresolved",
+    "mopsDistribution": "mops-0.4.0-e830037"
+  },
+  "nativeTests": [
+    "CSharpExpressionCaret",
+    "CSharpExpressionUndo",
+    "CSharpExportSyntax",
+    "CSharpPersistence.exportAndReload"
+  ],
+  "observations": [
+    {
+      "scenario": "empty-block-creation",
+      "before": "empty",
+      "after": "bare",
+      "parserControl": "pass",
+      "authoredNativeImport": "pass",
+      "referenceNative": "blocked",
+      "referenceReason": "No reference runtime adapter executed",
+      "generatedNative": "blocked",
+      "reason": "Native editor actions are not exercised by this scoped subset",
+      "focus": "blocked",
+      "undo": "blocked",
+      "export": "blocked",
+      "reload": "blocked"
+    },
+    {
+      "scenario": "append-populated-block",
+      "before": "bare",
+      "after": "two",
+      "parserControl": "pass",
+      "authoredNativeImport": "pass",
+      "referenceNative": "blocked",
+      "referenceReason": "No reference runtime adapter executed",
+      "generatedNative": "blocked",
+      "reason": "Native editor actions are not exercised by this scoped subset",
+      "focus": "blocked",
+      "undo": "blocked",
+      "export": "blocked",
+      "reload": "blocked"
+    },
+    {
+      "scenario": "nested-block-boundary",
+      "before": "nested",
+      "after": "nested-appended",
+      "parserControl": "pass",
+      "authoredNativeImport": "pass",
+      "referenceNative": "blocked",
+      "referenceReason": "No reference runtime adapter executed",
+      "generatedNative": "blocked",
+      "reason": "Native editor actions are not exercised by this scoped subset",
+      "focus": "blocked",
+      "undo": "blocked",
+      "export": "blocked",
+      "reload": "blocked"
+    },
+    {
+      "scenario": "optional-return-payload",
+      "before": "bare",
+      "after": "payload",
+      "parserControl": "pass",
+      "authoredNativeImport": "pass",
+      "referenceNative": "blocked",
+      "referenceReason": "No reference runtime adapter executed",
+      "generatedNative": "blocked",
+      "reason": "Native editor actions are not exercised by this scoped subset",
+      "focus": "blocked",
+      "undo": "blocked",
+      "export": "blocked",
+      "reload": "blocked"
+    },
+    {
+      "scenario": "remove-and-undo",
+      "before": "two",
+      "after": "bare",
+      "parserControl": "pass",
+      "authoredNativeImport": "pass",
+      "referenceNative": "blocked",
+      "referenceReason": "No reference runtime adapter executed",
+      "generatedNative": "blocked",
+      "reason": "Native editor actions are not exercised by this scoped subset",
+      "focus": "blocked",
+      "undo": "blocked",
+      "export": "blocked",
+      "reload": "blocked"
+    },
+    {
+      "scenario": "expression-caret",
+      "before": "sum",
+      "after": "sum-edited",
+      "parserControl": "pass",
+      "authoredNativeImport": "pass",
+      "referenceNative": "blocked",
+      "referenceReason": "No reference runtime adapter executed",
+      "generatedNative": "pass",
+      "reason": "Independent full fragment before/after AST equality and selected RHS cell assertions",
+      "focus": {
+        "status": "pass",
+        "role": "$.0.payload.rhs.number",
+        "caret": 1,
+        "selection": [
+          1,
+          1
+        ]
+      },
+      "undo": {
+        "status": "pass",
+        "actions": [
+          "TypeKeyStatement: 3",
+          "InvokeActionStatement: $Undo"
+        ],
+        "actualFacts": [
+          "$:block:1",
+          "$.0:return:add(number(1),number(2))"
+        ],
+        "focus": "blocked: not asserted"
+      },
+      "export": {
+        "status": "pass",
+        "kind": "native fragment text",
+        "actual": "{return 1+3;}",
+        "utf8Hex": "7b72657475726e20312b333b7d",
+        "lineEndingNormalization": "LF; no newline occurs in this golden",
+        "fileEmission": "blocked"
+      },
+      "reload": "blocked: this edited state is not independently reloaded",
+      "tests": [
+        "CSharpExpressionCaret",
+        "CSharpExpressionUndo"
+      ],
+      "initialFacts": [
+        "$:block:1",
+        "$.0:return:add(number(1),number(2))"
+      ],
+      "actualResultFacts": [
+        "$:block:1",
+        "$.0:return:add(number(1),number(3))"
+      ],
+      "initialFocus": {
+        "role": "$.0.payload.rhs.number",
+        "caret": 1,
+        "selection": [
+          0,
+          1
+        ]
+      },
+      "actions": [
+        "TypeKeyStatement: 3"
+      ]
+    },
+    {
+      "scenario": "export-and-reload",
+      "before": "persistent",
+      "after": "persistent",
+      "parserControl": "pass",
+      "authoredNativeImport": "pass",
+      "referenceNative": "blocked",
+      "referenceReason": "No reference runtime adapter executed",
+      "generatedNative": "pass",
+      "reason": "Native model-factory save/load, actual semantic extraction and fragment syntax assertions",
+      "focus": "unsupported: not required across reload",
+      "undo": "unsupported: no editing command in this scenario",
+      "export": {
+        "status": "pass",
+        "kind": "native fragment text",
+        "actual": "{{return 1+2;}return;}",
+        "utf8Hex": "7b7b72657475726e20312b323b7d72657475726e3b7d",
+        "lineEndingNormalization": "LF; no newline occurs in this golden",
+        "fileEmission": "blocked"
+      },
+      "reload": {
+        "status": "pass",
+        "actualFacts": [
+          "$:block:2",
+          "$.0:block:1",
+          "$.0.0:return:add(number(1),number(2))",
+          "$.1:return:absent"
+        ],
+        "actualFragmentText": "{{return 1+2;}return;}"
+      },
+      "tests": [
+        "CSharpExportSyntax",
+        "CSharpPersistence.exportAndReload"
+      ],
+      "initialFacts": [
+        "$:block:2",
+        "$.0:block:1",
+        "$.0.0:return:add(number(1),number(2))",
+        "$.1:return:absent"
+      ],
+      "actualResultFacts": [
+        "$:block:2",
+        "$.0:block:1",
+        "$.0.0:return:add(number(1),number(2))",
+        "$.1:return:absent"
+      ],
+      "initialFocus": {
+        "role": "$.0.0.payload.rhs.number",
+        "caret": 1,
+        "selection": [
+          1,
+          1
+        ]
+      },
+      "actions": [
+        "Export nested block fragment through TextGeneratorEngine",
+        "Save program through native MPS ModelFactory",
+        "Load through native MPS ModelFactory",
+        "Extract ordered/path-based semantic facts and export reloaded block fragment"
+      ]
+    }
+  ],
+  "wholeProgramFileExport": {
+    "status": "fail",
+    "diagnostic": "Argument for @NotNull parameter 'unitName' of jetbrains/mps/text/rt/TextGenModelOutline.registerTextUnit must not be null",
+    "reason": "Generated start concept has no name; fragment TextGeneratorEngine export is tested separately.",
+    "report": "build/comparative-root-export-diagnostic.json",
+    "fileEncoding": "blocked"
+  },
+  "nativeGrammarCheck": {
+    "status": "fail",
+    "reason": "Custom sandbox generation plan does not engage the regexp generator; explicit aspect generation succeeds. This is not parser/import rejection."
+  },
+  "targetChecks": {
+    "status": "pass",
+    "errors": 0,
+    "generatedEditorWarnings": 3,
+    "generatedEditorInfos": 2,
+    "nativeTestHelperWarnings": 2
+  },
+  "normalization": {
+    "scopedNativeDependencyRefresh": "pass: repeat leaves unchanged files",
+    "ciDirtyFilesGate": "not configured",
+    "fullMigrationCleanliness": "unverified"
+  },
+  "reports": {
+    "nativeImport": "build/comparative-native-verification.json",
+    "nativeTests": "build/mps-smoke/editor-reports",
+    "fixtureControls": "build/comparative-integrated-smoke.log",
+    "sourceAudit": "build/comparative-editor/source-audit/result.json"
+  },
+  "integratedNativeInventory": {
+    "status": "pass",
+    "cases": 51,
+    "newCases": 4,
+    "failedOrSkipped": 0,
+    "reports": "build/mps-smoke/editor-reports"
+  },
+  "integratedValidation": {
+    "status": "pass",
+    "tasks": [
+      "smokeTest",
+      "comparativeEditorFixtureTest",
+      "comparativeEditorSourceAudit"
+    ],
+    "nativeCases": 51,
+    "fixtureControls": 5,
+    "verifiedSourceChecksums": 5,
+    "log": "build/comparative-integrated-smoke.log",
+    "platformDiagnostics": "Windows Ant workers emit JNA/native-library startup/shutdown diagnostics; harness, inventory and Gradle complete successfully."
+  }
+}

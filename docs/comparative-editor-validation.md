@@ -60,6 +60,9 @@ editor usability or source-semantic preservation.
 
 See [C# editor comparison](csharp-editor-comparison.md) for source verification,
 the bounded authored fallback, semantic normalization, scenario expectations,
-execution instructions, and separate blocked native results. The fallback
-checks parser/fixture consistency only, not a generated-versus-hand-built
-native editing result.
+execution instructions, and separately classified native outcomes. The authored
+fallback has executable generated-side caret, undo, fragment export and native
+persistence tests in addition to parser controls. The upstream grammar is
+rejected by the native importer, and the hand-built reference has no executed
+runtime adapter. Passing the generated-side subset is not a completed
+head-to-head comparison or validation of unsupported full-language constructs.

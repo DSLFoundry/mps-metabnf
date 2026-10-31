@@ -304,7 +304,11 @@ smokeTest.configure {
             "actualGeneratedProfileControls", "nativePersistenceRetainsFlagAndEmptyClause",
             "ruleOverridesRemainProjectionLocal", "suppressionCannotHideInvalidAuthoredMetadata",
             "actualGenerationRejectsUnsupportedBackendAndFlatRange"
-        ).map { "metabnf.editor.tests.usability.InteractiveGeneration_Test.test_$it()" }
+        ).map { "metabnf.editor.tests.usability.InteractiveGeneration_Test.test_$it()" } + setOf(
+            "CSharpExpressionCaret", "CSharpExpressionUndo", "CSharpExportSyntax"
+        ).map { "metabnf.editor.tests.comparison.${it}_Test.test_$it()" } + setOf(
+            "metabnf.editor.tests.comparison.CSharpPersistence_Test.test_exportAndReload()"
+        )
         check(cases.size == expected.size && cases.toSet() == expected) {
             "Unexpected native editor-test inventory: expected $expected, got $cases; see $reports"
         }
@@ -356,6 +360,18 @@ val comparativeEditorFixtureTest = tasks.register<Exec>("comparativeEditorFixtur
         "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
     ).get().asFile.absolutePath)
     environment("JAVA_HOME", System.getProperty("java.home"))
+}
+
+tasks.register<Exec>("comparativeEditorSourceAudit") {
+    group = "verification"
+    description = "Fetches checksum-pinned comparison sources and verifies availability/importer/runtime blockers."
+    workingDir(projectDir)
+    commandLine(
+        providers.gradleProperty("pythonExecutable").getOrElse(
+            if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+        ),
+        "tests/comparative-editor/audit_sources.py"
+    )
 }
 
 val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
