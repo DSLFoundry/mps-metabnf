@@ -221,6 +221,7 @@
       </repository>
       <module file="${smoke.project}/languages/Demo/Demo.mpl" />
       <module file="${smoke.project}/languages/DemoUsability/DemoUsability.mpl" />
+      <module file="${smoke.project}/languages/CSharpComparison/CSharpComparison.mpl" />
       <module file="${smoke.project}/solutions/metabnf.editor.tests/metabnf.editor.tests.msd" />
       <jvmargs>
         <arg value="-Xmx2g" />
@@ -267,6 +268,7 @@
         <modules dir="${smoke.project}/solutions" />
       </repository>
       <module file="${smoke.project}/languages/Demo/Demo.mpl" />
+      <module file="${smoke.project}/languages/CSharpComparison/CSharpComparison.mpl" />
       <module file="${smoke.project}/languages/Python/Python.mpl" />
       <module file="${smoke.project}/languages/TestLanguage/TestLanguage.mpl" />
       <module file="${smoke.project}/languages/mbnf/sandbox/mbnf.sandbox.msd" />
