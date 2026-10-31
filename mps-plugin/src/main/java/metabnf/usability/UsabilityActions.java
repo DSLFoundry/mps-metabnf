@@ -72,9 +72,9 @@ public final class UsabilityActions {
         }
         String id = (String) JOptionPane.showInputDialog(null, "Profile (capability selection only; no backend generated):",
                 "Configure generation profile", JOptionPane.QUESTION_MESSAGE, null,
-                new String[]{"vanilla", "grammar-cells"}, "vanilla");
+                new String[]{"vanilla", "grammar-cells", "plaintextgen", "plaintextflow"}, "vanilla");
         if (id == null || !confirm("Profile requirements", GenerationProfiles.descriptor(id).toString()
-                + "\nCreate this native profile root? Grammar Cells remains blocked until compatibility is verified.")) return;
+                + "\nCreate this native profile root? Optional backends remain blocked until compatible dependencies are verified; generation never silently falls back.")) return;
         project.getModelAccess().executeCommand(() -> {
             SNode grammar = selected.node.resolve(project.getRepository());
             GenerationProfiles.createProfile(grammar.getModel(), grammar, id);
