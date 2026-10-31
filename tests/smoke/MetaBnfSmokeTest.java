@@ -76,6 +76,11 @@ public final class MetaBnfSmokeTest {
             System.out.println("SMOKE: native ANTLR/Rascal actions registered in Tools without an installed IDE plugin");
             SModel grammar = project.getModelAccess().computeReadAction(() -> model(project, GRAMMAR));
             checkConstraints(environment, project, grammar);
+            project.getModelAccess().computeReadAction(() -> {
+                ExpressionFamiliesTest.run(grammar.getRootNodes().iterator().next());
+                return null;
+            });
+            System.out.println("SMOKE: expression-family recognition and precedence-safe helper semantics are clean");
             System.out.println("SMOKE: native MPS grammar constraints are clean");
             SModel usability = project.getModelAccess().computeReadAction(() ->
                     model(project, "r:50e696ba-6dbe-4374-8573-c5102cf3ceca(mbnf.sandbox.UsabilityFixture)"));

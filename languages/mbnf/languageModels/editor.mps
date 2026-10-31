@@ -1491,6 +1491,81 @@
           </node>
         </node>
       </node>
+      <node concept="3F0ifn" id="7YGXO6tA000" role="3EZMnx">
+        <property role="3F0ifm" value="Expression metadata (authored semantics; blank suggestions do not lower):" />
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA001" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA002" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA003" role="3EZMnx">
+          <property role="3F0ifm" value="operandRoles:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA004" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01$" resolve="operandRoles" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA005" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA006" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA007" role="3EZMnx">
+          <property role="3F0ifm" value="precedence:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA008" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01_" resolve="precedence" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA009" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA00a" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA00b" role="3EZMnx">
+          <property role="3F0ifm" value="associativity:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA00c" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01A" resolve="associativity" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA00d" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA00e" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA00f" role="3EZMnx">
+          <property role="3F0ifm" value="wrappingPolicy:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA00g" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01B" resolve="wrappingPolicy" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA00h" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA00i" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA00j" role="3EZMnx">
+          <property role="3F0ifm" value="replacementPolicy:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA00k" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01C" resolve="replacementPolicy" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA00l" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA00m" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA00n" role="3EZMnx">
+          <property role="3F0ifm" value="deletionPolicy:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA00o" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01D" resolve="deletionPolicy" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA00p" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA00q" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA00r" role="3EZMnx">
+          <property role="3F0ifm" value="focusPolicy:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA00s" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01E" resolve="focusPolicy" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="7YGXO6tA00t" role="3EZMnx">
+        <node concept="2iRfu4" id="7YGXO6tA00u" role="2iSdaV" />
+        <node concept="3F0ifn" id="7YGXO6tA00v" role="3EZMnx">
+          <property role="3F0ifm" value="foldingPolicy:" />
+        </node>
+        <node concept="3F0A7n" id="7YGXO6tA00w" role="3EZMnx">
+          <ref role="1NtTu8" to="6o2a:7EHZiBAt01F" resolve="foldingPolicy" />
+        </node>
+      </node>
     </node>
   </node>
   <node concept="24kQdi" id="7Q_67PUJ0ap">

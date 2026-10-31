@@ -96,11 +96,26 @@ registered editor actions; include undo. Where a feature supports persistence
 or export, add independent reload and syntax assertions to its smoke coverage.
 Do not claim those capabilities from caret/AST assertions alone.
 
-The Number fixtures establish the baseline editing/undo contract. Flag/group
-coverage does not establish list, block, expression, or parser/mapping coverage.
-Each new interaction needs its own applicable contract cases and an explicit
-supported/unsupported matrix. Update the exact inventory in `build.gradle.kts`
-when registering fixtures; empty, skipped, missing or duplicate cases fail.
+The expression fixture (`Calculation`, `Operand`, `BinaryExpression`, `Group`
+in the checked-in `DemoUsability` language) is a hand-modeled reference backend
+for the interaction contract; it is not produced by the aspect generator. Its
+operators are `+ - * / ^` with precedence 10/10/20/20/30 and right-associative
+`^`, in the shared `ExpressionEditing` helper and the `Expression_ActionMap`.
+Native tests cover:
+
+| Interaction | Contract |
+| --- | --- |
+| Insert | Appends an operand after the selected node; at the end of an expression it appends to the whole expression (`a+b` then `+c`). When the node is an operand of a tighter or equal-precedence parent, the new operation is wrapped in an explicit `Group` (`(a+d)*b`). |
+| Operator replacement | Typing an operator into the operator cell keeps operands and adds `Group` nodes where precedence or associativity would otherwise change the tree (`a+b*c` becomes `a+(b-c)`); one Undo restores it. |
+| Backspace on a group parenthesis | Removes the `Group` only when the unwrapped tree is unchanged; refused otherwise (`(a+b)*c`); one Undo restores it. |
+
+TextGen emits parentheses only for explicit `Group` nodes and never rebalances.
+Unsupported: generated per-grammar expression backends, prefix/postfix/ternary
+or index/member actions, and deletion of operands. Flag/group coverage does not
+establish list or block coverage. Each new interaction needs its own applicable
+contract cases and an explicit supported/unsupported matrix. Update
+the exact inventory in `build.gradle.kts` when registering fixtures; empty,
+skipped, missing or duplicate cases fail.
 
 ## Reading failures
 
