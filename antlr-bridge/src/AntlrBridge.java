@@ -382,10 +382,12 @@ public final class AntlrBridge {
                     case ANTLRParser.CLOSURE -> "zero-or-more";
                     default -> "one-or-more";
                 };
-                String generated = synthetic.add(block);
+                String generated = null;
+                GrammarAST direct = singleRuleReference(block);
+                if (direct == null) generated = synthetic.add(block);
                 xml.writeStartElement(wrapper);
                 xml.writeEmptyElement("sort");
-                xml.writeAttribute("name", generated);
+                xml.writeAttribute("name", generated != null ? generated : direct.getText());
                 xml.writeEndElement();
             }
             case ANTLRParser.EPSILON -> xml.writeEmptyElement("empty");
@@ -394,6 +396,14 @@ public final class AntlrBridge {
                             "ANTLR element labels cannot be preserved in MetaBNF grammar import: " + symbol.getText());
             default -> throw unsupported(symbol);
         }
+    }
+
+    private static GrammarAST singleRuleReference(GrammarAST block) {
+        List<GrammarAST> alternatives = children(block);
+        if (alternatives.size() != 1) return null;
+        List<GrammarAST> symbols = children(alternatives.get(0));
+        if (symbols.size() != 1 || symbols.get(0).getType() != ANTLRParser.RULE_REF) return null;
+        return symbols.get(0);
     }
 
     private static IllegalArgumentException unsupported(GrammarAST node) {

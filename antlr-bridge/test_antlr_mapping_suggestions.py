@@ -37,7 +37,7 @@ class AntlrMappingSuggestionsTest(unittest.TestCase):
             explicit = json.loads((ROOT / "tests/antlr-bridge/demo-mapping.json").read_text())
             self.assertEqual(explicit, report["mapping"])
             registry = read_concept_registry(ET.parse(ROOT / "languages/mbnf/sandbox/models/langtest.mps").getroot())
-            for text, count in (("program P { X=1; }", 1), ("program P { X=1; Y=2; }", 2)):
+            for text, count in (("programP{X=1;}", 1), ("programP{X=1;Y=2;}", 2)):
                 source.write_text(text, encoding="utf-8")
                 result = subprocess.run(command + ["parse", grammar, "program", str(parse_xml), str(source)],
                                         capture_output=True, text=True)
