@@ -1195,6 +1195,15 @@
         <ref role="1NtTu8" to="n2m4:3R$mY2PS4TM" resolve="transitions" />
         <node concept="2iRfu4" id="3R$mY2PS4Vk" role="2czzBx" />
       </node>
+      <node concept="3F0ifn" id="3R$mY2QeeCy" role="3EZMnx">
+        <property role="3F0ifm" value=" [matrix note: " />
+      </node>
+      <node concept="3F0A7n" id="3R$mY2QeeCz" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2QeeCx" resolve="matrixNote" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2QeeC$" role="3EZMnx">
+        <property role="3F0ifm" value="]" />
+      </node>
     </node>
     <node concept="2aJ2om" id="3R$mY2PS4Vo" role="CpUAK">
       <ref role="2$4xQ3" node="3R$mY2PS4UG" resolve="StateEventMatrix" />

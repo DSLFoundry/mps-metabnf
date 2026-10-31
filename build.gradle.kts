@@ -287,6 +287,7 @@ smokeTest.configure {
             "GroupTrigger", "GroupTriggerUndo", "GroupEmptyRemoval",
             "GroupPopulatedRemovalRequiresApproval", "GroupPopulatedRemoval",
             "GroupPopulatedRemovalUndo", "StateMachineMatrixHint",
+            "StateMachineProjectionSwitchNoChange", "StateMachineMatrixLocalChoice",
             "ExpressionOperandInsertion", "ExpressionLeftOperandInsertion", "ExpressionInsertionGrouping",
             "ExpressionOperatorReplacementGrouping", "ExpressionOperatorReplacementUndo",
             "ExpressionGroupRemoval", "ExpressionGroupRemovalRefused", "ExpressionGroupRemovalUndo"
