@@ -23,13 +23,19 @@
       <concept id="1402906326895675325" name="jetbrains.mps.lang.editor.structure.CellActionMap_FunctionParm_selectedNode" flags="nn" index="0IXxy" />
       <concept id="1071666914219" name="jetbrains.mps.lang.editor.structure.ConceptEditorDeclaration" flags="ig" index="24kQdi">
         <child id="1078153129734" name="inspectedCellModel" index="6VMZX" />
+        <child id="2597348684684069742" name="contextHints" index="CpUAK" />
       </concept>
       <concept id="1176897764478" name="jetbrains.mps.lang.editor.structure.QueryFunction_NodeFactory" flags="in" index="4$FPG" />
+      <concept id="6822301196700715228" name="jetbrains.mps.lang.editor.structure.ConceptEditorHintDeclarationReference" flags="ig" index="2aJ2om">
+        <reference id="5944657839026714445" name="hint" index="2$4xQ3" />
+      </concept>
       <concept id="1140524381322" name="jetbrains.mps.lang.editor.structure.CellModel_ListWithRole" flags="ng" index="2czfm3">
         <property id="1140524450557" name="separatorText" index="2czwfO" />
         <child id="1176897874615" name="nodeFactory" index="4_6I_" />
         <child id="1140524464360" name="cellLayout" index="2czzBx" />
       </concept>
+      <concept id="5949640294884234625" name="jetbrains.mps.lang.editor.structure.CellLayout_Table" flags="nn" index="fvoJi" />
+      <concept id="1106270549637" name="jetbrains.mps.lang.editor.structure.CellLayout_Horizontal" flags="nn" index="2iRfu4" />
       <concept id="1106270571710" name="jetbrains.mps.lang.editor.structure.CellLayout_Vertical" flags="nn" index="2iRkQZ" />
       <concept id="3459162043708467089" name="jetbrains.mps.lang.editor.structure.CellActionMap_CanExecuteFunction" flags="in" index="jK8Ss" />
       <concept id="1237303669825" name="jetbrains.mps.lang.editor.structure.CellLayout_Indent" flags="nn" index="l2Vlx" />
@@ -38,6 +44,13 @@
       <concept id="1237385578942" name="jetbrains.mps.lang.editor.structure.IndentLayoutOnNewLineStyleClassItem" flags="ln" index="pVoyu" />
       <concept id="1080736578640" name="jetbrains.mps.lang.editor.structure.BaseEditorComponent" flags="ig" index="2wURMF">
         <child id="1080736633877" name="cellModel" index="2wV5jI" />
+      </concept>
+      <concept id="5944657839000868711" name="jetbrains.mps.lang.editor.structure.ConceptEditorContextHints" flags="ig" index="2ABfQD">
+        <child id="5944657839000877563" name="hints" index="2ABdcP" />
+      </concept>
+      <concept id="5944657839003601246" name="jetbrains.mps.lang.editor.structure.ConceptEditorHintDeclaration" flags="ig" index="2BsEeg">
+        <property id="168363875802087287" name="showInUI" index="2gpH_U" />
+        <property id="5944657839012629576" name="presentation" index="2BUmq6" />
       </concept>
       <concept id="1164824717996" name="jetbrains.mps.lang.editor.structure.CellMenuDescriptor" flags="ng" index="OXEIz">
         <child id="1164824815888" name="cellMenuPart" index="OY2wv" />
@@ -987,6 +1000,149 @@
           </node>
         </node>
       </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="3R$mY2PS4UP">
+    <property role="TrG5h" value="StateMachine_Editor" />
+    <ref role="1XX52x" to="n2m4:3R$mY2PS4TB" resolve="StateMachine" />
+    <node concept="3EZMnI" id="3R$mY2PS4UQ" role="2wV5jI">
+      <node concept="2iRkQZ" id="3R$mY2PS4UR" role="2iSdaV" />
+      <node concept="3F0ifn" id="3R$mY2PS4UH" role="3EZMnx">
+        <property role="3F0ifm" value="machine " />
+      </node>
+      <node concept="3F0A7n" id="3R$mY2PS4UI" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TF" resolve="identifier" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2PS4UJ" role="3EZMnx">
+        <property role="3F0ifm" value=" events " />
+      </node>
+      <node concept="3F2HdR" id="3R$mY2PS4UK" role="3EZMnx">
+        <property role="2czwfO" value=", " />
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TK" resolve="events" />
+        <node concept="2iRfu4" id="3R$mY2PS4UL" role="2czzBx" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2PS4UM" role="3EZMnx">
+        <property role="3F0ifm" value=" states " />
+      </node>
+      <node concept="3F2HdR" id="3R$mY2PS4UN" role="3EZMnx">
+        <property role="2czwfO" value="; " />
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TL" resolve="states" />
+        <node concept="2iRkQZ" id="3R$mY2PS4UO" role="2czzBx" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="3R$mY2PS4V0">
+    <property role="TrG5h" value="StateMachine_MatrixEditor" />
+    <ref role="1XX52x" to="n2m4:3R$mY2PS4TB" resolve="StateMachine" />
+    <node concept="3EZMnI" id="3R$mY2PS4V1" role="2wV5jI">
+      <node concept="2iRkQZ" id="3R$mY2PS4V2" role="2iSdaV" />
+      <node concept="3F0ifn" id="3R$mY2PS4US" role="3EZMnx">
+        <property role="3F0ifm" value="State/event transition matrix — " />
+      </node>
+      <node concept="3F0A7n" id="3R$mY2PS4UT" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TF" resolve="identifier" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2PS4UU" role="3EZMnx">
+        <property role="3F0ifm" value="Event columns: " />
+      </node>
+      <node concept="3F2HdR" id="3R$mY2PS4UV" role="3EZMnx">
+        <property role="2czwfO" value=" | " />
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TK" resolve="events" />
+        <node concept="2iRfu4" id="3R$mY2PS4UW" role="2czzBx" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2PS4UX" role="3EZMnx">
+        <property role="3F0ifm" value="State rows: " />
+      </node>
+      <node concept="3F2HdR" id="3R$mY2PS4UY" role="3EZMnx">
+        <property role="2czwfO" value="&#10;" />
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TL" resolve="states" />
+        <node concept="fvoJi" id="3R$mY2PS4UZ" role="2czzBx" />
+      </node>
+    </node>
+    <node concept="2aJ2om" id="3R$mY2PS4V3" role="CpUAK">
+      <ref role="2$4xQ3" node="3R$mY2PS4UG" resolve="StateEventMatrix" />
+    </node>
+  </node>
+  <node concept="24kQdi" id="3R$mY2PS4V6">
+    <property role="TrG5h" value="Event_Editor" />
+    <ref role="1XX52x" to="n2m4:3R$mY2PS4TC" resolve="Event" />
+    <node concept="3EZMnI" id="3R$mY2PS4V7" role="2wV5jI">
+      <node concept="2iRfu4" id="3R$mY2PS4V8" role="2iSdaV" />
+      <node concept="3F0ifn" id="3R$mY2PS4V4" role="3EZMnx">
+        <property role="3F0ifm" value="event " />
+      </node>
+      <node concept="3F0A7n" id="3R$mY2PS4V5" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TG" resolve="identifier" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="3R$mY2PS4Ve">
+    <property role="TrG5h" value="State_Editor" />
+    <ref role="1XX52x" to="n2m4:3R$mY2PS4TD" resolve="State" />
+    <node concept="3EZMnI" id="3R$mY2PS4Vf" role="2wV5jI">
+      <node concept="2iRfu4" id="3R$mY2PS4Vg" role="2iSdaV" />
+      <node concept="3F0ifn" id="3R$mY2PS4V9" role="3EZMnx">
+        <property role="3F0ifm" value="state " />
+      </node>
+      <node concept="3F0A7n" id="3R$mY2PS4Va" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TH" resolve="identifier" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2PS4Vb" role="3EZMnx">
+        <property role="3F0ifm" value=" : " />
+      </node>
+      <node concept="3F2HdR" id="3R$mY2PS4Vc" role="3EZMnx">
+        <property role="2czwfO" value=" | " />
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TM" resolve="transitions" />
+        <node concept="2iRfu4" id="3R$mY2PS4Vd" role="2czzBx" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="3R$mY2PS4Vl">
+    <property role="TrG5h" value="State_MatrixEditor" />
+    <ref role="1XX52x" to="n2m4:3R$mY2PS4TD" resolve="State" />
+    <node concept="3EZMnI" id="3R$mY2PS4Vm" role="2wV5jI">
+      <node concept="2iRfu4" id="3R$mY2PS4Vn" role="2iSdaV" />
+      <node concept="3F0A7n" id="3R$mY2PS4Vh" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TH" resolve="identifier" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2PS4Vi" role="3EZMnx">
+        <property role="3F0ifm" value=" | " />
+      </node>
+      <node concept="3F2HdR" id="3R$mY2PS4Vj" role="3EZMnx">
+        <property role="2czwfO" value=" | " />
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TM" resolve="transitions" />
+        <node concept="2iRfu4" id="3R$mY2PS4Vk" role="2czzBx" />
+      </node>
+    </node>
+    <node concept="2aJ2om" id="3R$mY2PS4Vo" role="CpUAK">
+      <ref role="2$4xQ3" node="3R$mY2PS4UG" resolve="StateEventMatrix" />
+    </node>
+  </node>
+  <node concept="24kQdi" id="3R$mY2PS4Vt">
+    <property role="TrG5h" value="Transition_Editor" />
+    <ref role="1XX52x" to="n2m4:3R$mY2PS4TE" resolve="Transition" />
+    <node concept="3EZMnI" id="3R$mY2PS4Vu" role="2wV5jI">
+      <node concept="2iRfu4" id="3R$mY2PS4Vv" role="2iSdaV" />
+      <node concept="3F0ifn" id="3R$mY2PS4Vp" role="3EZMnx">
+        <property role="3F0ifm" value="on " />
+      </node>
+      <node concept="3F0A7n" id="3R$mY2PS4Vq" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TI" resolve="event" />
+      </node>
+      <node concept="3F0ifn" id="3R$mY2PS4Vr" role="3EZMnx">
+        <property role="3F0ifm" value=" → " />
+      </node>
+      <node concept="3F0A7n" id="3R$mY2PS4Vs" role="3EZMnx">
+        <ref role="1NtTu8" to="n2m4:3R$mY2PS4TJ" resolve="target" />
+      </node>
+    </node>
+  </node>
+  <node concept="2ABfQD" id="3R$mY2PS9GN">
+    <property role="TrG5h" value="StateEventMatrixContext" />
+    <node concept="2BsEeg" id="3R$mY2PS4UG" role="2ABdcP">
+      <property role="TrG5h" value="StateEventMatrix" />
+      <property role="2BUmq6" value="State/event matrix" />
+      <property role="2gpH_U" value="true" />
     </node>
   </node>
 </model>

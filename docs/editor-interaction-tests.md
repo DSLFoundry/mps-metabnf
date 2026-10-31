@@ -28,6 +28,12 @@ The baseline interaction contract covers:
 | BlockSeparatorInsertion | Create the first statement, type `;`, invoke completion and Enter | Second `Statement` inserted; selection is on its constant cell at the end of `skip`; exact TextGen `begin\n    skip;skipend` after line-ending normalization |
 | BlockEndBoundaryInsertion | Invoke `Insert_Action` at the last statement of a populated Block | Sibling `Statement` appended; no optional child Block; exact TextGen; selection on the new statement's constant cell |
 | BlockNestedEmptyListTyping | Invoke completion and Enter at a nested Block's empty `statements` placeholder | `Statement` inserted into that nested Block, not a further optional child; selection on its constant cell |
+| StateMachineMatrixHint | Select the matrix hint, edit a state name, Undo, then return to the default hint | The active hint changes both ways; exact shared TextGen output changes then restores |
+
+The [alternate editor projections](alternate-projections.md) add a hinted matrix editor over
+the same state-machine AST. The test selects the hint through native MPS hint settings
+and refreshes the real editor; the chooser dialog and desktop appearance are not
+automated.
 
 The [interactive flag/group contract](interactive-flags-and-groups.md) adds
 typing, deletion, Undo, Inspector toggling, keyword completion and contextual

@@ -1,9 +1,11 @@
 # Generation profiles and grammar enrichment
 
 These are native metadata operations in the existing MPS project. Generation
-consumes flag selections for the textual editor and Inspector form; enrichment
-itself does not lower ASTs, rewrite mappings, or generate widgets. Build/setup
-is described in [MetaBNF basics](metabnf-base.md).
+consumes flag selections for the textual editor and Inspector form. Alternate hinted
+layouts over a shared AST are described in [Alternate editor projections]
+(alternate-projections.md). Enrichment itself does not lower ASTs, rewrite
+mappings, or generate widgets. Build/setup is described in [MetaBNF basics]
+(metabnf-base.md).
 
 ## Preview enrichment
 

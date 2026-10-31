@@ -152,6 +152,69 @@
         <ref role="3xiQg3" node="54cyhNXsM8C" resolve="Block" />
       </node>
     </node>
+    <node concept="3xhzZY" id="3R$mY2PS4Tk" role="3xJMYo">
+      <property role="TrG5h" value="StateMachine" />
+      <node concept="3xhzXc" id="3R$mY2PS4To" role="3xhzZr">
+        <property role="TrG5h" value="machine" />
+      </node>
+      <node concept="3uXKyI" id="3R$mY2PS4Tp" role="3xhzZr">
+        <property role="TrG5h" value="identifier" />
+      </node>
+      <node concept="3xhzXc" id="3R$mY2PS4Tq" role="3xhzZr">
+        <property role="TrG5h" value="events" />
+      </node>
+      <node concept="3xiQg6" id="3R$mY2PS4Tr" role="3xhzZr">
+        <property role="TrG5h" value="events" />
+        <property role="3xj4NX" value="2b2ZYR3yDpO/AtleastOne" />
+        <ref role="3xiQg3" node="3R$mY2PS4Tl" />
+      </node>
+      <node concept="3xhzXc" id="3R$mY2PS4Ts" role="3xhzZr">
+        <property role="TrG5h" value="states" />
+      </node>
+      <node concept="3xiQg6" id="3R$mY2PS4Tt" role="3xhzZr">
+        <property role="TrG5h" value="states" />
+        <property role="3xj4NX" value="2b2ZYR3yDpO/AtleastOne" />
+        <ref role="3xiQg3" node="3R$mY2PS4Tm" />
+      </node>
+    </node>
+    <node concept="3xhzZY" id="3R$mY2PS4Tl" role="3xJMYo">
+      <property role="TrG5h" value="Event" />
+      <node concept="3xhzXc" id="3R$mY2PS4Tu" role="3xhzZr">
+        <property role="TrG5h" value="event" />
+      </node>
+      <node concept="3uXKyI" id="3R$mY2PS4Tv" role="3xhzZr">
+        <property role="TrG5h" value="identifier" />
+      </node>
+    </node>
+    <node concept="3xhzZY" id="3R$mY2PS4Tm" role="3xJMYo">
+      <property role="TrG5h" value="State" />
+      <node concept="3xhzXc" id="3R$mY2PS4Tw" role="3xhzZr">
+        <property role="TrG5h" value="state" />
+      </node>
+      <node concept="3uXKyI" id="3R$mY2PS4Tx" role="3xhzZr">
+        <property role="TrG5h" value="identifier" />
+      </node>
+      <node concept="3xiQg6" id="3R$mY2PS4Ty" role="3xhzZr">
+        <property role="TrG5h" value="transitions" />
+        <property role="3xj4NX" value="2b2ZYR3yDpK/ZeroOrMore" />
+        <ref role="3xiQg3" node="3R$mY2PS4Tn" />
+      </node>
+    </node>
+    <node concept="3xhzZY" id="3R$mY2PS4Tn" role="3xJMYo">
+      <property role="TrG5h" value="Transition" />
+      <node concept="3xhzXc" id="3R$mY2PS4Tz" role="3xhzZr">
+        <property role="TrG5h" value="on" />
+      </node>
+      <node concept="3uXKyI" id="3R$mY2PS4T$" role="3xhzZr">
+        <property role="TrG5h" value="event" />
+      </node>
+      <node concept="3xhzXc" id="3R$mY2PS4T_" role="3xhzZr">
+        <property role="TrG5h" value="-&gt;" />
+      </node>
+      <node concept="3uXKyI" id="3R$mY2PS4TA" role="3xhzZr">
+        <property role="TrG5h" value="target" />
+      </node>
+    </node>
   </node>
   <node concept="2WW1O_" id="2RLAZYDJSlT">
     <ref role="2WW1OI" node="2RLAZYDJSlD" resolve="DemoUsability" />
