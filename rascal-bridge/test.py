@@ -210,9 +210,42 @@ def run_integration_tests(rascal_jar: Path) -> None:
         if expression_source.read_text(encoding="utf-8") != "e+e":
             raise AssertionError("Rascal source to MPS and back did not preserve expression text")
 
-    imported_grammar = (
-        ROOT / "languages" / "mbnf" / "sandbox" / "models" / "RascalImportFixture.mps"
-    )
+    coverage_directory = ROOT / "build" / "rascal-coverage-test"
+    shutil.rmtree(coverage_directory, ignore_errors=True)
+    coverage_directory.mkdir(parents=True)
+    source = FIXTURES / "GrammarCoverage.rsc"
+    coverage_interchange = coverage_directory / "GrammarCoverage.xml"
+    import_rascal_file(rascal_jar, source, coverage_interchange)
+    grammar_xml = ET.parse(coverage_interchange).getroot()
+    if grammar_xml.find("./rules/rule[@name='WS']").get("kind") != "layout":
+        raise AssertionError("Rascal layout declaration was not retained in coverage_interchange")
+    if grammar_xml.find("./rules/rule[@name='Identifier']/choice/production/sequence/one-or-more") is None:
+        raise AssertionError("Compound Rascal lexical repetition was not exported")
+    imported_model = coverage_directory / "GrammarCoverage.mps"
+    import_grammar(coverage_interchange, imported_model, "GrammarCoverage")
+    roundtrip = coverage_directory / "GrammarCoverage-roundtrip.xml"
+    export_model(imported_model, roundtrip, "GrammarCoverage")
+    valid = coverage_directory / "coverage-valid.txt"
+    valid.write_text("alpha, beta", encoding="utf-8")
+    invalid = coverage_directory / "coverage-invalid.txt"
+    invalid.write_text("alpha,,beta", encoding="utf-8")
+    roundtrip_valid = coverage_directory / "coverage-roundtrip-valid.txt"
+    roundtrip_valid.write_text("alpha,beta", encoding="utf-8")
+    for grammar in (coverage_interchange, roundtrip):
+        tree = coverage_directory / f"{grammar.stem}-tree.xml"
+        input_path = valid if grammar == coverage_interchange else roundtrip_valid
+        parse_text(rascal_jar, grammar, input_path, tree)
+        if ET.parse(tree).getroot().find("./node[@rule='Program']") is None:
+            raise AssertionError("Layout/compound Rascal grammar did not parse valid input")
+    try:
+        parse_text(rascal_jar, coverage_interchange, invalid, coverage_directory / "invalid-tree.xml",
+                   report_output=False)
+    except ParserRunError:
+        pass
+    else:
+        raise AssertionError("Layout/compound Rascal grammar accepted an invalid input")
+
+    imported_grammar = build / "RascalImportFixture.mps"
     import_grammar(interchange, imported_grammar, "RascalImportFixture")
     round_trip = build / "roundtrip-grammar.xml"
     export_model(imported_grammar, round_trip, "RascalImportFixture")
@@ -234,7 +267,7 @@ def run_integration_tests(rascal_jar: Path) -> None:
         exported_output = temporary / "exported-grammar-parse.txt"
         try:
             export_rascal_module(
-                ROOT / "languages" / "mbnf" / "sandbox" / "models" / "RascalImportFixture.mps",
+                imported_grammar,
                 exported_module,
                 exported_module_name,
             )
@@ -298,16 +331,7 @@ def run_integration_tests(rascal_jar: Path) -> None:
                 (FIXTURES / filename).read_text(encoding="utf-8").rstrip("\r\n"),
                 encoding="utf-8",
             )
-            output = (
-                ROOT
-                / "languages"
-                / "mbnf"
-                / "sandbox"
-                / "models"
-                / "RascalTextImportFixture.mps"
-                if filename == "program-single.txt"
-                else temporary / f"{Path(filename).stem}.mps"
-            )
+            output = temporary / f"{Path(filename).stem}.mps"
             import_text(
                 rascal_jar,
                 generated_grammar,
@@ -357,6 +381,8 @@ def run_integration_tests(rascal_jar: Path) -> None:
         else:
             raise AssertionError("Rascal parser accepted an invalid program")
 
+    shutil.rmtree(coverage_directory, ignore_errors=True)
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -387,7 +413,7 @@ def main() -> int:
         subprocess.CalledProcessError,
     ) as error:
         parser.error(str(error))
-    print("Rascal grammar round trips and three bidirectional source/model examples passed.")
+    print("Rascal grammar round trips, layout/compound lexical coverage, and bidirectional source/model examples passed.")
     return 0
 
 

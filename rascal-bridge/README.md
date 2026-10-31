@@ -79,26 +79,29 @@ Run the MPS smoke test from the repository root with the Gradle wrapper:
 
 On Windows use `gradlew.bat smokeTest --no-daemon --console=plain`.
 
-## Current capabilities and limits
+## Prioritized support matrix
 
-The bridge converts a supported subset of Rascal grammars to MetaBNF models
-and back, generates Rascal parsers for that subset, maps parse trees to
-ordinary nodes in an already-generated MPS language, and serializes mapped MPS
-ASTs back to source text. The subset supports one start sort; sort and lexical
-rules; plain alternatives; literal keywords; sort and lexical references;
-optional, one-or-more, and zero-or-more sort references; and one literal or
-BMP character class for a lexical rule. Lexical rules mapped through a `self`
-property serialize the property's text value. Unsupported constructs fail
-explicitly. Priorities and associativity semantics, compound lexical
-expressions, layout rules, separated repetitions, lexical reference
-cardinalities, AST references, ambiguity resolution, and non-tree mappings are
-not supported.
+| Priority | Grammar conversion and generated parsing | Remaining limitation |
+| --- | --- | --- |
+| 1. Core | One self-contained module and start sort; sort/lexical rules, plain alternatives, keywords, sort/lexical references, and optional/repeated sort references. Sort alternatives map to explicit choice/alternative rules. | External-module dependencies and multiple start symbols are rejected. |
+| 2. Layout and lexical expressions | Layout declarations become explicit layout references in imported productions. Literal/empty regexes, BMP character classes, nested sequences/choices, and `?`, `+`, `*` are mapped to native regexp nodes and generated Rascal expressions. | Separated repetitions and cardinality on lexical references are unsupported. |
+| 3. Precedence and AST mapping | Unsupported grammar constructs fail rather than being dropped. Source parse trees can be mapped to an existing MPS language using explicit rules. | Priority and associativity are rejected because MetaBNF has no equivalent precedence model. Ambiguity resolution, AST references and non-tree mappings are unsupported. |
+
+Interchange retains Rascal layout references for native MetaBNF import, while
+generated Rascal parsers restore the layout declaration and omit duplicate
+references. The native MetaBNF model stores them as ordinary terminal references,
+so export loses the layout classification: whitespace is guaranteed for parsing
+the imported interchange, but not after MetaBNF re-export. Compound lexical operators are represented recursively;
+they are not flattened to a single literal or character class. The parser
+round-trip fixture checks valid and invalid inputs, and the native MPS smoke
+test checks imported nodes, references, persistence and constraints.
 
 Importing a grammar creates a MetaBNF grammar model; it does not automatically
 generate/configure an MPS AST language or infer a mapping. Source-model
 operations therefore require an existing target language and an explicit AST
-mapping configuration. The tests exercise the bridge conversion in both
-directions and representative source examples.
+mapping configuration. The bridges do not execute user grammar code. See the
+[prioritized cross-bridge matrix](../docs/importing-grammars.md#prioritized-supportedunsupported-matrix)
+for ANTLR limitations and the shared import policy.
 
 ## Licensing scope
 

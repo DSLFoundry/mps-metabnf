@@ -85,7 +85,7 @@
       <arg value="--antlr-jar" />
       <arg value="${antlr.jar}" />
       <arg value="--grammar" />
-      <arg value="${repo.root}/tests/antlr-bridge/Mini.g4" />
+      <arg value="${repo.root}/tests/antlr-bridge/GrammarCoverage.g4" />
       <arg value="--start" />
       <arg value="program" />
       <arg value="--model-name" />
