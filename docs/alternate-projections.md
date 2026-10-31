@@ -16,12 +16,18 @@ and the `StateEventMatrix` editor bind directly to those containment links and p
 | `StateMachine.events` | Comma-separated event declarations | Event headings |
 | `StateMachine.states` | State declarations | State rows |
 | `State.identifier` | State name | Row label |
+| `State.matrixNote` | — | Matrix-only state annotation |
 | `State.transitions` | Ordered transitions | Transition cells in the state row |
 | `Transition.event`, `Transition.target` | `on event -> target` | Event-labeled target cell |
 
-Both editors edit these very same nodes. The state-machine concept implements `INamedConcept` so a root can retain a
+Both editors edit the same semantic nodes. The state-machine concept implements `INamedConcept` so a root can retain a
 stable MPS name; the `identifier` property remains the visible language value. Its native TextGen declaration serializes
-the shared tree, independent of the selected editor hint.
+the shared semantic tree, independent of the selected editor hint.
+
+`State.matrixNote` is an explicit, nonsemantic presentation annotation exposed only in the matrix editor. It is persisted
+in the shared `State` node, omitted from the default textual editor and from TextGen, and is not part of the state-machine
+grammar. It demonstrates a projection-local choice without changing the other view's explicit state/transition choices or
+exported syntax.
 
 The `StateEventMatrixContext` root declares the hint and its presentation. `StateMachine_StateEventMatrix_Editor` and
 `State_StateEventMatrix_Editor` provide the hinted editors; `Event` and `Transition` reuse their default child editors.
@@ -35,12 +41,27 @@ an alternate projection and mapping seam, not a complete state-machine language 
 
 ## Interaction coverage
 
-`StateMachineMatrixHint` in `metabnf.editor.tests.interactions@tests` exercises the native editor context-hint settings,
-checks that the matrix hint becomes active, edits a state name, and verifies the shared TextGen serialization. It then
-invokes Undo, checks the restored serialization, disables the hint, and verifies the default editor is active again.
-The fixture refreshes the real editor on the event-dispatch thread. It does not automate the chooser dialog or claim
-pixel-level/desktop appearance coverage. Its exact test name is registered in `build.gradle.kts` alongside the other
-editor fixtures.
+`StateMachineMatrixHint` edits a state name in the matrix, switches to the textual editor and asserts the edited name is
+visible in that other projection, then verifies Undo restores the serialized value.
+
+`StateMachineProjectionSwitchNoChange` switches from text to matrix and back without editing, comparing a recursive AST
+fingerprint, reference-target fingerprint, and exact TextGen before, during, and after the switch. Event and transition
+targets in this demonstrator are strings, so its current reference snapshot is empty; if links are added, their target
+identities are part of the fingerprint. `StateMachineMatrixLocalChoice` edits `State.matrixNote` in the matrix editor,
+asserts that the choice is visible there but absent from the textual editor, and checks that the textual choices and exact
+TextGen remain unchanged.
+
+The fixtures use native MPS hint settings and refresh the real editor on the event-dispatch thread. They do not automate the
+chooser dialog or claim pixel-level/desktop appearance coverage. Their exact names are registered in `build.gradle.kts`.
+
+## Backend compatibility and dependencies
+
+This demonstrator is built and tested against the project-pinned MPS 2026.1.1 and JBR 25.0.3-b329.124, with the Gradle
+MPS plugin 2.1.1 (`gradle/libs.versions.toml`). It uses the standard MPS Editor/editor-hint runtime and TextGen;
+`DemoUsability.mpl` declares `MPS.Editor`, while its aspect models use JetBrains MPS structure, editor, editor.forms,
+and textGen languages. No third-party table/diagram backend or extra runtime library is required. Compatibility is verified
+for the pinned MPS build only; older/newer MPS versions must be checked with their matching project toolchain because editor
+hint APIs and persisted language models are versioned.
 
 ## Extension points
 

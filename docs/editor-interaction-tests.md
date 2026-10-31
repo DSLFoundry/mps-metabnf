@@ -29,11 +29,12 @@ The baseline interaction contract covers:
 | BlockEndBoundaryInsertion | Invoke `Insert_Action` at the last statement of a populated Block | Sibling `Statement` appended; no optional child Block; exact TextGen; selection on the new statement's constant cell |
 | BlockNestedEmptyListTyping | Invoke completion and Enter at a nested Block's empty `statements` placeholder | `Statement` inserted into that nested Block, not a further optional child; selection on its constant cell |
 | StateMachineMatrixHint | Select the matrix hint, edit a state name, Undo, then return to the default hint | The active hint changes both ways; exact shared TextGen output changes then restores |
+| StateMachineProjectionSwitchNoChange | Switch text → matrix → text without edits | Recursive AST and reference-target snapshots and exact TextGen are unchanged at each step |
+| StateMachineMatrixLocalChoice | Enter a matrix-only state note, then switch to text | The note is visible only in the matrix; explicit textual state/transition choices and exact TextGen remain unchanged |
 
-The [alternate editor projections](alternate-projections.md) add a hinted matrix editor over
-the same state-machine AST. The test selects the hint through native MPS hint settings
-and refreshes the real editor; the chooser dialog and desktop appearance are not
-automated.
+The [alternate editor projections](alternate-projections.md) document the shared mapping, matrix-only annotation,
+backend requirements, and limits. Native tests select hints through MPS settings and refresh the real editor; chooser
+dialogs and desktop appearance are not automated.
 
 The [interactive flag/group contract](interactive-flags-and-groups.md) adds
 typing, deletion, Undo, Inspector toggling, keyword completion and contextual
