@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "topic": "upstream-grammar",
+      "repository": "antlr/grammars-v4",
+      "revision": "7bb150f62f54e587f18e323b71fa0309bdec5056",
+      "path": "csharp/v7/CSharpParser.g4",
+      "sha256": "61172fff2fc97c57de9522e4219517ad0f1fc614cb356221717ff33d979a8395",
+      "license": "MIT and EPL-1.0 notices; applicable terms unresolved; not redistributed"
+    },
+    {
+      "topic": "reference-language",
+      "repository": "DSLFoundry/mps-dflat",
+      "revision": "98a92f2ece2d5eb6cec01a4e12d1e615f744808a",
+      "path": "build.gradle",
+      "sha256": "c85892a35dff65599a2bb6691e63690b6a48d58d760d40e9935640071578f6ec",
+      "license": "Apache-2.0"
+    },
+    {
+      "topic": "reference-language",
+      "repository": "DSLFoundry/mps-dflat",
+      "revision": "98a92f2ece2d5eb6cec01a4e12d1e615f744808a",
+      "path": "LICENSE",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "license": "Apache-2.0"
+    },
+    {
+      "topic": "reference-language",
+      "repository": "DSLFoundry/mps-dflat",
+      "revision": "98a92f2ece2d5eb6cec01a4e12d1e615f744808a",
+      "path": "solutions/com.dslfoundry.dflat.expression.test.editor/models/com.dslfoundry.dflat.expression.test.editor.base@tests.mps",
+      "sha256": "22218e7ce9d66a872decba85345ae5ece2c1cc6aa1f51fe643359ca529cf4397",
+      "license": "Apache-2.0"
+    },
+    {
+      "topic": "reference-language",
+      "repository": "DSLFoundry/mps-dflat",
+      "revision": "98a92f2ece2d5eb6cec01a4e12d1e615f744808a",
+      "path": "solutions/com.dslfoundry.dflat.statement.test.editor/models/com.dslfoundry.dflat.statement.test.editor.base@tests.mps",
+      "sha256": "7ea1f86a96f08c5d471a21c4e556d7e9e5392a8e7a3c1fbc50cfc764a0678496",
+      "license": "Apache-2.0"
+    }
+  ]
+}
