@@ -1679,6 +1679,76 @@
       <node concept="3Tm1VV" id="3R$mY2Q3hGj" role="1B3o_S" />
       <node concept="3cqZAl" id="3R$mY2Q3hGk" role="3clF45" />
     </node>
+    <node concept="2YIFZL" id="3R$mY2Q6Jnt" role="jymVt">
+      <property role="TrG5h" value="editorText" />
+      <node concept="37vLTG" id="3R$mY2Q6Jnu" role="3clF46">
+        <property role="TrG5h" value="editor" />
+        <node concept="3uibUv" id="3R$mY2Q6Jnv" role="1tU5fm">
+          <ref role="3uigEE" to="cj4x:~EditorComponent" resolve="jetbrains.mps.openapi.editor.EditorComponent" />
+        </node>
+      </node>
+      <node concept="3clFbS" id="3R$mY2Q6Jnw" role="3clF47">
+        <node concept="3cpWs6" id="3R$mY2Q6Jnx" role="3cqZAp">
+          <node concept="2OqwBi" id="3R$mY2Q6JpM" role="3cqZAk">
+            <node concept="2OqwBi" id="3R$mY2Q6Jpo" role="2Oq$k0">
+              <node concept="2OqwBi" id="3R$mY2Q6JoZ" role="2Oq$k0">
+                <node concept="37vLTw" id="3R$mY2Q6Joc" role="2Oq$k0">
+                  <ref role="3cqZAo" node="3R$mY2Q6Jnu" resolve="editor" />
+                </node>
+                <node concept="liA8E" id="3R$mY2Q6Jp0" role="2OqNvi">
+                  <ref role="37wK5l" to="cj4x:~EditorComponent.getRootCell()" resolve="getRootCell" />
+                </node>
+              </node>
+              <node concept="liA8E" id="3R$mY2Q6Jpp" role="2OqNvi">
+                <ref role="37wK5l" to="f4zo:~EditorCell.renderText()" resolve="renderText" />
+              </node>
+            </node>
+            <node concept="liA8E" id="3R$mY2Q6JpN" role="2OqNvi">
+              <ref role="37wK5l" to="cj4x:~TextBuilder.getText()" resolve="getText" />
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3Tm1VV" id="3R$mY2Q6Jn_" role="1B3o_S" />
+      <node concept="3uibUv" id="3R$mY2Q6JnA" role="3clF45">
+        <ref role="3uigEE" to="wyt6:~String" resolve="String" />
+      </node>
+    </node>
+    <node concept="2YIFZL" id="3R$mY2Q6JnB" role="jymVt">
+      <property role="TrG5h" value="editorTextContains" />
+      <node concept="37vLTG" id="3R$mY2Q6JnC" role="3clF46">
+        <property role="TrG5h" value="editor" />
+        <node concept="3uibUv" id="3R$mY2Q6JnD" role="1tU5fm">
+          <ref role="3uigEE" to="cj4x:~EditorComponent" resolve="jetbrains.mps.openapi.editor.EditorComponent" />
+        </node>
+      </node>
+      <node concept="37vLTG" id="3R$mY2Q6JnE" role="3clF46">
+        <property role="TrG5h" value="fragment" />
+        <node concept="3uibUv" id="3R$mY2Q6JnF" role="1tU5fm">
+          <ref role="3uigEE" to="wyt6:~String" resolve="String" />
+        </node>
+      </node>
+      <node concept="3clFbS" id="3R$mY2Q6JnG" role="3clF47">
+        <node concept="3cpWs6" id="3R$mY2Q6JnH" role="3cqZAp">
+          <node concept="2OqwBi" id="3R$mY2Q6Joz" role="3cqZAk">
+            <node concept="1rXfSq" id="3R$mY2Q6JnJ" role="2Oq$k0">
+              <ref role="37wK5l" node="3R$mY2Q6Jnt" resolve="editorText" />
+              <node concept="37vLTw" id="3R$mY2Q6JnK" role="37wK5m">
+                <ref role="3cqZAo" node="3R$mY2Q6JnC" resolve="editor" />
+              </node>
+            </node>
+            <node concept="liA8E" id="3R$mY2Q6Jo$" role="2OqNvi">
+              <ref role="37wK5l" to="wyt6:~String.contains(java.lang.CharSequence)" resolve="contains" />
+              <node concept="37vLTw" id="3R$mY2Q6Jo_" role="37wK5m">
+                <ref role="3cqZAo" node="3R$mY2Q6JnE" resolve="fragment" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3Tm1VV" id="3R$mY2Q6JnM" role="1B3o_S" />
+      <node concept="10P_77" id="3R$mY2Q6JnN" role="3clF45" />
+    </node>
   </node>
   <node concept="LiM7Y" id="39m6c$Kgtdp">
     <property role="TrG5h" value="FlagCompletion" />
@@ -2299,6 +2369,46 @@
           </node>
         </node>
       </node>
+      <node concept="3clFbF" id="3R$mY2Q6JpO" role="3cqZAp">
+        <node concept="2YIFZM" id="3R$mY2Q6JpS" role="3clFbG">
+          <ref role="37wK5l" node="3R$mY2Q3hFk" resolve="setMatrixHint" />
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <node concept="1jxXqW" id="3R$mY2Q6JpP" role="37wK5m" />
+          <node concept="369mXd" id="3R$mY2Q6JpQ" role="37wK5m" />
+          <node concept="3clFbT" id="3R$mY2Q6JpR" role="37wK5m" />
+        </node>
+      </node>
+      <node concept="3vlDli" id="3R$mY2Q6JpW" role="3cqZAp">
+        <node concept="3clFbT" id="3R$mY2Q6JpV" role="3tpDZB" />
+        <node concept="2YIFZM" id="3R$mY2Q6JpU" role="3tpDZA">
+          <ref role="37wK5l" node="3R$mY2PU9t3" resolve="matrixHintActive" />
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <node concept="369mXd" id="3R$mY2Q6JpT" role="37wK5m" />
+        </node>
+        <node concept="3_1$Yv" id="3R$mY2Q6JpX" role="3_9lra">
+          <node concept="Xl_RD" id="3R$mY2Q6JpY" role="3_1BAH">
+            <property role="Xl_RC" value="Switching to the textual view must disable the matrix hint" />
+          </node>
+        </node>
+      </node>
+      <node concept="3vlDli" id="3R$mY2Q6Jq3" role="3cqZAp">
+        <node concept="3clFbT" id="3R$mY2Q6Jq2" role="3tpDZB">
+          <property role="3clFbU" value="true" />
+        </node>
+        <node concept="2YIFZM" id="3R$mY2Q6Jq1" role="3tpDZA">
+          <ref role="37wK5l" node="3R$mY2Q6JnB" resolve="editorTextContains" />
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <node concept="369mXd" id="3R$mY2Q6JpZ" role="37wK5m" />
+          <node concept="Xl_RD" id="3R$mY2Q6Jq0" role="37wK5m">
+            <property role="Xl_RC" value="ClosedX" />
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="3R$mY2Q6Jq4" role="3_9lra">
+          <node concept="Xl_RD" id="3R$mY2Q6Jq5" role="3_1BAH">
+            <property role="Xl_RC" value="The edited state name must be visible in the textual projection" />
+          </node>
+        </node>
+      </node>
       <node concept="2HxZob" id="3R$mY2PUv$1" role="3cqZAp">
         <node concept="3iKlGA" id="3R$mY2PUv$2" role="3iKnsn">
           <property role="3iKnse" value="$Undo" />
@@ -2322,6 +2432,22 @@
         <node concept="3_1$Yv" id="3R$mY2PUv$a" role="3_9lra">
           <node concept="Xl_RD" id="3R$mY2PUv$b" role="3_1BAH">
             <property role="Xl_RC" value="Undo must restore the shared AST serialization" />
+          </node>
+        </node>
+      </node>
+      <node concept="3vlDli" id="3R$mY2Q8f8m" role="3cqZAp">
+        <node concept="3clFbT" id="3R$mY2Q8f8n" role="3tpDZB" />
+        <node concept="2YIFZM" id="3R$mY2Q8f8j" role="3tpDZA">
+          <ref role="37wK5l" node="3R$mY2Q6JnB" resolve="editorTextContains" />
+          <ref role="1Pybhc" node="39m6c$Kgt2e" resolve="InteractionAssertions" />
+          <node concept="369mXd" id="3R$mY2Q8f8l" role="37wK5m" />
+          <node concept="Xl_RD" id="3R$mY2Q8f8k" role="37wK5m">
+            <property role="Xl_RC" value="ClosedX" />
+          </node>
+        </node>
+        <node concept="3_1$Yv" id="3R$mY2Q8f8o" role="3_9lra">
+          <node concept="Xl_RD" id="3R$mY2Q8f8p" role="3_1BAH">
+            <property role="Xl_RC" value="Undo must remove the edited value from the textual projection" />
           </node>
         </node>
       </node>
