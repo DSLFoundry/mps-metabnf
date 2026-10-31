@@ -15,6 +15,7 @@ authoring, generation, every MetaBNF Tools action, and troubleshooting.
 | [Native editor interaction tests](editor-interaction-tests.md) | Generated Demo keyboard/action fixtures, caret/undo assertions, CI registration and failure diagnostics |
 | [List, block, and trivia editing](list-block-editing.md) | Cardinality, explicit list/block policy decisions, trivia anchoring contract and current coverage limits |
 | [Comparative MPS editor validation](comparative-editor-validation.md) | Observable behavior comparison protocol and verified generated/hand-built candidate matrix |
+| [C# editor comparison](csharp-editor-comparison.md) | Authored fallback fixtures, semantic normalization, source verification and blocked native observations |
 | [Protected regeneration](protected-regeneration.md) | Reviewed adoption/updates, ownership and extension boundaries, stable identities, preview/apply API and failure guarantees |
 
 For optional legacy source/model mapping and Rascal export, see the

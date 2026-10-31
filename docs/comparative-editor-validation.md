@@ -55,3 +55,11 @@ For each completed scenario, record:
 Keep the bounded fixtures reproducible and independent of mutable upstream
 branches. A successful build or matching exported text does not establish
 editor usability or source-semantic preservation.
+
+## Selected C# benchmark
+
+See [C# editor comparison](csharp-editor-comparison.md) for source verification,
+the bounded authored fallback, semantic normalization, scenario expectations,
+execution instructions, and separate blocked native results. The fallback
+checks parser/fixture consistency only, not a generated-versus-hand-built
+native editing result.
