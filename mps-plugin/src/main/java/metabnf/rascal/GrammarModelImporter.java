@@ -24,8 +24,11 @@ public final class GrammarModelImporter {
     private static final String MBNF = "metabnf.structure.";
     private static final String REGEX = "jetbrains.mps.baseLanguage.regexp.structure.";
 
-    public record Symbol(String kind, String value, String cardinality, List<int[]> ranges) {}
-    public record Rule(String name, boolean lexical, List<List<Symbol>> alternatives) {}
+    public record Symbol(String kind, String value, String cardinality, List<int[]> ranges,
+                         List<Symbol> children) {}
+    public record Rule(String name, String kind, List<List<Symbol>> alternatives) {
+        boolean lexical() { return !kind.equals("sort"); }
+    }
     public record Grammar(String start, List<Rule> rules) {}
 
     public static Grammar read(Path interchange) throws Exception {
@@ -49,7 +52,11 @@ public final class GrammarModelImporter {
             require(element.getTagName().equals("rule"), "Unexpected element in grammar rules");
             String ruleName = name(element.getAttribute("name"));
             String kind = element.getAttribute("kind");
-            require(kind.equals("sort") || kind.equals("lexical"), "Unsupported rule kind: " + kind + " in " + ruleName);
+            require(children(element).stream().noneMatch(child ->
+                            List.of("priority", "associativity").contains(child.getTagName())),
+                    "Priority/associativity cannot be preserved: " + ruleName);
+            require(List.of("sort", "lexical", "layout").contains(kind),
+                    "Unsupported rule kind: " + kind + " in " + ruleName);
             List<List<Symbol>> alternatives = new ArrayList<>();
             for (Element production : children(only(element, "choice"))) {
                 require(production.getTagName().equals("production"),
@@ -59,25 +66,38 @@ public final class GrammarModelImporter {
                 alternatives.add(List.copyOf(symbols));
             }
             require(!alternatives.isEmpty(), "No productions for " + ruleName);
-            boolean lexical = kind.equals("lexical");
-            if (lexical) require(alternatives.size() == 1 && alternatives.get(0).size() == 1
-                    && List.of("literal", "character-class").contains(alternatives.get(0).get(0).kind()),
-                    "Lexical rule must contain one literal or BMP character class: " + ruleName);
-            require(rules.putIfAbsent(ruleName, new Rule(ruleName, lexical, List.copyOf(alternatives))) == null,
+            boolean lexical = !kind.equals("sort");
+            if (lexical) {
+                require(alternatives.size() == 1 && !alternatives.get(0).isEmpty(),
+                        "Lexical/layout rule must contain one expression: " + ruleName);
+                List<Symbol> components = alternatives.get(0);
+                Symbol expression = components.size() == 1 ? components.get(0)
+                        : new Symbol("sequence", "", "ExactlyOne", List.of(), components);
+                alternatives.set(0, List.of(expression));
+                validateRegex(expression, ruleName);
+            }
+            require(rules.putIfAbsent(ruleName, new Rule(ruleName, kind, List.copyOf(alternatives))) == null,
                     "Duplicate rule: " + ruleName);
         }
         require(rules.containsKey(start) && !rules.get(start).lexical(), "Start rule is not a declared sort: " + start);
         for (Rule rule : rules.values()) {
             for (List<Symbol> alternative : rule.alternatives()) {
                 for (Symbol symbol : alternative) {
-                    if (List.of("sort", "lexical").contains(symbol.kind())) {
+                    if (List.of("sort", "lexical", "layout").contains(symbol.kind())) {
                         Rule target = rules.get(symbol.value());
-                        require(target != null && target.lexical() == symbol.kind().equals("lexical"),
+                        boolean targetKindMatches = target != null && target.lexical() == !symbol.kind().equals("sort")
+                                && (!symbol.kind().equals("layout") || target.kind().equals("layout"))
+                                && (!symbol.kind().equals("lexical") || target.kind().equals("lexical"));
+                        require(targetKindMatches,
                                 "Undefined or incorrectly typed reference: " + rule.name() + " -> " + symbol.value());
                     }
-                    if (rule.lexical()) require(symbol.cardinality().equals("ExactlyOne"),
-                            "Lexical cardinality is unsupported: " + rule.name());
-                    else require(!symbol.kind().equals("character-class"), "Inline character classes are unsupported");
+                    if (rule.lexical()) continue;
+                    require(symbol.children().isEmpty(), "Grouped parser expressions are not supported in " + rule.name());
+                    if (symbol.kind().equals("sort")) continue;
+                    require(symbol.cardinality().equals("ExactlyOne"),
+                            "Cardinality operators are supported only on sort references: " + rule.name());
+                    require(List.of("literal", "empty", "lexical", "layout").contains(symbol.kind()),
+                            "Unsupported parser symbol " + symbol.kind() + " in " + rule.name());
                 }
             }
         }
@@ -91,24 +111,25 @@ public final class GrammarModelImporter {
             case "zero-or-more" -> "ZeroOrMore";
             default -> "ExactlyOne";
         };
-        Element base = element;
         if (!cardinality.equals("ExactlyOne")) {
             require(children(element).size() == 1, "Cardinality requires one symbol");
-            base = children(element).get(0);
-            require(base.getTagName().equals("sort"), "Only sort references support cardinality");
+            Symbol nested = symbol(children(element).get(0));
+            require(nested.cardinality().equals("ExactlyOne"), "Nested cardinality is not supported");
+            return new Symbol(nested.kind(), nested.value(), cardinality, nested.ranges(), nested.children());
         }
-        String kind = base.getTagName();
-        require(List.of("literal", "empty", "sort", "lexical", "character-class").contains(kind),
-                "Unsupported grammar symbol: " + kind);
+        String kind = element.getTagName();
+        require(List.of("literal", "empty", "sort", "lexical", "layout", "character-class",
+                "sequence", "choice").contains(kind), "Unsupported grammar symbol: " + kind);
         String value = "";
         List<int[]> ranges = new ArrayList<>();
-        if (kind.equals("sort") || kind.equals("lexical")) value = name(base.getAttribute("name"));
+        List<Symbol> nested = new ArrayList<>();
+        if (List.of("sort", "lexical", "layout").contains(kind)) value = name(element.getAttribute("name"));
         if (kind.equals("literal")) {
-            require(base.hasAttribute("value"), "Literal has no value");
-            value = base.getAttribute("value");
+            require(element.hasAttribute("value"), "Literal has no value");
+            value = element.getAttribute("value");
         }
         if (kind.equals("character-class")) {
-            for (Element range : children(base)) {
+            for (Element range : children(element)) {
                 require(range.getTagName().equals("range"), "Unexpected character-class content");
                 require(children(range).isEmpty(), "Unexpected nested character-range content");
                 int first = Integer.parseInt(range.getAttribute("start"));
@@ -117,8 +138,28 @@ public final class GrammarModelImporter {
                 ranges.add(new int[]{first, last});
             }
             require(!ranges.isEmpty(), "Empty character class");
-        } else require(children(base).isEmpty(), "Unexpected nested symbol: " + kind);
-        return new Symbol(kind, value, cardinality, List.copyOf(ranges));
+        } else if (kind.equals("sequence") || kind.equals("choice")) {
+            for (Element child : children(element)) nested.add(symbol(child));
+            require(!nested.isEmpty(), "Empty lexical " + kind);
+        } else require(children(element).isEmpty(), "Unexpected nested symbol: " + kind);
+        return new Symbol(kind, value, cardinality, List.copyOf(ranges), List.copyOf(nested));
+    }
+
+    private static void validateRegex(Symbol symbol, String rule) {
+        require(List.of("literal", "empty", "character-class", "sequence", "choice")
+                        .contains(symbol.kind())
+                        || List.of("AtMostOne", "AtleastOne", "ZeroOrMore").contains(symbol.cardinality()),
+                "Unsupported lexical expression " + symbol.kind() + " in " + rule);
+        if (symbol.kind().equals("sequence") || symbol.kind().equals("choice")) {
+            for (Symbol child : symbol.children()) validateRegex(child, rule);
+            return;
+        }
+        require(symbol.children().isEmpty(), "Unexpected children in lexical " + rule);
+        if (symbol.kind().equals("character-class")) {
+            require(!symbol.ranges().isEmpty(), "Empty character class in " + rule);
+        }
+        require(List.of("literal", "empty", "character-class").contains(symbol.kind()),
+                "Unsupported lexical expression " + symbol.kind() + " in " + rule);
     }
 
     /** Caller supplies command access; validation/construction precede attachment. */
@@ -141,24 +182,7 @@ public final class GrammarModelImporter {
             if (rule.lexical()) {
                 Symbol symbol = rule.alternatives().get(0).get(0);
                 SNode expression = node(model, REGEX + "InlineRegexpExpression", null);
-                SNode regex;
-                if (symbol.kind().equals("literal")) {
-                    regex = node(model, REGEX + "StringLiteralRegexp", null);
-                    put(regex, "text", symbol.value());
-                } else {
-                    regex = node(model, REGEX + "PositiveSymbolClassRegexp", null);
-                    for (int[] range : symbol.ranges()) {
-                        SNode part = node(model, REGEX + (range[0] == range[1]
-                                ? "CharacterSymbolClassPart" : "IntervalSymbolClassPart"), null);
-                        if (range[0] == range[1]) put(part, "character", Character.toString((char) range[0]));
-                        else {
-                            put(part, "start", Character.toString((char) range[0]));
-                            put(part, "end", Character.toString((char) range[1]));
-                        }
-                        add(regex, "part", part);
-                    }
-                }
-                add(expression, "regexp", regex);
+                add(expression, "regexp", regex(model, symbol));
                 add(nativeRule, "regexp", expression);
             } else {
                 int index = 0;
@@ -203,6 +227,62 @@ public final class GrammarModelImporter {
         model.addRootNode(result);
         ((EditableSModel) model).save();
         return result;
+    }
+
+    private static SNode regex(SModel model, Symbol symbol) {
+        SNode result;
+        switch (symbol.kind()) {
+            case "literal", "empty" -> {
+                result = node(model, REGEX + "StringLiteralRegexp", null);
+                put(result, "text", symbol.kind().equals("empty") ? "" : symbol.value());
+            }
+            case "character-class" -> {
+                result = node(model, REGEX + "PositiveSymbolClassRegexp", null);
+                for (int[] range : symbol.ranges()) {
+                    SNode part = node(model, REGEX + (range[0] == range[1]
+                            ? "CharacterSymbolClassPart" : "IntervalSymbolClassPart"), null);
+                    if (range[0] == range[1]) put(part, "character", Character.toString((char) range[0]));
+                    else {
+                        put(part, "start", Character.toString((char) range[0]));
+                        put(part, "end", Character.toString((char) range[1]));
+                    }
+                    add(result, "part", part);
+                }
+            }
+            case "sequence", "choice" -> {
+                String binary = symbol.kind().equals("sequence") ? "SeqRegexp" : "OrRegexp";
+                result = regex(model, symbol.children().get(0));
+                for (int index = 1; index < symbol.children().size(); index++) {
+                    SNode combined = node(model, REGEX + binary, null);
+                    add(combined, "left", result);
+                    add(combined, "right", regex(model, symbol.children().get(index)));
+                    result = combined;
+                }
+            }
+            default -> throw new IllegalArgumentException("Unsupported lexical expression: " + symbol.kind());
+        }
+        return switch (symbol.cardinality()) {
+            case "ExactlyOne" -> result;
+            case "AtMostOne" -> {
+                SNode optional = node(model, REGEX + "OrRegexp", null);
+                SNode empty = node(model, REGEX + "StringLiteralRegexp", null);
+                put(empty, "text", "");
+                add(optional, "left", empty);
+                add(optional, "right", result);
+                yield optional;
+            }
+            case "AtleastOne" -> {
+                SNode plus = node(model, REGEX + "PlusRegexp", null);
+                add(plus, "regexp", result);
+                yield plus;
+            }
+            case "ZeroOrMore" -> {
+                SNode star = node(model, REGEX + "StarRegexp", null);
+                add(star, "regexp", result);
+                yield star;
+            }
+            default -> throw new IllegalArgumentException("Unsupported lexical cardinality: " + symbol.cardinality());
+        };
     }
 
     private static SConcept concept(String name) {

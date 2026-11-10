@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import tempfile
 import uuid
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -43,6 +45,8 @@ def read_concept_registry(model: ET.Element) -> dict[str, ET.Element]:
     for concept in registry.findall("./language/concept"):
         name = concept.get("name")
         if name:
+            if name in concepts:
+                raise ImportError(f"Target model registry has duplicate concept {name!r}")
             concepts[name] = concept
     return concepts
 
@@ -58,6 +62,25 @@ def registry_role(concept: ET.Element, role_name: str, role_tag: str) -> str:
             f"Concept {concept.get('name')} has no unique {role_tag} role {role_name!r}"
         )
     return roles[0].get("index", "")
+
+
+def write_model_atomically(model_tree: ET.ElementTree, output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="wb", prefix=f".{output_path.name}.", suffix=".pending",
+            dir=output_path.parent, delete=False
+        ) as temporary:
+            temporary_path = Path(temporary.name)
+            ET.indent(model_tree, space="  ")
+            model_tree.write(temporary, encoding="UTF-8", xml_declaration=True)
+            temporary.flush()
+            os.fsync(temporary.fileno())
+        temporary_path.replace(output_path)
+    finally:
+        if temporary_path is not None:
+            temporary_path.unlink(missing_ok=True)
 
 
 def load_mapping(mapping_path: Path) -> dict[str, Any]:
@@ -143,6 +166,7 @@ def map_tree(
     rules: dict[str, Any],
     concepts: dict[str, ET.Element],
     factory: MpsNodeFactory,
+    pending_references: list[tuple[ET.Element, str, str, str, str, str]],
     role_index: str | None = None,
 ) -> ET.Element:
     tag = tree.tag
@@ -168,8 +192,10 @@ def map_tree(
 
     property_mappings = rule_mapping.get("properties", {})
     child_mappings = rule_mapping.get("children", {})
-    if not isinstance(property_mappings, dict) or not isinstance(child_mappings, dict):
-        raise ImportError(f"Properties and children for rule {rule_name!r} must be objects")
+    reference_mappings = rule_mapping.get("references", {})
+    if not isinstance(property_mappings, dict) or not isinstance(child_mappings, dict) \
+            or not isinstance(reference_mappings, dict):
+        raise ImportError(f"Properties, children, and references for rule {rule_name!r} must be objects")
 
     children = list(tree)
     consumed_tokens: set[int] = set()
@@ -210,6 +236,57 @@ def map_tree(
         property_index = registry_role(concept, property_name, "property")
         ET.SubElement(node, "property", {"role": property_index, "value": value})
 
+    for reference_name, specification in reference_mappings.items():
+        if not isinstance(specification, dict):
+            raise ImportError(
+                f"Reference mapping {rule_name}.{reference_name} must be an object"
+            )
+        token_rule = specification.get("token")
+        target_concept_name = specification.get("targetConcept")
+        target_identifier_name = specification.get("targetIdentifier")
+        scope = specification.get("scope")
+        if not all(isinstance(value, str) and value for value in (
+            token_rule, target_concept_name, target_identifier_name, scope
+        )):
+            raise ImportError(
+                f"Reference mapping {rule_name}.{reference_name} requires string fields "
+                "token, targetConcept, targetIdentifier, and scope"
+            )
+        if scope != "model":
+            raise ImportError(
+                f"Unsupported scope {scope!r} for {rule_name}.{reference_name}; "
+                "only explicit model scope is supported"
+            )
+        token_matches = [
+            (index, child)
+            for index, child in enumerate(children)
+            if child.tag == "token" and child.get("rule") == token_rule
+        ]
+        if len(token_matches) != 1:
+            raise ImportError(
+                f"Reference {rule_name}.{reference_name} requires exactly one "
+                f"{token_rule!r} token; found {len(token_matches)}"
+            )
+        token_index, token = token_matches[0]
+        consumed_tokens.add(token_index)
+        identifier = token.get("value")
+        if identifier is None or not identifier:
+            raise ImportError(f"Reference token {token_rule!r} has no identifier value")
+        reference_index = registry_role(concept, reference_name, "reference")
+        target_concept = concepts.get(target_concept_name)
+        if target_concept is None or not target_concept.get("index"):
+            raise ImportError(
+                f"Reference mapping {rule_name}.{reference_name} names an unknown target "
+                f"concept: {target_concept_name!r}"
+            )
+        target_identifier_index = registry_role(
+            target_concept, target_identifier_name, "property"
+        )
+        pending_references.append((
+            node, reference_index, identifier, target_concept.get("index", ""),
+            target_identifier_index, f"{rule_name}.{reference_name}"
+        ))
+
     for index, child in enumerate(children):
         child_rule = child.get("rule", "")
         if child.tag == "token" and index in consumed_tokens:
@@ -222,8 +299,39 @@ def map_tree(
                 f"Rule {rule_name!r} has no child role mapping for {child_rule!r}"
             )
         role_index = registry_role(concept, role_name, "child")
-        node.append(map_tree(child, rules, concepts, factory, role_index))
+        node.append(map_tree(child, rules, concepts, factory, pending_references, role_index))
     return node
+
+
+def resolve_references(
+    root_node: ET.Element,
+    pending_references: list[tuple[ET.Element, str, str, str, str, str]],
+) -> None:
+    nodes = list(root_node.iter("node"))
+    for source, link_index, identifier, target_concept_index, property_index, description in pending_references:
+        matches = [
+            candidate for candidate in nodes
+            if candidate.get("concept") == target_concept_index
+            and any(
+                prop.get("role") == property_index and prop.get("value") == identifier
+                for prop in candidate.findall("property")
+            )
+        ]
+        if not matches:
+            raise ImportError(
+                f"Unresolved reference {description} to {identifier!r} in model scope"
+            )
+        if len(matches) > 1:
+            raise ImportError(
+                f"Ambiguous reference {description} to {identifier!r} in model scope "
+                f"({len(matches)} matching targets)"
+            )
+        target = matches[0]
+        ET.SubElement(source, "ref", {
+            "role": link_index,
+            "node": target.get("id", ""),
+            "resolve": identifier,
+        })
 
 
 def import_parse_tree(
@@ -263,7 +371,11 @@ def import_parse_tree(
     )
     mapping = load_mapping(mapping_path)
     concepts = read_concept_registry(model)
-    root_node = map_tree(parse_root[0], mapping["rules"], concepts, MpsNodeFactory())
+    pending_references: list[tuple[ET.Element, str, str, str, str, str]] = []
+    root_node = map_tree(
+        parse_root[0], mapping["rules"], concepts, MpsNodeFactory(), pending_references
+    )
+    resolve_references(root_node, pending_references)
     if not any(item.get("role") == "TrG5h" for item in root_node.findall("property")):
         ensure_named_concept_registry(model)
         ET.SubElement(root_node, "property", {"role": "TrG5h", "value": model_name})
@@ -272,9 +384,7 @@ def import_parse_tree(
             model.remove(child)
     model.append(root_node)
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    ET.indent(model_tree, space="  ")
-    model_tree.write(output_path, encoding="UTF-8", xml_declaration=True)
+    write_model_atomically(model_tree, output_path)
 
 
 def main() -> None:

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rascal-grammar format-version="1" module="GrammarCoverage">
+  <starts><start name="Program"/></starts>
+  <rules>
+    <rule name="WS" kind="layout">
+      <choice><production><sequence>
+        <zero-or-more><character-class>
+          <range start="9" end="13"/><range start="32" end="32"/>
+        </character-class></zero-or-more>
+      </sequence></production></choice>
+    </rule>
+    <rule name="Identifier" kind="lexical">
+      <choice><production><sequence>
+        <one-or-more><character-class><range start="65" end="90"/><range start="97" end="122"/></character-class></one-or-more>
+        <zero-or-more><character-class><range start="48" end="57"/></character-class></zero-or-more>
+      </sequence></production></choice>
+    </rule>
+    <rule name="Program" kind="sort">
+      <choice><production><sequence>
+        <lexical name="Identifier"/><layout name="WS"/><literal value=","/><layout name="WS"/><lexical name="Identifier"/>
+      </sequence></production></choice>
+    </rule>
+  </rules>
+</rascal-grammar>

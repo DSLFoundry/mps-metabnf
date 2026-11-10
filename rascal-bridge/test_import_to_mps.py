@@ -40,6 +40,40 @@ class ImportToMpsTest(unittest.TestCase):
             ]
             self.assertIn("2b2ZYR3yDpL/AtMostOne", cardinalities)
 
+    def test_imports_layout_and_compound_lexical_expressions(self):
+        source = Path(__file__).parents[1] / "tests" / "rascal-bridge" / "GrammarCoverage.xml"
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            output = Path(temporary_directory) / "Coverage.mps"
+            importer.import_grammar(source, output, "Coverage")
+            model = ET.parse(output).getroot()
+        concepts = {node.get("concept") for node in model.findall(".//node")}
+        self.assertTrue({"1OJ37Q", "1OCmVF", "1OClNT", "1SSJmt"} <= concepts)
+        references = model.findall(".//node/ref")
+        self.assertTrue(any(ref.get("resolve") == "WS" for ref in references))
+        self.assertTrue(any(ref.get("resolve") == "Identifier" for ref in references))
+
+    def test_rejects_priority_and_associativity_explicitly(self):
+        source = Path(__file__).parents[1] / "tests" / "rascal-bridge" / "simple-grammar.xml"
+        for tag in ("priority", "associativity"):
+            with self.subTest(tag=tag), tempfile.TemporaryDirectory() as temporary_directory:
+                grammar = ET.parse(source).getroot()
+                grammar.find("./rules/rule[@name='Program']/choice").tag = tag
+                invalid = Path(temporary_directory) / "invalid.xml"
+                ET.ElementTree(grammar).write(invalid, encoding="UTF-8")
+                with self.assertRaisesRegex(importer.ImportError, "(?i)priority and associativity are not supported"):
+                    importer.import_grammar(invalid, Path(temporary_directory) / "out.mps", "Invalid")
+
+    def test_rejects_case_insensitive_symbols_explicitly(self):
+        source = Path(__file__).parents[1] / "tests" / "rascal-bridge" / "simple-grammar.xml"
+        grammar = ET.parse(source).getroot()
+        grammar.find("./rules/rule[@name='Program']/choice/production/sequence").append(
+            ET.Element("case-insensitive-literal", {"value": "x"}))
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            invalid = Path(temporary_directory) / "invalid.xml"
+            ET.ElementTree(grammar).write(invalid, encoding="UTF-8")
+            with self.assertRaisesRegex(importer.ImportError, "Unsupported symbol"):
+                importer.import_grammar(invalid, Path(temporary_directory) / "out.mps", "Invalid")
+
     def test_rejects_undefined_reference(self):
         source = Path(__file__).parents[1] / "tests" / "rascal-bridge" / "simple-grammar.xml"
         grammar = ET.parse(source).getroot()

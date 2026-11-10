@@ -26,6 +26,7 @@ final class ProfilesEnrichmentTest {
     static void run(SModel model, SModel demo) {
         SNode grammar = roots(model).stream().filter(node -> is(node, "grammar")).findFirst().orElseThrow();
         profiles(model, grammar);
+        serializationProfiles(model, grammar);
         roots(model).forEach(model::removeRootNode);
         grammar = GrammarModelImporter.importInto(model, fixture(), "Patterns", "ANTLR");
         SNode nativeEnum = create(model, "EnumRule");
@@ -226,6 +227,34 @@ final class ProfilesEnrichmentTest {
         model.removeRootNode(profile);
     }
 
+    private static void serializationProfiles(SModel model, SNode grammar) {
+        String syntax = fingerprint(grammar);
+        SNode flag = tree(grammar).stream().filter(node -> is(node, "Flag")).findFirst().orElseThrow();
+        for (String id : List.of("plaintextgen", "plaintextflow")) {
+            Map<String, Object> descriptor = GenerationProfiles.descriptor(id);
+            require(Boolean.FALSE.equals(descriptor.get("available"))
+                    && descriptor.get("kind").equals("serialization"), "Optional serialization backend was treated as available: " + descriptor);
+            List<?> requirements = (List<?>) descriptor.get("requirements");
+            require(requirements.stream().anyMatch(value -> value.toString().contains("com.dslfoundry.plaintextgen")),
+                    "PlainTextGen dependency is not explicit: " + requirements);
+            if (id.equals("plaintextflow")) {
+                require(requirements.stream().anyMatch(value -> value.toString().contains("com.dslfoundry.plaintextflow")),
+                        "PlainTextFlow dependency is not explicit: " + requirements);
+            }
+            SNode profile = GenerationProfiles.createProfile(model, grammar, id);
+            try {
+                List<?> diagnostics = (List<?>) GenerationProfiles.inspect(profile).get("diagnostics");
+                require(diagnostics.toString().contains("MBNF_BACKEND_UNAVAILABLE"),
+                        "Unverified optional backend did not produce a structured diagnostic: " + diagnostics);
+                rejected("MBNF_BACKEND_UNAVAILABLE", () -> GenerationProfiles.validateForGeneration(profile));
+                rejected("MBNF_BACKEND_UNAVAILABLE", () -> GenerationProfiles.resolve(profile, flag, "Flag", "Textual"));
+            } finally {
+                model.removeRootNode(profile);
+            }
+        }
+        require(syntax.equals(fingerprint(grammar)), "Serialization profiles changed source grammar syntax");
+    }
+
     private static void suggestionEditor(SModel model, SNode suggestion) {
         EditorComponent editor = new EditorComponent(model.getRepository()) {};
         try {
@@ -250,24 +279,24 @@ final class ProfilesEnrichmentTest {
                         ref("lexicalLiteral", "AtMostOne"))),
                 rule("enabled", seq(literal("enabled"))),
                 rule("group", seq(literal("with"), ref("item", "ExactlyOne"))),
-                new GrammarModelImporter.Rule("access", false, List.of(seq(literal("public")), seq(literal("private")), seq(literal("protected")))),
-                new GrammarModelImporter.Rule("modifiers", false, List.of(seq(literal("static")), seq(literal("final")))),
+                new GrammarModelImporter.Rule("access", "sort", List.of(seq(literal("public")), seq(literal("private")), seq(literal("protected")))),
+                new GrammarModelImporter.Rule("modifiers", "sort", List.of(seq(literal("static")), seq(literal("final")))),
                 rule("item", seq(literal("item"))),
                 rule("tail", seq(literal(","), ref("item", "ExactlyOne"))),
                 rule("wrongTail", seq(literal(","), ref("group", "ExactlyOne"))),
                 rule("cyclic", seq(ref("cyclic", "ExactlyOne"))),
-                new GrammarModelImporter.Rule("duplicateChoice", false, List.of(seq(literal("same")), seq(literal("same")))),
-                new GrammarModelImporter.Rule("nonliteralChoice", false, List.of(seq(literal("one"), literal("two")), seq(literal("three")))),
-                rule("lexicalLiteral", seq(new GrammarModelImporter.Symbol("lexical", "TOKEN", "ExactlyOne", List.of()))),
-                new GrammarModelImporter.Rule("TOKEN", true, List.of(seq(literal("token"))))));
+                new GrammarModelImporter.Rule("duplicateChoice", "sort", List.of(seq(literal("same")), seq(literal("same")))),
+                new GrammarModelImporter.Rule("nonliteralChoice", "sort", List.of(seq(literal("one"), literal("two")), seq(literal("three")))),
+                rule("lexicalLiteral", seq(new GrammarModelImporter.Symbol("lexical", "TOKEN", "ExactlyOne", List.of(), List.of()))),
+                new GrammarModelImporter.Rule("TOKEN", "lexical", List.of(seq(literal("token"))))));
     }
 
     private static GrammarModelImporter.Rule rule(String name, List<GrammarModelImporter.Symbol> symbols) {
-        return new GrammarModelImporter.Rule(name, false, List.of(symbols));
+        return new GrammarModelImporter.Rule(name, "sort", List.of(symbols));
     }
     private static List<GrammarModelImporter.Symbol> seq(GrammarModelImporter.Symbol... symbols) { return List.of(symbols); }
-    private static GrammarModelImporter.Symbol literal(String value) { return new GrammarModelImporter.Symbol("literal", value, "ExactlyOne", List.of()); }
-    private static GrammarModelImporter.Symbol ref(String name, String card) { return new GrammarModelImporter.Symbol("sort", name, card, List.of()); }
+    private static GrammarModelImporter.Symbol literal(String value) { return new GrammarModelImporter.Symbol("literal", value, "ExactlyOne", List.of(), List.of()); }
+    private static GrammarModelImporter.Symbol ref(String name, String card) { return new GrammarModelImporter.Symbol("sort", name, card, List.of(), List.of()); }
     private static SNode rule(SNode grammar, String name) {
         return tree(grammar).stream().filter(node -> is(node.getParent(), "RuleGroup") && get(node, "name").equals(name)).findFirst().orElseThrow();
     }

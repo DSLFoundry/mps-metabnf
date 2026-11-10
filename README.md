@@ -3,6 +3,14 @@ Grammar-based MPS-language specification and generation
 This version of MetaBNF works on MPS 2026.1
 
 # Rationale
+MetaBNF connects textual DSLs with MPS, where DSLs are projectional. It does not rebuild a textual language by hand. Instead, it reuses the language's existing parsers and grammars as much as possible:
+
+1. **Import** the textual grammar, for example from ANTLR or Rascal, into an EBNF-like MetaBNF grammar in MPS.
+2. **Adorn** that grammar with typed usability annotations, such as flags, lists, optional groups and projection choices, that make the projectional version pleasant to use.
+3. **Generate** the MPS language, while the original parser remains available to import existing source text.
+
+See [Vision and approach](docs/vision-and-approach.md) for the full picture.
+
 This language tries to achieve similar results as [Ingrid](https://github.com/premun/ingrid) (see also [Ingrid-CS](https://github.com/vaclav/MPS_CSharp) for a DSL that has been accelerated using ingrid). The design principle of MetaBNF is different. Where ingrid translates a BNF grammar straightforward to an MPS DSL, MetaBNF has the goal to adorn/decorate (a possibly imported) BNF grammar with hints that will increase usability of a resulting MPS DSL that is generated based on the grammar.
 
 In the meantime, another MPS project named MetaBNF appeared: [MetaBNF by Porsche](https://github.com/porscheofficial/MetaBNF). The approach of Porsche's project is similar to this project, but with a smaller scope, focused on editors, not on parsing. The developer was contacted on the MPS Slack to discuss opportunities to work together or to merge, but no response so far.
@@ -22,6 +30,7 @@ Start at the [user documentation index](docs/README.md).
 
 | Guide | Contents |
 | --- | --- |
+| [Vision and approach](docs/vision-and-approach.md) | Why MetaBNF exists and how import, adornment and generation fit together |
 | [MetaBNF basics and all actions](docs/metabnf-base.md) | Setup, grammar authoring, decoration, language generation, every Tools action, legacy limitations and troubleshooting |
 | [ANTLR and Rascal grammar import](docs/importing-grammars.md) | Java-only import, bundled tools, target models and supported subsets |
 | [Usability annotations](docs/usability-annotations.md) | Projectional authoring, provenance, suppression and native inspection APIs |
@@ -46,7 +55,7 @@ Any kind of contribution or improvement would be helpful. To give a few ideas:
 # How to build
 The MetaBNF languages have no third-party plugin dependencies, so they can be used with [vanilla MPS](https://www.jetbrains.com/mps/download/?section=linux) (see the top of this README for the version to install). Parser actions belong to the existing `metabnf` language, not a separately installed IDE plugin. MetaBNF code remains Apache-2.0; bundled dependencies retain their own licenses, notices and corresponding sources as described in [third-party/README.md](third-party/README.md).
 
-For IDE development, run `.\gradlew.bat prepareParserBridge` first to prepare the Java adapter and bundled tools inside `languages\mbnf\parser-bridge`. Then open the existing MPS project and rebuild `metabnf`, `metabnf.aspectgen`, and `GenPlan`. No copy into MPS's plugins directory is necessary. Setup, migration and troubleshooting details are in the [core user guide](docs/metabnf-base.md).
+For IDE development, run `.\gradlew.bat prepareParserBridge` first to prepare the Java adapter and bundled tools inside `languages\mbnf\parser-bridge`. Then open the existing MPS project and rebuild `metabnf.trivia`, `metabnf`, `metabnf.aspectgen`, and `GenPlan`. No copy into MPS's plugins directory is necessary. Setup, migration and troubleshooting details are in the [core user guide](docs/metabnf-base.md).
 
 ## Gradle build and automated smoke test
 
@@ -70,7 +79,7 @@ For local development, `-PmpsHomeDir=C:\path\to\MPS` selects an existing MPS ins
 
 GitHub Actions builds and smoketests on Linux and Windows for pull requests and development branches, uploading the compiled module ZIP and diagnostics. Pushes to `main` run the same build and smoke test on Linux, publish `com.dslfoundry:metabnf:<version>@zip` to GitHub Packages, and attach the ZIP to a GitHub prerelease. CI versions include the run ID and attempt so retries do not overwrite existing packages. Publishing uses the repository's built-in `GITHUB_TOKEN`; no personal token, reviewer assignment, or approval environment is required.
 
-The ZIP under `build/distributions` contains one compiled MPS module library under `metabnf/`. The existing language's `languages/mbnf/parser-bridge/` directory carries the Java adapter, ANTLR/Rascal tools and offline legal/source materials. Add the complete library to MPS 2026.1; there is no IDE plugin to install. The bundled materials deliberately increase archive size. Locally, `publishToMavenLocal` installs the ZIP and POM into your Maven repository; remote `publish` requires `GITHUB_ACTOR` and `GITHUB_TOKEN`. Use `-PreleaseVersion=...` to set a deliberate publication version.
+The ZIP under `build/distributions` contains one compiled MPS module library under `metabnf/`. The existing language's `languages/mbnf/parser-bridge/` directory carries the Java adapter, ANTLR/Rascal tools and offline legal/source materials. The library includes the generator-free `metabnf.trivia` storage/editor language used by opt-in target comments and blank lines. Add the complete library to MPS 2026.1; there is no IDE plugin to install. The bundled materials deliberately increase archive size. Locally, `publishToMavenLocal` installs the ZIP and POM into your Maven repository; remote `publish` requires `GITHUB_ACTOR` and `GITHUB_TOKEN`. Use `-PreleaseVersion=...` to set a deliberate publication version.
 
 # History
 MetaBNF started as an idea on 30 October 2013 in the evening when @klemensschindler, @RemiBosman, and @eugenschindler were thinking about a way to interface projectional languages like the ones built in JetBrains MPS with textual languages that typically have a grammer describing them. On the same date and the evening after (1 November), @klemensschindler created a mockup language for writing BNF grammars in MPS, which we called mps-compiler-toolkit.

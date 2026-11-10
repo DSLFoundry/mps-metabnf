@@ -1,10 +1,9 @@
 # Typed usability annotations
 
-This is the foundation for [issue #3](https://github.com/DSLFoundry/mps-metabnf/issues/3):
-native semantic metadata, separate from editor backend selection. The shared recognizer and
+Usability annotations are native semantic metadata, separate from editor backend selection. The shared recognizer and
 profile resolver are described in [Profiles and enrichment](profiles-and-enrichment.md).
 Existing grammars need no migration or annotations. Generators explicitly drop
-annotation-set roots. The vanilla generator now supports existing flags and
+annotation-set roots. The vanilla generator supports existing flags and
 approved whole-rule optional groups as described in
 [interactive flags and groups](interactive-flags-and-groups.md). Metadata never
 silently lowers flat ranges or rewrites parser mappings.
@@ -39,7 +38,19 @@ Enrichment respects these decisions without applying AST/mapping transforms.
 | `FlagAnnotation` | `target: Flag`; decorates the existing flag term, not a new boolean/keyword representation |
 | `ListAnnotation` | `target: NonterminalReference`; requires existing `>*` or `>+` cardinality and reuses its separator |
 | `OptionalGroupAnnotation` | `owner: NonterminalRule`, `first: ITerm`, `last: ITerm`; inclusive, ordered endpoints among the owner's terms |
-| `PatternAnnotation` | Grammar-local `target`, typed `pattern` and `mappingImpact`; review a flag/list/group/literal-choice interpretation without lowering AST nodes |
+| `PatternAnnotation` | Grammar-local `target`, typed `pattern` and `mappingImpact`; review a flag/list/group/literal-choice/expression-family interpretation without lowering AST nodes |
+
+`ListAnnotation` additionally has opt-in `triviaPrefix: string`,
+`clauseSiblings: boolean`, optional `openingBoundary` / `closingBoundary: Keyword`
+references, and `foldSummary: string`. Defaults leave existing list layout and
+export unchanged. Both boundary references must enclose the target in its owner;
+a summary requires a pair. The prefix is a nonblank single-line target comment
+prefix. Generation validates these policies with `MBNF_LIST_POLICY`; shared
+annotation inspection continues to report attachment/provenance diagnostics.
+Keep generator-facing list policies beside their grammar in the same model.
+See [List, block, and trivia editing](list-block-editing.md) for native storage,
+editing/export behavior, supported boundaries and limits. These fields do not
+infer a catch/elseif policy from cardinality or lower semantic storage.
 
 `OptionalGroupAnnotation.distinguishEmpty` records whether absent and
 present-but-empty groups must remain distinct. The supported existing-child
@@ -49,6 +60,28 @@ grammar cannot encode that distinction, a later explicit lowering/mapping
 decision is needed. Endpoints reference term identities, so inserting terms
 inside a range includes them; deleting/moving endpoints requires review.
 One optional-group annotation is allowed per first endpoint within a set.
+
+Expression `PatternAnnotation` values include literal, prefix, postfix, infix,
+ternary, grouping, index-access, member-access, and layered candidates. They
+also expose `operandRoles`, `precedence`, `associativity`, `wrappingPolicy`,
+`replacementPolicy`, `deletionPolicy`, `focusPolicy`, and `foldingPolicy` for
+review. Shape recognition never derives precedence, associativity, or a binary
+fold from rule names or recursive structure. Authored operator annotations
+must supply explicit non-negative precedence and associativity; larger numeric
+precedence binds more tightly, and associativity applies only at equal
+precedence. Equal-precedence operators with different associativity are always
+grouped. Atomic operands also need an explicit precedence classification in
+the helper API. Layered expressions must choose a left/right fold before binary
+lowering. Candidate roles are structural suggestions, not semantic
+declarations. Rendering follows the supplied AST and never rebalances it.
+
+These expression fields are metadata only. The current profile resolver has
+no installed expression-interaction backend and rejects approved expression
+resolution with `MBNF_EXPRESSION_INTERACTIONS_UNAVAILABLE`. It does not claim
+to generate precedence-safe editor actions from annotations; the hand-modeled
+reference interactions are described in
+[Editor interaction tests](editor-interaction-tests.md), and the support matrix
+is in [Profiles and enrichment](profiles-and-enrichment.md).
 
 Existing `Name`, `IdReference`, cardinality, separator, indentation, and newline
 facilities remain authoritative and unchanged. No implementation/profile ID,

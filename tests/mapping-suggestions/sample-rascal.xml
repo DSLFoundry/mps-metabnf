@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rascal-grammar format-version="1" module="MappingSample">
+  <starts>
+    <start name="Program" />
+  </starts>
+  <rules>
+    <rule name="Assignment" kind="sort">
+      <choice>
+        <production>
+          <sequence>
+            <lexical name="IDENTIFIER" />
+            <literal value="=" />
+            <lexical name="NUMBER" />
+            <literal value=";" />
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+    <rule name="IDENTIFIER" kind="lexical">
+      <choice>
+        <production>
+          <sequence>
+            <character-class>
+              <range start="65" end="90" />
+            </character-class>
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+    <rule name="NUMBER" kind="lexical">
+      <choice>
+        <production>
+          <sequence>
+            <character-class>
+              <range start="48" end="57" />
+            </character-class>
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+    <rule name="Program" kind="sort">
+      <choice>
+        <production>
+          <sequence>
+            <literal value="program" />
+            <lexical name="IDENTIFIER" />
+            <literal value="{" />
+            <sort name="Statements" />
+            <literal value="}" />
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+    <rule name="Statements" kind="sort">
+      <choice>
+        <production>
+          <sequence>
+            <one-or-more-sep>
+              <element>
+                <sort name="Assignment" />
+              </element>
+              <separators>
+                <layout name="$default$" />
+              </separators>
+            </one-or-more-sep>
+          </sequence>
+        </production>
+      </choice>
+    </rule>
+  </rules>
+</rascal-grammar>

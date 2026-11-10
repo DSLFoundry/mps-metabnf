@@ -280,11 +280,21 @@ smokeTest.configure {
         }
         val expected = setOf(
             "NumberTyping", "NumberDeletion", "NumberUndo",
+            "BlockEmptyListTyping", "BlockEmptyListEnter", "BlockSeparatorInsertion", "BlockNestedEmptyListTyping",
+            "BlockLastStatementRemoval", "BlockLastStatementRemovalUndo", "BlockEndBoundaryInsertion",
+            "BlockTriviaTyping", "BlockTriviaTypingUndo", "BlockTriviaRemovalReanchors", "BlockTriviaRemovalUndo",
+            "BlockTriviaReorder", "BlockClosingBoundaryNavigation", "BlockNestedClosingBoundaryNavigation",
+            "BlockFolding", "TryBodyStatementBoundaryInsertion", "TryBodyBoundaryEnter", "EmptyClauseBoundaryEnter", "ClauseBoundaryEnter",
+            "ClauseBodyBoundaryInsertion",
             "FlagTyping", "FlagDeletion", "FlagUndo", "FlagFormToggle",
             "FlagCompletion", "FlagContextRemoval",
             "GroupTrigger", "GroupTriggerUndo", "GroupEmptyRemoval",
             "GroupPopulatedRemovalRequiresApproval", "GroupPopulatedRemoval",
-            "GroupPopulatedRemovalUndo"
+            "GroupPopulatedRemovalUndo", "StateMachineMatrixHint",
+            "StateMachineProjectionSwitchNoChange", "StateMachineMatrixLocalChoice",
+            "ExpressionOperandInsertion", "ExpressionLeftOperandInsertion", "ExpressionInsertionGrouping",
+            "ExpressionOperatorReplacementGrouping", "ExpressionOperatorReplacementUndo",
+            "ExpressionGroupRemoval", "ExpressionGroupRemovalRefused", "ExpressionGroupRemovalUndo"
         ).map {
             "metabnf.editor.tests.interactions.${it}_Test.test_$it()"
         }.toSet() + setOf(
@@ -302,7 +312,17 @@ smokeTest.configure {
             "actualGeneratedProfileControls", "nativePersistenceRetainsFlagAndEmptyClause",
             "ruleOverridesRemainProjectionLocal", "suppressionCannotHideInvalidAuthoredMetadata",
             "actualGenerationRejectsUnsupportedBackendAndFlatRange"
-        ).map { "metabnf.editor.tests.usability.InteractiveGeneration_Test.test_$it()" }
+        ).map { "metabnf.editor.tests.usability.InteractiveGeneration_Test.test_$it()" } + setOf(
+            "CSharpExpressionCaret", "CSharpExpressionUndo", "CSharpExportSyntax"
+        ).map { "metabnf.editor.tests.comparison.${it}_Test.test_$it()" } + setOf(
+            "emptyBlockReload", "populatedBlockReload", "nestedBlockReload"
+        ).map { "metabnf.editor.tests.interactions.BlockPersistence_Test.test_$it()" } + setOf(
+            "commentsAndBlankLinesReload", "referenceAnchorsReloadAfterReorder"
+        ).map { "metabnf.editor.tests.interactions.BlockTriviaPersistence_Test.test_$it()" } + setOf(
+            "foreignAnchorIsRejected", "multilineCommentIsRejected", "nonemptyBlankLineIsRejected"
+        ).map { "metabnf.editor.tests.interactions.BlockTriviaValidation_Test.test_$it()" } + setOf(
+            "metabnf.editor.tests.comparison.CSharpPersistence_Test.test_exportAndReload()"
+        )
         check(cases.size == expected.size && cases.toSet() == expected) {
             "Unexpected native editor-test inventory: expected $expected, got $cases; see $reports"
         }
@@ -339,9 +359,39 @@ val antlrBridgeTest = tasks.register<Exec>("antlrBridgeTest") {
     environment("JAVA_HOME", System.getProperty("java.home"))
 }
 
-val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
+val comparativeEditorFixtureTest = tasks.register<Exec>("comparativeEditorFixtureTest") {
+    dependsOn(prepareAntlr)
     group = "verification"
-    description = "Tests the shared grammar and AST-to-MPS bridge converters."
+    description = "Checks authored C#-like comparison fixtures, not native editor behavior."
+    workingDir(projectDir)
+    commandLine(
+        providers.gradleProperty("pythonExecutable").getOrElse(
+            if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+        ),
+        "-m", "unittest", "discover", "-s", "tests/comparative-editor", "-p", "test_*.py", "-v"
+    )
+    environment("ANTLR_JAR", layout.buildDirectory.file(
+        "antlr/antlr4-${libs.versions.antlr.get()}-complete.jar"
+    ).get().asFile.absolutePath)
+    environment("JAVA_HOME", System.getProperty("java.home"))
+}
+
+tasks.register<Exec>("comparativeEditorSourceAudit") {
+    group = "verification"
+    description = "Fetches checksum-pinned comparison sources and verifies availability/importer/runtime blockers."
+    workingDir(projectDir)
+    commandLine(
+        providers.gradleProperty("pythonExecutable").getOrElse(
+            if (System.getProperty("os.name").startsWith("Windows")) "python" else "python3"
+        ),
+        "tests/comparative-editor/audit_sources.py"
+    )
+}
+
+val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
+    dependsOn(prepareRascal)
+    group = "verification"
+    description = "Tests Rascal grammar conversion, source parsing, and the pinned compatibility corpus."
     workingDir(projectDir)
     commandLine(
         providers.gradleProperty("pythonExecutable").getOrElse(
@@ -349,6 +399,8 @@ val rascalBridgeTest = tasks.register<Exec>("rascalBridgeTest") {
         ),
         "-m", "unittest", "discover", "-s", "rascal-bridge", "-p", "test_*.py", "-v"
     )
+    environment("RASCAL_JAR", layout.buildDirectory.file("rascal/rascal-0.43.0.jar").get().asFile.absolutePath)
+    environment("JAVA_HOME", System.getProperty("java.home"))
 }
 
 val packageLanguages = tasks.register<Zip>("packageLanguages") {
@@ -363,7 +415,7 @@ val packageLanguages = tasks.register<Zip>("packageLanguages") {
         from(layout.buildDirectory.dir("mps-build/project")) {
             include("languages/mbnf/mbnf.mpl", "languages/mbnf/languageModels/**")
             include("languages/mbnf/classes_gen/**", "languages/mbnf/generator/**")
-            include("languages/metabnf.aspectgen/**", "solutions/GenPlan/**")
+            include("languages/metabnf.aspectgen/**", "languages/metabnf.trivia/**", "solutions/GenPlan/**")
             exclude("**/source_gen/**", "**/source_gen.caches/**")
         }
         from("README.md", "LICENSE")
@@ -377,6 +429,9 @@ val packageLanguages = tasks.register<Zip>("packageLanguages") {
         check(layout.buildDirectory.file(
             "mps-build/project/languages/mbnf/classes_gen/metabnf/structure/StructureAspectDescriptor.class"
         ).get().asFile.isFile) { "The compiled MetaBNF structure descriptor is missing" }
+        check(layout.buildDirectory.file(
+            "mps-build/project/languages/metabnf.trivia/classes_gen/metabnf/trivia/structure/StructureAspectDescriptor.class"
+        ).get().asFile.isFile) { "The compiled target-trivia structure descriptor is missing" }
     }
 }
 
@@ -424,7 +479,7 @@ tasks.assemble {
 }
 
 tasks.check {
-    dependsOn(smokeTest, compileRascalBridgePlugin, antlrBridgeTest, rascalBridgeTest,
+    dependsOn(smokeTest, compileRascalBridgePlugin, antlrBridgeTest, rascalBridgeTest, comparativeEditorFixtureTest,
         verifyParserBridgeDistribution, verifyBundledGrammarTools)
 }
 

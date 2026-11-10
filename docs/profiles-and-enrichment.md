@@ -1,9 +1,11 @@
 # Generation profiles and grammar enrichment
 
 These are native metadata operations in the existing MPS project. Generation
-consumes flag selections for the textual editor and Inspector form; enrichment
-itself does not lower ASTs, rewrite mappings, or generate widgets. Build/setup
-is described in [MetaBNF basics](metabnf-base.md).
+consumes flag selections for the textual editor and Inspector form. Alternate hinted
+layouts over a shared AST are described in [Alternate editor projections]
+(alternate-projections.md). Enrichment itself does not lower ASTs, rewrite
+mappings, or generate widgets. Build/setup is described in [MetaBNF basics]
+(metabnf-base.md).
 
 ## Preview enrichment
 
@@ -23,6 +25,7 @@ Recognition uses structure, not names:
 | Optional reference to a keyword-led sequence with payload | Suggested optional group; retain absent/present-empty distinction |
 | Finite distinct literal alternatives, including an optional reference to them | Suggested exclusive literal choice, not independent flags |
 | Exact `head (separator head)*` helper structure | Suggested separated-list interpretation; do not collapse the helper AST |
+| Recursive/literal expression-like rule shapes | Suggested expression-family candidates with explicit operand-role evidence; precedence, associativity, and folding are never inferred |
 
 Repeated modifiers remain lists, not booleans. Unsupported, cyclic, duplicate
 literal alternatives and similar-looking nonmatching separated-list forms do
@@ -32,8 +35,8 @@ remain unchanged.
 Safe decorations are `Inferred`. Interpretations that could change node shape,
 absence semantics, or source/model mapping are `Suggested` and carry
 `mappingImpact` and evidence. **Approval records intent only**, not permission
-for this operation to change the AST or mappings (the mapping work remains
-[issue #5](https://github.com/DSLFoundry/mps-metabnf/issues/5)).
+for this operation to change the AST or mappings; mapping changes require
+explicit user mappings.
 In the native annotation editor, change the origin to `Authored` to approve;
 keep `Suggested` and set suppression to `true` to reject without losing evidence.
 Authored annotations cannot be suppressed.
@@ -65,8 +68,9 @@ Generation-profile implementation selections are not copied by this action.
 
 ## Configure a generation profile
 
-Use **Tools > Configure Generation Profile...**. Choose `vanilla` or the explicit
-`grammar-cells` profile. This creates a native `GenerationProfile` root; invoking
+Use **Tools > Configure Generation Profile...**. Choose `vanilla`, the explicit
+`grammar-cells` profile, or one of the optional `plaintextgen` / `plaintextflow`
+serialization profiles. This creates a native `GenerationProfile` root; invoking
 the action again displays its computed inspection. Profiles are version `1`.
 The native root can also be created through **New Root**.
 
@@ -79,6 +83,19 @@ checkout targets a different prerelease platform than this project's pinned MPS.
 No compatible Grammar Cells backend has been verified or bundled. Selecting
 that profile produces `MBNF_BACKEND_UNAVAILABLE`, never a platform change or
 silent fallback.
+
+The `plaintextgen` and `plaintextflow` profiles describe optional plain-text
+serialization backends; they do not change the default `TextGen` or install a
+plugin. `plaintextgen` requires the `com.dslfoundry.plaintextgen` language/plugin
+and an MPS 2026.1-compatible release. `plaintextflow` additionally requires
+`com.dslfoundry.plaintextflow` and PlainTextGen. Neither backend is currently
+verified against this project's pinned MPS 2026.1.1 build, so both profiles are
+explicitly unavailable and produce `MBNF_BACKEND_UNAVAILABLE` during generation
+and resolution. They never fall back to vanilla. Check the [PlainTextGen
+project](https://github.com/DSLFoundry/mps-plaintextgen) and its
+[release compatibility](https://plugins.jetbrains.com/plugin/8444-mps-plaintext-generator/versions)
+before enabling them. These descriptors preserve the optional dependency
+boundary; no PlainTextGen/Flow language is added to the project build.
 
 Add `ImplementationSelection` children using normal MPS completion:
 
@@ -101,6 +118,18 @@ and `vanilla.form-group`, remain capability descriptors, not generated policies.
 Explicit `grammar-cells.flag` / `grammar-cells.list` choices under vanilla are
 incompatible errors. Unknown IDs, duplicate selections, stale targets and
 unsupported profile versions are also diagnosed.
+
+Expression-family metadata is not a profile backend. `resolveAnnotation` rejects
+an authored expression pattern with `MBNF_EXPRESSION_INTERACTIONS_UNAVAILABLE`:
+the generator does not yet emit expression operator actions for a grammar. The
+checked-in `DemoUsability` fixture hand-models a precedence-safe reference
+backend (insert, operator replacement, group removal; see
+[Editor interaction tests](editor-interaction-tests.md)), which proves the
+interaction contract but is not selected through profile resolution. The
+recognizer can suggest literal/prefix/postfix/infix/ternary/grouping/index/
+member/layered shapes for review. The Java helper library has explicit
+precedence-safe rendering, replacement, wrapping, and token-boundary splitting
+contracts. Do not treat either as fulfillment of a generated expression backend.
 
 Resolution is deterministic: active projection's occurrence override, then
 rule default, pattern default, narrow form/table policy, then profile-wide

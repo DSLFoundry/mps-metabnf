@@ -1,0 +1,356 @@
+{
+  "formatVersion": 1,
+  "concepts": [
+    {
+      "name": "Demo.structure.Assignment",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706113",
+      "abstract": false,
+      "rootable": false,
+      "assignableTo": [
+        "Demo.structure.Assignment",
+        "Demo.structure.Statement"
+      ],
+      "properties": [
+        {
+          "name": "Identifier",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706114",
+          "type": "constrained",
+          "declared": true
+        },
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "Expression",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706115",
+          "target": "Demo.structure.Expression",
+          "optional": false,
+          "multiple": false
+        },
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "Demo.structure.Bool",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706102",
+      "abstract": false,
+      "rootable": false,
+      "assignableTo": [
+        "Demo.structure.Bool",
+        "Demo.structure.Condition",
+        "Demo.structure.Expression"
+      ],
+      "properties": [
+        {
+          "name": "BooleanValue",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706103",
+          "type": "constrained",
+          "declared": true
+        },
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "Demo.structure.Loop",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706122",
+      "abstract": false,
+      "rootable": false,
+      "assignableTo": [
+        "Demo.structure.Loop",
+        "Demo.structure.Statement"
+      ],
+      "properties": [
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "Condition",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706123",
+          "target": "Demo.structure.Condition",
+          "optional": false,
+          "multiple": false
+        },
+        {
+          "name": "Statement",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706124",
+          "target": "Demo.structure.Statement",
+          "optional": false,
+          "multiple": false
+        },
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "Demo.structure.Number",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706105",
+      "abstract": false,
+      "rootable": false,
+      "assignableTo": [
+        "Demo.structure.Expression",
+        "Demo.structure.Number"
+      ],
+      "properties": [
+        {
+          "name": "NumberValue",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706106",
+          "type": "constrained",
+          "declared": true
+        },
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "Demo.structure.Program",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706129",
+      "abstract": false,
+      "rootable": true,
+      "assignableTo": [
+        "Demo.structure.Program"
+      ],
+      "properties": [
+        {
+          "name": "Identifier",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706130",
+          "type": "constrained",
+          "declared": true
+        },
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "Statements",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706131",
+          "target": "Demo.structure.Statements",
+          "optional": false,
+          "multiple": false
+        },
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "Demo.structure.Selection",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706117",
+      "abstract": false,
+      "rootable": false,
+      "assignableTo": [
+        "Demo.structure.Selection",
+        "Demo.structure.Statement"
+      ],
+      "properties": [
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "Condition",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706118",
+          "target": "Demo.structure.Condition",
+          "optional": false,
+          "multiple": false
+        },
+        {
+          "name": "elsestats",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706120",
+          "target": "Demo.structure.Statements",
+          "optional": false,
+          "multiple": false
+        },
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        },
+        {
+          "name": "thenstats",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706119",
+          "target": "Demo.structure.Statements",
+          "optional": false,
+          "multiple": false
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "Demo.structure.Skip",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706111",
+      "abstract": false,
+      "rootable": false,
+      "assignableTo": [
+        "Demo.structure.Skip",
+        "Demo.structure.Statement"
+      ],
+      "properties": [
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "Demo.structure.Statements",
+      "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706127",
+      "abstract": false,
+      "rootable": false,
+      "assignableTo": [
+        "Demo.structure.Statements"
+      ],
+      "properties": [
+        {
+          "name": "shortDescription",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1156234966388",
+          "type": "string",
+          "declared": false
+        },
+        {
+          "name": "virtualPackage",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/1193676396447",
+          "type": "string",
+          "declared": false
+        }
+      ],
+      "children": [
+        {
+          "name": "Statement",
+          "id": "r:2338345e-d246-468d-922d-9f8162ca4e3b(Demo.structure)/7815825181032706128",
+          "target": "Demo.structure.Statement",
+          "optional": false,
+          "multiple": true
+        },
+        {
+          "name": "smodelAttribute",
+          "id": "r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)/5169995583184591170",
+          "target": "jetbrains.mps.lang.core.structure.Attribute",
+          "optional": true,
+          "multiple": true
+        }
+      ],
+      "references": []
+    }
+  ]
+}

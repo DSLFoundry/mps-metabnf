@@ -21,7 +21,7 @@ the pinned parser dependencies under `languages\mbnf\parser-bridge`; Java 25
 is needed to run Gradle. Repeat after changing bridge code or tool versions.
 The normal Gradle `build` and `assemble` tasks also prepare these dependencies.
 
-Open this repository's existing MPS project. Rebuild `metabnf`,
+Open this repository's existing MPS project. Rebuild `metabnf.trivia`, `metabnf`,
 `metabnf.aspectgen`, and `GenPlan` in Logical View. The grammar import actions
 are part of **the existing `metabnf` language's plugin aspect**, alongside
 the generated-language import actions. There is no second project, and

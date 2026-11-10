@@ -90,6 +90,10 @@ public final class GrammarEnrichment {
                         "Repeated literal alternatives do not identify a unique exclusive choice",
                         "Review the alternatives; no boolean/enum interpretation was inferred"));
             }
+            for (ExpressionFamilies.Candidate expression : ExpressionFamilies.recognizeNode(node, grammar)) {
+                candidates.add(candidate(key, "PatternAnnotation", expression.family(), node,
+                        expression.evidence(), true));
+            }
         }
         if (set != null) {
             Set<String> keys = candidates.stream().map(Candidate::key).collect(java.util.stream.Collectors.toSet());

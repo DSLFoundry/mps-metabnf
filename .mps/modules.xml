@@ -2,6 +2,7 @@
 <project version="4">
   <component name="MPSProject">
     <projectModules>
+      <modulePath path="$PROJECT_DIR$/languages/CSharpComparison/CSharpComparison.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/Demo/Demo.mpl" folder="test" />
       <modulePath path="$PROJECT_DIR$/languages/DemoUsability/DemoUsability.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/Python/Python.mpl" folder="test" />
@@ -9,6 +10,7 @@
       <modulePath path="$PROJECT_DIR$/languages/mbnf/mbnf.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/languages/mbnf/sandbox/mbnf.sandbox.msd" folder="test" />
       <modulePath path="$PROJECT_DIR$/languages/metabnf.aspectgen/metabnf.aspectgen.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/languages/metabnf.trivia/metabnf.trivia.mpl" folder="" />
       <modulePath path="$PROJECT_DIR$/solutions/GenPlan/Genplan.msd" folder="" />
       <modulePath path="$PROJECT_DIR$/solutions/metabnf.editor.tests/metabnf.editor.tests.msd" folder="" />
     </projectModules>

@@ -25,6 +25,17 @@ class GenerateRascalParserTest(unittest.TestCase):
         self.assertIn('writeFile(toLocation(outputUri)', source)
         self.assertIn("treeXml(parsed)", source)
 
+    def test_generates_layout_and_compound_lexical_rules(self):
+        grammar = Path(__file__).parents[1] / "tests" / "rascal-bridge" / "GrammarCoverage.xml"
+        source = generator.generate_module(grammar, "test::Coverage", executable=False)
+        self.assertIn("layout WS =", source)
+        self.assertIn("lexical Identifier =", source)
+        self.assertIn("syntax Program =", source)
+        self.assertNotIn("Identifier WS", source)
+        self.assertIn("+", source)
+        self.assertIn("*", source)
+        self.assertIn(r"\u0020", source)
+
     def test_rejects_invalid_module_name(self):
         with self.assertRaisesRegex(generator.ImportError, "Invalid Rascal module name"):
             generator.generate_module(self.grammar, "bad-name")
@@ -38,7 +49,7 @@ class GenerateRascalParserTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary_directory:
             unsupported = Path(temporary_directory) / "priority.xml"
             ET.ElementTree(grammar).write(unsupported, encoding="UTF-8")
-            with self.assertRaisesRegex(generator.ImportError, "exactly one choice"):
+            with self.assertRaisesRegex(generator.ImportError, "(?i)priority and associativity are not supported"):
                 generator.generate_module(unsupported, "test::GrammarParser")
 
 

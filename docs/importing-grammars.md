@@ -58,31 +58,63 @@ For a first ANTLR example use `tests\antlr-bridge\Mini.g4`, start rule `program`
 For Rascal use `tests\rascal-bridge\hello-grammar.rsc`. Fixture paths are relative
 to a source checkout, not required runtime resources.
 
-## Supported subset
+## Prioritized supported/unsupported matrix
 
-Both formats support a single start rule, plain alternatives, literal
-keywords, sort/nonterminal and lexical/token references, and optional/repeated
-sort references. Lexical rules must be a single literal or BMP character class.
-Priorities, associativity, separated repetitions, compound lexical expressions,
-and cardinalities on lexical references are not supported.
+The matrix distinguishes grammar-to-MetaBNF conversion from parsing source text
+with the original tool. Import never executes user grammar code and rejects
+constructs whose meaning cannot be represented faithfully.
 
-ANTLR additionally requires a single self-contained combined grammar. Imports,
-split grammars, options, actions/predicates, fragments, and left-recursive
-parser rules are rejected. A trailing start-rule EOF is omitted. A sole
-`-> skip` lexer rule is omitted as layout; lexer priority/layout semantics are
-not reproduced. See the [ANTLR guide](../antlr-bridge/README.md) for details.
-Rascal is limited to one self-contained grammar module; layout declarations
-and external-module grammar dependencies are not supported. See the
-[Rascal guide](../rascal-bridge/README.md).
+| Priority | Rascal grammar import | ANTLR grammar import |
+| --- | --- | --- |
+| 1. Core grammar | One start sort, self-contained module, sort/lexical rules, plain alternatives, keywords, and typed references. Sort alternatives become explicit choice/alternative rules. | One self-contained combined grammar, parser alternatives, literal keywords, parser/token references, optional/repeated parser references, and a trailing start-rule EOF (omitted). |
+| 2. Layout and lexical expressions | Layout declarations and references are retained. Literal/empty regexes, BMP character classes, nested sequences/choices, optional, `+`, and `*` lexical expressions are represented by native regexp nodes. | Grouped parser alternatives become deterministic synthetic sort rules (language retained; parse-tree shape changes). Lexer literal/class alternatives and nested groups, sequences, choices, `?`, `+`, and `*` are retained as regexp expressions. |
+| 3. Precedence and behavior | Priority and associativity productions are rejected explicitly; MetaBNF has no equivalent precedence model. Separated repetitions and lexical-reference cardinalities are unsupported. | Parser left recursion is rejected for grammar import because precedence/associativity would be lost. Lexer commands (including `skip`/channels), fragments and lexer-rule references are rejected; lexer priority/layout behavior is not inferred. |
+| 4. Dependencies and code | External-module dependencies and unsupported Rascal symbols fail explicitly. | Split lexer/parser grammars, imports, `tokenVocab`, options, embedded actions/predicates, labels, and exception handlers fail explicitly. Actions and predicates are never executed. |
+
+Expression-precedence import remains deliberately limited:
+
+| Source form | Current result | Meaning |
+| --- | --- | --- |
+| Stratified rules that encode precedence structurally (for example `Expression -> Term`, `Term -> Factor`) | The rule/reference structure is imported as written | No precedence annotation is inferred; source parser behavior has not been independently proven by this structural import |
+| ANTLR parser left recursion | Rejected with a precedence-loss diagnostic | No rewrite or precedence guess is applied |
+| Rascal `priority` or `associativity` productions | Rejected explicitly | These source semantics are not represented in the native grammar |
+| Ambiguous or unsupported precedence notation | Rejected or retained only as ordinary grammar structure when the importer can parse it | The importer does not choose a binding order |
+
+Expression-family enrichment is a separate review step: it can suggest
+structural roles but does not restore precedence lost by an import. See
+[profiles and enrichment](profiles-and-enrichment.md) for the annotation and
+backend support matrix.
+
+Rascal interchange records layout references explicitly for native MetaBNF
+import. Generated Rascal parsers restore the declared layout and avoid duplicate
+explicit references. The native MetaBNF model stores these as ordinary terminal
+references, so export loses the layout classification: whitespace is guaranteed
+for parsing the imported interchange, but not after MetaBNF re-export. ANTLR grouped parser lowering
+preserves the accepted language but introduces synthetic rule names and thus
+changes the parse-tree structure. Native constraints and the bundled smoke
+fixtures cover both imports. Source-text parsing through the ANTLR interpreter
+uses the original lexer/parser, so its supported lexer, skip, and left-recursion
+semantics are distinct from grammar conversion.
+
+Neither import claims arbitrary grammar compatibility. Unsupported constructs
+produce an error rather than being silently dropped or approximated. See the
+[representative grammar corpus and observed outcomes](grammar-corpus-compatibility.md),
+[ANTLR guide](../antlr-bridge/README.md), and
+[Rascal guide](../rascal-bridge/README.md) for precise details and test tasks.
 
 ## Legacy utilities and licensing
 
-**Tools > Parser Bridge Utilities (legacy Python)...** retains optional
-source-model import/export and Rascal grammar export. Those older workflows
-still require Python, explicit mappings/templates, and a selected parser JAR.
-Their grammar-import choices redirect to the new native importer. The portable
-Python command-line scripts remain available for compatibility; they are not
-used by the new grammar-file import path.
+**Tools > Parser Bridge Utilities (legacy Python)...** provides source-model
+import/export and Rascal grammar export. Source-model import requires Python,
+an explicit AST mapping, and the parser runtime for the selected grammar. It
+maps parsed roots into native nodes in a selected editable target model.
+Reference mappings are separate from child mappings and use the loaded MPS
+reference link's scope, target concept, and identifier-property metadata. The
+importer supports forward references, rejects missing or ambiguous targets,
+and removes the imported roots when resolution fails. The portable Python
+serializer accepts explicit model scope but does not execute MPS scope providers
+or semantic checks. See the [Rascal bridge guide](../rascal-bridge/README.md#current-capabilities-and-limits)
+for the mapping shape and validation limits.
 
 MetaBNF remains Apache-2.0. Bundled tools and their dependencies retain their
 own licenses. Every module distribution includes upstream notices, supplementary

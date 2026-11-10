@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "NUMBER": {
+      "concept": "Demo.structure.Number",
+      "properties": {
+        "NumberValue": {
+          "self": true
+        }
+      }
+    },
+    "program": {
+      "properties": {
+        "Identifier": {
+          "token": "IDENTIFIER"
+        }
+      }
+    },
+    "assignment": {
+      "properties": {
+        "Identifier": {
+          "token": "IDENTIFIER"
+        }
+      }
+    }
+  }
+}

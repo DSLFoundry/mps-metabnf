@@ -24,22 +24,74 @@ The baseline interaction contract covers:
 | NumberTyping | Type `2` after `1` | Number value `12`, caret at end |
 | NumberDeletion | Invoke the registered MPS Backspace action after `12` | Number value `1`, caret at end |
 | NumberUndo | Type `2` after `1`, invoke the registered IDE Undo action | Number value `1`, caret restored |
+| BlockEmptyListTyping | Invoke MPS completion and Enter at the empty `statements` placeholder | First `Statement` inserted; exact TextGen `begin\n    skipend` after line-ending normalization |
+| BlockEmptyListEnter | Invoke native `Insert_Action` at the empty `statements` placeholder | First semantic `Statement` and exact TextGen; no post-insertion caret assertion |
+| BlockSeparatorInsertion | Create the first statement, type `;`, invoke completion and Enter | Second `Statement` inserted; selection is on its constant cell at the end of `skip`; exact TextGen `begin\n    skip;skipend` after line-ending normalization |
+| BlockEndBoundaryInsertion | Invoke `Insert_Action` at the last statement of a populated Block | Sibling `Statement` appended; no optional child Block; exact TextGen; selection on the new statement's constant cell |
+| BlockNestedEmptyListTyping | Invoke completion and Enter at a nested Block's empty `statements` placeholder | `Statement` inserted into that nested Block, not a further optional child; selection on its constant cell |
+| StateMachineMatrixHint | Select the matrix hint, edit a state name, Undo, then return to the default hint | The active hint changes both ways; exact shared TextGen output changes then restores |
+| StateMachineProjectionSwitchNoChange | Switch text → matrix → text without edits | Recursive AST and reference-target snapshots and exact TextGen are unchanged at each step |
+| StateMachineMatrixLocalChoice | Enter a matrix-only state note, then switch to text | The note is visible only in the matrix; explicit textual state/transition choices and exact TextGen remain unchanged |
+
+The [alternate editor projections](alternate-projections.md) document the shared mapping, matrix-only annotation,
+backend requirements, and limits. Native tests select hints through MPS settings and refresh the real editor; chooser
+dialogs and desktop appearance are not automated.
 
 The [interactive flag/group contract](interactive-flags-and-groups.md) adds
 typing, deletion, Undo, Inspector toggling, keyword completion and contextual
 removal. Optional-child fixtures cover trigger/payload focus, empty removal,
 first-attempt protection of populated content, deliberate removal and Undo.
 They assert independent before/result ASTs, caret/selection, and exact TextGen.
+`BlockEmptyListTyping` targets the inner `empty_statements` placeholder rather
+than the `list` collection wrapper; it verifies the resulting AST and exact
+TextGen, but does not assert the post-insertion caret position.
+`BlockSeparatorInsertion` exercises the fixture's declared semicolon separator
+and verifies the second statement's AST position, exact TextGen, and
+post-insertion selection on that statement's `Constant_7h2wce_a0` cell at
+caret/selection offset 4. This is a fixture-specific generated cell identity,
+not a generic list-navigation policy. `BlockNestedEmptyListTyping` verifies
+that Enter in a nested empty list leaves the optional recursive child absent
+and selects the new nested statement at the corresponding constant cell.
+The [list, block, and trivia contract](list-block-editing.md) records the
+separate cardinality, boundary, block, and non-semantic trivia requirements.
 Separate `NodesTestCase` fixtures exercise profile overrides, original-source
 traces, storage rejection, actual generated control shapes, and disposable
 native file save/load with absent, empty and populated children.
 
-Typing uses MPS's real key-event dispatcher. Backspace and Undo use native
-`InvokeActionStatement` nodes because the low-level dispatcher does not route
-those global shortcuts through the IDE action system in this headless runner.
+List/block fixtures also exercise native trivia-table typing and Undo, semantic
+statement deletion with reference-anchor reanchoring and Undo, native statement
+reorder, right-arrow selection on outer/nested closing keywords, and native
+Collapse/Expand with an authored summary. Closing-navigation fixtures also assert
+the actual matching-label styles, and trivia validation rejects foreign anchors,
+multiline comments and nonempty blank-line chunks. Try/catch fixtures distinguish
+statement insertion from boundary Enter that must not append a sibling clause.
+`BlockPersistence` and `BlockTriviaPersistence` independently save/load native
+models and assert semantic counts and exact TextGen, including explicit blank
+lines and reordered reference anchors. They are registered in the same exact
+Gradle inventory. See [the list/block contract](list-block-editing.md) for the
+metadata-table scope and parser-import limits.
+
+Text typing uses MPS's real key-event dispatcher. The low-level dispatcher does
+not route the global `Insert_Action`, Backspace, or Undo through key events in
+this headless runner; tests of those actions should use native
+`InvokeActionStatement` nodes. The empty-list fixtures' completion-and-Enter
+sequence is a separate behavior and does not establish populated-list
+`Insert_Action` behavior or physical Enter-key binding.
 The tests open a real MPS node editor, compare before/result nodes using the
 native matcher, assert cell identity and caret/selection, and dispose the editor.
 They do not substitute direct property setters for the interaction.
+
+When changing aspect-generator templates through mops, explicitly build the
+generator module with `make module 'metabnf.aspectgen#01'` before fresh generation;
+making only its owning language is not evidence that the generator was built.
+Require complete structure/editor/TextGen output before applying protected
+regeneration; a partial generation must never be treated as intentional removal.
+
+Also verify ordinary in-place generation with
+`GenerationOptions.defaults.saveTransientModels(false).useInplaceTransformations(true)`.
+Postmappers may receive detached roots: use native mapping labels with the root
+`MAP_SRC` grammar-start input, and create editor/TextGen nodes without requiring
+`output.getModel()`. A retained-transient preview alone does not cover this path.
 
 For a quicker local iteration after preparing the project wrapper:
 
@@ -71,11 +123,26 @@ registered editor actions; include undo. Where a feature supports persistence
 or export, add independent reload and syntax assertions to its smoke coverage.
 Do not claim those capabilities from caret/AST assertions alone.
 
-The Number fixtures establish the baseline editing/undo contract. Flag/group
-coverage does not establish list, block, expression, or parser/mapping coverage.
-Each new interaction needs its own applicable contract cases and an explicit
-supported/unsupported matrix. Update the exact inventory in `build.gradle.kts`
-when registering fixtures; empty, skipped, missing or duplicate cases fail.
+The expression fixture (`Calculation`, `Operand`, `BinaryExpression`, `Group`
+in the checked-in `DemoUsability` language) is a hand-modeled reference backend
+for the interaction contract; it is not produced by the aspect generator. Its
+operators are `+ - * / ^` with precedence 10/10/20/20/30 and right-associative
+`^`, in the shared `ExpressionEditing` helper and the `Expression_ActionMap`.
+Native tests cover:
+
+| Interaction | Contract |
+| --- | --- |
+| Insert | Appends an operand after the selected node; at the end of an expression it appends to the whole expression (`a+b` then `+c`). When the node is an operand of a tighter or equal-precedence parent, the new operation is wrapped in an explicit `Group` (`(a+d)*b`). |
+| Operator replacement | Typing an operator into the operator cell keeps operands and adds `Group` nodes where precedence or associativity would otherwise change the tree (`a+b*c` becomes `a+(b-c)`); one Undo restores it. |
+| Backspace on a group parenthesis | Removes the `Group` only when the unwrapped tree is unchanged; refused otherwise (`(a+b)*c`); one Undo restores it. |
+
+TextGen emits parentheses only for explicit `Group` nodes and never rebalances.
+Unsupported: generated per-grammar expression backends, prefix/postfix/ternary
+or index/member actions, and deletion of operands. Flag/group coverage does not
+establish list or block coverage. Each new interaction needs its own applicable
+contract cases and an explicit supported/unsupported matrix. Update
+the exact inventory in `build.gradle.kts` when registering fixtures; empty,
+skipped, missing or duplicate cases fail.
 
 ## Reading failures
 

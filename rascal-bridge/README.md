@@ -27,23 +27,32 @@ using MPS's Java runtime, and saves native MPS nodes: **no Python or separately
 downloaded JAR is required**. See the
 [complete grammar import instructions](../docs/importing-grammars.md).
 
-Optional **Tools → Parser Bridge Utilities (legacy Python)…** retains the
-older source/export operations. Grammar export writes Rascal source from a
-MetaBNF model. Source-model
-import parses a source file with a Rascal or MetaBNF grammar and creates an
-MPS model; source-model export serializes a mapped MPS model back to text.
+Optional **Tools → Parser Bridge Utilities (legacy Python)…** provides grammar
+export and source-model import/export. Grammar export writes Rascal source from
+a MetaBNF model. Source-model import parses text with a Rascal or MetaBNF
+grammar, maps the parse tree into native MPS nodes, and adds them to a selected
+editable target model. Source-model export serializes a mapped MPS model back
+to text. Grammar and source files, mappings, and target models are selected
+through file dialogs; parse-tree XML is an internal interchange format.
 Save generated `.mps` models under the corresponding MPS model root so MPS can
 discover them; imported MetaBNF grammars use the `mbnf.sandbox` package.
 
-Only these legacy utilities ask for a Rascal distribution JAR when an operation
-needs the runtime. Source-model import/export also asks for a target model template
-and an AST mapping configuration: the target MPS language must already be
-generated, and its rule-to-concept mapping must be defined. Python 3 must be
-available as `python` on Windows or `python3` elsewhere; override the
-executable with the `metabnf.python` system property if needed. The bridge
-uses MPS's Java runtime for Rascal commands. Source grammar, source text, MPS
-models, and Rascal source are selected through file dialogs; the bridge's XML
-interchange is kept in a temporary directory.
+Source-model import requires a generated target language with its MPS metadata
+loaded and an explicit AST mapping. Its parser tools require Python 3 (`python`
+on Windows or `python3` elsewhere), a Rascal distribution JAR for Rascal or
+MetaBNF grammars, or an ANTLR complete JAR for ANTLR source. Override the Python
+executable with the `metabnf.python` system property. The bridge uses MPS's
+Java runtime for parser commands.
+
+## Mapping suggestions
+
+The opt-in [AST mapping advisor](../docs/ast-mapping-suggestions.md) combines
+shared grammar interchange with a Code Mode export of the target metamodel.
+It suggests structurally compatible configuration, preserves explicit keys,
+and reports ambiguity and mapping drift. Review its output and pass the
+reviewed mapping to the existing source-model import command; neither importer
+uses suggestions implicitly. Constrained datatype choices and reference
+resolution require explicit decisions.
 
 ## Run the tests
 
@@ -79,26 +88,59 @@ Run the MPS smoke test from the repository root with the Gradle wrapper:
 
 On Windows use `gradlew.bat smokeTest --no-daemon --console=plain`.
 
-## Current capabilities and limits
+## Prioritized support matrix
 
-The bridge converts a supported subset of Rascal grammars to MetaBNF models
-and back, generates Rascal parsers for that subset, maps parse trees to
-ordinary nodes in an already-generated MPS language, and serializes mapped MPS
-ASTs back to source text. The subset supports one start sort; sort and lexical
-rules; plain alternatives; literal keywords; sort and lexical references;
-optional, one-or-more, and zero-or-more sort references; and one literal or
-BMP character class for a lexical rule. Lexical rules mapped through a `self`
-property serialize the property's text value. Unsupported constructs fail
-explicitly. Priorities and associativity semantics, compound lexical
-expressions, layout rules, separated repetitions, lexical reference
-cardinalities, AST references, ambiguity resolution, and non-tree mappings are
-not supported.
+| Priority | Grammar conversion and generated parsing | Remaining limitation |
+| --- | --- | --- |
+| 1. Core | One self-contained module and start sort; sort/lexical rules, plain alternatives, keywords, sort/lexical references, and optional/repeated sort references. Sort alternatives map to explicit choice/alternative rules. | External-module dependencies and multiple start symbols are rejected. |
+| 2. Layout and lexical expressions | Layout declarations become explicit layout references in imported productions. Literal/empty regexes, BMP character classes, nested sequences/choices, and `?`, `+`, `*` are mapped to native regexp nodes and generated Rascal expressions. | Separated repetitions and cardinality on lexical references are unsupported. |
+| 3. Precedence and AST mapping | Unsupported grammar constructs fail rather than being dropped. Source parse trees can be mapped to an existing MPS language using explicit rules. | Priority and associativity are rejected because MetaBNF has no equivalent precedence model. Ambiguity resolution, AST references and non-tree mappings are unsupported. |
+
+Interchange retains Rascal layout references for native MetaBNF import, while
+generated Rascal parsers restore the layout declaration and omit duplicate
+references. The native MetaBNF model stores them as ordinary terminal references,
+so export loses the layout classification: whitespace is guaranteed for parsing
+the imported interchange, but not after MetaBNF re-export. Compound lexical operators are represented recursively;
+they are not flattened to a single literal or character class. The parser
+round-trip fixture checks valid and invalid inputs, and the native MPS smoke
+test checks imported nodes, references, persistence and constraints.
 
 Importing a grammar creates a MetaBNF grammar model; it does not automatically
 generate/configure an MPS AST language or infer a mapping. Source-model
 operations therefore require an existing target language and an explicit AST
-mapping configuration. The tests exercise the bridge conversion in both
-directions and representative source examples.
+mapping configuration. Mappings may declare a reference independently from
+containment, for example:
+
+```json
+"Reference": {
+  "concept": "example.target.Reference",
+  "references": {
+    "declaration": {
+      "token": "IDENTIFIER",
+      "targetConcept": "example.target.Declaration",
+      "targetIdentifier": "name",
+      "scope": "native"
+    }
+  }
+}
+```
+
+The native importer maps all parse-tree roots and their containment before
+resolving references. It looks up the reference link, target concept, and
+identifier property from the loaded MPS language, verifies the mapped target
+type against the link's declared target concept, and queries that link's native
+MPS scope. All imported roots are attached before resolution, so forward
+references are supported. Lookup is limited to the selected target model. A
+missing or ambiguous target rejects the import and removes all roots from that
+attempt. The standalone Python serializer uses its target model registry and
+supports explicit `model` scope; it cannot execute MPS scope providers or run
+native semantic checks. Validate imported nodes with the target language loaded
+in MPS. The smoke suite checks native prior/forward references after reload and
+rejects missing and ambiguous targets without retaining partial imports.
+
+The bridges do not execute user grammar code. See the
+[prioritized cross-bridge matrix](../docs/importing-grammars.md#prioritized-supportedunsupported-matrix)
+for ANTLR limitations and the shared import policy.
 
 ## Licensing scope
 

@@ -40,6 +40,18 @@ class ParseTreeToMpsTest(unittest.TestCase):
             {"id": "200", "name": "example.target.Child", "index": "ChildConcept"},
         )
         ET.SubElement(child, "property", {"id": "201", "name": "value", "index": "valueRole"})
+        declaration = ET.SubElement(
+            language,
+            "concept",
+            {"id": "300", "name": "example.target.Declaration", "index": "DeclarationConcept"},
+        )
+        ET.SubElement(declaration, "property", {"id": "301", "name": "name", "index": "declaredNameRole"})
+        reference = ET.SubElement(
+            language,
+            "concept",
+            {"id": "400", "name": "example.target.Reference", "index": "ReferenceConcept"},
+        )
+        ET.SubElement(reference, "reference", {"id": "401", "name": "target", "index": "targetRole"})
         ET.SubElement(model, "node", {"concept": "ProgramConcept", "id": "TemplateNode"})
         ET.ElementTree(model).write(self.template, encoding="UTF-8")
 
@@ -56,17 +68,45 @@ class ParseTreeToMpsTest(unittest.TestCase):
                         "Program": {
                             "concept": "example.target.Program",
                             "properties": {"name": {"token": "IDENTIFIER"}},
-                            "children": {"Child": "children"},
+                            "children": {
+                                "Child": "children",
+                                "Declaration": "children",
+                                "Reference": "children",
+                            },
                         },
                         "Child": {
                             "concept": "example.target.Child",
                             "properties": {"value": {"literal": "suffix"}},
+                        },
+                        "Declaration": {
+                            "concept": "example.target.Declaration",
+                            "properties": {"name": {"token": "IDENTIFIER"}},
+                        },
+                        "Reference": {
+                            "concept": "example.target.Reference",
+                            "references": {
+                                "target": {
+                                    "token": "IDENTIFIER",
+                                    "targetConcept": "example.target.Declaration",
+                                    "targetIdentifier": "name",
+                                    "scope": "model",
+                                }
+                            },
                         },
                     }
                 }
             ),
             encoding="utf-8",
         )
+
+    def write_reference_parse(self, *items):
+        parse_result = ET.Element("parse-result")
+        root = ET.SubElement(parse_result, "node", {"rule": "Program"})
+        ET.SubElement(root, "token", {"rule": "IDENTIFIER", "value": "main"})
+        for rule, identifier in items:
+            item = ET.SubElement(root, "node", {"rule": rule})
+            ET.SubElement(item, "token", {"rule": "IDENTIFIER", "value": identifier})
+        ET.ElementTree(parse_result).write(self.parse_tree, encoding="UTF-8")
 
     def tearDown(self):
         self.temporary_directory.cleanup()
@@ -100,6 +140,59 @@ class ParseTreeToMpsTest(unittest.TestCase):
             child.find("property").attrib,
             {"role": "valueRole", "value": "suffix"},
         )
+
+    def test_resolves_previously_declared_and_forward_declared_symbols(self):
+        self.write_reference_parse(
+            ("Declaration", "before"),
+            ("Reference", "before"),
+            ("Reference", "forward"),
+            ("Declaration", "forward"),
+        )
+        importer.import_parse_tree(
+            self.parse_tree, self.template, self.mapping, self.output, "Parsed"
+        )
+
+        model = ET.parse(self.output).getroot()
+        declarations = {
+            declaration.find("property[@role='declaredNameRole']").get("value"): declaration
+            for declaration in model.findall(".//node[@concept='DeclarationConcept']")
+        }
+        references = model.findall(".//node[@concept='ReferenceConcept']/ref[@role='targetRole']")
+        self.assertEqual(len(references), 2)
+        for reference in references:
+            identifier = reference.get("resolve")
+            self.assertEqual(reference.get("node"), declarations[identifier].get("id"))
+
+    def test_unresolved_reference_does_not_publish_a_model(self):
+        self.write_reference_parse(("Reference", "missing"))
+        with self.assertRaisesRegex(importer.ImportError, "Unresolved reference.*model scope"):
+            importer.import_parse_tree(
+                self.parse_tree, self.template, self.mapping, self.output, "Parsed"
+            )
+        self.assertFalse(self.output.exists())
+
+    def test_ambiguous_reference_does_not_replace_existing_output(self):
+        self.write_reference_parse(
+            ("Declaration", "same"), ("Declaration", "same"), ("Reference", "same")
+        )
+        self.output.write_bytes(b"previous model remains untouched")
+        with self.assertRaisesRegex(importer.ImportError, "Ambiguous reference.*2 matching targets"):
+            importer.import_parse_tree(
+                self.parse_tree, self.template, self.mapping, self.output, "Parsed"
+            )
+        self.assertEqual(self.output.read_bytes(), b"previous model remains untouched")
+
+    def test_requires_an_explicit_supported_scope(self):
+        self.mapping.write_text(
+            self.mapping.read_text(encoding="utf-8").replace('"scope": "model"', '"scope": "global"'),
+            encoding="utf-8",
+        )
+        self.write_reference_parse(("Reference", "alpha"))
+        with self.assertRaisesRegex(importer.ImportError, "Unsupported scope 'global'"):
+            importer.import_parse_tree(
+                self.parse_tree, self.template, self.mapping, self.output, "Parsed"
+            )
+        self.assertFalse(self.output.exists())
 
     def test_rejects_unmapped_ast_rule(self):
         self.mapping.write_text(json.dumps({"rules": {}}), encoding="utf-8")

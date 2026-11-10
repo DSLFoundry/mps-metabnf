@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "scope": "authored-parser-control-not-native-editor-results",
+  "syntax": {
+    "empty": "{}",
+    "bare": "{return;}",
+    "two": "{return;return 1;}",
+    "nested": "{{return;}}",
+    "nested-appended": "{{return;return 1;}}",
+    "payload": "{return 1;}",
+    "sum": "{return 1+2;}",
+    "sum-edited": "{return 1+3;}",
+    "persistent": "{{return 1+2;}return;}"
+  },
+  "invalid": [
+    "{",
+    "{return 1}",
+    "{return +1;}",
+    "{return 1+;}",
+    "{}{}",
+    "{return name;}",
+    "{ return;}",
+    "{return1;}"
+  ],
+  "scenarios": [
+    {
+      "id": "empty-block-creation",
+      "before": "empty",
+      "after": "bare",
+      "initialFocus": "$.statements.empty",
+      "actions": [
+        "Open completion on the empty statement placeholder",
+        "Select ReturnStatement by semantic kind; confirm with Enter"
+      ],
+      "focus": "$.0.return",
+      "undo": "empty",
+      "reload": "bare"
+    },
+    {
+      "id": "append-populated-block",
+      "before": "bare",
+      "after": "two",
+      "initialFocus": "$.0.end",
+      "actions": [
+        "Press Enter at the end of the first return",
+        "Select return in completion; populate its expression with decimal 1"
+      ],
+      "focus": "$.1.payload.number.end",
+      "undo": "adapter-must-record-command-boundaries",
+      "reload": "two"
+    },
+    {
+      "id": "nested-block-boundary",
+      "before": "nested",
+      "after": "nested-appended",
+      "initialFocus": "$.0.closing-brace.before",
+      "actions": [
+        "Press Enter immediately before the nested closing brace",
+        "Select return in completion; populate its expression with decimal 1"
+      ],
+      "focus": "$.0.1.payload.number.end",
+      "undo": "adapter-must-record-command-boundaries",
+      "reload": "nested-appended"
+    },
+    {
+      "id": "optional-return-payload",
+      "before": "bare",
+      "after": "payload",
+      "initialFocus": "$.0.payload.absent",
+      "actions": [
+        "Open payload completion; select NumberLiteral",
+        "Type 1"
+      ],
+      "focus": "$.0.payload.number.end",
+      "undo": "adapter-must-record-command-boundaries",
+      "reload": "payload"
+    },
+    {
+      "id": "remove-and-undo",
+      "before": "two",
+      "after": "bare",
+      "initialFocus": "$.1.selected-node",
+      "actions": [
+        "Select the second whole return statement",
+        "Invoke Delete once",
+        "Capture and save the after state as a separate fixture",
+        "Invoke Undo once and capture the undo state and focus",
+        "Reload the separately saved after-state fixture for the reload assertion"
+      ],
+      "focus": "$.statements.boundary[1]",
+      "undo": "two",
+      "undoFocus": "$.1.selected-node",
+      "reload": "bare"
+    },
+    {
+      "id": "expression-caret",
+      "before": "sum",
+      "after": "sum-edited",
+      "initialFocus": "$.0.payload.rhs.number.selected-text",
+      "actions": [
+        "Select all text of the right operand only",
+        "Type 3"
+      ],
+      "focus": "$.0.payload.rhs.number.end",
+      "undo": "sum",
+      "reload": "sum-edited"
+    },
+    {
+      "id": "export-and-reload",
+      "before": "persistent",
+      "after": "persistent",
+      "initialFocus": "$.0.0.payload.rhs.number.end",
+      "actions": [
+        "Save model",
+        "Export supported syntax",
+        "Close and reload model",
+        "Normalize reloaded semantic facts"
+      ],
+      "focus": "not-required-across-reload",
+      "undo": "not-applicable",
+      "reload": "persistent"
+    }
+  ]
+}

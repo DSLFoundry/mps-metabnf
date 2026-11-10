@@ -13,6 +13,8 @@
   <accessoryModels />
   <dependencies>
     <dependency reexport="false">1ed103c3-3aa6-49b7-9c21-6765ee11f224(MPS.Editor)</dependency>
+    <dependency reexport="false">9c03c641-469f-49e7-aeed-44a3d19b7253(metabnf)</dependency>
+    <dependency reexport="false">50e8d5cb-be9f-4332-9294-b42895622bde(metabnf.trivia)</dependency>
   </dependencies>
   <languageVersions>
     <language slang="l:f3061a53-9226-4cc5-a443-f952ceaf5816:jetbrains.mps.baseLanguage" version="12" />

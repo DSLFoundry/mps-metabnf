@@ -20,7 +20,12 @@ CONCEPTS = {
     "metabnf.structure.NonterminalReference": "sort-reference",
     "metabnf.structure.TerminalReference": "lexical-reference",
     "jetbrains.mps.baseLanguage.regexp.structure.InlineRegexpExpression": "inline-regexp",
-    "jetbrains.mps.baseLanguage.regexp.structure.StringRegexp": "string-regexp",
+    "jetbrains.mps.baseLanguage.regexp.structure.StringLiteralRegexp": "string-regexp",
+    "jetbrains.mps.baseLanguage.regexp.structure.SeqRegexp": "sequence-regexp",
+    "jetbrains.mps.baseLanguage.regexp.structure.OrRegexp": "choice-regexp",
+    "jetbrains.mps.baseLanguage.regexp.structure.PlusRegexp": "plus-regexp",
+    "jetbrains.mps.baseLanguage.regexp.structure.StarRegexp": "star-regexp",
+    "jetbrains.mps.baseLanguage.regexp.structure.ParensRegexp": "parens-regexp",
     "jetbrains.mps.baseLanguage.regexp.structure.PositiveSymbolClassRegexp": "character-class",
     "jetbrains.mps.baseLanguage.regexp.structure.SingleSymbolClassPart": "character",
     "jetbrains.mps.baseLanguage.regexp.structure.IntervalSymbolClassPart": "range",
@@ -113,6 +118,67 @@ def production_xml(terms: list[ET.Element], names: dict[str, str]) -> ET.Element
     return production
 
 
+def regexp_container(tag: str, children: list[ET.Element]) -> ET.Element:
+    result = ET.Element(tag)
+    result.extend(children)
+    return result
+
+
+def regexp_xml(expression: ET.Element, names: dict[str, str]) -> ET.Element:
+    expression_concept = concept(expression, names)
+    if expression_concept == "jetbrains.mps.baseLanguage.regexp.structure.StringLiteralRegexp":
+        return ET.Element("literal", {"value": node_property(expression, "1OCb_u", "regexp literal")})
+    if expression_concept == "jetbrains.mps.baseLanguage.regexp.structure.PositiveSymbolClassRegexp":
+        character_class = ET.Element("character-class")
+        for part in expression.findall("node"):
+            part_concept = concept(part, names)
+            if part_concept == "jetbrains.mps.baseLanguage.regexp.structure.CharacterSymbolClassPart":
+                value = node_property(part, "1T6KD9", "character class character")
+                if len(value) != 1:
+                    raise ExportError("Character class member must be exactly one BMP character")
+                codepoint = ord(value)
+                ET.SubElement(character_class, "range", {"start": str(codepoint), "end": str(codepoint)})
+            elif part_concept == "jetbrains.mps.baseLanguage.regexp.structure.IntervalSymbolClassPart":
+                start = node_property(part, "1T8p8b", "character range start")
+                end = node_property(part, "1T8pRJ", "character range end")
+                if len(start) != 1 or len(end) != 1:
+                    raise ExportError("Character class range bounds must be single BMP characters")
+                ET.SubElement(character_class, "range", {"start": str(ord(start)), "end": str(ord(end))})
+            else:
+                raise ExportError(f"Unsupported character class part: {part_concept}")
+        if not len(character_class):
+            raise ExportError("Empty character classes cannot be exported")
+        return character_class
+
+    children = expression.findall("node")
+    if expression_concept in {
+        "jetbrains.mps.baseLanguage.regexp.structure.SeqRegexp",
+        "jetbrains.mps.baseLanguage.regexp.structure.OrRegexp",
+    }:
+        if len(children) != 2:
+            raise ExportError(f"Binary regexp must contain two operands: {expression_concept}")
+        operands = [regexp_xml(child, names) for child in children]
+        if expression_concept.endswith("OrRegexp"):
+            empty = next((item for item in operands if item.tag == "literal" and item.get("value") == ""), None)
+            if empty is not None:
+                return regexp_container("optional", [operands[1] if operands[0] is empty else operands[0]])
+            return regexp_container("choice", operands)
+        return regexp_container("sequence", operands)
+    if expression_concept in {
+        "jetbrains.mps.baseLanguage.regexp.structure.PlusRegexp",
+        "jetbrains.mps.baseLanguage.regexp.structure.StarRegexp",
+    }:
+        if len(children) != 1:
+            raise ExportError(f"Unary regexp must contain one operand: {expression_concept}")
+        tag = "one-or-more" if expression_concept.endswith("PlusRegexp") else "zero-or-more"
+        return regexp_container(tag, [regexp_xml(children[0], names)])
+    if expression_concept == "jetbrains.mps.baseLanguage.regexp.structure.ParensRegexp":
+        if len(children) != 1:
+            raise ExportError("Parenthesized regexp must contain one expression")
+        return regexp_xml(children[0], names)
+    raise ExportError(f"Unsupported lexical expression concept: {expression_concept}")
+
+
 def regex_xml(rule: ET.Element, names: dict[str, str]) -> ET.Element:
     inline = [child for child in rule.findall("node") if concept(child, names) ==
               "jetbrains.mps.baseLanguage.regexp.structure.InlineRegexpExpression"]
@@ -121,35 +187,7 @@ def regex_xml(rule: ET.Element, names: dict[str, str]) -> ET.Element:
     expressions = inline[0].findall("node")
     if len(expressions) != 1:
         raise ExportError("Inline regular expression must contain exactly one expression")
-    expression = expressions[0]
-    expression_concept = concept(expression, names)
-    if expression_concept == "jetbrains.mps.baseLanguage.regexp.structure.StringRegexp":
-        return ET.Element("literal", {"value": node_property(expression, "1OCb_u", "regexp literal")})
-    if expression_concept != "jetbrains.mps.baseLanguage.regexp.structure.PositiveSymbolClassRegexp":
-        raise ExportError(f"Unsupported lexical expression concept: {expression_concept}")
-
-    character_class = ET.Element("character-class")
-    for part in expression.findall("node"):
-        part_concept = concept(part, names)
-        if part_concept == "jetbrains.mps.baseLanguage.regexp.structure.SingleSymbolClassPart":
-            value = node_property(part, "1T6KD9", "character class character")
-            if len(value) != 1:
-                raise ExportError("Character class member must be exactly one BMP character")
-            codepoint = ord(value)
-            ET.SubElement(character_class, "range", {"start": str(codepoint), "end": str(codepoint)})
-        elif part_concept == "jetbrains.mps.baseLanguage.regexp.structure.IntervalSymbolClassPart":
-            start = node_property(part, "1T8p8b", "character range start")
-            end = node_property(part, "1T8pRJ", "character range end")
-            if len(start) != 1 or len(end) != 1:
-                raise ExportError("Character class range bounds must be single BMP characters")
-            ET.SubElement(
-                character_class,
-                "range",
-                {"start": str(ord(start)), "end": str(ord(end))},
-            )
-        else:
-            raise ExportError(f"Unsupported character class part: {part_concept}")
-    return character_class
+    return regexp_xml(expressions[0], names)
 
 
 def export_model(model_path: Path, output_path: Path, module_name: str) -> None:
